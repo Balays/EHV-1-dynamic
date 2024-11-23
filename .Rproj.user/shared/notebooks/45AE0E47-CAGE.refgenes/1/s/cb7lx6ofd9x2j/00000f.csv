@@ -1,0 +1,7 @@
+"0",""
+"0","TR.gff.compare.uni.CAGE     <- fread(paste0(outdir, '/TR.gff.compare.uni.CAGE.tsv'), na.strings = '')"
+"0","TR.data <- fread(paste0(outdir, '/TR.data.tsv'), na.strings = '')"
+"0","TR.reads.gfffile <- paste0(outdir, '/TR.reads.gff2')"
+"0","TR.gff <- data.table(as.data.frame(rtracklayer::import.gff2(TR.reads.gfffile)))"
+"0",""
+"0",""

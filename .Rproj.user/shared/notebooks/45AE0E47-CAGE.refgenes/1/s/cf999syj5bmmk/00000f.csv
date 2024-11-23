@@ -1,0 +1,630 @@
+"0","library(prettydoc)"
+"0","library(hrbrthemes, quietly = T)"
+"0","#library(GenomicFeatures, quietly = T)"
+"0","library(DESeq2, quietly = T)"
+"2","
+Attaching package: ‘BiocGenerics’
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append,
+    as.data.frame, basename, cbind,
+    colnames, dirname, do.call,
+    duplicated, eval, evalq, Filter,
+    Find, get, grep, grepl, intersect,
+    is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax,
+    pmax.int, pmin, pmin.int, Position,
+    rank, rbind, Reduce, rownames,
+    sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit,
+    which.max, which.min
+
+"
+"2","
+Attaching package: ‘S4Vectors’
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+"
+"2","
+Attaching package: ‘IRanges’
+
+"
+"2","The following object is masked from ‘package:grDevices’:
+
+    windows
+
+"
+"2","
+Attaching package: ‘MatrixGenerics’
+
+"
+"2","The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys,
+    colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins,
+    colCumprods, colCumsums, colDiffs,
+    colIQRDiffs, colIQRs, colLogSumExps,
+    colMadDiffs, colMads, colMaxs,
+    colMeans2, colMedians, colMins,
+    colOrderStats, colProds,
+    colQuantiles, colRanges, colRanks,
+    colSdDiffs, colSds, colSums2,
+    colTabulates, colVarDiffs, colVars,
+    colWeightedMads, colWeightedMeans,
+    colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs,
+    rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs,
+    rowCummins, rowCumprods, rowCumsums,
+    rowDiffs, rowIQRDiffs, rowIQRs,
+    rowLogSumExps, rowMadDiffs, rowMads,
+    rowMaxs, rowMeans2, rowMedians,
+    rowMins, rowOrderStats, rowProds,
+    rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2,
+    rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans,
+    rowWeightedMedians, rowWeightedSds,
+    rowWeightedVars
+
+"
+"2","Welcome to Bioconductor
+
+    Vignettes contain introductory
+    material; view with
+    'browseVignettes()'. To cite
+    Bioconductor, see
+    'citation(""Biobase"")', and for
+    packages 'citation(""pkgname"")'.
+
+"
+"2","
+Attaching package: ‘Biobase’
+
+"
+"2","The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+"
+"2","The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+"
+"0","library(ggpubr, quietly = T)"
+"0","#library(misc, quietly = T)"
+"0","library(dplyr, quietly = T)"
+"2","
+Attaching package: ‘dplyr’
+
+"
+"2","The following object is masked from ‘package:Biobase’:
+
+    combine
+
+"
+"2","The following object is masked from ‘package:matrixStats’:
+
+    count
+
+"
+"2","The following objects are masked from ‘package:GenomicRanges’:
+
+    intersect, setdiff, union
+
+"
+"2","The following object is masked from ‘package:GenomeInfoDb’:
+
+    intersect
+
+"
+"2","The following objects are masked from ‘package:IRanges’:
+
+    collapse, desc, intersect, setdiff,
+    slice, union
+
+"
+"2","The following objects are masked from ‘package:S4Vectors’:
+
+    first, intersect, rename, setdiff,
+    setequal, union
+
+"
+"2","The following objects are masked from ‘package:BiocGenerics’:
+
+    combine, intersect, setdiff, union
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","#library(tidyverse, quietly = T)"
+"0","library(ggsci, quietly = T)"
+"0","#library(Gviz, quietly = T)"
+"0","library(dplyr, quietly = T)"
+"0","library(tidyr)"
+"2","
+Attaching package: ‘tidyr’
+
+"
+"2","The following object is masked from ‘package:S4Vectors’:
+
+    expand
+
+"
+"0","library(scales)"
+"0","#library(plyr)"
+"0","library(moanin, quietly = T)"
+"2","
+Attaching package: ‘AnnotationDbi’
+
+"
+"2","The following object is masked from ‘package:dplyr’:
+
+    select
+
+"
+"2","
+"
+"2","
+groupGOTerms: 	GOBPTerm, GOMFTerm, GOCCTerm environments built.
+"
+"2","
+Attaching package: ‘topGO’
+
+"
+"2","The following object is masked from ‘package:IRanges’:
+
+    members
+
+"
+"0","library(grid, quietly = T)"
+"2","
+Attaching package: ‘grid’
+
+"
+"2","The following object is masked from ‘package:topGO’:
+
+    depth
+
+"
+"0","library(gridExtra, quietly = T) "
+"2","
+Attaching package: ‘gridExtra’
+
+"
+"2","The following object is masked from ‘package:dplyr’:
+
+    combine
+
+"
+"2","The following object is masked from ‘package:Biobase’:
+
+    combine
+
+"
+"2","The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+"
+"0","library(ggpubr, quietly = T)"
+"0","library(data.table)"
+"2","Registered S3 method overwritten by 'data.table':
+  method           from
+  print.data.table     
+"
+"2","data.table 1.16.0 using 10 threads (see ?getDTthreads).  "
+"2","Latest news: r-datatable.com
+"
+"2","
+Attaching package: ‘data.table’
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    between, first, last
+
+"
+"2","The following object is masked from ‘package:SummarizedExperiment’:
+
+    shift
+
+"
+"2","The following object is masked from ‘package:GenomicRanges’:
+
+    shift
+
+"
+"2","The following object is masked from ‘package:IRanges’:
+
+    shift
+
+"
+"2","The following objects are masked from ‘package:S4Vectors’:
+
+    first, second
+
+"
+"0","library(ggh4x)"
+"2","
+Attaching package: ‘ggh4x’
+
+"
+"2","The following object is masked from ‘package:ggplot2’:
+
+    guide_axis_logticks
+
+"
+"0","library(knitr)"
+"0","library(formattable)"
+"2","Registered S3 method overwritten by 'htmlwidgets':
+  method           from         
+  print.htmlwidget tools:rstudio
+"
+"2","
+Attaching package: ‘formattable’
+
+"
+"2","The following objects are masked from ‘package:scales’:
+
+    comma, percent, scientific
+
+"
+"2","The following object is masked from ‘package:BiocGenerics’:
+
+    normalize
+
+"
+"0","library(stageR); library(edgeR) ; library(Biobase) ; library(limma) ; library(utils) ; library(DEXSeq)"
+"2","
+Attaching package: ‘stageR’
+
+"
+"2","The following object is masked from ‘package:methods’:
+
+    getMethod
+
+"
+"2","Loading required package: limma
+"
+"2","
+Attaching package: ‘limma’
+
+"
+"2","The following object is masked from ‘package:DESeq2’:
+
+    plotMA
+
+"
+"2","The following object is masked from ‘package:BiocGenerics’:
+
+    plotMA
+
+"
+"2","Loading required package: BiocParallel
+"
+"2","Loading required package: RColorBrewer
+"
+"2","Registered S3 methods overwritten by 'dbplyr':
+  method         from
+  print.tbl_lazy     
+  print.tbl_sql      
+"
+"0","###"
+"0","viral.ref <- ""NC_001491.2.mRNA_corrected.gff3"""
+"0","source('_WF.part0.R')"
+"2","Loading required package: Biostrings
+"
+"2","Loading required package: XVector
+"
+"2","
+Attaching package: ‘Biostrings’
+
+"
+"2","The following object is masked from ‘package:grid’:
+
+    pattern
+
+"
+"2","The following object is masked from ‘package:graph’:
+
+    complement
+
+"
+"2","The following object is masked from ‘package:base’:
+
+    strsplit
+
+"
+"2","
+Attaching package: ‘seqinr’
+
+"
+"2","The following object is masked from ‘package:Biostrings’:
+
+    translate
+
+"
+"2","The following object is masked from ‘package:limma’:
+
+    zscore
+
+"
+"2","The following object is masked from ‘package:dplyr’:
+
+    count
+
+"
+"2","The following object is masked from ‘package:matrixStats’:
+
+    count
+
+"
+"2","Loading required package: future
+"
+"2","
+Attaching package: ‘purrr’
+
+"
+"2","The following object is masked from ‘package:XVector’:
+
+    compact
+
+"
+"2","The following object is masked from ‘package:data.table’:
+
+    transpose
+
+"
+"2","The following object is masked from ‘package:scales’:
+
+    discard
+
+"
+"2","The following object is masked from ‘package:GenomicRanges’:
+
+    reduce
+
+"
+"2","The following object is masked from ‘package:IRanges’:
+
+    reduce
+
+"
+"2","Loading required package: GenomicAlignments
+"
+"2","
+Attaching package: ‘GenomicAlignments’
+
+"
+"2","The following object is masked from ‘package:data.table’:
+
+    last
+
+"
+"2","The following object is masked from ‘package:dplyr’:
+
+    last
+
+"
+"2","Loading required package: gggenes
+"
+"2","Loading required package: tidyverse
+"
+"1","── [1mAttaching core tidyverse packages[22m ─────────
+[32m✔[39m [34mforcats  [39m 1.0.0     [32m✔[39m [34mstringr  [39m 1.5.1
+[32m✔[39m [34mlubridate[39m 1.9.3     [32m✔[39m [34mtibble   [39m 3.2.1
+[32m✔[39m [34mreadr    [39m 2.1.5     
+"
+"1","── [1mConflicts[22m ──────── tidyverse_conflicts() ──
+[31m✖[39m [34mlubridate[39m::[32m%within%()[39m        masks [34mIRanges[39m::%within%()
+[31m✖[39m [34mdata.table[39m::[32mbetween()[39m        masks [34mdplyr[39m::between()
+[31m✖[39m [34mstringr[39m::[32mboundary()[39m          masks [34mgraph[39m::boundary()
+[31m✖[39m [34mreadr[39m::[32mcol_factor()[39m          masks [34mscales[39m::col_factor()
+[31m✖[39m [34mBiostrings[39m::[32mcollapse()[39m       masks [34mdplyr[39m::collapse(), [34mIRanges[39m::collapse()
+[31m✖[39m [34mgridExtra[39m::[32mcombine()[39m         masks [34mdplyr[39m::combine(), [34mBiobase[39m::combine(), [34mBiocGenerics[39m::combine()
+[31m✖[39m [34mpurrr[39m::[32mcompact()[39m             masks [34mXVector[39m::compact()
+[31m✖[39m [34mseqinr[39m::[32mcount()[39m              masks [34mdplyr[39m::count(), [34mmatrixStats[39m::count()
+[31m✖[39m [34mdplyr[39m::[32mdesc()[39m                masks [34mIRanges[39m::desc()
+[31m✖[39m [34mpurrr[39m::[32mdiscard()[39m             masks [34mscales[39m::discard()
+[31m✖[39m [34mtidyr[39m::[32mexpand()[39m              masks [34mS4Vectors[39m::expand()
+[31m✖[39m [34mdplyr[39m::[32mfilter()[39m              masks [34mstats[39m::filter()
+[31m✖[39m [34mGenomicAlignments[39m::[32mfirst()[39m   masks [34mdata.table[39m::first(), [34mdplyr[39m::first(), [34mS4Vectors[39m::first()
+[31m✖[39m [34mggh4x[39m::[32mguide_axis_logticks()[39m masks [34mggplot2[39m::guide_axis_logticks()
+[31m✖[39m [34mlubridate[39m::[32mhour()[39m            masks [34mdata.table[39m::hour()
+[31m✖[39m [34mlubridate[39m::[32misoweek()[39m         masks [34mdata.table[39m::isoweek()
+[31m✖[39m [34mdplyr[39m::[32mlag()[39m                 masks [34mstats[39m::lag()
+[31m✖[39m [34mGenomicAlignments[39m::[32mlast()[39m    masks [34mdata.table[39m::last(), [34mdplyr[39m::last()
+[31m✖[39m [34mlubridate[39m::[32mmday()[39m            masks [34mdata.table[39m::mday()
+[31m✖[39m [34mlubridate[39m::[32mminute()[39m          masks [34mdata.table[39m::minute()
+[31m✖[39m [34mlubridate[39m::[32mmonth()[39m           masks [34mdata.table[39m::month()
+[31m✖[39m [34mggplot2[39m::[32mPosition()[39m          masks [34mBiocGenerics[39m::Position(), [34mbase[39m::Position()
+[31m✖[39m [34mlubridate[39m::[32mquarter()[39m         masks [34mdata.table[39m::quarter()
+[31m✖[39m [34mpurrr[39m::[32mreduce()[39m              masks [34mGenomicRanges[39m::reduce(), [34mIRanges[39m::reduce()
+[31m✖[39m [34mdplyr[39m::[32mrename()[39m              masks [34mS4Vectors[39m::rename()
+[31m✖[39m [34mlubridate[39m::[32msecond()[39m          masks [34mGenomicAlignments[39m::second(), [34mdata.table[39m::second(), [34mS4Vectors[39m::second()
+[31m✖[39m [34mlubridate[39m::[32msecond<-()[39m        masks [34mS4Vectors[39m::second<-()
+[31m✖[39m [34mAnnotationDbi[39m::[32mselect()[39m      masks [34mdplyr[39m::select()
+[31m✖[39m [34mXVector[39m::[32mslice()[39m             masks [34mdplyr[39m::slice(), [34mIRanges[39m::slice()
+[31m✖[39m [34mpurrr[39m::[32mtranspose()[39m           masks [34mdata.table[39m::transpose()
+[31m✖[39m [34mlubridate[39m::[32mwday()[39m            masks [34mdata.table[39m::wday()
+[31m✖[39m [34mlubridate[39m::[32mweek()[39m            masks [34mdata.table[39m::week()
+[31m✖[39m [34mlubridate[39m::[32myday()[39m            masks [34mdata.table[39m::yday()
+[31m✖[39m [34mlubridate[39m::[32myear()[39m            masks [34mdata.table[39m::year()
+[36mℹ[39m Use the ]8;;http://conflicted.r-lib.org/conflicted package]8;; to force all conflicts to become errors
+"
+"2","Loading required package: igraph
+"
+"2","
+Attaching package: ‘igraph’
+
+"
+"2","The following objects are masked from ‘package:lubridate’:
+
+    %--%, union
+
+"
+"2","The following object is masked from ‘package:tibble’:
+
+    as_data_frame
+
+"
+"2","The following objects are masked from ‘package:purrr’:
+
+    compose, simplify
+
+"
+"2","The following objects are masked from ‘package:future’:
+
+    %->%, %<-%
+
+"
+"2","The following object is masked from ‘package:Biostrings’:
+
+    union
+
+"
+"2","The following object is masked from ‘package:XVector’:
+
+    path
+
+"
+"2","The following objects are masked from ‘package:rtracklayer’:
+
+    blocks, path
+
+"
+"2","The following object is masked from ‘package:formattable’:
+
+    normalize
+
+"
+"2","The following objects are masked from ‘package:topGO’:
+
+    algorithm, graph
+
+"
+"2","The following objects are masked from ‘package:graph’:
+
+    degree, edges, intersection, union
+
+"
+"2","The following object is masked from ‘package:tidyr’:
+
+    crossing
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    as_data_frame, groups, union
+
+"
+"2","The following object is masked from ‘package:GenomicRanges’:
+
+    union
+
+"
+"2","The following object is masked from ‘package:IRanges’:
+
+    union
+
+"
+"2","The following object is masked from ‘package:S4Vectors’:
+
+    union
+
+"
+"2","The following objects are masked from ‘package:BiocGenerics’:
+
+    normalize, path, union
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+"
+"2","The following object is masked from ‘package:base’:
+
+    union
+
+"
+"2","
+
+╔═════════════════════════════════╗
+║                                 ║
+║  ┌┬┐  ┬  ┐ ┌  ┬  ─┬─  ┌─┐  ╲╱   ║
+║  │││  │  │┝│  │   │   │ │  ||   ║
+║  ┴ ┴  ┴  ┘ └  ┴   ┴   ┴ ┴  ╱╲   ║
+║                                 ║
+╚═════════════════════════════════╝
+
+"
+"2","Welcome to	𝑚ＩＮＩＴΛΧ !
+minitax, version: 0.9
+"
+"2","Error in read.table(file = file, header = header, sep = sep, quote = quote,  : 
+  object 'config' not found
+"
+"0","#### Settings ####"
+"0",""
+"0","## Main"
+"0","#save.data <- 'PRV.rebase.RData'"
+"0","EndType <- 'CAGE'"
+"0",""
+"0","project_config  <- fread('project_config.txt')"
+"0","outdir  <- project_config$outdir"
+"0","res.dir <- outdir; try({ dir.create(res.dir) })"
+"0","fig.dir <- paste0(res.dir, '/', EndType); try({ dir.create(fig.dir) })## save plots to this directory"
+"0",""
+"0","## Miscallenaous"
+"0","colorvec <- na.omit(c("
+"0","  colorvec[c(1:5,15,13,10,24,7,26,32,33)],"
+"0","  colorvec[-c(1:5,15,13,10,24,7,26,32,33)]))"
+"0",""
+"0","colorvec <- colorvec[-c(9,13)]"
+"0",""
+"0","palette  <- colorvec #pal_npg()(10)"
+"0",""
+"0","writetables <- T"
+"0",""
+"0",""
+"0","#### For Gene/Transcript plotting"
+"0",""
+"0","## Gene Feature annotation"
+"0",""
+"0",""
+"0","genome.plotdata <- make.genome.plot.data(feature.df, feature.col = 8, feature.name = 'ID')"
+"0","genome.plotdata$strand <- factor(genome.plotdata$strand, levels = c('+', '-', '*'))"
+"0","gene.plotdata <- genome.plotdata"
+"0","## GENE NAMES !"
+"0","gene.plotdata$gene_name <- gsub('_.*', '', gene.plotdata$gene)"
+"0","#gene.plotdata$start > gene.plotdata$end"
+"0","## Misc"
+"0","alpha <- data.frame(cov_geom        = 0.6,"
+"0","                    gene_geom       = 0.75,"
+"0","                    unstranded_geom = 0.75)"
+"0",""
+"0",""
+"0",""
