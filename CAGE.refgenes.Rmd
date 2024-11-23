@@ -1023,6 +1023,30 @@ TX_nov <- foo.filt[,.(sum_TES_count=sum(sum_count)), by=.(seqnames, strand, Ref.
 
 ## these are effectively novel transcripts, but have to chcek their read count
 
+ggplot(TX_nov) + 
+  geom_bar(aes(sum_TES_count))
+  
+
+ggplot(TX_nov) + 
+ geom_histogram(aes(sum_TES_count), bins = 500)
+  
+
+
+nrow(TX_nov[sum_TES_count>0])
+
+nrow(TX_nov[sum_TES_count>1])
+
+nrow(TX_nov[sum_TES_count>=5])
+
+nrow(TX_nov[sum_TES_count>=10])
+
+nrow(TX_nov[sum_TES_count>=20])
+
+nrow(TX_nov[sum_TES_count>=50])
+
+
+TX_nov[,.N,by=.(CAGE_significance, support)]
+
 ```
 
 
