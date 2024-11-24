@@ -1156,7 +1156,7 @@ final_tx_nov_filt_gff <- final_tx_nov_filt[,
                                            .(seqnames, strand, type = 'transcript', Ref.prime3.TR, prime5.TR, TX_nov_ID)]
 
 final_tx_nov_filt_gff[, start := fifelse(strand == '+', prime5.TR, Ref.prime3.TR)]
-final_tx_nov_filt_gff[, end   := fifelse(strand == '-', Ref.prime3.TR, prime5.TR)]
+final_tx_nov_filt_gff[, end   := fifelse(strand == '+', Ref.prime3.TR, prime5.TR)]
 final_tx_nov_filt_gff[, ':=' (source = 'Tombácz_et_al', width = end-start+1, phase=NA, score=NA), ]
 
 
