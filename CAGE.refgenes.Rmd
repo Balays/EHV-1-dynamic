@@ -43,7 +43,6 @@ library(dplyr, quietly = T)
 library(tidyr)
 library(scales)
 #library(plyr)
-library(moanin, quietly = T)
 library(grid, quietly = T)
 library(gridExtra, quietly = T) 
 library(ggpubr, quietly = T)
@@ -52,8 +51,11 @@ library(ggh4x)
 library(knitr)
 library(formattable)
 library(ggrepel)
+library(utils)
 
-library(stageR); library(edgeR) ; library(Biobase) ; library(limma) ; library(utils) ; library(DEXSeq)
+#library(moanin, quietly = T)
+#library(stageR); library(edgeR) ; library(Biobase)
+#library(limma) ; library(DEXSeq)
 
 ###
 viral.ref <- "NC_001491.2.mRNA_corrected.gff3"
@@ -940,10 +942,11 @@ trids.toclust <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[transcript_id %in% 
 
 
 
-Select TSS clusters that are significant (non-NA) in the CAGE results AND have sufficient read counts in the dcDNA reads as well, from where their 5-prime ends were correct and their class-code based on gff-compare was either 5-prime short or long.
+Select TSS clusters that are significant (non-NA) in the CAGE results AND have sufficient read counts in the dcDNA reads as well, from where their 5-prime ends were correct and their class-code based on gff-compare was either 5-prime short or long. 
+
+Exclude those transfrags that have more than one exon, for now.
 
 ```{r}
-
 trids <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
     #hpi == '12h'
   class_code %in% c('5`-long', '5`-short')
@@ -953,8 +956,38 @@ trids <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
   #& strand == '+',
          ,transcript_id ]
 
-trids.gff <- TR.gff[transcript_id %in% trids, ]
 
+trids.gff <- TR.gff[transcript_id %in% trids
+                  & type == 'exon', ]
+
+
+trids.gff[type == 'exon', n_exon := seq_along(exon_number), by=.(seqnames, transcript_id)]
+
+
+trids.spliced <- unique(trids.gff[transcript_id %in% trids
+                  & n_exon > 1
+                  , transcript_id])
+
+trids.spliced.gff <- trids.gff[transcript_id %in% trids.spliced, ]
+
+trids.gff <- trids.gff[transcript_id %in% trids
+                  & n_exon == 1
+                  , ]
+
+
+trids <- unique(trids.gff[, transcript_id])
+
+
+
+message('Number of TransFrags to be kept:')
+length(trids)
+
+message('Number of TransFrags omitted because they are spliced:')
+length(trids.spliced)
+```
+
+
+```{r}
 #rtracklayer::export.gff3(trids.gff, 'ORF51_5p-longs-TRs.gff3')
 
 
@@ -963,39 +996,53 @@ trids.gff <- TR.gff[transcript_id %in% trids, ]
 ## to make novel transcripts from these, we cluster the transfrags according to the CAGE clusters.
 ## (we could also find the peaks here using the dcDNA read end counts.)
 
-## summed read counts for each such CAGE TSS cluster
-trids.cage.sum <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
-  transcript_id %in% trids
-  #& !is.na(CAGE_significance), 
-  , .(sum_count=sum(count)), 
-         by=.(seqnames, strand, CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
 
-
-## summed read counts for each such CAGE TSS cluster AND read 3-prime end
 TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[, prime3.TR := fifelse(strand == '+', TR_end,   TR_start)]
 TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[, prime5.TR := fifelse(strand == '+', TR_start, TR_end)]
 
+
+
+## 
 trids.cage <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
   transcript_id %in% trids
   #& !is.na(CAGE_significance), 
   , .(sum_count=sum(count)), 
-         by=.(seqnames, strand, prime3.TR, CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+         by=.(seqnames, strand, transcript_id, prime3.TR, prime5.TR, 
+              CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+
+## assign novel TX_ID, based on CAGE ID and 3-prime end
+trids.cage[,TX_ID := .GRP, by=.(prime3.TR, CAGE_ID)]
+
+
+## summed read counts for each such CAGE TSS cluster AND read 3-prime end
+trids.cage.sum <- trids.cage[
+  #transcript_id %in% trids
+  #& !is.na(CAGE_significance), 
+  , .(sum_count=sum(sum_count)), 
+         by=.(seqnames, strand, TX_ID, prime3.TR, 
+              CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+
+
 
 ## we have to merge with the reference annotations 3-prime ends
 viral.mrna[, prime3.TR := fifelse(strand == '+', transcript_end,   transcript_start )]
 viral.mrna[, prime5.TR := fifelse(strand == '-', transcript_end,   transcript_start )]
-ref.trs  <- unique(viral.mrna[type == 'transcript', .(seqnames, strand, transcript_id, prime3.TR, prime5.TR)])
-## unique 3-primes
-ref.trs[,TES := .GRP, prime3.TR]
-ref.TESs <- unique(ref.trs[,.(seqnames, strand, prime3.TR, TES)])
+
+## unique 3-primes with genes
+ref.trs  <- unique(viral.mrna[type == 'transcript', .(seqnames, strand, transcript_id, prime3.TR, prime5.TR, gene_id)])
+ref.TESs <- unique(ref.trs[,.(seqnames, strand, prime3.TR, gene_id)])
+#ref.TESs[,gene_nr := seq_along(gene_id), by=.(seqnames, strand, prime3.TR)]
+ref.TESs[,genes   := paste0(gene_id, collapse = ';'), by=.(seqnames, strand, prime3.TR)]
+ref.TESs <- unique(ref.TESs[,.(seqnames, strand, prime3.TR, genes)])
+ref.TESs[,TES := .GRP, prime3.TR]
+
 
 ## add windows for merging
 ref.TESs  [,':='(start = prime3.TR-10, end=prime3.TR+10)]
-trids.cage[,':='(start = prime3.TR-10, end=prime3.TR+10)]
+trids.cage.sum[,':='(start = prime3.TR-10, end=prime3.TR+10)]
 
-trids.cage[,TX_ID := .GRP, by=.(prime3.TR, CAGE_ID)]
 
-foo <- foverlaps2(trids.cage, ref.TESs, by = c('seqnames', 'strand', 'start', 'end'), minoverlap = 1)
+foo <- foverlaps2(trids.cage.sum, ref.TESs, by = c('seqnames', 'strand', 'start', 'end'), minoverlap = 1)
 
 setnames(foo, c('i.start', 'i.end', 'i.prime3.TR', 'start', 'end', 'prime3.TR'), c('TX.prime3.win.start', 'TX.prime3.win.end', 'TX.prime3.TR', 'Ref.prime3.win.start', 'Ref.prime3.win.end', 'Ref.prime3.TR'))
 
@@ -1019,35 +1066,187 @@ nrow(foo.filt) == nrow(trids.cage)
 
 ### assembly novel TXs based on ref TESs and CAGE TSS clusters
 
-TX_nov <- foo.filt[,.(sum_TES_count=sum(sum_count)), by=.(seqnames, strand, Ref.prime3.TR, TES, CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+TX_nov <- foo.filt[,.(sum_TX_count=sum(sum_count)), 
+                   by=.(seqnames, strand, Ref.prime3.TR, TES, 
+                        CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+TX_nov[,TX_nov_ID := paste0('TX_nov_ID_', seq(1:nrow(TX_nov)))]
+
 
 ## these are effectively novel transcripts, but have to chcek their read count
+```
 
+
+```{r}
+tx_uni <- unique(foo.filt[,.(seqnames, strand, TX_ID, TX.prime3.TR, TES, Ref.prime3.TR, CAGE_ID)])
+## merge back with the original 3-prime sites and TX_IDs
+tx_uni <- merge(tx_uni, 
+                TX_nov[,.(Ref.prime3.TR, TES, CAGE_ID, TX_nov_ID, sum_TX_count)], by=c('Ref.prime3.TR', 'TES', 'CAGE_ID'))
+
+## transcript_id is the original transfrags ID, 
+## TX ID is when we clustered CAGE TSS cluster ID with the transfrags' prime3 site,
+## while TX-nov-ID is when we clustered these with the REFERENCES closest TES in addition
+
+## merge with original transfrags
+tx_uni <- merge(tx_uni,
+                unique(trids.cage[,.(seqnames, strand, transcript_id, prime3.TR, CAGE_ID, TX_ID)]),
+                by.x=c('seqnames', 'strand', 'CAGE_ID', 'TX.prime3.TR', 'TX_ID'),
+                by.y=c('seqnames', 'strand', 'CAGE_ID', 'prime3.TR', 'TX_ID')
+                )
+
+nrow(tx_uni) == length(trids)
+## OK
+```
+
+
+```{r}
+## add 5-prime sites and other info, including read counts
+TR.gff.compare.uni.CAGE.ref.counts.melt.hpi.TXnov <- merge(
+  TR.gff.compare.uni.CAGE.ref.counts.melt.hpi,
+  tx_uni,
+  by.x=c('seqnames', 'strand', 'CAGE_ID', 'prime3.TR', 'transcript_id'),
+  by.y=c('seqnames', 'strand', 'CAGE_ID', 'TX.prime3.TR', 'transcript_id'),
+  all=T
+)
+## OK
+
+  
+## unique this without read counts to get 5-prime sites and other info
+tx_uni_trs <- 
+  TR.gff.compare.uni.CAGE.ref.counts.melt.hpi.TXnov[,.(sum_count=sum(count)),
+        by=.(seqnames, strand, prime3.TR, prime5.TR, transcript_id,
+             CAGE_ID, CAGE_significance, score, support, TX_ID, TX_nov_ID, Ref.prime3.TR, TES,
+             cmp_ref, class_code, gene)]
+```
+
+
+```{r}
+## find the largest 5-prime count site for each novel TX
+## because for now, only the CAGE TSS cluster is considered
+
+
+tx_uni_trs_nov <- tx_uni_trs[!is.na(TX_nov_ID)]
+tx_uni_trs_nov[,highest_count := max(sum_count), by=.(TX_nov_ID)]
+
+tx_uni_trs_nov[,peak_5prime   := fifelse(sum_count == highest_count, T, F)]
+
+
+final_tx_nov <- tx_uni_trs_nov[peak_5prime == T, ]
+```
+
+
+```{r}
+## filtering based on CAGE TSS and dcDNA read counts
+
+final_tx_nov_filt <- final_tx_nov[sum_count >= 20 &
+            support > 2 &
+            score > 300 &
+            CAGE_significance != '*'
+            ]
+
+length(unique(final_tx_nov_filt[,transcript_id]))
+
+
+final_tx_nov_filt[,.N,gene]
+```
+
+
+```{r}
+## make gff from them
+final_tx_nov_filt_gff <- final_tx_nov_filt[,
+                                           .(seqnames, strand, type = 'transcript', Ref.prime3.TR, prime5.TR, TX_nov_ID)]
+
+final_tx_nov_filt_gff[, start := fifelse(strand == '+', prime5.TR, Ref.prime3.TR)]
+final_tx_nov_filt_gff[, end   := fifelse(strand == '-', Ref.prime3.TR, prime5.TR)]
+final_tx_nov_filt_gff[, ':=' (source = 'Tombácz_et_al', width = end-start+1, phase=NA, score=NA), ]
+
+
+rtracklayer::export.gff3(as.data.frame(final_tx_nov_filt_gff), 'final_tx_nov_filt.gff3')
+
+## make gff from them
+
+#TX_nov <- merge(TX_nov)
+
+```
+
+
+```{r}
+
+TR.adapt.filt_nov <- merge(TR.adapt.filt, tx_uni, 
+                           by.x=c('seqnames', 'strand', 'transcript_id'), 
+                           by.y=c('seqnames', 'strand', 'transcript_id'), all=T)
+
+TR.adapt.filt_nov.only <- TR.adapt.filt_nov[!is.na(TX_nov_ID)]
+TR.adapt.filt_nov.only[,.(sum_count = sum(count)), by=.(seqnames, strand, TX_nov_ID) ]
+TR.adapt.filt_nov.only[,max_TSS := max(count)]
+
+
+TR.merged.data.gene
+orf.perc
+
+TR.gff.compare.uni.CAGE.ref.counts.melt.hpi
+length(unique(TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[,transcript_id]))
+length(unique(TR.adapt.filt[,transcript_id]))
+
+
+## have to check the distribution of these novel TXs in the dcDNA samples
+
+
+```
+
+
+
+```{r}
 ggplot(TX_nov) + 
-  geom_bar(aes(sum_TES_count))
+  geom_bar(aes(sum_TX_count))
   
 
 ggplot(TX_nov) + 
- geom_histogram(aes(sum_TES_count), bins = 500)
-  
+ geom_histogram(aes(sum_TX_count), bins = 500)
 
 
-nrow(TX_nov[sum_TES_count>0])
+nrow(TX_nov[sum_TX_count > 0])
 
-nrow(TX_nov[sum_TES_count>1])
+nrow(TX_nov[sum_TX_count > 1])
 
-nrow(TX_nov[sum_TES_count>=5])
+nrow(TX_nov[sum_TX_count >= 5])
 
-nrow(TX_nov[sum_TES_count>=10])
+nrow(TX_nov[sum_TX_count >= 10])
 
-nrow(TX_nov[sum_TES_count>=20])
+nrow(TX_nov[sum_TX_count >= 20])
 
-nrow(TX_nov[sum_TES_count>=50])
+nrow(TX_nov[sum_TX_count >= 50])
+
+
+
+
+nrow(TX_nov[sum_TX_count >= 20 &
+            support > 2 &
+            score > 300 &
+            CAGE_significance != '*'
+            ])
+
+
 
 
 TX_nov[,.N,by=.(CAGE_significance, support)]
+```
+
+
+```{r}
+
+ggplot(TX_nov) + 
+  geom_point(aes(sum_TX_count, score, color=CAGE_significance)) +
+  facet_wrap(~support, scales = 'free')
 
 ```
+
+
+
+
+
+
+
+
 
 
 Annotation plotting function

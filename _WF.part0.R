@@ -18,7 +18,7 @@ library(tidygenomics)
 library(tidyr)
 library(dplyr)
 library(fuzzyjoin)
-library(future.apply)
+#library(future.apply)
 library(purrr)
 library(BiocParallel)
 
@@ -27,15 +27,15 @@ misc.dir    <- 'C:/GitHub/Rlyeh/R'
 minitax.dir <- 'C:/GitHub/minitax/R'
 
 if (.Platform$OS.type!="windows") {
-  
+
   misc.dir  <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', misc.dir))),
                       stri_replace_first_regex(misc.dir, '.*:\\/', '')
   )
-  
+
   minitax.dir  <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', minitax.dir))),
                          stri_replace_first_regex(minitax.dir, '.*:\\/', '')
   )
-  
+
 }
 
 for(f in list.files(misc.dir,    '*.R', full.names = T)) { try({source(f)}) }
@@ -71,7 +71,7 @@ metacols <- c('sample', 'hpi', 'Time', 'cell_line', 'group')
 
 ### Reference genome
 virus  <- 'EHV-1'
-genome <- 'NC_001491.2' 
+genome <- 'NC_001491.2'
 #fasta.ref  <- if (.Platform$OS.type!="windows") {'/mnt/e/data/genomes/Rnor_6.0.104_and_LT934125.1.fasta'} else {'E:/data/genomes/Rnor_6.0.104_and_LT934125.1.fasta'}
 fasta.ref <- paste0(genome, '.fasta')
 fasta  <- seqinr::read.fasta(fasta.ref)
@@ -89,24 +89,24 @@ if (create.ann.from.gff) {
   gff           <- data.table(as.data.frame(rtracklayer::import.gff(gff.file)))
   CDS.df        <- gff[gff$type == 'CDS', c("seqnames", "start", "end", "strand", "type", "product", 'ID', 'Name', 'gene')]
   CDS.df$Name   <- CDS.df$gene
-  
+
   ## differentiate multicopy genes
   CDS.df[,copy_number := 1:n_distinct(strand), by=.(gene)]
   CDS.df[copy_number > 1, gene := paste0(gene, '_', copy_number)]
-  
+
   CDS.df[, part := 1:.N, by=.(gene)]
   CDS.df[, part := 1:.N, by=.(gene)]
-  
+
   CDS.df[part != 1, ID   := paste(gene, part, sep='_')]
-  
+
   feature.df <- CDS.df[,c("seqnames", "start", "end", "strand", "type", "gene", 'part', 'ID')]
-  
+
   write.table(feature.df, 'feature.df.tsv', sep = '\t', row.names = F, quote = F)
 } else {
   feature.df <- read.delim('feature.df.tsv')
   feature.colname <- 'ID'
   stopifnot(nrow(feature.df) == luniq(feature.df[,feature.colname]))
-  
+
 }
 
 feature.colname <- 'gene'
@@ -133,16 +133,16 @@ if(add.nc.genes) {
   #feature.nc$gene_name[feature.nc$gene == 'NOIR2'] <- 'NOIR1'
   #feature.nc$gene_name[feature.nc$gene == 'NOIR2-2'] <- 'NOIR2'
   #feature.nc$gene_name[feature.nc$gene == 'NOIR-2'] <- 'NOIR2'
-  
+
   feature.df$gene_name <- feature.df$gene
   feature.df$gene_name <- gsub('_2', '', feature.df$gene_name)
   feature.df <- rbind(feature.df, feature.nc)
-  
+
 } else {
-  
+
   feature.df$gene_name <- feature.df$gene
   feature.df$gene_name <- gsub('_2', '', feature.df$gene_name)
-} 
+}
 
 feature.dt <- data.table(feature.df)
 
@@ -161,7 +161,7 @@ append_cluster <- function(genes, cluster) {
 genes_and_clusters <- gene.clusters.all[, .(CompleteList = append_cluster(gene, gene_cluster)), by = gene_cluster]
 genes_and_clusters[,gene_region := unlist(CompleteList)]
 
-genes_and_clusters <- merge(genes_and_clusters, 
+genes_and_clusters <- merge(genes_and_clusters,
                             unique(gene.clusters.all[,.(gene_cluster, Kinetic_class)]),
                             by='gene_cluster')
 
