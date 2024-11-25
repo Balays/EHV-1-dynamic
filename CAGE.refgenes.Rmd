@@ -960,8 +960,11 @@ trids <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
 trids.gff <- TR.gff[transcript_id %in% trids
                   & type == 'exon', ]
 
+trids.gff[,transcript_id := as.numeric(transcript_id)]
 
 trids.gff[type == 'exon', n_exon := seq_along(exon_number), by=.(seqnames, transcript_id)]
+
+trids.gff <- merge(trids.gff, TR.adapt.filt[,.(sum_count=sum(count)), by=.(transcript_id)], by='transcript_id', all.x=T)
 
 
 trids.spliced <- unique(trids.gff[transcript_id %in% trids
@@ -969,6 +972,10 @@ trids.spliced <- unique(trids.gff[transcript_id %in% trids
                   , transcript_id])
 
 trids.spliced.gff <- trids.gff[transcript_id %in% trids.spliced, ]
+
+
+rtracklayer::export.gff3(trids.spliced.gff, 'TX_spliced.gff3')
+
 
 trids.gff <- trids.gff[transcript_id %in% trids
                   & n_exon == 1
@@ -1114,59 +1121,162 @@ TR.gff.compare.uni.CAGE.ref.counts.melt.hpi.TXnov <- merge(
 tx_uni_trs <- 
   TR.gff.compare.uni.CAGE.ref.counts.melt.hpi.TXnov[,.(sum_count=sum(count)),
         by=.(seqnames, strand, prime3.TR, prime5.TR, transcript_id,
-             CAGE_ID, CAGE_significance, score, support, TX_ID, TX_nov_ID, Ref.prime3.TR, TES,
+             CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, score, support, TX_ID, TX_nov_ID, Ref.prime3.TR, TES,
              cmp_ref, class_code, gene)]
+tx_uni_trs[,CAGE_cluster_width := CAGE.cluster.end - CAGE.cluster.start +1]
+tx_uni_trs[,.N,CAGE_cluster_width][order(CAGE_cluster_width)]
+
 ```
 
 
 ```{r}
 ## find the largest 5-prime count site for each novel TX
 ## because for now, only the CAGE TSS cluster is considered
-
-
 tx_uni_trs_nov <- tx_uni_trs[!is.na(TX_nov_ID)]
-tx_uni_trs_nov[,highest_count := max(sum_count), by=.(TX_nov_ID)]
-
-tx_uni_trs_nov[,peak_5prime   := fifelse(sum_count == highest_count, T, F)]
 
 
-final_tx_nov <- tx_uni_trs_nov[peak_5prime == T, ]
+## AND/OR use mclust to cluster the dcDNA read ends (accross timepoints)
+
+CAGEID <- unique(tx_uni_trs_nov[,CAGE_ID])[2]
+tx_uni_trs_nov_mclust_all <- data.table(NULL)
+
+
+for (CAGEID in unique(tx_uni_trs_nov[,CAGE_ID])) {
+  
+  tx_uni_trs_nov_mclust <- tx_uni_trs_nov[CAGE_ID == CAGEID, .(seqnames, strand, count=sum_count, position=prime5.TR, CAGE_ID, transcript_id)]
+  
+  if (nrow(tx_uni_trs_nov_mclust) > 22) {
+  
+    message('Clustering ', CAGEID, ' with ', nrow(tx_uni_trs_nov_mclust), ' positions...')
+    
+    tx_uni_trs_nov_mclust <- 
+      Mclust_stranded(
+        tx_uni_trs_nov_mclust,
+                      sep_strands = FALSE,
+                      use_weights = TRUE,
+                      include_zeros = FALSE,
+                      plot_results = TRUE,
+                      G = NULL  # Let Mclust decide the optimal number of clusters)
+                      )
+  
+     tx_uni_trs_nov_mclust_all <- rbind(tx_uni_trs_nov_mclust, tx_uni_trs_nov_mclust_all)
+       
+  } else {
+    
+    message('Skipping ', CAGEID, ', as it had only ', nrow(tx_uni_trs_nov_mclust), ' positions.')
+    
+  }
+  
+ 
+}
+
+#####
+CAGEID <- unique(tx_uni_trs_nov[,CAGE_ID])[2]
+tx_uni_trs_nov_customclust_all <- data.table(NULL)
+
+
+for (CAGEID in unique(tx_uni_trs_nov[,CAGE_ID])) {
+  
+  tx_uni_trs_nov_customclust <- tx_uni_trs_nov[CAGE_ID == CAGEID, .(seqnames, strand, count=sum_count, position=prime5.TR, CAGE_ID, transcript_id)]
+  
+  if (nrow(tx_uni_trs_nov_customclust) > 10) {
+  
+    message('Clustering ', CAGEID, ' with ', nrow(tx_uni_trs_nov_customclust), ' positions...')
+    
+    tx_uni_trs_nov_customclust <- 
+      CustomClustering(
+        tx_uni_trs_nov_customclust,
+        max_cluster_size = 25,
+        max_distance_within_cluster = 5,  # Adjust as needed
+        sep_strands = FALSE,
+        include_zeros = FALSE,
+        plot_results = FALSE
+      )
+  
+     tx_uni_trs_nov_customclust_all <- rbind(tx_uni_trs_nov_customclust, tx_uni_trs_nov_customclust_all)
+       
+  } else {
+    
+    message('Skipping ', CAGEID, ', as it had only ', nrow(tx_uni_trs_nov_customclust), ' positions.')
+    
+  }
+  
+ 
+}
+```
+
+
+```{r}
+
+
+## merge it with the 5-prime clustering
+
+final_tx_nov_clust  <- merge(tx_uni_trs_nov, tx_uni_trs_nov_customclust_all, 
+                             by.x=c('seqnames', 'strand', 'sum_count', 'CAGE_ID', 'transcript_id', 'prime5.TR'),
+                             by.y=c('seqnames', 'strand', 'count', 'CAGE_ID', 'transcript_id', 'position')
+                          ) 
+
+## OR
+# final_tx_nov  <- merge(tx_uni_trs_nov, tx_uni_trs_nov_mclust_all[,.()], by=c('seqnames', 'strand', 'position', 'count', 'CAGE_ID', 'transcript_id', 'position'))
+
+## OR:
+# tx_uni_trs_nov[,highest_count := max(sum_count), by=.(TX_nov_ID)]
+# tx_uni_trs_nov[,peak_5prime   := fifelse(sum_count == highest_count, T, F)]
+# final_tx_nov <- tx_uni_trs_nov[peak_5prime == T, ]
+
+## subset to the highest peak
+#final_tx_nov[,peak_5prime   := fifelse(cluster_peak == prime5.TR, T, F)]
+#final_tx_nov <- final_tx_nov[peak_5prime == T, ]
+# final_tx_nov
+
+
+## OR! -->> sum counts again and add final_TX_ID based on the new 5-prime clusters
+
+final_tx_nov_clust[, final_TX_ID := paste0('TX_', .GRP), by=.(seqnames, strand, Ref.prime3.TR, TES, CAGE_ID, TX_nov_ID, cluster_ID, cluster_peak)]
+
+final_tx_nov <- final_tx_nov_clust[,.(sum_count = sum(sum_count), prime5.TR = cluster_peak), 
+                                   by=.(seqnames, strand, Ref.prime3.TR, TES, cmp_ref, class_code, gene,
+                                        TX_nov_ID, CAGE_ID, CAGE_significance, score, support, 
+                                        cluster_ID, final_TX_ID)]
+
+```
+
+
+
+```{r}
+## make gff from them
+final_tx_nov_gff <- final_tx_nov[, .(seqnames, strand, Ref.prime3.TR, prime5.TR, final_TX_ID)]
+
+final_tx_nov_gff[, start := fifelse(strand == '+', prime5.TR, Ref.prime3.TR)]
+final_tx_nov_gff[, end   := fifelse(strand == '+', Ref.prime3.TR, prime5.TR)]
+final_tx_nov_gff[, ':=' (type = 'transcript', source = 'Tombácz_et_al', width = end-start+1, phase=NA, score=NA), ]
+
+
+rtracklayer::export.gff3(as.data.frame(final_tx_nov_gff), 'final_tx_nov.gff3')
+
+
 ```
 
 
 ```{r}
 ## filtering based on CAGE TSS and dcDNA read counts
 
-final_tx_nov_filt <- final_tx_nov[sum_count >= 20 &
+final_tx_nov_filt <- final_tx_nov[sum_count >= 5 &
             support > 2 &
             score > 300 &
             CAGE_significance != '*'
             ]
 
-length(unique(final_tx_nov_filt[,transcript_id]))
+length(unique(final_tx_nov_filt[,final_TX_ID]))
 
+final_tx_nov_filt_gff <- final_tx_nov_gff[final_TX_ID %in% final_tx_nov_filt$final_TX_ID, ]
 
-final_tx_nov_filt[,.N,gene]
-```
-
-
-```{r}
 ## make gff from them
-final_tx_nov_filt_gff <- final_tx_nov_filt[,
-                                           .(seqnames, strand, type = 'transcript', Ref.prime3.TR, prime5.TR, TX_nov_ID)]
-
-final_tx_nov_filt_gff[, start := fifelse(strand == '+', prime5.TR, Ref.prime3.TR)]
-final_tx_nov_filt_gff[, end   := fifelse(strand == '+', Ref.prime3.TR, prime5.TR)]
-final_tx_nov_filt_gff[, ':=' (source = 'Tombácz_et_al', width = end-start+1, phase=NA, score=NA), ]
-
-
 rtracklayer::export.gff3(as.data.frame(final_tx_nov_filt_gff), 'final_tx_nov_filt.gff3')
 
-## make gff from them
-
-#TX_nov <- merge(TX_nov)
-
 ```
+
+
 
 
 ```{r}
