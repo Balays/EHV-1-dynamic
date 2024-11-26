@@ -1,6 +1,6 @@
 ##gff-version 3
 ##source-version rtracklayer 1.58.0
-##date 2024-11-25
+##date 2024-11-26
 NC_001491.2	Tombácz_et_al	transcript	137837	138877	.	+	.	Ref.prime3.TR=138877;prime5.TR=137837;final_TX_ID=TX_1
 NC_001491.2	Tombácz_et_al	transcript	137837	138877	.	+	.	Ref.prime3.TR=138877;prime5.TR=137837;final_TX_ID=TX_1
 NC_001491.2	Tombácz_et_al	transcript	137837	138877	.	+	.	Ref.prime3.TR=138877;prime5.TR=137837;final_TX_ID=TX_1

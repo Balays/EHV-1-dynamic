@@ -57,6 +57,11 @@ library(utils)
 #library(stageR); library(edgeR) ; library(Biobase)
 #library(limma) ; library(DEXSeq)
 
+dontrun <- T
+source('customclust.R')
+source('mclust.R')
+
+
 ###
 viral.ref <- "NC_001491.2.mRNA_corrected.gff3"
 source('_WF.part0.R')
