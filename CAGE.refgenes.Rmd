@@ -751,6 +751,11 @@ TR.gff.compare.uni.CAGE.ref.counts.melt <-
 
 TR.gff.compare.uni.CAGE.ref.counts.melt.hpi <- merge(TR.gff.compare.uni.CAGE.ref.counts.melt, metafilt, by='sample')
 
+
+TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[, prime3.TR := fifelse(strand == '+', TR_end,   TR_start)]
+TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[, prime5.TR := fifelse(strand == '+', TR_start, TR_end)]
+
+
 TR.gff.compare.uni.CAGE.ref.counts.sum      <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[,.(sum_count=sum(count)), 
              by=.(class_code, CAGE_ID, CAGE_significance, correct_tss, correct_tes, support, score, hpi)]
 
@@ -954,12 +959,12 @@ Exclude those transfrags that have more than one exon, for now.
 ```{r}
 trids <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
     #hpi == '12h'
-  class_code %in% c('5`-long', '5`-short')
-  & correct_tss == T
+  class_code != '=' & # %in% c('5`-long', '5`-short') &
+  correct_tss == T
   & !is.na(CAGE_significance)
   #& gene == 'ORF51'
   #& strand == '+',
-         ,transcript_id ]
+         ,  transcript_id]
 
 
 trids.gff <- TR.gff[transcript_id %in% trids
@@ -970,7 +975,7 @@ trids.gff[,transcript_id := as.numeric(transcript_id)]
 trids.gff[type == 'exon', n_exon := seq_along(exon_number), by=.(seqnames, transcript_id)]
 
 trids.gff <- merge(trids.gff, TR.adapt.filt[,.(sum_count=sum(count)), by=.(transcript_id)], by='transcript_id', all.x=T)
-
+trids.gff[,ID := transcript_id]
 
 trids.spliced <- unique(trids.gff[transcript_id %in% trids
                   & n_exon > 1
@@ -1008,9 +1013,6 @@ length(trids.spliced)
 ## to make novel transcripts from these, we cluster the transfrags according to the CAGE clusters.
 ## (we could also find the peaks here using the dcDNA read end counts.)
 
-
-TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[, prime3.TR := fifelse(strand == '+', TR_end,   TR_start)]
-TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[, prime5.TR := fifelse(strand == '+', TR_start, TR_end)]
 
 
 
@@ -1052,6 +1054,9 @@ ref.TESs[,TES := .GRP, prime3.TR]
 ## add windows for merging
 ref.TESs  [,':='(start = prime3.TR-10, end=prime3.TR+10)]
 trids.cage.sum[,':='(start = prime3.TR-10, end=prime3.TR+10)]
+
+
+ref.TESs <- ref.TESs[!TES %in% c(11062, 51693)]
 
 
 foo <- foverlaps2(trids.cage.sum, ref.TESs, by = c('seqnames', 'strand', 'start', 'end'), minoverlap = 1)
@@ -1102,11 +1107,12 @@ tx_uni <- merge(tx_uni,
 tx_uni <- merge(tx_uni,
                 unique(trids.cage[,.(seqnames, strand, transcript_id, prime3.TR, CAGE_ID, TX_ID)]),
                 by.x=c('seqnames', 'strand', 'CAGE_ID', 'TX.prime3.TR', 'TX_ID'),
-                by.y=c('seqnames', 'strand', 'CAGE_ID', 'prime3.TR', 'TX_ID')
-                )
+                by.y=c('seqnames', 'strand', 'CAGE_ID', 'prime3.TR', 'TX_ID'),
+                all=T)
 
 nrow(tx_uni) == length(trids)
 ## OK
+
 ```
 
 
@@ -1120,6 +1126,11 @@ TR.gff.compare.uni.CAGE.ref.counts.melt.hpi.TXnov <- merge(
   all=T
 )
 ## OK
+
+
+
+### Filter for those that have their 3-prime sites in the previous annotation
+##tx_uni <- tx_uni[!is.na(TX_nov_ID),]
 
   
 ## unique this without read counts to get 5-prime sites and other info
@@ -1139,18 +1150,31 @@ tx_uni_trs[,.N,CAGE_cluster_width][order(CAGE_cluster_width)]
 ## because for now, only the CAGE TSS cluster is considered
 tx_uni_trs_nov <- tx_uni_trs[!is.na(TX_nov_ID)]
 
+ggplot(tx_uni_trs_nov, ## [,.N,CAGE_cluster_width]
+       aes(CAGE_cluster_width)) + 
+  geom_density() +
+  theme_bw() +
+  labs(title = 'Density of CAGE TSS Cluster widths')
 
+```
+
+
+```{r, eval=T, echo=FALSE}
 ## AND/OR use mclust to cluster the dcDNA read ends (accross timepoints)
 
 CAGEID <- unique(tx_uni_trs_nov[,CAGE_ID])[2]
+CAGEID <- 'CAGE_cluster_789'
 tx_uni_trs_nov_mclust_all <- data.table(NULL)
 
 
 for (CAGEID in unique(tx_uni_trs_nov[,CAGE_ID])) {
   
-  tx_uni_trs_nov_mclust <- tx_uni_trs_nov[CAGE_ID == CAGEID, .(seqnames, strand, count=sum_count, position=prime5.TR, CAGE_ID, transcript_id)]
+  tx_uni_trs_nov_mclust <- tx_uni_trs_nov[CAGE_ID == CAGEID, .(count=sum(sum_count)), 
+                                          by=.(seqnames, strand, CAGE_ID, prime5.TR)]
   
-  if (nrow(tx_uni_trs_nov_mclust) > 22) {
+  setnames(tx_uni_trs_nov_mclust, 'prime5.TR', 'position')
+  
+  if (nrow(tx_uni_trs_nov_mclust) > 5 ) {
   
     message('Clustering ', CAGEID, ' with ', nrow(tx_uni_trs_nov_mclust), ' positions...')
     
@@ -1160,7 +1184,7 @@ for (CAGEID in unique(tx_uni_trs_nov[,CAGE_ID])) {
                       sep_strands = FALSE,
                       use_weights = TRUE,
                       include_zeros = FALSE,
-                      plot_results = TRUE,
+                      plot_results = F,
                       G = NULL  # Let Mclust decide the optimal number of clusters)
                       )
   
@@ -1175,16 +1199,41 @@ for (CAGEID in unique(tx_uni_trs_nov[,CAGE_ID])) {
  
 }
 
-#####
-CAGEID <- unique(tx_uni_trs_nov[,CAGE_ID])[2]
+ggplot(tx_uni_trs_nov_mclust_all, ## [,.N,CAGE_cluster_width]
+       aes(cluster_width)) + 
+  geom_density() +
+  theme_bw() +
+  labs(title = 'Density of CAGE TSS Cluster widths')
+
+
+ggplot(tx_uni_trs_nov_mclust_all[,.N,cluster_width],
+       aes(cluster_width, N)) + 
+  geom_col() +
+  scale_x_continuous(breaks = c(0,1,2,5,10,15,20,30,50)) +
+  xlim(c(0,100)) +
+  theme_bw() +
+  labs(title = 'Density of Novel CAGE TSS Cluster widths')
+
+tx_uni_trs_nov_mclust_all[,.N,cluster_width][order(cluster_width)]
+
+```
+
+
+```{r}
+#### Use custom clustering function
+CAGEID <- unique(tx_uni_trs_nov[,CAGE_ID])[]
 tx_uni_trs_nov_customclust_all <- data.table(NULL)
 
 
 for (CAGEID in unique(tx_uni_trs_nov[,CAGE_ID])) {
   
-  tx_uni_trs_nov_customclust <- tx_uni_trs_nov[CAGE_ID == CAGEID, .(seqnames, strand, count=sum_count, position=prime5.TR, CAGE_ID, transcript_id)]
+  tx_uni_trs_nov_customclust <- tx_uni_trs_nov[CAGE_ID == CAGEID, .(count=sum(sum_count)), 
+                                          by=.(seqnames, strand, CAGE_ID, prime5.TR)]
   
-  if (nrow(tx_uni_trs_nov_customclust) > 10) {
+  setnames(tx_uni_trs_nov_customclust, 'prime5.TR', 'position')
+
+  
+  if (nrow(tx_uni_trs_nov_customclust) > 5) {
   
     message('Clustering ', CAGEID, ' with ', nrow(tx_uni_trs_nov_customclust), ' positions...')
     
@@ -1193,9 +1242,9 @@ for (CAGEID in unique(tx_uni_trs_nov[,CAGE_ID])) {
         tx_uni_trs_nov_customclust,
         max_cluster_size = 25,
         max_distance_within_cluster = 5,  # Adjust as needed
-        sep_strands = FALSE,
+        sep_strands   = FALSE,
         include_zeros = FALSE,
-        plot_results = FALSE
+        plot_results  = FALSE
       )
   
      tx_uni_trs_nov_customclust_all <- rbind(tx_uni_trs_nov_customclust, tx_uni_trs_nov_customclust_all)
@@ -1208,7 +1257,60 @@ for (CAGEID in unique(tx_uni_trs_nov[,CAGE_ID])) {
   
  
 }
+
+
+c(tx_uni_trs_nov_customclust_all[CAGE_ID == 'CAGE_cluster_1897', min(cluster_start)],
+  tx_uni_trs_nov_customclust_all[CAGE_ID == 'CAGE_cluster_1897', max(cluster_end)])
+
+c(tx_uni_trs_nov[CAGE_ID == 'CAGE_cluster_1897', min(CAGE.cluster.start)],
+  tx_uni_trs_nov[CAGE_ID == 'CAGE_cluster_1897', max(CAGE.cluster.end)])
+
+
+ggplot(tx_uni_trs_nov_customclust_all, ## [,.N,CAGE_cluster_width]
+       aes(cluster_width)) + 
+  geom_density() +
+  theme_bw() +
+  labs(title = 'Density of CAGE TSS Cluster widths')
+
+
+ggplot(tx_uni_trs_nov_customclust_all[,.N,cluster_width],
+       aes(cluster_width, N)) + 
+  geom_col() +
+  scale_x_continuous(breaks = c(0,1,2,5,10,15,20,30,50)) +
+  theme_bw() +
+  labs(title = 'Density of Novel CAGE TSS Cluster widths')
+
+tx_uni_trs_nov_customclust_all[,.N,cluster_width][order(cluster_width)]
 ```
+
+
+```{r}
+
+## cluster all 5-prime ends
+
+tx_uni_trs_nov_customclust_dcDNA <- 
+      CustomClustering(
+        tx_uni_trs_nov[, 
+                       .(seqnames, strand, count=sum_count, position=prime5.TR, CAGE_ID, transcript_id)],
+        max_cluster_size = 25,
+        max_distance_within_cluster = 5,  # Adjust as needed
+        sep_strands   = FALSE,
+        include_zeros = FALSE,
+        plot_results  = FALSE
+      )
+  
+
+ggplot(tx_uni_trs_nov_customclust_dcDNA[,.N,cluster_width],
+       aes(cluster_width, N)) + 
+  geom_col() +
+  scale_x_continuous(breaks = c(0,1,2,5,10,15,20,30,50)) +
+  theme_bw() +
+  labs(title = 'Density of dcDNA TSS Cluster widths')
+
+tx_uni_trs_nov_customclust_dcDNA[,.N,cluster_width][order(cluster_width)]
+
+```
+
 
 
 ```{r}
@@ -1216,10 +1318,13 @@ for (CAGEID in unique(tx_uni_trs_nov[,CAGE_ID])) {
 
 ## merge it with the 5-prime clustering
 
-final_tx_nov_clust  <- merge(tx_uni_trs_nov, tx_uni_trs_nov_customclust_all, 
-                             by.x=c('seqnames', 'strand', 'sum_count', 'CAGE_ID', 'transcript_id', 'prime5.TR'),
-                             by.y=c('seqnames', 'strand', 'count', 'CAGE_ID', 'transcript_id', 'position')
+final_tx_nov_clust  <- merge(tx_uni_trs_nov, tx_uni_trs_nov_customclust_all, ## OR: tx_uni_trs_nov_mclust_all
+                             by.x=c('seqnames', 'strand', 'sum_count', 'CAGE_ID', 'prime5.TR'),
+                             by.y=c('seqnames', 'strand', 'count', 'CAGE_ID', 'position')
                           ) 
+
+## OR with
+#tx_uni_trs_nov_customclust_dcDNA
 
 ## OR
 # final_tx_nov  <- merge(tx_uni_trs_nov, tx_uni_trs_nov_mclust_all[,.()], by=c('seqnames', 'strand', 'position', 'count', 'CAGE_ID', 'transcript_id', 'position'))
@@ -1235,22 +1340,34 @@ final_tx_nov_clust  <- merge(tx_uni_trs_nov, tx_uni_trs_nov_customclust_all,
 # final_tx_nov
 
 
-## OR! -->> sum counts again and add final_TX_ID based on the new 5-prime clusters
+## sum counts again and add final_TX_ID based on the new 5-prime clusters
 
-final_tx_nov_clust[, final_TX_ID := paste0('TX_', .GRP), by=.(seqnames, strand, Ref.prime3.TR, TES, CAGE_ID, TX_nov_ID, cluster_ID, cluster_peak)]
+final_tx_nov_clust[, final_TX_ID := .GRP, 
+                   by=.(seqnames, strand, Ref.prime3.TR, TES, CAGE_ID, TX_nov_ID, cluster_ID, cluster_peak)]
 
+## these contain the novel TX IDs and clusters with the original TransFrags and class_code
 final_tx_nov <- final_tx_nov_clust[,.(sum_count = sum(sum_count), prime5.TR = cluster_peak), 
                                    by=.(seqnames, strand, Ref.prime3.TR, TES, cmp_ref, class_code, gene,
                                         TX_nov_ID, CAGE_ID, CAGE_significance, score, support, 
-                                        cluster_ID, final_TX_ID)]
+                                        cluster_ID, cluster_width, final_TX_ID)]
+
+final_tx_nov[,.(sum_class_count = sum(sum_count)), by=.(class_code)]
+
+
+## this is the novel transcripts based on the the novel TX IDs
+final_tx_nov_clust <- unique(final_tx_nov_clust[,.(sum_count = sum(sum_count), prime5.TR = cluster_peak), 
+                                   by=.(seqnames, strand, Ref.prime3.TR, TES, 
+                                        TX_nov_ID, CAGE_ID, CAGE_significance, score, support, 
+                                        cluster_ID, cluster_width, final_TX_ID)])
+
 
 ```
 
 
 
 ```{r}
-## make gff from them
-final_tx_nov_gff <- final_tx_nov[, .(seqnames, strand, Ref.prime3.TR, prime5.TR, final_TX_ID)]
+## make gff from the Novel Transcripts
+final_tx_nov_gff <- final_tx_nov_clust[, .(seqnames, strand, Ref.prime3.TR, prime5.TR, final_TX_ID)]
 
 final_tx_nov_gff[, start := fifelse(strand == '+', prime5.TR, Ref.prime3.TR)]
 final_tx_nov_gff[, end   := fifelse(strand == '+', Ref.prime3.TR, prime5.TR)]
@@ -1266,7 +1383,7 @@ rtracklayer::export.gff3(as.data.frame(final_tx_nov_gff), 'final_tx_nov.gff3')
 ```{r}
 ## filtering based on CAGE TSS and dcDNA read counts
 
-final_tx_nov_filt <- final_tx_nov[sum_count >= 5 &
+final_tx_nov_filt <- final_tx_nov_clust[sum_count >= 5 &
             support > 2 &
             score > 300 &
             CAGE_significance != '*'
@@ -1279,7 +1396,361 @@ final_tx_nov_filt_gff <- final_tx_nov_gff[final_TX_ID %in% final_tx_nov_filt$fin
 ## make gff from them
 rtracklayer::export.gff3(as.data.frame(final_tx_nov_filt_gff), 'final_tx_nov_filt.gff3')
 
+
 ```
+END
+
+## Spliced reads to transcripts
+```{r}
+
+## 1.) compare to CAGE TSS
+
+## 2.) compare to ref TES
+trids.spliced.gff
+trids.spliced
+## 3.) compare to ref introns
+
+
+```
+
+
+```{r}
+## 1.)
+trids.cage <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
+  transcript_id %in% trids.spliced
+  #& !is.na(CAGE_significance), 
+  , .(sum_count=sum(count)), 
+         by=.(seqnames, strand, transcript_id, prime3.TR, prime5.TR, 
+              CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+
+## assign novel TX_ID, which is the same as transcript_id, as we dont want to cluster the spliced reads
+trids.cage[,TX_ID := transcript_id]
+
+
+## summed read counts for each such CAGE TSS cluster AND read 3-prime end
+## -->> the same as count
+trids.cage.sum <- trids.cage[
+  #transcript_id %in% trids
+  #& !is.na(CAGE_significance), 
+  , .(sum_count=sum(sum_count)), 
+         by=.(seqnames, strand, TX_ID, prime3.TR, 
+              CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+
+
+
+## we have to merge with the reference annotations 3-prime ends
+viral.mrna[, prime3.TR := fifelse(strand == '+', transcript_end,   transcript_start )]
+viral.mrna[, prime5.TR := fifelse(strand == '-', transcript_end,   transcript_start )]
+
+## unique 3-primes with genes
+ref.trs  <- unique(viral.mrna[type == 'transcript', .(seqnames, strand, transcript_id, prime3.TR, prime5.TR, gene_id)])
+ref.TESs <- unique(ref.trs[,.(seqnames, strand, prime3.TR, gene_id)])
+#ref.TESs[,gene_nr := seq_along(gene_id), by=.(seqnames, strand, prime3.TR)]
+ref.TESs[,genes   := paste0(gene_id, collapse = ';'), by=.(seqnames, strand, prime3.TR)]
+ref.TESs <- unique(ref.TESs[,.(seqnames, strand, prime3.TR, genes)])
+ref.TESs[,TES := .GRP, prime3.TR]
+
+
+## add windows for merging
+ref.TESs  [,':='(start = prime3.TR-10, end=prime3.TR+10)]
+trids.cage.sum[,':='(start = prime3.TR-10, end=prime3.TR+10)]
+
+## van egy két TES, ami túl közel van a szomszédjához -->> hiba az annotációban
+ref.TESs <- ref.TESs[!TES %in% c(11062, 51693)]
+
+
+foo <- foverlaps2(trids.cage.sum, ref.TESs, by = c('seqnames', 'strand', 'start', 'end'), minoverlap = 1)
+
+setnames(foo, c('i.start', 'i.end', 'i.prime3.TR', 'start', 'end', 'prime3.TR'), c('TX.prime3.win.start', 'TX.prime3.win.end', 'TX.prime3.TR', 'Ref.prime3.win.start', 'Ref.prime3.win.end', 'Ref.prime3.TR'))
+
+## calculate distance between novel TXs and Ref TRs
+foo[,prime3.dist := fifelse(strand == '+', TX.prime3.TR-Ref.prime3.TR, Ref.prime3.TR-TX.prime3.TR)]
+## negative distance is when the novel TX is shorter
+
+## find minimum absolute distance for each prime3 in each CAGE cluster
+foo[,min.prime3.dist := min(abs(prime3.dist)), by=.(CAGE_ID, TX.prime3.TR)]
+
+## subset for these
+foo.filt <- foo[abs(prime3.dist) == min.prime3.dist, ]
+
+## ezeknél ugyanakkora a distance, szerintem ez hiba a ref annotációban
+dup(foo.filt$TX_ID)
+
+foo.filt <- foo.filt[!duplicated(TX_ID), ]
+```
+
+
+```{r}
+### merge spliced transcripts back with exon/intron data
+
+TX_nov <- foo.filt[,.(sum_TX_count=sum(sum_count)), 
+                   by=.(seqnames, strand, TX_ID, Ref.prime3.TR, TES, 
+                        CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+
+
+TX_nov <- merge(TX_nov, trids.spliced.gff[type== 'exon', .(seqnames, strand, transcript_id, start, end, exon_number, n_exon)], 
+                by.x=c('seqnames', 'strand', 'TX_ID'), by.y = c('seqnames', 'strand', 'transcript_id'), all.x=T)
+
+# exon numbers
+TX_nov[, exon_number := length(unique(start)), by=.(seqnames, strand, TX_ID)]
+TX_nov[, n_exon      := seq_along(exon_number), by=.(seqnames, TX_ID)]
+TX_nov[, exon_number := as.integer(exon_number)]
+
+# Calculate intron start and end
+TX_nov[, intron_start := c(NA, head(end, -1) + 1), by=TX_ID]
+TX_nov[, intron_end   := start - 1]
+   
+## intron donor and acceptor
+#TX_nov[, intron_donor    := fifelse(strand == '+', intron_start, intron_end)]
+#TX_nov[, intron_acceptor := fifelse(strand == '+', intron_end,   intron_start)]
+
+# intron numbers
+TX_nov[, intron_number := n_exon -1]
+TX_nov[, n_intron      := exon_number -1]
+
+
+### for reference also
+viral.mrna[, exon_number := length(unique(start)), by=.(seqnames, strand, transcript_id)]
+viral.mrna[type == 'exon', n_exon := seq_along(exon_number), by=.(seqnames, transcript_id)]
+viral.mrna[, exon_number := as.integer(exon_number)]
+
+viral.ex <- viral.mrna[type == 'exon', .(seqnames, strand, transcript_id, start, end, exon_number, n_exon)]
+
+# Calculate intron start and end
+viral.ex[, intron_start := c(NA, head(end, -1) + 1), by=transcript_id]
+viral.ex[, intron_end   := start - 1]
+   
+## intron donor and acceptor
+#viral.ex[, intron_donor    := fifelse(strand == '+', intron_start, intron_end)]
+#viral.ex[, intron_acceptor := fifelse(strand == '+', intron_end,   intron_start)]
+
+# intron numbers
+viral.ex[, intron_number := n_exon -1]
+viral.ex[, n_intron      := exon_number -1]
+
+
+ref.introns <- unique(viral.ex[, .(seqnames, strand, intron_start, intron_end)]) ## intron_donor, intron_acceptor
+ref.introns <- ref.introns[complete.cases(ref.introns)]
+ref.introns[,intron_ID := paste0('intron_', seq_along(1:nrow(ref.introns)))]
+
+## or from pre-filt LoRTIA
+lortia <- as.data.table(as.data.frame(rtracklayer::import.gff('EHV_dRNA_minion_20210129_pass_mapped_intron.gff3')))
+
+
+### merge together (nucleotide-precision)
+TX_nov <- merge(TX_nov, ref.introns, by = c('seqnames', 'strand', 'intron_start', 'intron_end'), all.x=T) ## , 'intron_donor', 'intron_acceptor'
+
+TX_nov[,ref.intron_nr := sum(!is.na(intron_ID)), by=TX_ID]
+
+## intron composition
+TX_nov[,intron_composition := paste(na.omit(intron_ID), collapse='::'), by=TX_ID]
+#TX_nov_splice_clust <- dcast(TX_nov_splice, seqnames + strand + TX_ID + sum_TX_count + exon_number ~ n_exon, value.var = 'intron_ID')
+```
+
+
+```{r}
+### compare with the TSSs from the previous analyis
+TX_nov[,TSS := fifelse(strand == '+', min(start), max(end)), by=TX_ID]
+
+TX_nov_TSS <- unique(TX_nov[,.(seqnames, strand, TX_ID, TSS, TES)])
+
+TX_nov_TSS[,start := TSS][, end := TSS]
+
+TSSs <- unique(final_tx_nov_clust[,.(seqnames, strand, TSS = prime5.TR)])
+TSSs[,start := TSS - 10][, end := TSS + 10]
+
+
+TX_nov_TSS_fo <- foverlaps2(TX_nov_TSS, TSSs, by=c('seqnames', 'strand', 'start', 'end'), minoverlap = 1)
+
+setnames(TX_nov_TSS_fo, c('i.TSS', 'TSS'), c('TSS', 'Ref.TSS'))
+
+
+
+## find the closeest
+TX_nov_TSS_fo[,TSS_dist := abs(Ref.TSS - TSS)]
+TX_nov_TSS_fo[,closest.TSS := min(TSS_dist), by=TX_ID]
+TX_nov_TSS_fo <- TX_nov_TSS_fo[closest.TSS == TSS_dist]
+
+
+TX_nov_TSS <- merge(TX_nov, 
+                    TX_nov_TSS_fo[,.(seqnames, strand, TX_ID, TES, TSS, Ref.TSS)],
+                    by=c('seqnames', 'strand', 'TX_ID', 'TES', 'TSS'), all.x=T)
+```
+
+
+```{r, eval=F}
+## make transcritps from these
+TX_nov_splice_clust <- unique(TX_nov_splice[!is.na(intron_ID), .(seqnames, strand, TX_ID, sum_TX_count, intron_composition, intron_ID, intron_number, n_intron)])
+
+
+TX_nov_splice_clust <- merge(TX_nov_splice_clust, ref.introns, by=c('seqnames', 'strand', 'intron_ID'), all.x=T)
+
+
+TX_nov_splice_clust <- merge(TX_nov_splice_clust,
+                             unique(TX_nov_splice[, .(seqnames, strand, TX_ID, start, end, exon_number, n_exon, intron_number)]),
+                             by=c('seqnames', 'strand', 'TX_ID', 'intron_number'),
+                             all=T)
+
+TX_nov_splice_clust <- merge(TX_nov_splice_clust,
+                             unique(TX_nov_splice[, .(seqnames, strand, TX_ID, Ref.TSS, CAGE_ID, Ref.prime3.TR, TES)]),
+                             by=c('seqnames', 'strand', 'TX_ID'),
+                             all.x=T)
+```
+
+
+```{r}
+### Filtering and Refine TSSs
+TX_nov_splice <- TX_nov_TSS
+
+## overweite TSS to ref TSS
+TX_nov_splice[,start := fifelse(strand == '+' & n_exon == 1, Ref.TSS, start), by=TX_ID]
+TX_nov_splice[,end   := fifelse(strand == '-' & exon_number == n_exon, Ref.TSS, end), by=TX_ID]
+
+
+## overweite TES to ref TES
+TX_nov_splice[,end    := fifelse(strand == '+' & exon_number == n_exon, Ref.prime3.TR, end), by=TX_ID]
+TX_nov_splice[,start  := fifelse(strand == '-' & n_exon == 1, Ref.prime3.TR, start), by=TX_ID]
+
+
+## filter for those that had no TSS
+TX_nov_splice <- TX_nov_splice[!is.na(Ref.TSS), ]
+```
+
+
+```{r}
+## filter for those that had no ref introns
+TX_nov_splice_filt <- TX_nov_splice[ref.intron_nr == n_intron & intron_composition != '', ]
+
+
+### ID based on Ref.TSS, intron composition and Ref.TES
+TX_nov_splice_filt[,TX_nov_ID := .GRP, by=.(seqnames, strand, CAGE_ID, Ref.TSS, intron_composition, Ref.prime3.TR, TES)]
+TX_nov_splice_filt[,sum_TX_count := sum(sum_TX_count), by=TX_nov_ID]
+
+```
+
+
+```{r}
+TX_nov_splice_clust <- unique(TX_nov_splice_filt[,.(seqnames, strand, TX_nov_ID, start, end, Ref.TSS, Ref.prime3.TR, TES, CAGE_ID, intron_composition, sum_TX_count)])
+
+TX_nov_splice_clust[,.N,sum_TX_count][order(sum_TX_count)]
+ggplot(TX_nov_splice_clust) + 
+  geom_density(aes(sum_TX_count))
+
+```
+
+
+```{r}
+
+## filter
+TX_nov_splice_clust_filt <- TX_nov_splice_clust[sum_TX_count >= 5]
+
+```
+
+
+
+```{r}
+## make gff from the Novel Spliced Transcripts
+final_tx_nov_splice_gff_ex <- unique(TX_nov_splice_clust_filt[, .(seqnames, strand, type='exon', 
+                                                        Parent = TX_nov_ID, 
+                                                        ID = TX_nov_ID, 
+                                                        transcript_id = TX_nov_ID, 
+                                                        start, end, Ref.TSS, Ref.prime3.TR, TES, CAGE_ID, TX_nov_ID, score=sum_TX_count, intron_composition)])
+
+final_tx_nov_splice_gff_tr <- unique(TX_nov_splice_clust_filt[, .(seqnames, strand, type='transcript', 
+                                                        ID = TX_nov_ID, 
+                                                        transcript_id = TX_nov_ID, 
+                                                        start = min(start), end=max(end), Ref.TSS, Ref.prime3.TR, TES, CAGE_ID, score=sum_TX_count, intron_composition), by=TX_nov_ID])
+
+final_tx_nov_splice_gff <- rbind(final_tx_nov_splice_gff_ex, 
+                                 final_tx_nov_splice_gff_tr,
+                                 fill=TRUE)
+
+
+final_tx_nov_splice_gff[, ':=' (source = 'Tombácz_et_al', phase=NA), ]
+
+
+rtracklayer::export.gff3(as.data.frame(final_tx_nov_splice_gff), 'final_tx_nov_splice.gff3')
+
+
+```
+
+
+### Novel splices
+```{r}
+## filter for those that had no ref introns
+TX_nov_splice_filt <- TX_nov_splice[intron_composition == '', ]
+
+## novel intron ids
+TX_nov_introns <- unique(TX_nov_splice_filt[,.(seqnames, strand, intron_start, intron_end)])[complete.cases(intron_start)]
+TX_nov_introns[,nov.intron_ID := paste0('intron_', seq(1, nrow(TX_nov_introns)))]
+
+TX_nov_splice_filt <- merge(TX_nov_splice_filt, TX_nov_introns, by=c('seqnames', 'strand', 'intron_start', 'intron_end'), all.x=T)
+TX_nov_splice_filt[,intron_composition := paste(na.omit(nov.intron_ID), collapse = ';'), by=TX_ID]
+
+### ID based on Ref.TSS, intron composition and Ref.TES
+TX_nov_splice_filt[,TX_nov_ID := .GRP, by=.(seqnames, strand, CAGE_ID, Ref.TSS, intron_composition, Ref.prime3.TR, TES)]
+TX_nov_splice_filt[,sum_TX_count := sum(sum_TX_count), by=TX_nov_ID]
+
+```
+
+
+```{r}
+TX_nov_splice_clust <- unique(TX_nov_splice_filt[,.(seqnames, strand, TX_nov_ID, start, end, Ref.TSS, Ref.prime3.TR, TES, CAGE_ID, intron_composition, sum_TX_count)])
+
+TX_nov_splice_clust[,.N,sum_TX_count][order(sum_TX_count)]
+ggplot(TX_nov_splice_clust) + 
+  geom_density(aes(sum_TX_count))
+
+
+```
+
+
+```{r}
+
+## filter
+TX_nov_splice_clust_filt <- TX_nov_splice_clust[sum_TX_count >= 3]
+
+```
+
+
+
+```{r}
+## make gff from the Novel Spliced Transcripts
+final_tx_nov_splice_gff_ex <- unique(TX_nov_splice_clust_filt[, .(seqnames, strand, type='exon', 
+                                                        Parent = TX_nov_ID, 
+                                                        ID = TX_nov_ID, 
+                                                        transcript_id = TX_nov_ID, 
+                                                        start, end, Ref.TSS, Ref.prime3.TR, TES, CAGE_ID, TX_nov_ID, score=sum_TX_count, intron_composition)])
+
+final_tx_nov_splice_gff_tr <- unique(TX_nov_splice_clust_filt[, .(seqnames, strand, type='transcript', 
+                                                        ID = TX_nov_ID, 
+                                                        transcript_id = TX_nov_ID, 
+                                                        start = min(start), end=max(end), Ref.TSS, Ref.prime3.TR, TES, CAGE_ID, score=sum_TX_count, intron_composition), by=TX_nov_ID])
+
+final_tx_nov_splice_gff <- rbind(final_tx_nov_splice_gff_ex, 
+                                 final_tx_nov_splice_gff_tr,
+                                 fill=TRUE)
+
+
+final_tx_nov_splice_gff[, ':=' (source = 'Tombácz_et_al', phase=NA), ]
+
+
+rtracklayer::export.gff3(as.data.frame(final_tx_nov_splice_gff), 'final_tx_nov_splice_nov.gff3')
+
+
+```
+
+
+
+```{r}
+TR.adapt.count[,.N,sample]
+```
+
+
+
+
+
+#### 
 
 
 

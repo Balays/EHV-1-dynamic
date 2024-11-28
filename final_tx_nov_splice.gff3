@@ -1,0 +1,24 @@
+##gff-version 3
+##source-version rtracklayer 1.58.0
+##date 2024-11-28
+NC_001491.2	Tombácz_et_al	exon	121002	121105	7604	+	.	Parent=1;ID=1;transcript_id=1;Ref.TSS=121002;Ref.prime3.TR=122451;TES=78;CAGE_ID=CAGE_cluster_849;TX_nov_ID=1;intron_composition=intron_27
+NC_001491.2	Tombácz_et_al	exon	121287	122451	7604	+	.	Parent=1;ID=1;transcript_id=1;Ref.TSS=121002;Ref.prime3.TR=122451;TES=78;CAGE_ID=CAGE_cluster_849;TX_nov_ID=1;intron_composition=intron_27
+NC_001491.2	Tombácz_et_al	exon	118879	119224	54	+	.	Parent=2;ID=2;transcript_id=2;Ref.TSS=118879;Ref.prime3.TR=119857;TES=79;CAGE_ID=CAGE_cluster_835;TX_nov_ID=2;intron_composition=intron_25
+NC_001491.2	Tombácz_et_al	exon	119461	119857	54	+	.	Parent=2;ID=2;transcript_id=2;Ref.TSS=118879;Ref.prime3.TR=119857;TES=79;CAGE_ID=CAGE_cluster_835;TX_nov_ID=2;intron_composition=intron_25
+NC_001491.2	Tombácz_et_al	exon	118879	119136	88	+	.	Parent=3;ID=3;transcript_id=3;Ref.TSS=118879;Ref.prime3.TR=119857;TES=79;CAGE_ID=CAGE_cluster_835;TX_nov_ID=3;intron_composition=intron_26
+NC_001491.2	Tombácz_et_al	exon	119461	119857	88	+	.	Parent=3;ID=3;transcript_id=3;Ref.TSS=118879;Ref.prime3.TR=119857;TES=79;CAGE_ID=CAGE_cluster_835;TX_nov_ID=3;intron_composition=intron_26
+NC_001491.2	Tombácz_et_al	exon	121002	121068	22	+	.	Parent=4;ID=4;transcript_id=4;Ref.TSS=121002;Ref.prime3.TR=122451;TES=78;CAGE_ID=CAGE_cluster_849;TX_nov_ID=4;intron_composition=intron_29
+NC_001491.2	Tombácz_et_al	exon	121287	122451	22	+	.	Parent=4;ID=4;transcript_id=4;Ref.TSS=121002;Ref.prime3.TR=122451;TES=78;CAGE_ID=CAGE_cluster_849;TX_nov_ID=4;intron_composition=intron_29
+NC_001491.2	Tombácz_et_al	exon	118879	119136	18	+	.	Parent=6;ID=6;transcript_id=6;Ref.TSS=118879;Ref.prime3.TR=119749;TES=80;CAGE_ID=CAGE_cluster_835;TX_nov_ID=6;intron_composition=intron_26
+NC_001491.2	Tombácz_et_al	exon	119461	119749	18	+	.	Parent=6;ID=6;transcript_id=6;Ref.TSS=118879;Ref.prime3.TR=119749;TES=80;CAGE_ID=CAGE_cluster_835;TX_nov_ID=6;intron_composition=intron_26
+NC_001491.2	Tombácz_et_al	exon	104338	104390	6	+	.	Parent=7;ID=7;transcript_id=7;Ref.TSS=104338;Ref.prime3.TR=105836;TES=72;CAGE_ID=CAGE_cluster_785;TX_nov_ID=7;intron_composition=intron_21
+NC_001491.2	Tombácz_et_al	exon	105514	105836	6	+	.	Parent=7;ID=7;transcript_id=7;Ref.TSS=104338;Ref.prime3.TR=105836;TES=72;CAGE_ID=CAGE_cluster_785;TX_nov_ID=7;intron_composition=intron_21
+NC_001491.2	Tombácz_et_al	exon	121002	121108	6	+	.	Parent=10;ID=10;transcript_id=10;Ref.TSS=121002;Ref.prime3.TR=122451;TES=78;CAGE_ID=CAGE_cluster_849;TX_nov_ID=10;intron_composition=intron_28
+NC_001491.2	Tombácz_et_al	exon	121287	122451	6	+	.	Parent=10;ID=10;transcript_id=10;Ref.TSS=121002;Ref.prime3.TR=122451;TES=78;CAGE_ID=CAGE_cluster_849;TX_nov_ID=10;intron_composition=intron_28
+NC_001491.2	Tombácz_et_al	transcript	121002	122451	7604	+	.	ID=1;transcript_id=1;Ref.TSS=121002;Ref.prime3.TR=122451;TES=78;CAGE_ID=CAGE_cluster_849;TX_nov_ID=1;intron_composition=intron_27
+NC_001491.2	Tombácz_et_al	transcript	118879	119857	54	+	.	ID=2;transcript_id=2;Ref.TSS=118879;Ref.prime3.TR=119857;TES=79;CAGE_ID=CAGE_cluster_835;TX_nov_ID=2;intron_composition=intron_25
+NC_001491.2	Tombácz_et_al	transcript	118879	119857	88	+	.	ID=3;transcript_id=3;Ref.TSS=118879;Ref.prime3.TR=119857;TES=79;CAGE_ID=CAGE_cluster_835;TX_nov_ID=3;intron_composition=intron_26
+NC_001491.2	Tombácz_et_al	transcript	121002	122451	22	+	.	ID=4;transcript_id=4;Ref.TSS=121002;Ref.prime3.TR=122451;TES=78;CAGE_ID=CAGE_cluster_849;TX_nov_ID=4;intron_composition=intron_29
+NC_001491.2	Tombácz_et_al	transcript	118879	119749	18	+	.	ID=6;transcript_id=6;Ref.TSS=118879;Ref.prime3.TR=119749;TES=80;CAGE_ID=CAGE_cluster_835;TX_nov_ID=6;intron_composition=intron_26
+NC_001491.2	Tombácz_et_al	transcript	104338	105836	6	+	.	ID=7;transcript_id=7;Ref.TSS=104338;Ref.prime3.TR=105836;TES=72;CAGE_ID=CAGE_cluster_785;TX_nov_ID=7;intron_composition=intron_21
+NC_001491.2	Tombácz_et_al	transcript	121002	122451	6	+	.	ID=10;transcript_id=10;Ref.TSS=121002;Ref.prime3.TR=122451;TES=78;CAGE_ID=CAGE_cluster_849;TX_nov_ID=10;intron_composition=intron_28

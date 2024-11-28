@@ -1,7 +1,7 @@
 # RStudio project files
 .Rproj.user/
 .Rhistory
-.RData
+.RData/
 .Rproj
 
 # R environment
