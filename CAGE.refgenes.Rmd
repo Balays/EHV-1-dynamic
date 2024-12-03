@@ -1396,6 +1396,8 @@ final_tx_nov_filt_gff <- final_tx_nov_gff[final_TX_ID %in% final_tx_nov_filt$fin
 ## make gff from them
 rtracklayer::export.gff3(as.data.frame(final_tx_nov_filt_gff), 'final_tx_nov_filt.gff3')
 
+final_tx_nov_filt_gff <- as.data.table(as.data.frame(rtracklayer::import.gff3('final_tx_nov_filt.gff3')))
+
 
 ```
 ### END
