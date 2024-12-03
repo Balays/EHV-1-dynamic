@@ -816,7 +816,7 @@ gene.sizes <- data.frame(gene_arrowhead_height=8,
                          gene_label_height=4,   ## size of gene label text
                          gene_feature_height=5, ## lineheight of feature line
                          gene_feature_width=5,
-                         gene_feature_label_height=1.5, ## position of gene label text
+                         gene_feature_label_height=4, ## position of gene label text
                          gene_feature_label_text=-2, ## inactive
                          unstranded_rect_height=0.5,
                          unstranded_feature_height=6,
@@ -851,7 +851,7 @@ breakseq <- 2000
 width <- 35; height <- 14
 
 
-ylims.gene <- c(10, -5) ## NULL
+ylims.gene <- c(-2, 5) ## NULL
 
 gene_to_plot <- 'NOIR'
 
@@ -881,8 +881,10 @@ ann.plotfun <- function(gene_to_plot=NULL, plot.data=plot.data,
              
              gene_name_col = 'gene_name', 
              gene.label=T, add.unstranded=T, add.feature=T, 
-             #gene.feature.width.thresh=700, flip.gene.y=T, force.gene.y=T,
-             #force.one.lab.per.gene=T, force.all.gene.up.and.down=T,
+             #gene.feature.width.thresh=700, flip.gene.y=T, 
+             force.gene.y=T,
+             #force.one.lab.per.gene=T, 
+             force.all.gene.up.and.down=T,
              force.all.gene.down=F, angle=angle, 
              
              transcript.sizes=transcript.sizes, tr.size.multip = 0.75,
@@ -1128,6 +1130,7 @@ mapfun <- function(gene_to_plot=NULL,  DT=orf.sum.perc, TRs_to_plot=NULL, recalc
 
 gene_to_plot <- 'ORF38'
 
+
 Fig.test <- cowplot::plot_grid(
   mapfun(gene_to_plot=gene_to_plot,  orf.sum.perc, 
        TR.annot.data = TR.merged.data.gene,
@@ -1192,11 +1195,16 @@ TRs_to_plot <- TR.merged.data.gene[,.(seqnames, start, end, Ref_Class)]
 TRs_to_plot <- genome_join(TRs_to_plot, data.frame(seqnames=genome, start=visfrom, end=visto))
 TRs_to_plot <- unique(TRs_to_plot$Ref_Class)
 
+vis_win <- 1500
+visfrom <- min(TR.merged.data.gene[gene == gene_to_plot & strand == '+', start]) - vis_win*2
+visto   <- max(TR.merged.data.gene[gene == gene_to_plot & strand == '+', end  ]) + vis_win
+
+
 Fig.test <- cowplot::plot_grid(
   mapfun(gene_to_plot=NULL,  orf.sum.perc, TRs_to_plot=TRs_to_plot, 
        TR.annot.data = TR.merged.data.gene,
        strand_to_plot = '+',
-       recalc=F,  use_gene_norm_count=F, fscale='free', 
+       recalc=F,  use_gene_norm_count=F, fscale='free', fnrow = 2,
        #visfrom = min(TR.merged.data.gene[gene == gene_to_plot & strand == '+', start]) - vis_win,
        #visto   = max(TR.merged.data.gene[gene == gene_to_plot & strand == '+', end  ]) + vis_win,
        visfrom =visfrom, visto =visto,
