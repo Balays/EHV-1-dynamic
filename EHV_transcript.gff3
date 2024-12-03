@@ -1,0 +1,280 @@
+##gff-version 3
+##source-version rtracklayer 1.58.0
+##date 2024-12-02
+NC_001491.2	Tombacz_et_al	transcript	1613	1923	.	+	.	ID=1;Name=1;ORF_id=ORF1;gene_id=ORF1;final_TX_ID=320;prime5.TR=1613;Ref.prime3.TR=1923;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	1629	1923	.	+	.	ID=2;Name=2;ORF_id=ORF1;gene_id=ORF1;final_TX_ID=272;prime5.TR=1629;Ref.prime3.TR=1923;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	1918	2343	.	-	.	ID=3;Name=3;ORF_id=ORF2;gene_id=ORF2;final_TX_ID=750;prime5.TR=2343;Ref.prime3.TR=1918;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	1918	2417	.	-	.	ID=4;Name=4;ORF_id=ORF2;gene_id=ORF2;final_TX_ID=355;prime5.TR=2417;Ref.prime3.TR=1918;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	1918	2498	.	-	.	ID=5;Name=5;ORF_id=ORF2;gene_id=ORF2;final_TX_ID=356;prime5.TR=2498;Ref.prime3.TR=1918;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	1918	2354	.	-	.	ID=6;Name=6;ORF_id=ORF2;gene_id=ORF2;final_TX_ID=717;prime5.TR=2354;Ref.prime3.TR=1918;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	3043	3632	.	+	.	ID=7;Name=7;ORF_id=ORF3;gene_id=ORF3;final_TX_ID=45;prime5.TR=3043;Ref.prime3.TR=3632;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	4391	5770	.	-	.	ID=8;Name=8;ORF_id=ORF5;gene_id=ORF5;final_TX_ID=366;prime5.TR=5770;Ref.prime3.TR=4391;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	4391	5063	.	-	.	ID=9;Name=9;ORF_id=ORF5;gene_id=ORF5;final_TX_ID=363;prime5.TR=5063;Ref.prime3.TR=4391;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	4391	5786	.	-	.	ID=10;Name=10;ORF_id=ORF5;gene_id=ORF5;final_TX_ID=783;prime5.TR=5786;Ref.prime3.TR=4391;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	10444	11072	.	+	.	ID=11;Name=11;ORF_id=ORF8;gene_id=ORF8;final_TX_ID=310;prime5.TR=10444;Ref.prime3.TR=11072;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	10458	11072	.	+	.	ID=12;Name=12;ORF_id=ORF8;gene_id=ORF8;final_TX_ID=251;prime5.TR=10458;Ref.prime3.TR=11072;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	11062	11621	.	-	.	ID=13;Name=13;ORF_id=ORF9;gene_id=ORF9;final_TX_ID=687;prime5.TR=11621;Ref.prime3.TR=11062;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	11062	11522	.	-	.	ID=14;Name=14;ORF_id=ORF9;gene_id=ORF9;final_TX_ID=718;prime5.TR=11522;Ref.prime3.TR=11062;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	18093	20385	.	+	.	ID=15;Name=15;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=297;prime5.TR=18093;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	18151	20385	.	+	.	ID=16;Name=16;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=24;prime5.TR=18151;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	18370	20385	.	+	.	ID=17;Name=17;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=281;prime5.TR=18370;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	18487	20385	.	+	.	ID=18;Name=18;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=25;prime5.TR=18487;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19091	20385	.	+	.	ID=19;Name=19;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=298;prime5.TR=19091;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19152	20385	.	+	.	ID=20;Name=20;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=282;prime5.TR=19152;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19224	20385	.	+	.	ID=21;Name=21;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=283;prime5.TR=19224;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19287	20385	.	+	.	ID=22;Name=22;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=28;prime5.TR=19287;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19331	20385	.	+	.	ID=23;Name=23;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=29;prime5.TR=19331;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19579	20385	.	+	.	ID=24;Name=24;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=31;prime5.TR=19579;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19640	20385	.	+	.	ID=25;Name=25;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=32;prime5.TR=19640;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19675	20385	.	+	.	ID=26;Name=26;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=34;prime5.TR=19675;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19745	20385	.	+	.	ID=27;Name=27;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=349;prime5.TR=19745;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19795	20385	.	+	.	ID=28;Name=28;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=35;prime5.TR=19795;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19886	20385	.	+	.	ID=29;Name=29;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=36;prime5.TR=19886;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19907	20385	.	+	.	ID=30;Name=30;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=339;prime5.TR=19907;Ref.prime3.TR=20385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	24413	25679	.	-	.	ID=31;Name=31;ORF_id=ORF18;gene_id=ORF18;final_TX_ID=746;prime5.TR=25679;Ref.prime3.TR=24413;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	24413	25666	.	-	.	ID=32;Name=32;ORF_id=ORF18;gene_id=ORF18;final_TX_ID=384;prime5.TR=25666;Ref.prime3.TR=24413;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	24413	25077	.	-	.	ID=33;Name=33;ORF_id=ORF18;gene_id=ORF18;final_TX_ID=732;prime5.TR=25077;Ref.prime3.TR=24413;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	26566	27784	.	+	.	ID=34;Name=34;ORF_id=ORF19;gene_id=ORF19;final_TX_ID=40;prime5.TR=26566;Ref.prime3.TR=27784;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	27258	27784	.	+	.	ID=35;Name=35;ORF_id=ORF19;gene_id=ORF19;final_TX_ID=42;prime5.TR=27258;Ref.prime3.TR=27784;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	27868	28242	.	-	.	ID=36;Name=36;ORF_id=ORF20;gene_id=ORF20;final_TX_ID=385;prime5.TR=28242;Ref.prime3.TR=27868;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	27868	28808	.	-	.	ID=37;Name=37;ORF_id=ORF20;gene_id=ORF20;final_TX_ID=389;prime5.TR=28808;Ref.prime3.TR=27868;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	27868	28513	.	-	.	ID=38;Name=38;ORF_id=ORF20;gene_id=ORF20;final_TX_ID=781;prime5.TR=28513;Ref.prime3.TR=27868;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	31489	32227	.	-	.	ID=39;Name=39;ORF_id=ORF22;gene_id=ORF22;final_TX_ID=408;prime5.TR=32227;Ref.prime3.TR=31489;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	31489	32681	.	-	.	ID=40;Name=40;ORF_id=ORF22;gene_id=ORF22;final_TX_ID=410;prime5.TR=32681;Ref.prime3.TR=31489;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	35191	36380	.	+	.	ID=41;Name=41;ORF_id=ORF23;gene_id=ORF23;final_TX_ID=329;prime5.TR=35191;Ref.prime3.TR=36380;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	35467	36380	.	+	.	ID=42;Name=42;ORF_id=ORF23;gene_id=ORF23;final_TX_ID=324;prime5.TR=35467;Ref.prime3.TR=36380;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	35755	36380	.	+	.	ID=43;Name=43;ORF_id=ORF23;gene_id=ORF23;final_TX_ID=52;prime5.TR=35755;Ref.prime3.TR=36380;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	35897	36380	.	+	.	ID=44;Name=44;ORF_id=ORF23;gene_id=ORF23;final_TX_ID=344;prime5.TR=35897;Ref.prime3.TR=36380;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	36080	36380	.	+	.	ID=45;Name=45;ORF_id=ORF23;gene_id=ORF23;final_TX_ID=53;prime5.TR=36080;Ref.prime3.TR=36380;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	45786	46890	.	+	.	ID=46;Name=46;ORF_id=ORF24;gene_id=ORF24;final_TX_ID=285;prime5.TR=45786;Ref.prime3.TR=46890;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	45839	46890	.	+	.	ID=47;Name=47;ORF_id=ORF24;gene_id=ORF24;final_TX_ID=56;prime5.TR=45839;Ref.prime3.TR=46890;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	46895	47279	.	-	.	ID=48;Name=48;ORF_id=ORF25;gene_id=ORF25;final_TX_ID=739;prime5.TR=47279;Ref.prime3.TR=46895;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	46895	47136	.	-	.	ID=49;Name=49;ORF_id=ORF25;gene_id=ORF25;final_TX_ID=765;prime5.TR=47136;Ref.prime3.TR=46895;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	50748	51693	.	+	.	ID=50;Name=50;ORF_id=ORF29;gene_id=ORF29;final_TX_ID=61;prime5.TR=50748;Ref.prime3.TR=51693;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	51148	51693	.	+	.	ID=51;Name=51;ORF_id=ORF29;gene_id=ORF29;final_TX_ID=63;prime5.TR=51148;Ref.prime3.TR=51693;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	51486	55172	.	-	.	ID=52;Name=52;ORF_id=ORF30;gene_id=ORF30;final_TX_ID=434;prime5.TR=55172;Ref.prime3.TR=51486;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	51486	52403	.	-	.	ID=53;Name=53;ORF_id=ORF30;gene_id=ORF30;final_TX_ID=433;prime5.TR=52403;Ref.prime3.TR=51486;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	56316	59182	.	+	.	ID=54;Name=54;ORF_id=ORF31;gene_id=ORF31;final_TX_ID=247;prime5.TR=56316;Ref.prime3.TR=59182;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	56326	59182	.	+	.	ID=55;Name=55;ORF_id=ORF31;gene_id=ORF31;final_TX_ID=73;prime5.TR=56326;Ref.prime3.TR=59182;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	56757	59182	.	+	.	ID=56;Name=56;ORF_id=ORF31;gene_id=ORF31;final_TX_ID=76;prime5.TR=56757;Ref.prime3.TR=59182;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	58023	59182	.	+	.	ID=57;Name=57;ORF_id=ORF31;gene_id=ORF31;final_TX_ID=78;prime5.TR=58023;Ref.prime3.TR=59182;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	58487	59182	.	+	.	ID=58;Name=58;ORF_id=ORF31;gene_id=ORF31;final_TX_ID=79;prime5.TR=58487;Ref.prime3.TR=59182;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	58635	59182	.	+	.	ID=59;Name=59;ORF_id=ORF31;gene_id=ORF31;final_TX_ID=81;prime5.TR=58635;Ref.prime3.TR=59182;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	64580	65093	.	+	.	ID=60;Name=60;ORF_id=ORF34;gene_id=ORF34;final_TX_ID=341;prime5.TR=64580;Ref.prime3.TR=65093;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	64629	65093	.	+	.	ID=61;Name=61;ORF_id=ORF34;gene_id=ORF34;final_TX_ID=309;prime5.TR=64629;Ref.prime3.TR=65093;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	64740	65093	.	+	.	ID=62;Name=62;ORF_id=ORF34;gene_id=ORF34;final_TX_ID=345;prime5.TR=64740;Ref.prime3.TR=65093;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	65089	66123	.	-	.	ID=63;Name=63;ORF_id=ORF35.5;gene_id=ORF35.5;final_TX_ID=447;prime5.TR=66123;Ref.prime3.TR=65089;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	65089	66027	.	-	.	ID=64;Name=64;ORF_id=ORF35.5;gene_id=ORF35.5;final_TX_ID=697;prime5.TR=66027;Ref.prime3.TR=65089;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	65089	66140	.	-	.	ID=65;Name=65;ORF_id=ORF35.5;gene_id=ORF35.5;final_TX_ID=698;prime5.TR=66140;Ref.prime3.TR=65089;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	65089	65942	.	-	.	ID=66;Name=66;ORF_id=ORF35.5;gene_id=ORF35.5;final_TX_ID=755;prime5.TR=65942;Ref.prime3.TR=65089;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	65089	65535	.	-	.	ID=67;Name=67;ORF_id=ORF35.5;gene_id=ORF35.5;final_TX_ID=773;prime5.TR=65535;Ref.prime3.TR=65089;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	67167	68471	.	-	.	ID=68;Name=68;ORF_id=ORF36;gene_id=ORF36;final_TX_ID=453;prime5.TR=68471;Ref.prime3.TR=67167;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	67167	67893	.	-	.	ID=69;Name=69;ORF_id=ORF36;gene_id=ORF36;final_TX_ID=721;prime5.TR=67893;Ref.prime3.TR=67167;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	70249	71034	.	+	.	ID=70;Name=70;ORF_id=ORF38;gene_id=ORF38;final_TX_ID=96;prime5.TR=70249;Ref.prime3.TR=71034;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	73834	74017	.	-	.	ID=71;Name=71;ORF_id=CTO-S-Short-5;gene_id=CTO;final_TX_ID=464;prime5.TR=74017;Ref.prime3.TR=73834;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	73834	74049	.	-	.	ID=72;Name=72;ORF_id=CTO-S-Short-4;gene_id=CTO;final_TX_ID=465;prime5.TR=74049;Ref.prime3.TR=73834;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	73834	74113	.	-	.	ID=73;Name=73;ORF_id=CTO-S-Short-3;gene_id=CTO;final_TX_ID=701;prime5.TR=74113;Ref.prime3.TR=73834;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	73834	74145	.	-	.	ID=74;Name=74;ORF_id=CTO-S-Short-2;gene_id=CTO;final_TX_ID=467;prime5.TR=74145;Ref.prime3.TR=73834;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	73834	74171	.	-	.	ID=75;Name=75;ORF_id=CTO-S-Short-1;gene_id=CTO;final_TX_ID=779;prime5.TR=74171;Ref.prime3.TR=73834;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	74614	75173	.	-	.	ID=76;Name=76;ORF_id=ORF40;gene_id=ORF40;final_TX_ID=504;prime5.TR=75173;Ref.prime3.TR=74614;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	78089	81894	.	+	.	ID=77;Name=77;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=107;prime5.TR=78089;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	78779	81894	.	+	.	ID=78;Name=78;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=255;prime5.TR=78779;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	78932	81894	.	+	.	ID=79;Name=79;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=257;prime5.TR=78932;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79076	81894	.	+	.	ID=80;Name=80;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=131;prime5.TR=79076;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79609	81894	.	+	.	ID=81;Name=81;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=259;prime5.TR=79609;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79636	81894	.	+	.	ID=82;Name=82;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=139;prime5.TR=79636;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79748	81894	.	+	.	ID=83;Name=83;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=144;prime5.TR=79748;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79808	81894	.	+	.	ID=84;Name=84;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=260;prime5.TR=79808;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79957	81894	.	+	.	ID=85;Name=85;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=146;prime5.TR=79957;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79972	81894	.	+	.	ID=86;Name=86;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=147;prime5.TR=79972;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	80198	81894	.	+	.	ID=87;Name=87;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=150;prime5.TR=80198;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	80354	81894	.	+	.	ID=88;Name=88;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=153;prime5.TR=80354;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	80615	81894	.	+	.	ID=89;Name=89;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=155;prime5.TR=80615;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	80709	81894	.	+	.	ID=90;Name=90;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=314;prime5.TR=80709;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	80964	81894	.	+	.	ID=91;Name=91;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=336;prime5.TR=80964;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81077	81894	.	+	.	ID=92;Name=92;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=326;prime5.TR=81077;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81304	81892	.	+	.	ID=93;Name=93;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=311;prime5.TR=81304;Ref.prime3.TR=81892;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81304	81894	.	+	.	ID=94;Name=94;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=303;prime5.TR=81304;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81328	81894	.	+	.	ID=95;Name=95;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=315;prime5.TR=81328;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81499	81892	.	+	.	ID=96;Name=96;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=327;prime5.TR=81499;Ref.prime3.TR=81892;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81499	81894	.	+	.	ID=97;Name=97;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=338;prime5.TR=81499;Ref.prime3.TR=81894;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	87562	87824	.	+	.	ID=98;Name=98;ORF_id=nc-ORF46;gene_id=ORF46;final_TX_ID=165;prime5.TR=87562;Ref.prime3.TR=87824;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	93031	94227	.	-	.	ID=99;Name=99;ORF_id=ORF52;gene_id=ORF52;final_TX_ID=520;prime5.TR=94227;Ref.prime3.TR=93031;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	93031	94097	.	-	.	ID=100;Name=100;ORF_id=ORF52;gene_id=ORF52;final_TX_ID=722;prime5.TR=94097;Ref.prime3.TR=93031;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	93031	93242	.	-	.	ID=101;Name=101;ORF_id=nc-ORF52;gene_id=ORF52;final_TX_ID=770;prime5.TR=93242;Ref.prime3.TR=93031;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	93031	93295	.	-	.	ID=102;Name=102;ORF_id=ORF52;gene_id=ORF52;final_TX_ID=784;prime5.TR=93295;Ref.prime3.TR=93031;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	105829	106232	.	-	.	ID=103;Name=103;ORF_id=ORF59;gene_id=ORF59;final_TX_ID=774;prime5.TR=106232;Ref.prime3.TR=105829;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	105829	105968	.	-	.	ID=104;Name=104;ORF_id=nc-ORF59;gene_id=ORF59;final_TX_ID=527;prime5.TR=105968;Ref.prime3.TR=105829;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	105829	106204	.	-	.	ID=105;Name=105;ORF_id=ORF59;gene_id=ORF59;final_TX_ID=707;prime5.TR=106204;Ref.prime3.TR=105829;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	105829	106278	.	-	.	ID=106;Name=106;ORF_id=ORF59;gene_id=ORF59;final_TX_ID=708;prime5.TR=106278;Ref.prime3.TR=105829;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	105829	106346	.	-	.	ID=107;Name=107;ORF_id=ORF59;gene_id=ORF59;final_TX_ID=763;prime5.TR=106346;Ref.prime3.TR=105829;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	105829	106303	.	-	.	ID=108;Name=108;ORF_id=ORF59;gene_id=ORF59;final_TX_ID=771;prime5.TR=106303;Ref.prime3.TR=105829;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	105829	106142	.	-	.	ID=109;Name=109;ORF_id=ORF59;gene_id=ORF59;final_TX_ID=782;prime5.TR=106142;Ref.prime3.TR=105829;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	110319	111620	.	-	.	ID=110;Name=110;ORF_id=ORF63;gene_id=ORF63;final_TX_ID=584;prime5.TR=111620;Ref.prime3.TR=110319;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	110319	111634	.	-	.	ID=111;Name=111;ORF_id=ORF63;gene_id=ORF63;final_TX_ID=585;prime5.TR=111634;Ref.prime3.TR=110319;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	110319	111661	.	-	.	ID=112;Name=112;ORF_id=ORF63;gene_id=ORF63;final_TX_ID=586;prime5.TR=111661;Ref.prime3.TR=110319;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	121617	122451	.	+	.	ID=113;Name=113;ORF_id=ORF65;gene_id=ORF65;final_TX_ID=340;prime5.TR=121617;Ref.prime3.TR=122451;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	121687	122451	.	+	.	ID=114;Name=114;ORF_id=ORF65;gene_id=ORF65;final_TX_ID=201;prime5.TR=121687;Ref.prime3.TR=122451;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	121769	122451	.	+	.	ID=115;Name=115;ORF_id=nc-ORF65;gene_id=ORF65;final_TX_ID=269;prime5.TR=121769;Ref.prime3.TR=122451;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	121801	122451	.	+	.	ID=116;Name=116;ORF_id=nc-ORF65;gene_id=ORF65;final_TX_ID=304;prime5.TR=121801;Ref.prime3.TR=122451;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	121887	122451	.	+	.	ID=117;Name=117;ORF_id=nc-ORF65;gene_id=ORF65;final_TX_ID=203;prime5.TR=121887;Ref.prime3.TR=122451;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	121953	122451	.	+	.	ID=118;Name=118;ORF_id=nc-ORF65;gene_id=ORF65;final_TX_ID=204;prime5.TR=121953;Ref.prime3.TR=122451;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	121973	122451	.	+	.	ID=119;Name=119;ORF_id=nc-ORF65;gene_id=ORF65;final_TX_ID=205;prime5.TR=121973;Ref.prime3.TR=122451;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122010	122451	.	+	.	ID=120;Name=120;ORF_id=nc-ORF65;gene_id=ORF65;final_TX_ID=270;prime5.TR=122010;Ref.prime3.TR=122451;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122047	122451	.	+	.	ID=121;Name=121;ORF_id=nc-ORF65;gene_id=ORF65;final_TX_ID=206;prime5.TR=122047;Ref.prime3.TR=122451;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122078	122451	.	+	.	ID=122;Name=122;ORF_id=nc-ORF65;gene_id=ORF65;final_TX_ID=207;prime5.TR=122078;Ref.prime3.TR=122451;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122127	122451	.	+	.	ID=123;Name=123;ORF_id=nc-ORF65;gene_id=ORF65;final_TX_ID=208;prime5.TR=122127;Ref.prime3.TR=122451;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122214	122451	.	+	.	ID=124;Name=124;ORF_id=nc-ORF65;gene_id=ORF65;final_TX_ID=209;prime5.TR=122214;Ref.prime3.TR=122451;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122245	122451	.	+	.	ID=125;Name=125;ORF_id=nc-ORF65;gene_id=ORF65;final_TX_ID=337;prime5.TR=122245;Ref.prime3.TR=122451;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	124283	124631	.	-	.	ID=126;Name=126;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=760;prime5.TR=124631;Ref.prime3.TR=124283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124906	.	-	.	ID=127;Name=127;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=749;prime5.TR=124906;Ref.prime3.TR=124283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124594	.	-	.	ID=128;Name=128;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=723;prime5.TR=124594;Ref.prime3.TR=124283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124742	.	-	.	ID=129;Name=129;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=724;prime5.TR=124742;Ref.prime3.TR=124283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124786	.	-	.	ID=130;Name=130;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=725;prime5.TR=124786;Ref.prime3.TR=124283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124944	.	-	.	ID=131;Name=131;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=726;prime5.TR=124944;Ref.prime3.TR=124283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	125062	.	-	.	ID=132;Name=132;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=727;prime5.TR=125062;Ref.prime3.TR=124283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124852	.	-	.	ID=133;Name=133;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=744;prime5.TR=124852;Ref.prime3.TR=124283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124985	.	-	.	ID=134;Name=134;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=745;prime5.TR=124985;Ref.prime3.TR=124283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124678	.	-	.	ID=135;Name=135;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=777;prime5.TR=124678;Ref.prime3.TR=124283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	127926	128944	.	+	.	ID=136;Name=136;ORF_id=ORF70;gene_id=ORF70;final_TX_ID=216;prime5.TR=127926;Ref.prime3.TR=128944;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	132988	134249	.	+	.	ID=137;Name=137;ORF_id=ORF73;gene_id=ORF73;final_TX_ID=224;prime5.TR=132988;Ref.prime3.TR=134249;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	133013	134249	.	+	.	ID=138;Name=138;ORF_id=ORF73;gene_id=ORF73;final_TX_ID=225;prime5.TR=133013;Ref.prime3.TR=134249;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	133322	134249	.	+	.	ID=139;Name=139;ORF_id=ORF73;gene_id=ORF73;final_TX_ID=226;prime5.TR=133322;Ref.prime3.TR=134249;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	133335	134249	.	+	.	ID=140;Name=140;ORF_id=ORF73;gene_id=ORF73;final_TX_ID=227;prime5.TR=133335;Ref.prime3.TR=134249;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	133698	134249	.	+	.	ID=141;Name=141;ORF_id=ORF73;gene_id=ORF73;final_TX_ID=229;prime5.TR=133698;Ref.prime3.TR=134249;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	133839	134249	.	+	.	ID=142;Name=142;ORF_id=ORF73;gene_id=ORF73;final_TX_ID=316;prime5.TR=133839;Ref.prime3.TR=134249;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	136088	136464	.	+	.	ID=143;Name=143;ORF_id=ORF75;gene_id=ORF75;final_TX_ID=276;prime5.TR=136088;Ref.prime3.TR=136464;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138098	138877	.	+	.	ID=144;Name=144;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=277;prime5.TR=138098;Ref.prime3.TR=138877;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138175	138877	.	+	.	ID=145;Name=145;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=6;prime5.TR=138175;Ref.prime3.TR=138877;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138216	138877	.	+	.	ID=146;Name=146;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=7;prime5.TR=138216;Ref.prime3.TR=138877;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138254	138877	.	+	.	ID=147;Name=147;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=317;prime5.TR=138254;Ref.prime3.TR=138877;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138290	138877	.	+	.	ID=148;Name=148;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=307;prime5.TR=138290;Ref.prime3.TR=138877;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138308	138877	.	+	.	ID=149;Name=149;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=351;prime5.TR=138308;Ref.prime3.TR=138877;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138374	138877	.	+	.	ID=150;Name=150;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=8;prime5.TR=138374;Ref.prime3.TR=138877;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138418	138877	.	+	.	ID=151;Name=151;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=278;prime5.TR=138418;Ref.prime3.TR=138877;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138482	138877	.	+	.	ID=152;Name=152;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=243;prime5.TR=138482;Ref.prime3.TR=138877;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138529	138877	.	+	.	ID=153;Name=153;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=335;prime5.TR=138529;Ref.prime3.TR=138877;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138566	138877	.	+	.	ID=154;Name=154;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=279;prime5.TR=138566;Ref.prime3.TR=138877;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	140709	140946	.	-	.	ID=155;Name=155;ORF_id=nc-ORF65.1;gene_id=ORF65;final_TX_ID=639;prime5.TR=140946;Ref.prime3.TR=140709;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141063	.	-	.	ID=156;Name=156;ORF_id=nc-ORF65.1;gene_id=ORF65;final_TX_ID=644;prime5.TR=141063;Ref.prime3.TR=140709;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141113	.	-	.	ID=157;Name=157;ORF_id=nc-ORF65.1;gene_id=ORF65;final_TX_ID=646;prime5.TR=141113;Ref.prime3.TR=140709;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141207	.	-	.	ID=158;Name=158;ORF_id=nc-ORF65.1;gene_id=ORF65;final_TX_ID=648;prime5.TR=141207;Ref.prime3.TR=140709;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141473	.	-	.	ID=159;Name=159;ORF_id=ORF65.1;gene_id=ORF65;final_TX_ID=677;prime5.TR=141473;Ref.prime3.TR=140709;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	140709	141391	.	-	.	ID=160;Name=160;ORF_id=nc-ORF65.1;gene_id=ORF65;final_TX_ID=716;prime5.TR=141391;Ref.prime3.TR=140709;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141359	.	-	.	ID=161;Name=161;ORF_id=nc-ORF65.1;gene_id=ORF65;final_TX_ID=738;prime5.TR=141359;Ref.prime3.TR=140709;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141082	.	-	.	ID=162;Name=162;ORF_id=nc-ORF65.1;gene_id=ORF65;final_TX_ID=645;prime5.TR=141082;Ref.prime3.TR=140709;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141150	.	-	.	ID=163;Name=163;ORF_id=nc-ORF65.1;gene_id=ORF65;final_TX_ID=647;prime5.TR=141150;Ref.prime3.TR=140709;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	140915	.	-	.	ID=164;Name=164;ORF_id=ORF65.1;gene_id=ORF65;final_TX_ID=764;prime5.TR=140915;Ref.prime3.TR=140709;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	140709	141543	.	-	.	ID=165;Name=165;ORF_id=nc-ORF65.1;gene_id=ORF65;final_TX_ID=767;prime5.TR=141543;Ref.prime3.TR=140709;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141245	.	-	.	ID=166;Name=166;ORF_id=nc-ORF65.1;gene_id=ORF65;final_TX_ID=649;prime5.TR=141245;Ref.prime3.TR=140709;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141273	.	-	.	ID=167;Name=167;ORF_id=nc-ORF65.1;gene_id=ORF65;final_TX_ID=671;prime5.TR=141273;Ref.prime3.TR=140709;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	2650	3632	.	+	.	ID=168;Name=168;ORF_id=ORF3;gene_id=ORF3;final_TX_ID=37;prime5.TR=2650;Ref.prime3.TR=3632;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	2702	3632	.	+	.	ID=169;Name=169;ORF_id=ORF3;gene_id=ORF3;final_TX_ID=39;prime5.TR=2702;Ref.prime3.TR=3632;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	4391	5941	.	-	.	ID=170;Name=170;ORF_id=ORF5;gene_id=ORF5;final_TX_ID=778;prime5.TR=5941;Ref.prime3.TR=4391;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	10054	11072	.	+	.	ID=171;Name=171;ORF_id=ORF8;gene_id=ORF8;final_TX_ID=331;prime5.TR=10054;Ref.prime3.TR=11072;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	10068	11072	.	+	.	ID=172;Name=172;ORF_id=ORF8;gene_id=ORF8;final_TX_ID=322;prime5.TR=10068;Ref.prime3.TR=11072;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	10095	11072	.	+	.	ID=173;Name=173;ORF_id=ORF8;gene_id=ORF8;final_TX_ID=332;prime5.TR=10095;Ref.prime3.TR=11072;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	13509	14971	.	+	.	ID=174;Name=174;ORF_id=ORF12;gene_id=ORF12;final_TX_ID=193;prime5.TR=13509;Ref.prime3.TR=14971;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	13560	14971	.	+	.	ID=175;Name=175;ORF_id=ORF12;gene_id=ORF12;final_TX_ID=199;prime5.TR=13560;Ref.prime3.TR=14971;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	15195	20385	.	+	.	ID=176;Name=176;ORF_id=ORF13-ORF14;gene_id=ORF13;final_TX_ID=4;prime5.TR=15195;Ref.prime3.TR=20385;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	15260	20385	.	+	.	ID=177;Name=177;ORF_id=ORF13-ORF14;gene_id=ORF13;final_TX_ID=306;prime5.TR=15260;Ref.prime3.TR=20385;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	15673	20385	.	+	.	ID=178;Name=178;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=9;prime5.TR=15673;Ref.prime3.TR=20385;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	15746	20385	.	+	.	ID=179;Name=179;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=11;prime5.TR=15746;Ref.prime3.TR=20385;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	15828	20385	.	+	.	ID=180;Name=180;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=14;prime5.TR=15828;Ref.prime3.TR=20385;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	17455	20385	.	+	.	ID=181;Name=181;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=296;prime5.TR=17455;Ref.prime3.TR=20385;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	17503	20385	.	+	.	ID=182;Name=182;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=19;prime5.TR=17503;Ref.prime3.TR=20385;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	17518	20385	.	+	.	ID=183;Name=183;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=244;prime5.TR=17518;Ref.prime3.TR=20385;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	17967	20385	.	+	.	ID=184;Name=184;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=20;prime5.TR=17967;Ref.prime3.TR=20385;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	17998	20385	.	+	.	ID=185;Name=185;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=22;prime5.TR=17998;Ref.prime3.TR=20385;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	18016	20385	.	+	.	ID=186;Name=186;ORF_id=ORF14;gene_id=ORF14;final_TX_ID=23;prime5.TR=18016;Ref.prime3.TR=20385;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	20383	22761	.	-	.	ID=187;Name=187;ORF_id=ORF15;gene_id=ORF15;final_TX_ID=379;prime5.TR=22761;Ref.prime3.TR=20383;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	20383	22773	.	-	.	ID=188;Name=188;ORF_id=ORF15;gene_id=ORF15;final_TX_ID=689;prime5.TR=22773;Ref.prime3.TR=20383;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	27868	28962	.	-	.	ID=189;Name=189;ORF_id=ORF20;gene_id=ORF20;final_TX_ID=394;prime5.TR=28962;Ref.prime3.TR=27868;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	27868	29000	.	-	.	ID=190;Name=190;ORF_id=ORF20;gene_id=ORF20;final_TX_ID=396;prime5.TR=29000;Ref.prime3.TR=27868;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	27868	31322	.	-	.	ID=191;Name=191;ORF_id=ORF21-ORF20;gene_id=ORF21;final_TX_ID=693;prime5.TR=31322;Ref.prime3.TR=27868;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	27868	31361	.	-	.	ID=192;Name=192;ORF_id=ORF21-ORF20;gene_id=ORF21;final_TX_ID=404;prime5.TR=31361;Ref.prime3.TR=27868;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	27868	29209	.	-	.	ID=193;Name=193;ORF_id=ORF20;gene_id=ORF20;final_TX_ID=692;prime5.TR=29209;Ref.prime3.TR=27868;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	31489	33072	.	-	.	ID=194;Name=194;ORF_id=ORF22;gene_id=ORF22;final_TX_ID=411;prime5.TR=33072;Ref.prime3.TR=31489;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	31489	33114	.	-	.	ID=195;Name=195;ORF_id=ORF22;gene_id=ORF22;final_TX_ID=412;prime5.TR=33114;Ref.prime3.TR=31489;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	33224	36380	.	+	.	ID=196;Name=196;ORF_id=ORF23;gene_id=ORF23;final_TX_ID=299;prime5.TR=33224;Ref.prime3.TR=36380;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	47360	.	-	.	ID=197;Name=197;ORF_id=ORF25;gene_id=ORF25;final_TX_ID=416;prime5.TR=47360;Ref.prime3.TR=46895;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	46895	48182	.	-	.	ID=198;Name=198;ORF_id=ORF25;gene_id=ORF25;final_TX_ID=421;prime5.TR=48182;Ref.prime3.TR=46895;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	48267	.	-	.	ID=199;Name=199;ORF_id=ORF26-ORF25;gene_id=ORF26;final_TX_ID=785;prime5.TR=48267;Ref.prime3.TR=46895;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	48319	.	-	.	ID=200;Name=200;ORF_id=ORF26-ORF25;gene_id=ORF26;final_TX_ID=747;prime5.TR=48319;Ref.prime3.TR=46895;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	47555	.	-	.	ID=201;Name=201;ORF_id=ORF25;gene_id=ORF25;final_TX_ID=695;prime5.TR=47555;Ref.prime3.TR=46895;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	47822	.	-	.	ID=202;Name=202;ORF_id=ORF25;gene_id=ORF25;final_TX_ID=696;prime5.TR=47822;Ref.prime3.TR=46895;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	48247	.	-	.	ID=203;Name=203;ORF_id=ORF26-ORF25;gene_id=ORF26;final_TX_ID=720;prime5.TR=48247;Ref.prime3.TR=46895;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	46895	49214	.	-	.	ID=204;Name=204;ORF_id=ORF27-ORF26-ORF25;gene_id=ORF27;final_TX_ID=740;prime5.TR=49214;Ref.prime3.TR=46895;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	46895	47635	.	-	.	ID=205;Name=205;ORF_id=ORF25;gene_id=ORF25;final_TX_ID=754;prime5.TR=47635;Ref.prime3.TR=46895;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	48532	51693	.	+	.	ID=206;Name=206;ORF_id=ORF28-ORF29;gene_id=ORF28;final_TX_ID=57;prime5.TR=48532;Ref.prime3.TR=51693;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	51486	55203	.	-	.	ID=207;Name=207;ORF_id=ORF30;gene_id=ORF30;final_TX_ID=437;prime5.TR=55203;Ref.prime3.TR=51486;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	55255	59182	.	+	.	ID=208;Name=208;ORF_id=ORF31;gene_id=ORF31;final_TX_ID=66;prime5.TR=55255;Ref.prime3.TR=59182;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	55342	59182	.	+	.	ID=209;Name=209;ORF_id=ORF31;gene_id=ORF31;final_TX_ID=68;prime5.TR=55342;Ref.prime3.TR=59182;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	62857	65093	.	+	.	ID=210;Name=210;ORF_id=ORF34;gene_id=ORF34;final_TX_ID=85;prime5.TR=62857;Ref.prime3.TR=65093;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	63531	65093	.	+	.	ID=211;Name=211;ORF_id=ORF34;gene_id=ORF34;final_TX_ID=250;prime5.TR=63531;Ref.prime3.TR=65093;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	64500	65093	.	+	.	ID=212;Name=212;ORF_id=ORF34;gene_id=ORF34;final_TX_ID=352;prime5.TR=64500;Ref.prime3.TR=65093;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	65089	66250	.	-	.	ID=213;Name=213;ORF_id=ORF35.5;gene_id=ORF35;final_TX_ID=762;prime5.TR=66250;Ref.prime3.TR=65089;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	65089	66521	.	-	.	ID=214;Name=214;ORF_id=ORF35.5;gene_id=ORF35;final_TX_ID=699;prime5.TR=66521;Ref.prime3.TR=65089;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	67167	70102	.	-	.	ID=215;Name=215;ORF_id=ORF37-ORF36;gene_id=ORF37;final_TX_ID=459;prime5.TR=70102;Ref.prime3.TR=67167;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	69068	70102	.	-	.	ID=216;Name=216;ORF_id=ORF37;gene_id=ORF37;final_TX_ID=460;prime5.TR=70102;Ref.prime3.TR=69068;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	69807	71034	.	+	.	ID=217;Name=217;ORF_id=ORF38;gene_id=ORF38;final_TX_ID=94;prime5.TR=69807;Ref.prime3.TR=71034;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	77615	81894	.	+	.	ID=218;Name=218;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=325;prime5.TR=77615;Ref.prime3.TR=81894;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	77615	83096	.	+	.	ID=219;Name=219;ORF_id=ORF42-ORF43;gene_id=ORF42;final_TX_ID=102;prime5.TR=77615;Ref.prime3.TR=83096;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	77645	81894	.	+	.	ID=220;Name=220;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=104;prime5.TR=77645;Ref.prime3.TR=81894;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	77665	81894	.	+	.	ID=221;Name=221;ORF_id=ORF42;gene_id=ORF42;final_TX_ID=252;prime5.TR=77665;Ref.prime3.TR=81894;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	79972	83096	.	+	.	ID=222;Name=222;ORF_id=ORF43;gene_id=ORF43;final_TX_ID=348;prime5.TR=79972;Ref.prime3.TR=83096;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	81892	83096	.	+	.	ID=223;Name=223;ORF_id=ORF43;gene_id=ORF43;final_TX_ID=160;prime5.TR=81892;Ref.prime3.TR=83096;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	81919	83096	.	+	.	ID=224;Name=224;ORF_id=ORF43;gene_id=ORF43;final_TX_ID=161;prime5.TR=81919;Ref.prime3.TR=83096;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	82060	83096	.	+	.	ID=225;Name=225;ORF_id=ORFF43;gene_id=ORFF43;final_TX_ID=263;prime5.TR=82060;Ref.prime3.TR=83096;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	86383	87824	.	+	.	ID=226;Name=226;ORF_id=ORF46;gene_id=ORF46;final_TX_ID=318;prime5.TR=86383;Ref.prime3.TR=87824;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	90650	93028	.	+	.	ID=227;Name=227;ORF_id=ORF50-ORF51;gene_id=ORF50;final_TX_ID=168;prime5.TR=90650;Ref.prime3.TR=93028;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	90663	93028	.	+	.	ID=228;Name=228;ORF_id=ORF50-ORF51;gene_id=ORF50;final_TX_ID=169;prime5.TR=90663;Ref.prime3.TR=93028;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	90707	93028	.	+	.	ID=229;Name=229;ORF_id=ORF50-ORF51;gene_id=ORF50;final_TX_ID=172;prime5.TR=90707;Ref.prime3.TR=93028;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	90734	93028	.	+	.	ID=230;Name=230;ORF_id=ORF50-ORF51;gene_id=ORF50;final_TX_ID=265;prime5.TR=90734;Ref.prime3.TR=93028;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	90784	93028	.	+	.	ID=231;Name=231;ORF_id=ORF50-ORF51;gene_id=ORF50;final_TX_ID=175;prime5.TR=90784;Ref.prime3.TR=93028;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	91202	93028	.	+	.	ID=232;Name=232;ORF_id=ORF51;gene_id=ORF51;final_TX_ID=180;prime5.TR=91202;Ref.prime3.TR=93028;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	92378	93028	.	+	.	ID=233;Name=233;ORF_id=ORF51;gene_id=ORF51;final_TX_ID=182;prime5.TR=92378;Ref.prime3.TR=93028;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	92455	93028	.	+	.	ID=234;Name=234;ORF_id=ORF51;gene_id=ORF51;final_TX_ID=291;prime5.TR=92455;Ref.prime3.TR=93028;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	93031	94806	.	-	.	ID=235;Name=235;ORF_id=ORF52;gene_id=ORF52;final_TX_ID=526;prime5.TR=94806;Ref.prime3.TR=93031;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	105829	108304	.	-	.	ID=236;Name=236;ORF_id=ORF61-ORF60-ORF59;gene_id=ORF61;final_TX_ID=575;prime5.TR=108304;Ref.prime3.TR=105829;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	105829	108333	.	-	.	ID=237;Name=237;ORF_id=ORF61-ORF60-ORF59;gene_id=ORF61;final_TX_ID=578;prime5.TR=108333;Ref.prime3.TR=105829;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	105829	108180	.	-	.	ID=238;Name=238;ORF_id=ORF61-ORF60-ORF59;gene_id=ORF61;final_TX_ID=574;prime5.TR=108180;Ref.prime3.TR=105829;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	105829	108171	.	-	.	ID=239;Name=239;ORF_id=ORF61-ORF60-ORF59;gene_id=ORF61;final_TX_ID=709;prime5.TR=108171;Ref.prime3.TR=105829;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	105829	106781	.	-	.	ID=240;Name=240;ORF_id=ORF59;gene_id=ORF59;final_TX_ID=743;prime5.TR=106781;Ref.prime3.TR=105829;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	105829	106674	.	-	.	ID=241;Name=241;ORF_id=ORF59;gene_id=ORF59;final_TX_ID=769;prime5.TR=106674;Ref.prime3.TR=105829;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	105829	106443	.	-	.	ID=242;Name=242;ORF_id=ORF59;gene_id=ORF59;final_TX_ID=772;prime5.TR=106443;Ref.prime3.TR=105829;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	105829	106475	.	-	.	ID=243;Name=243;ORF_id=ORF59;gene_id=ORF59;final_TX_ID=780;prime5.TR=106475;Ref.prime3.TR=105829;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	110319	112011	.	-	.	ID=244;Name=244;ORF_id=ORF63;gene_id=ORF63;final_TX_ID=710;prime5.TR=112011;Ref.prime3.TR=110319;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	124283	125249	.	-	.	ID=245;Name=245;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=737;prime5.TR=125249;Ref.prime3.TR=124283;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	124283	125296	.	-	.	ID=246;Name=246;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=752;prime5.TR=125296;Ref.prime3.TR=124283;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	124283	125219	.	-	.	ID=247;Name=247;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=736;prime5.TR=125219;Ref.prime3.TR=124283;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	124283	125313	.	-	.	ID=248;Name=248;ORF_id=ORF67;gene_id=ORF67;final_TX_ID=756;prime5.TR=125313;Ref.prime3.TR=124283;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	127655	128944	.	+	.	ID=249;Name=249;ORF_id=ORF70;gene_id=ORF70;final_TX_ID=214;prime5.TR=127655;Ref.prime3.TR=128944;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	132880	134249	.	+	.	ID=250;Name=250;ORF_id=ORF73;gene_id=ORF73;final_TX_ID=223;prime5.TR=132880;Ref.prime3.TR=134249;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	134995	136464	.	+	.	ID=251;Name=251;ORF_id=ORF75;gene_id=ORF75;final_TX_ID=230;prime5.TR=134995;Ref.prime3.TR=136464;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	135013	136464	.	+	.	ID=252;Name=252;ORF_id=ORF75;gene_id=ORF75;final_TX_ID=231;prime5.TR=135013;Ref.prime3.TR=136464;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	135581	136464	.	+	.	ID=253;Name=253;ORF_id=ORF75;gene_id=ORF75;final_TX_ID=232;prime5.TR=135581;Ref.prime3.TR=136464;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135613	136464	.	+	.	ID=254;Name=254;ORF_id=ORF75;gene_id=ORF75;final_TX_ID=233;prime5.TR=135613;Ref.prime3.TR=136464;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135684	136464	.	+	.	ID=255;Name=255;ORF_id=ORF75;gene_id=ORF75;final_TX_ID=235;prime5.TR=135684;Ref.prime3.TR=136464;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135768	136464	.	+	.	ID=256;Name=256;ORF_id=ORF75;gene_id=ORF75;final_TX_ID=328;prime5.TR=135768;Ref.prime3.TR=136464;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135785	136464	.	+	.	ID=257;Name=257;ORF_id=ORF75;gene_id=ORF75;final_TX_ID=236;prime5.TR=135785;Ref.prime3.TR=136464;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135791	136464	.	+	.	ID=258;Name=258;ORF_id=ORF75;gene_id=ORF75;final_TX_ID=275;prime5.TR=135791;Ref.prime3.TR=136464;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135916	136464	.	+	.	ID=259;Name=259;ORF_id=ORF75;gene_id=ORF75;final_TX_ID=237;prime5.TR=135916;Ref.prime3.TR=136464;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135935	136464	.	+	.	ID=260;Name=260;ORF_id=ORF75;gene_id=ORF75;final_TX_ID=305;prime5.TR=135935;Ref.prime3.TR=136464;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	137847	138877	.	+	.	ID=261;Name=261;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=2;prime5.TR=137847;Ref.prime3.TR=138877;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	137864	138877	.	+	.	ID=262;Name=262;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=321;prime5.TR=137864;Ref.prime3.TR=138877;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	137911	138877	.	+	.	ID=263;Name=ORF67_2_Long;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=3;prime5.TR=137911;Ref.prime3.TR=138877;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	137925	138877	.	+	.	ID=264;Name=264;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=323;prime5.TR=137925;Ref.prime3.TR=138877;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	137965	138877	.	+	.	ID=265;Name=265;ORF_id=ORF67.1;gene_id=ORF67;final_TX_ID=295;prime5.TR=137965;Ref.prime3.TR=138877;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	73834	74215	.	-	.	ID=266;Name=266;ORF_id=CTO;gene_id=CTO;final_TX_ID=758;prime5.TR=74215;Ref.prime3.TR=73834;TX_category=CTO-L
+NC_001491.2	Tombacz_et_al	transcript	73834	75173	.	-	.	ID=267;Name=267;ORF_id=CTO;gene_id=CTO;final_TX_ID=503;prime5.TR=75173;Ref.prime3.TR=73834;TX_category=CTO-L-2
+NC_001491.2	Tombacz_et_al	transcript	89245	90532	.	-	.	ID=268;Name=268;ORF_id=ORF49-ORF48;gene_id=ORF49;final_TX_ID=512;prime5.TR=90532;Ref.prime3.TR=89245;TX_category=Antisense-Long
+NC_001491.2	Tombacz_et_al	transcript	89245	90504	.	-	.	ID=269;Name=269;ORF_id=ORF49-ORF48;gene_id=ORF49;final_TX_ID=706;prime5.TR=90504;Ref.prime3.TR=89245;TX_category=Antisense-Long
+NC_001491.2	Tombacz_et_al	transcript	118856	119857	.	+	.	ID=270;Name=270;ORF_id=NOIR;gene_id=NOIR_1;final_TX_ID=195;prime5.TR=118856;Ref.prime3.TR=119857;TX_category=Non-coding-Long
+NC_001491.2	Tombacz_et_al	transcript	122289	122451	.	+	.	ID=271;Name=271;ORF_id=ORF65-ORF66;gene_id=ORF65;final_TX_ID=211;prime5.TR=122289;Ref.prime3.TR=122451;TX_category=Non-coding-intergenic
+NC_001491.2	Tombacz_et_al	transcript	122298	122451	.	+	.	ID=272;Name=272;ORF_id=ORF65-ORF66;gene_id=ORF65;final_TX_ID=347;prime5.TR=122298;Ref.prime3.TR=122451;TX_category=Non-coding-intergenic
+NC_001491.2	Tombacz_et_al	transcript	130283	131598	.	+	.	ID=273;Name=273;ORF_id=ORF71;gene_id=ORF71;final_TX_ID=219;prime5.TR=130283;Ref.prime3.TR=131598;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	140871	.	-	.	ID=274;Name=274;ORF_id=ORF65.1;gene_id=ORF65;final_TX_ID=634;prime5.TR=140871;Ref.prime3.TR=140709;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	140709	140862	.	-	.	ID=275;Name=275;ORF_id=ORF65.1;gene_id=ORF65;final_TX_ID=775;prime5.TR=140862;Ref.prime3.TR=140709;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	143303	144260	.	-	.	ID=276;Name=276;ORF_id=NOIR;gene_id=NOIR_2;final_TX_ID=731;prime5.TR=144260;Ref.prime3.TR=143303;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	143303	144302	.	-	.	ID=277;Name=277;ORF_id=NOIR;gene_id=NOIR_2;final_TX_ID=685;prime5.TR=144302;Ref.prime3.TR=143303;TX_category=Non-coding-long

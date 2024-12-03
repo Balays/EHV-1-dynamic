@@ -32,68 +32,79 @@ if (include.cage) {
   outdir  <- 'CAGE'; try({ dir.create(outdir) })
   project_config <- data.table(outdir = outdir)
   #fwrite(project_config, 'project_config.txt')
-  
+
   bamdir  <- "../CAGE/bam"
   pattern <- '.bam'
-  bamfiles <- grep('.bai', 
-                   list.files(bamdir, pattern, recursive = T, full.names = T), 
+  bamfiles <- grep('.bai',
+                   list.files(bamdir, pattern, recursive = T, full.names = T),
                    invert = T, value = T)
-  
+
   is.lortia <- F
   flag  <- scanBamFlag(isSupplementaryAlignment=FALSE)
   param <- ScanBamParam(what=scanBamWhat(), flag=scanBamFlag(isSupplementaryAlignment=FALSE))
   rm.gaps.in.aln <- T
-  
+
   ## PK15 4h and PK15 12h was switched as the barcodes were switched (most likely).
   #meta.cage <- read.delim('CAGE/metadata.cage.tsv')
   meta.cage <- data.frame(sample = gsub('.*\\/', '', gsub(pattern, '', bamfiles)))
-  
+
   meta.cage$group <- gsub('_202.*', '', meta.cage$sample)
   meta.cage$group <- gsub('_cage', '', meta.cage$group)
-  
+
   meta.cage$cell_line <- 'RK-13'
   meta.cage$rep       <- c(1,1,1,2,2,2,3,3,3)
-  
+
   metafilt <- plyr::rbind.fill(meta.cage, metafilt)
-  
+
   ### CECKPOINT -> stop
   source('_WF.part1.R')
   ##
-  
+
   ## overwriting 'sample' to coerce the same sample from different runs
   bam.all <- merge(bam.all, meta.cage, by='sample')
   bam.all[,sample := group]
   bam.all <- bam.all[,c(1:15)]
-  
+
   bam.all[,correct_tes := T] # fifelse(grepl('correct', tag.l3) | grepl('correct', tag.r3), T, F)]
   bam.all[,correct_tss := T] # fifelse(grepl('correct', tag.l5) | grepl('correct', tag.r5), T, F)]
   bam.filt <- bam.all[!is.na(seqnames)]
   bam.filt.cage <- bam.filt
-  
+
   ### -> continue
   #mapped.cov       <- fread(paste0(outdir, '/mapped.cov.tsv'), na.strings = '')
   #merged_cov       <- fread(paste0(outdir, '/merged.cov.tsv'), na.strings = '')
   norm_cov_summary <- fread(paste0(outdir, '/norm.cov.summary.tsv'), na.strings = '')
   readcounts       <- fread(paste0(outdir, '/readcounts.tsv'), na.strings = '')
-  
+
   readcounts.CAGE  <- readcounts
 }
 
-### dcDNA
+### settings
 outdir  <- 'LoRTIA_virus'; try({ dir.create(outdir) })
 project_config <- data.table(outdir = outdir)
 fwrite(project_config, 'project_config.txt')
 
-bamdir  <- "../LoRTIA_stranded_only"
-pattern <- '_stranded_only.bam'
-bamfiles <- grep('.bai', 
-                 list.files(bamdir, pattern, recursive = T, full.names = T), 
-                 invert = T, value = T)
 
-is.lortia <- T
 flag  <- scanBamFlag(isSupplementaryAlignment=FALSE)
 param <- ScanBamParam(what=scanBamWhat(), flag=scanBamFlag(isSupplementaryAlignment=FALSE))
 rm.gaps.in.aln <- T
+
+### dcDNA
+is.lortia <- T
+bamdir  <- "../LoRTIA_stranded_only"
+pattern <- '_stranded_only.bam'
+bamfiles <- grep('.bai',
+                 list.files(bamdir, pattern, recursive = T, full.names = T),
+                 invert = T, value = T)
+
+### dRNA
+#is.lortia <- F
+#bamdir  <- "C:/data/EHV-1/rebasecall/mapped"
+#pattern <- '.bam'
+#bamfiles <- grep('.bai',
+#                 list.files(bamdir, pattern, recursive = T, full.names = T),
+#                 invert = T, value = T)
+
 
 ##
 source('_WF.part1.R')
@@ -134,7 +145,7 @@ if(save.images) {
 ##
 #### WF Part 2. Read clustering into TRs ####
 
-if(is.lortia) { 
+if(is.lortia) {
   bam.all[,correct_tes := fifelse(grepl('correct', tag.l3) | grepl('correct', tag.r3), T, F)]
   bam.all[,correct_tss := fifelse(grepl('correct', tag.l5) | grepl('correct', tag.r5), T, F)]
 }
@@ -196,54 +207,54 @@ valid.TES.win <- 10
 validate_TES  <- T
 
 if (validate_TES) {
-  
+
   TR.ref[,transcript_prime3 := fifelse(strand == '+', transcript_end, transcript_start)]
   TR.ref[,transcript_prime5 := fifelse(strand == '-', transcript_end, transcript_start)]
-  
+
   valid.prime3 <- unique(TR.ref[,.(seqnames, transcript_start, transcript_end, transcript_prime3, transcript_prime5, strand)])
   valid.prime3 <- valid.prime3[,.(seqnames, strand, start = transcript_prime3 - valid.TES.win, end = transcript_prime3 + valid.TES.win)]
   valid.prime3 <- unique(valid.prime3)
   valid.prime3[,valid_tes := T]
-  
+
   aln.uni[,TR_prime3 := fifelse(strand == '+', TR_end, TR_start )]
   aln.uni[,TR_prime5 := fifelse(strand == '-', TR_end, TR_start )]
   aln.uni[,start := TR_prime3]
   aln.uni[,end   := TR_prime3]
-  
+
   prime3.TR.ov <- foverlaps2(aln.uni, valid.prime3, by.x=c('seqnames', 'strand', 'start', 'end'), by.y=c('seqnames', 'strand', 'start', 'end'), minoverlap = 1)
   prime3.TR.ov <- prime3.TR.ov[,.(seqnames, strand, TR_start, TR_end, TR_prime3, TR_prime5, correct_tss, correct_tes, aln_ID, TR_ID, start, end, sample)]
   prime3.TR.ov <- merge(prime3.TR.ov, valid.prime3, by=c('seqnames', 'strand', 'start', 'end'), all.x=T)
-  
+
   prime3.TR.ov[, start  := NULL]
   prime3.TR.ov[, end    := NULL]
   aln.uni[, start       := NULL]
   aln.uni[, end         := NULL]
-  
-  
+
+
   prime3.TR.ov <- merge(prime3.TR.ov, aln.uni, by=colnames(aln.uni), all=T)
   prime3.TR.ov[,valid_tes := fifelse(is.na(valid_tes), F, T)]
-  
+
   prime3.valid.corr.freq <- prime3.TR.ov[,.N, by=.(sample, correct_tes, valid_tes)]
-  
-  ggplot(prime3.valid.corr.freq) + 
+
+  ggplot(prime3.valid.corr.freq) +
     geom_col(aes(x=sample, y=N, fill=correct_tes), color='black') +
-    coord_flip() + 
+    coord_flip() +
     facet_wrap(~valid_tes, nrow=1) +
     theme_bw() +
     ggtitle('3-prime end result, according to ref mRNA TES')
-  
+
   ggsave(file.path(outdir, 'Ref_mRNA_TES_validation.jpg'), height = 12, width = 9)
-  
+
   prime3.TR.ov[, correct_tes := fifelse(valid_tes == T | correct_tes == T, T, F)]
   prime3.TR.ov[, valid_tes   := NULL]
-  
+
   keyby <- colnames(prime3.TR.ov)
   prime3.TR.ov <- unique(prime3.TR.ov[,]) ##.(), by=.()]
-  
+
   if(nrow(aln.uni) == nrow(prime3.TR.ov)) {
     aln.uni      <- prime3.TR.ov
   } else { stop() }
-  
+
 }
 
 TR.adapt.count <- aln.uni[,.(count=.N), by=.(seqnames, strand, TR_ID, TR_start, TR_end, correct_tss, correct_tes, sample)]
@@ -282,8 +293,8 @@ all.merged.result_gff.compare  <- fread(paste0(outdir, "/all.merged.result_gff.c
 
 ## find the closest ref-TR for each query
 ## categorise non-equal matches
-thresh.eq.prime5 <- 10 
-thresh.eq.prime3 <- 10 
+thresh.eq.prime5 <- 10
+thresh.eq.prime3 <- 10
 thresh.eq.junc   <- 2
 source('analyse_GFF.COMPARE.R')
 ## import results
@@ -338,7 +349,7 @@ gene.clusters.all <- unique(gene.clusters.all[,.(seqnames, TSS.canonic, TES.cano
 
 
 
-## filter some genes ? 
+## filter some genes ?
 genes_to_filter <- NULL # 'CTO-L'
 
 ## treat spliced transcripts differently?
@@ -370,12 +381,12 @@ if(save.images) {
 
 
 
-## Count coverages of GENE REGIONS (FROM TSS TO TES) 
+## Count coverages of GENE REGIONS (FROM TSS TO TES)
 source('count.gene.cov.R')
 cov.gene.ov.counts <- fread(paste0(outdir, '/cov.gene.ov.counts.tsv'), sep = '\t')
 
 
-## Count coverages of CDS 
+## Count coverages of CDS
 source('count.CDS.cov.R')
 cov.CDS.ov.counts <- fread(paste0(outdir, '/cov.CDS.ov.counts.tsv'), sep = '\t')
 
@@ -384,17 +395,17 @@ cov.CDS.ov.counts <- fread(paste0(outdir, '/cov.CDS.ov.counts.tsv'), sep = '\t')
 source('count.overlaps.R')
 
 
-## Finding ANY 10 Overlaps between exons and GENE REGIONS (FROM TSS TO TES) 
+## Finding ANY 10 Overlaps between exons and GENE REGIONS (FROM TSS TO TES)
 source('count.generegions.any10.R')
 TR.any10.generegion.counts <- fread(paste0(outdir, '/TR.any10.generegion.counts.tsv'), sep = '\t')
 
 
-## Finding ANY 10-nt Overlaps between exons and ORFs 
+## Finding ANY 10-nt Overlaps between exons and ORFs
 source('count.ORFs.any10.R')
 TR.any10.ORF.counts <- fread(paste0(outdir, '/TR.any10.ORF.counts.tsv'), sep = '\t')
 
 
-## Finding WITHIN Overlaps between exons and ORFs 
+## Finding WITHIN Overlaps between exons and ORFs
 source('count.ORFs.within.R')
 TR.within.ORF.counts <- fread(paste0(outdir, '/TR.within.ORF.counts.tsv'), sep = '\t')
 
@@ -504,7 +515,7 @@ fwrite(prime5.counts, paste0(outdir, '/prime5.counts.tsv'))
 ### Combine
 prime.counts  <- rbind(prime5.counts, prime3.counts)
 fwrite(prime.counts, paste0(outdir, '/prime.counts.tsv'))
-  
+
 
 ### Combine w CAGE
 prime5.counts <-  rbind(prime.counts[endtype == 'prime5'], prime.counts.CAGE[endtype == 'prime5'])
@@ -567,7 +578,7 @@ TR.counts.sp <- dcast(TR.adapt.count, TR_ID + correct_tss + correct_tes ~ sample
 #     Answer: No.
 
 
-##### NEW COUNT TABLE 
+##### NEW COUNT TABLE
 
 ## prime5 and prime3 counts from TR-table, considering adapters
 
@@ -600,11 +611,15 @@ fwrite(prime5.counts, paste0(outdir, '/prime5.counts.tsv'), sep = '\t')
 fwrite(cov.counts,    paste0(outdir, '/cov.counts.tsv'),    sep = '\t')
 
 
+
+
 ##### START PLOTTING FROM HERE
+#cov.counts    <- fread(paste0(outdir, '/cov.counts.tsv'),    na.strings = '')
+
 ## read back in
 prime5.counts <- fread(paste0(outdir, '/prime5.counts.tsv'), na.strings = '')
 prime3.counts <- fread(paste0(outdir, '/prime3.counts.tsv'), na.strings = '')
-cov.counts    <- fread(paste0(outdir, '/cov.counts.tsv'),    na.strings = '')
+
 
 
 ## filter now
@@ -624,13 +639,13 @@ if(norm) {
   prime5.counts[, count     := round((count/ sum_count) * 100, 3)]
   prime5.counts[, .(sum_count = sum(count)), by=colsby]
   prime5.counts[, sum_count := NULL]
-  
+
   colsby <- colnames(prime3.counts)[!colnames(prime3.counts) %in% c('pos', 'start', 'end', 'prime3', 'count')]
   prime3.counts[, sum_count := sum(count), by=colsby]
   prime3.counts[, count     := round((count/ sum_count) * 100, 3)]
   prime3.counts[, .(sum_count = sum(count)), by=colsby]
   prime3.counts[, sum_count := NULL]
-  
+
 }
 
 ## check if all the samples have the same library size
@@ -639,14 +654,14 @@ all(round(prime5.counts[,.(sum_count = (sum(count))), by=.(sample)][,sum_count],
 
 ##calculate the mean? otherwise, the plot will SUM the counts based on the "group" column
 calc.mean <- F
-## 
+##
 if(calc.mean) {
   prime3.counts <- prime3.counts[,.(count = round(mean(count), 2)), by=.(seqnames, strand, pos, correct_tes, hpi, Time, cell_line, group, endtype)]
   prime5.counts <- prime5.counts[,.(count = round(mean(count), 2)), by=.(seqnames, strand, pos, correct_tss, hpi, Time, cell_line, group, endtype)]
-  
+
   #prime5.counts <- unique(prime5.counts[,.(seqnames, strand, pos, correct_tss, count, hpi, Time, cell_line, group, endtype)])
   #prime3.counts <- unique(prime3.counts[,.(seqnames, strand, pos, correct_tes, count, hpi, Time, cell_line, group, endtype)])
-  
+
 }
 
 ##
@@ -659,7 +674,7 @@ prime3.counts[,prime3 := pos][,prime3 := NULL]
 plot.all.together <- T
 
 ## grouping
-combine.groups <- 'hpi' ## 'sample' ## OR:  
+combine.groups <- 'hpi' ## 'sample' ## OR:
 
 ## adapter settings
 adapter.setting <- 'v4'
@@ -669,6 +684,8 @@ tolower_gene_name <- F
 
 
 
+######## REVIEW
+
 #### Normalized
 file_name_suffix <- 'Mean_correct_norm'
 ##
@@ -676,22 +693,129 @@ ylim       <- NULL #c(0, 50) # c(-1000, 1000)
 
 ## prime5
 source('plot_prime5_area_settings.R')
-fig.dir <- '../EHV-1 dynamic article/Review 2024 nov'
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
 source('plot_prime5.R')
 
-ggsave(paste0(fig.dir, '/', 'Figure 1B_REVIEW_ori.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+ggsave(paste0(fig.dir, '/', 'Figure 1B_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
 #ggsave(paste0(fig.dir, '/', 'Figure 1B_REVIEW_ori.tif'), plot = FigY, height = 20, width = 36, limitsize = F, dpi=300)
 Fig1B <- Fig1
 
 
 ## prime3
 source('plot_prime3_area_settings.R')
-fig.dir <- '../EHV-1 dynamic article/Review 2024 nov'
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
 source('plot_prime3.R')
 
 Fig2B <- Fig2
 
-ggsave(paste0(fig.dir, '/', 'Figure 2B_REVIEW_ori.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+ggsave(paste0(fig.dir, '/', 'Figure 2B_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+
+
+
+#### ylim 0-500
+file_name_suffix <- 'Mean_correct_ylim500'
+##
+ylim       <- c(0, 500) # c(-1000, 1000)
+
+## prime5
+source('plot_prime5_area_settings.R')
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
+source('plot_prime5.R')
+
+ggsave(paste0(fig.dir, '/', 'Figure 1A_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+
+Fig1A <- Fig1
+
+
+## prime3
+source('plot_prime3_area_settings.R')
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
+source('plot_prime3.R')
+
+ggsave(paste0(fig.dir, '/', 'Figure 2A_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+
+Fig2A <- Fig2
+
+
+
+
+#### ylim 0-50
+file_name_suffix <- 'Mean_correct_norm'
+##
+ylim       <- c(0, 50) # c(-1000, 1000)
+
+## prime5
+source('plot_prime5_area_settings.R')
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
+source('plot_prime5.R')
+
+ggsave(paste0(fig.dir, '/', 'SuppFig 1B_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+#ggsave(paste0(fig.dir, '/', 'Figure 1B_REVIEW_ori.tif'), plot = FigY, height = 20, width = 36, limitsize = F, dpi=300)
+Fig1B <- Fig1
+
+
+## prime3
+source('plot_prime3_area_settings.R')
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
+source('plot_prime3.R')
+
+Fig2B <- Fig2
+
+ggsave(paste0(fig.dir, '/', 'SuppFig 2B_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+
+
+#### ylim 0-5000
+file_name_suffix <- 'Mean_correct_ylim500'
+##
+ylim       <- c(0, 5000) # c(-1000, 1000)
+
+## prime5
+source('plot_prime5_area_settings.R')
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
+source('plot_prime5.R')
+
+ggsave(paste0(fig.dir, '/', 'SuppFig 1A_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+
+Fig1A <- Fig1
+
+
+## prime3
+source('plot_prime3_area_settings.R')
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
+source('plot_prime3.R')
+
+ggsave(paste0(fig.dir, '/', 'SuppFig 2A_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+
+Fig2A <- Fig2
+
+
+
+
+######### ORIGINAL
+
+#### 0-5000
+file_name_suffix <- 'Mean_correct_norm'
+##
+ylim       <- c(0, 5000) # c(-1000, 1000)
+
+## prime5
+source('plot_prime5_area_settings.R')
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
+source('plot_prime5.R')
+
+ggsave(paste0(fig.dir, '/', 'SuppFig 1C_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+#ggsave(paste0(fig.dir, '/', 'Figure 1B_REVIEW_ori.tif'), plot = FigY, height = 20, width = 36, limitsize = F, dpi=300)
+Fig1B <- Fig1
+
+
+## prime3
+source('plot_prime3_area_settings.R')
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
+source('plot_prime3.R')
+
+Fig2B <- Fig2
+
+ggsave(paste0(fig.dir, '/', 'SuppFig 2C_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
 
 
 #### ylim500
@@ -701,22 +825,27 @@ ylim       <- c(0, 500) # c(-1000, 1000)
 
 ## prime5
 source('plot_prime5_area_settings.R')
-fig.dir <- '../EHV-1 dynamic article/Review 2024 nov'
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
 source('plot_prime5.R')
 
-ggsave(paste0(fig.dir, '/', 'Figure 1A_REVIEW_ori.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+ggsave(paste0(fig.dir, '/', 'SuppFig 1D_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
 
 Fig1A <- Fig1
 
 
 ## prime3
 source('plot_prime3_area_settings.R')
-fig.dir <- '../EHV-1 dynamic article/Review 2024 nov'
+fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
 source('plot_prime3.R')
 
-ggsave(paste0(fig.dir, '/', 'Figure 2A_REVIEW_ori.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+ggsave(paste0(fig.dir, '/', 'SuppFig 2D_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
 
 Fig2A <- Fig2
+
+
+
+
+
 
 
 
@@ -763,7 +892,7 @@ SFig2B <- Fig2
 #
 #### Coverage plots
 
-## 
+##
 file_name_suffix <- 'Mean_correct_ylim5000'
 ylim       <- c(-5000, 5000) # c(-1000, 1000)
 
@@ -772,7 +901,7 @@ source('plot_coverage.R')
 
 SFig3A <- Fig3
 
-## 
+##
 file_name_suffix <- 'Mean_correct_ylim500'
 ylim       <- c(-500, 500) # c(-1000, 1000)
 
@@ -781,7 +910,7 @@ source('plot_coverage.R')
 
 SFig3B <- Fig3
 
-## 
+##
 file_name_suffix <- 'Mean_correct_ylim50'
 ylim       <- c(-50, 50) # c(-1000, 1000)
 
@@ -912,7 +1041,7 @@ source('plot_prime3.R')
 ###
 
 ## coverage
-cov.counts <- data.table(data.frame(win.cov.sum[,.(pos = round(mean(c(window_end, window_start)),0), count=sum_coverage), 
+cov.counts <- data.table(data.frame(win.cov.sum[,.(pos = round(mean(c(window_end, window_start)),0), count=sum_coverage),
                                                 by=.(seqnames, sample, strand, group, hpi, Time, window_start )]))
 
 source('plot_coverage_area_bin50_settings.R')
@@ -928,10 +1057,10 @@ source('CAGE.R')
 TR.prime3 <- prime3.counts
 TR.prime3 <- TR.prime3[,.(seqnames, strand, sample, count, TR.prime3 = pos, hpi, cell_line, group)]
 
-##### Cluster the counts of the prime3, in th hpi12 samples with count as weight 
+##### Cluster the counts of the prime3, in th hpi12 samples with count as weight
 ## OMIT CAGE FOR NOW
-TR.prime3.sum <- unique(TR.prime3[cell_line == 'PK-15' & hpi == '12h' & !grepl('CAGE', group), 
-                                  .(sum_count = sum(count)), 
+TR.prime3.sum <- unique(TR.prime3[cell_line == 'PK-15' & hpi == '12h' & !grepl('CAGE', group),
+                                  .(sum_count = sum(count)),
                                   by=.(seqnames, strand, TR.prime3, hpi)])
 
 fwrite(TR.prime3.sum, paste0(outdir, '/DBScan.prime3.cluster.data.tsv'), sep='\t')
@@ -942,10 +1071,10 @@ TR.prime3.sum <- fread(paste0(outdir, '/DBScan.prime3.cluster.data.tsv'), na.str
 TR.prime5 <- prime5.counts
 TR.prime5 <- TR.prime5[,.(seqnames, strand, sample, count, TR.prime5 = pos, hpi, cell_line, group)]
 
-##### Cluster the counts of the prime5, in th hpi12 samples with count as weight 
+##### Cluster the counts of the prime5, in th hpi12 samples with count as weight
 ## OMIT CAGE FOR NOW
-TR.prime5.sum <- unique(TR.prime5[cell_line == 'PK-15' & hpi == '12h' & !grepl('CAGE', group), 
-                                  .(sum_count = sum(count)), 
+TR.prime5.sum <- unique(TR.prime5[cell_line == 'PK-15' & hpi == '12h' & !grepl('CAGE', group),
+                                  .(sum_count = sum(count)),
                                   by=.(seqnames, strand, TR.prime5, hpi)])
 
 fwrite(TR.prime5.sum, paste0(outdir, '/DBScan.prime5.cluster.data.tsv'), sep='\t')

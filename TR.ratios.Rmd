@@ -1,0 +1,1303 @@
+---
+title: "EHV-1 Genes' transcript ratios"
+author: Balázs Kakuk
+output: 
+  html_document:
+    theme: cosmo
+    toc: yes
+    toc_float:
+      collapsed: false
+---
+
+```{css, echo=FALSE}
+    body .main-container {
+      max-width: 90% !important;
+      width: 90% !important;
+    }
+    body {
+      max-width: 90% !important;
+      margin-left: auto;
+      margin-right: auto;
+    }
+```
+
+
+```{r include=FALSE}
+## hrbrthemes::ipsum:
+
+knitr::opts_chunk$set(fig.retina=2, echo = FALSE, fig.align = 'center', message = F, warning = F)
+```
+
+```{r ipsum_setup, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+library(prettydoc)
+library(hrbrthemes, quietly = T)
+#library(GenomicFeatures, quietly = T)
+library(DESeq2, quietly = T)
+library(ggpubr, quietly = T)
+#library(misc, quietly = T)
+library(dplyr, quietly = T)
+#library(tidyverse, quietly = T)
+library(ggsci, quietly = T)
+#library(Gviz, quietly = T)
+library(dplyr, quietly = T)
+library(tidyr)
+library(scales)
+#library(plyr)
+library(grid, quietly = T)
+library(gridExtra, quietly = T) 
+library(ggpubr, quietly = T)
+library(data.table)
+library(ggh4x)
+library(knitr)
+library(formattable)
+library(ggrepel)
+library(utils)
+
+#library(moanin, quietly = T)
+#library(stageR); library(edgeR) ; library(Biobase)
+#library(limma) ; library(DEXSeq)
+
+dontrun <- T
+source('customclust.R')
+source('mclust.R')
+
+
+###
+viral.ref <- "NC_001491.2.mRNA_corrected.gff3"
+source('_WF.part0.R')
+
+#### Settings ####
+
+## Main
+#save.data <- 'PRV.rebase.RData'
+EndType <- 'CAGE'
+
+project_config  <- fread('project_config.txt')
+outdir  <- project_config$outdir
+res.dir <- outdir; try({ dir.create(res.dir) })
+fig.dir <- paste0(res.dir, '/', EndType); try({ dir.create(fig.dir) })## save plots to this directory
+
+## Miscallenaous
+colorvec <- na.omit(c(
+  colorvec[c(1:5,15,13,10,24,7,26,32,33)],
+  colorvec[-c(1:5,15,13,10,24,7,26,32,33)]))
+
+colorvec <- colorvec[-c(9,13)]
+
+
+colorvec <- colorvec[-c(10,13,17,18)]
+
+colorvec <- colorvec[c(1:2,14,3:length(colorvec))]
+
+
+palette  <- colorvec #pal_npg()(10)
+
+writetables <- T
+
+
+#### For Gene/Transcript plotting
+
+## Gene Feature annotation
+
+
+genome.plotdata <- make.genome.plot.data(feature.df, feature.col = 8, feature.name = 'ID')
+genome.plotdata$strand <- factor(genome.plotdata$strand, levels = c('+', '-', '*'))
+gene.plotdata <- genome.plotdata
+## GENE NAMES !
+gene.plotdata$gene_name <- gsub('_.*', '', gene.plotdata$gene)
+#gene.plotdata$start > gene.plotdata$end
+## Misc
+alpha <- data.frame(cov_geom        = 0.6,
+                    gene_geom       = 0.75,
+                    unstranded_geom = 0.75)
+
+
+
+```
+
+# Project info
+*Samples: dcDNA Seq*  
+*pychopper: no*  
+*mapping version: v6*  
+*LoRTIA: yes (stranded only)*  
+
+*Filtering samples: C6_2h_3 & PC-12_8h_3*  
+
+## Only those reads were counted, where LoRTIA found *both* 5- and 3-prime adapters!
+
+```{r}
+
+TR.gff.compare.uni.CAGE     <- fread(paste0(outdir, '/TR.gff.compare.uni.CAGE.tsv'), na.strings = '')
+TR.data <- fread(paste0(outdir, '/TR.data.tsv'), na.strings = '')
+TR.reads.gfffile <- paste0(outdir, '/TR.reads.gff2')
+TR.gff <- data.table(as.data.frame(rtracklayer::import.gff2(TR.reads.gfffile)))
+
+
+```
+
+
+```{r}
+#### Import transcript and gene (cluster) counts
+TR.gene.cluster <- fread(paste0(outdir, '/', 'TR.gene.cluster.tsv'), na.strings = '')
+
+
+#### Import Toram et al annotation transferred from Kaplan
+source('import.ref.TRs.R')
+
+#### Reference annotation with CAGE results
+TR.merged.data <- fread(paste0(outdir, '/TR.Ref.data.CAGE.tsv'))
+
+#### Read-transcripts counts with adapter info
+TR.adapt.count  <- fread(paste0(outdir, '/TR.adapt.count.tsv'), na.strings = '')
+
+#### consider adapters?
+# possible values : adapters <- 'both' | 'either' | 'any' | 'prime5' | 'prime3'
+adapters <- 'both'
+       if(adapters == 'both') {
+  TR.adapt.filt <- TR.adapt.count[correct_tss == T & correct_tes == T]
+  
+} else if(adapters == 'either') {
+  TR.adapt.filt <- TR.adapt.count[correct_tss == T | correct_tes == T, .(count = sum(count)), by=.(seqnames, strand, TR_ID, sample)]
+  
+} else if(adapters == 'any') {
+  TR.adapt.filt <- TR.adapt.count[, .(count = sum(count)), by=.(seqnames, strand, TR_ID, sample)]
+  
+} else if(adapters == 'prime5') {
+  TR.adapt.filt <- TR.adapt.count[correct_tss == T, .(count = sum(count)), by=.(seqnames, strand, TR_ID, sample)]
+  
+} else if(adapters == 'prime3') {
+  TR.adapt.filt <- TR.adapt.count[correct_tes == T, .(count = sum(count)), by=.(seqnames, strand, TR_ID, sample)]
+  
+}
+setnames(TR.adapt.filt, 'TR_ID', 'transcript_id')
+
+###### Merge with read-transcript counts (possible filtered) #####
+TR.gene.cluster.counts <- merge(TR.gene.cluster, 
+                                TR.adapt.filt[,.(sample, transcript_id, count)],
+                                by=c('transcript_id')
+                                #all.x=T, 
+                                #allow.cartesian=TRUE
+                                )
+```
+
+
+```{r}
+#### summarise read-transcripts into ref transcripts
+TR.ref.sum      <- TR.gene.cluster.counts[,.(read_count = sum(count)),  
+  by=.(seqnames, gene_region, gene_cluster, gene, cmp_ref, Ref_Class, class_code, Kinetic_class, sample)]
+
+
+## melt to get 0 counts
+orf.counts <- dcast(TR.ref.sum, seqnames + gene_region + gene_cluster + gene + Kinetic_class + Ref_Class + class_code + cmp_ref ~ sample, value.var = 'read_count')
+orf.perc   <- melt(orf.counts, variable.name = 'sample', value.name = 'read_count', id.vars = colnames(orf.counts)[1:8])
+orf.perc[is.na(read_count), read_count := 0]
+
+TR.ref.sum   <- orf.perc
+## merge back for transcript strand
+TR.ref.sum  <- merge(unique(TR.genes[,.(seqnames, strand, transcript_id)]), 
+                     TR.ref.sum, by.y=c('seqnames', 'cmp_ref'), by.x=c('seqnames', 'transcript_id'))
+setnames(TR.ref.sum, 'transcript_id', 'cmp_ref')
+## and metadata
+TR.ref.sum  <- merge(TR.ref.sum, metafilt[,metacols], by=c('sample'), all.x=T)
+
+
+
+## Factorize Kinetic classes
+TR.ref.sum[is.na(Kinetic_class), Kinetic_class := 'unknown']
+TR.ref.sum[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
+
+
+```
+
+
+
+```{r, eval=F}
+#### Keep spliced genes only
+spliced.genes <-  unique(TR.ref[exon_number > 1, gene_id])
+
+message('Keeping spliced genes only!')
+message('genes, other than: \n', paste(spliced.genes, collapse = '\n'), ' were filtered out!' )
+
+## All Transcripts of Spliced Genes
+spliced.TRs <- unique(viral.mrna[gene_id %in% spliced.genes, transcript_id]) 
+
+TR.ref.sum  <- TR.ref.sum[ gene %in% spliced.genes, ]
+
+```
+
+
+
+```{r, eval=T}
+#### Completely omit all non-validated isoform!
+keep_equal_only <- T
+class.code.tofilt <- '='
+if(keep_equal_only) {
+  TR.ref.sum <- TR.ref.sum[class_code %in% class.code.tofilt]
+  message('Only the Reference Isoforms were kept, 
+          all reads that are notequal ("=") to these, were omitted!')
+}
+```
+
+
+
+```{r, eval=T}
+#### Use the "gene" from the annotation, not the counting algorithm 
+use_gene_from_annot <- T
+
+if(use_gene_from_annot) {
+  TR.ref.sum[,gene         := NULL]
+  TR.ref.sum[,gene_cluster := NULL]
+  
+  TR.ref.sum.m <- merge(TR.ref.sum[],
+                      TR.genes[,.(gene = gene_id, seqnames, strand, transcript_id)],
+                      by.x=c('seqnames', 'strand', 'cmp_ref'),
+                      by.y=c('seqnames', 'strand', 'transcript_id'),
+                      all=F )
+  TR.ref.sum.m <- merge(TR.ref.sum.m[],
+                        unique(gene.clusters.all[, .(seqnames, strand, gene, gene_cluster)]),
+                        by=c('seqnames', 'strand', 'gene'), all.x=T)
+  if(nrow(TR.ref.sum.m) == nrow(TR.ref.sum)) { 
+    message('The genes were assigned to the transcripts based on the Reference annotation!')
+    TR.ref.sum <- TR.ref.sum.m
+    rm(TR.ref.sum.m)
+  } else {stop ()}
+}
+```
+
+## Correct some genes in the annotation
+```{r, eval=T}
+
+
+correct_genes_with <- "NC_001491.2.mRNA_correct_genes_with.gff3"
+correct_genes_with <- data.table(as.data.frame(rtracklayer::import.gff(correct_genes_with, version='3')))
+#if(nrow(viral.ref[ID != transcript_id]) != 0 ) { stop('The IDs do not match for these transcripts: ', viral.ref[ID != transcript_id])}
+correct_genes_with[type=='exon', exon_number := 1:.N, by = .(transcript_id)]
+correct_genes_with <- correct_genes_with[type == 'mRNA', .(seqnames, source, type, phase, strand, start, end, transcript_id, Name, ID, gene_id, ORF_id)]
+
+
+TR.ref.sum.corr <- merge(TR.ref.sum, 
+                           correct_genes_with[,.(transcript_id, gene_id)],
+                           by.x = c('cmp_ref'),
+                           by.y = c('transcript_id'), 
+                           all.x=T)
+
+TR.corr <- unique(TR.ref.sum.corr[gene != gene_id, cmp_ref])
+
+TR.ref.sum.corr <- TR.ref.sum.corr[gene != gene_id, ]
+TR.ref.sum.corr[,gene := gene_id]
+TR.ref.sum.corr[,gene_id := NULL]
+
+
+TR.ref.sum <- rbind(
+  TR.ref.sum.corr,
+  TR.ref.sum[!cmp_ref %in% TR.corr, ]
+)
+
+#
+
+
+```
+
+DO NOT Filter second copies of genes, as in some cases there are transcripts from only one of the copies
+```{r, eval=T}
+filter_second_copy_genes <- F
+
+if(filter_second_copy_genes) {
+  ## Filter second copies of genes and rename first copy
+  genes_to_filter <- grep('_2', unique(TR.ref.sum[, gene]), value = T)
+  if(exists('genes_to_filter')) {
+    message('The following genes were filtered out for counting: \n', paste(genes_to_filter, collapse = '\n'))
+    TR.ref.sum <- TR.ref.sum[ ! gene %in% c(genes_to_filter), ]
+  } else (message('No genes were filtered out for counting!'))
+  
+  if (all(
+    gsub('_.*', '', grep('_', unique(TR.ref.sum[ , gene]), value = T)) %in%
+    gsub('_.*', '', genes_to_filter)
+  )) {
+    
+    TR.ref.sum[, gene         := gsub('_.*', '', gene)]
+    TR.ref.sum[, gene_region  := gsub('_.*', '', gene_region)]
+    TR.ref.sum[, gene_cluster := gsub('_.*', '', gene_cluster)]
+    
+    gene_regions <- unique(gsub('_.*', '', gene_regions))
+    
+    gene.plotdata <- data.frame(data.table(gene.plotdata)[!gene %in% genes_to_filter, ])
+    #gene.plotdata[, gene         := gsub('_.*', '', gene)]
+    #gene.plotdata[, gene         := gsub('_.*', '', gene)]
+    #gene.plotdata <- unique(gsub('_.*', '', gene_regions))
+    
+  }  
+} else {
+  
+  ## check for genes with two copies
+  genes_to_filter <- grep('_2|_1', unique(TR.ref.sum[, gene]), value = T)
+  
+  ## assign Parent to them
+  TR.ref.sum[gene %in% genes_to_filter, parent := gsub('_.*', '', gene)]
+  ## we need to remove gene cluster as its not always the same
+  TR.ref.sum[gene %in% genes_to_filter, gene_cluster := gsub('_.*', '', gene)]
+  TR.ref.sum[gene %in% genes_to_filter, gene_region  := gsub('_.*', '', gene)]
+
+  ## and overwrite gene as well
+  TR.ref.sum[gene %in% genes_to_filter, gene := gsub('_.*', '', gene)]
+  
+  
+    
+}
+
+
+
+  
+#unique(TR.ref.sum[, gene_cluster])
+```
+
+
+```{r, eval=F}
+### Filtering of very-low coverage samples
+samples_to_filt <- c('C6_2h_3', 'PC-12_8h_3')
+
+
+metafilt <- metafilt[!metafilt$sample %in% samples_to_filt, ]
+
+TR.ref.sum <- TR.ref.sum[!sample %in% samples_to_filt, ]
+
+message(paste(samples_to_filt, ' was filtered out!', collapse = '\n') )
+
+```
+
+
+###
+
+```{r, eval=F}
+### Torma and Fulop annotation and check
+
+TX_nov_gff <- fread('EHV_transcript.tsv')
+#TX_nov_gff[,All_Attributes := paste(c(paste(c(Attributes, TX_category), collapse = ';TX_Type='), gene_id, ORF_id, Name, ID), collapse=';'), by=.(ID)]
+#TX_nov_gff <- TX_nov_gff[,.(Contig, Source, Type, `Start`, `End`, Score, Strand, Phase, All_Attributes)]
+TX_nov_gff[,Attributes := NULL]
+colnames(TX_nov_gff)[1:8]  <- c('seqnames', 'source', 'type', 'start', 'end', 'score', 'strand', 'phase')
+
+rtracklayer::export.gff3(as.data.frame(TX_nov_gff), 'EHV_transcript.gff3')
+```
+
+
+```{r}
+TX_nov_gff <- as.data.table(as.data.frame(rtracklayer::import.gff3('EHV_transcript.gff3')))
+TX_nov_gff[, final_TX_ID := paste0('novTX_', final_TX_ID)]
+
+
+final_tx_nov_clust <- fread('final_tx_nov_clust.tsv', na.strings = '')
+final_tx_nov_clust[, final_TX_ID := paste0('novTX_', final_TX_ID)]
+```
+
+
+##
+```{r}
+### merge the new transcripts into the original and omit those in the ori that were used to generate them
+
+#sum(!trids.spliced %in% trids) ## OK
+
+TR.merged.data.nov <- TX_nov_gff#[,.(transcript_id = gene=gene_id, )]
+TR.merged.data.nov[,":="(transcript_id=final_TX_ID, class_code=TX_category,
+                              gene=gene_id, gene_cluster=gene_id, gene_region=gene_id, 
+                              exon_number=1, start.TR=start, end.TR=end, start.exon=start, end.exon=end, last_exon=T
+                              )]
+TR.merged.data.nov[,Ref_Class := paste(gene, class_code, final_TX_ID, sep = '-'), by=transcript_id]
+TR.merged.data.nov[,":="(prime5.TR = fifelse(strand =='+', start, end), 
+                              prime5.ex = fifelse(strand =='+', start, end), 
+                              prime3.TR = fifelse(strand =='+', end, start), 
+                              prime3.ex = fifelse(strand =='+', end, start)) ]
+# OK 
+## merge with CAGE
+
+TR.merged.data.nov <- merge(TR.merged.data.nov, 
+                                 unique(final_tx_nov_clust[,.(final_TX_ID=as.character(final_TX_ID), CAGE_ID, CAGE_significance, CAGE.cluster.start, CAGE.cluster.end, support)]),
+                                 by='final_TX_ID', all.x=T )
+
+TR.merged.data.nov[,thick.start := NA][, thick.end := NA]
+
+
+TR.merged.data.nov[,transcript_id := Ref_Class]
+
+
+cnames <- colnames(TR.merged.data)
+
+TR.merged.data.nov <- unique(TR.merged.data.nov[,..cnames])
+```
+
+
+```{r}
+TR.merged.data <- rbind(TR.merged.data, 
+                        TR.merged.data.nov[,..cnames], fill=F)
+
+
+```
+
+
+##
+```{r}
+TX_nov_gff <- as.data.table(as.data.frame(rtracklayer::import.gff3('EHV_transcript.gff3')))
+TX_nov_gff[, final_TX_ID := paste0('novTX_', final_TX_ID)]
+
+### merge the new transcripts into the original and omit those in the ori that were used to generate them
+
+TR_IDs_nov    <- unique(final_tx_nov_clust[,.(transcript_id, TX_ID, TX_nov_ID, final_TX_ID)])
+
+TR_counts_nov <- merge(TR.adapt.filt, TR_IDs_nov, by='transcript_id')
+
+
+TR_counts_final <- TR_counts_nov[,.(read_count = sum(count)), by=.(seqnames, strand, final_TX_ID, sample)]
+
+#sum(!trids.spliced %in% trids) ## OK
+#TR.ref.sum[Ref_Class == cmp_ref]
+
+TR.ref.sum.nov <- TX_nov_gff#[,.(transcript_id = gene=gene_id, )]
+TR.ref.sum.nov[,":="(final_TX_ID=final_TX_ID, class_code=TX_category, parent=NA, Kinetic_class = 'unknown',
+                     gene=gene_id, gene_cluster=gene_id, gene_region=gene_id)]
+
+TR.ref.sum.nov[,Ref_Class := paste(gene, class_code, final_TX_ID, sep = '-'), by=final_TX_ID]
+TR.ref.sum.nov[,cmp_ref   := Ref_Class]
+
+TR.ref.sum.nov <- TR.ref.sum.nov[,.(final_TX_ID, cmp_ref, seqnames, strand, gene, gene_region, Kinetic_class, Ref_Class, class_code, gene_cluster, parent)]
+
+# OK 
+
+TR.ref.sum.nov <- merge(TR.ref.sum.nov, TR_counts_final, by=c('seqnames', 'strand', 'final_TX_ID'))
+TR.ref.sum.nov[,final_TX_ID := NULL]
+
+
+## melt to get 0 counts
+orf.counts.nov <- dcast(TR.ref.sum.nov, seqnames + strand + gene_region + gene_cluster + gene + Kinetic_class + Ref_Class + class_code + cmp_ref + parent ~ sample, value.var = 'read_count')
+orf.perc.nov   <- melt(orf.counts.nov, variable.name = 'sample', value.name = 'read_count', id.vars = c(1:10))
+orf.perc.nov[is.na(read_count), read_count := 0]
+
+TR.ref.sum.nov   <- orf.perc.nov
+
+## and metadata
+TR.ref.sum.nov  <- merge(TR.ref.sum.nov, metafilt[,metacols], by=c('sample'), all.x=T)
+
+
+```
+
+
+```{r}
+TR.ref.sum <- rbind(TR.ref.sum, 
+                    TR.ref.sum.nov, fill=F)
+
+
+```
+
+
+
+
+###
+
+```{r}
+
+orf.sum  <- TR.ref.sum
+orf.perc <- orf.sum
+
+
+#orf.perc[grepl('1h', sample),.(sum_read_count=sum(read_count)), by=.(gene, sample)][sum_read_count != 0]
+```
+
+
+```{r, eval=F}
+## THE COUNTS ARE NORMALIZED TO THEIR RESPECTIVE PARENT GENE OR GENE/CLUSTER COUNTS AND NOT FOR LIBRARY SIZE OR OTHER !
+
+### Normalize counts
+
+#### Normalization method
+norm.method <- 'average_genome'
+multip      <- 10000
+
+ if (norm.method == 'average_genome') {
+  
+  ## Average genome norm method
+  norm_cov_summary <-  fread(paste0(outdir, '/norm.cov.summary.tsv'))
+  normBase <- norm_cov_summary[,.(sample, average_coverage)]
+  colnames(normBase)[2] <- 'norm_base'
+  
+  fig.dir <- paste0(fig.dir, '.norm_genome')
+
+} else if (norm.method == 'viral_read.count') {
+    
+  ## Viral read count method
+  # sum up all the ORF counts
+
+  normBase <- melt(gene.sample_count.sp, variable.name = 'sample', value.name = 'count')
+  normBase <- normBase[,.(norm_base = sum(count)), by=sample]
+  
+  fig.dir <- paste0(fig.dir, '.norm_LoRTIA')
+  
+} else if (norm.method == 'total_read.count') {
+  ## For total read count method
+
+  # This is not the LoRTIA-processed read counts, so each read is counted twice because they are from dcDNA that contains both orientations. 
+  # But since this is true for both the virus and the host, this will cause each ORF to be estimated down approx 2-fold but in an unbiased way.
+
+  normBase <- fread('../rebasecall/read_count.fastq.txt')
+  normBase[ , sample := gsub('.fastq', '', file)]
+  normBase[ , norm_base := read_count]
+  normBase <- normBase[,.(sample, norm_base)]
+  
+  fig.dir <- paste0(fig.dir, '.norm_total')
+  
+} else if (norm.method == 'host_read.count') {
+  ## For total HOST read count method
+
+  # This is not the LoRTIA-processed read counts, so each read is counted twice because they are from dcDNA that contains both orientations. 
+  # But since this is true for both the virus and the host, this will cause each ORF to be estimated down approx 2-fold but in an unbiased way.
+  # Currently this is the unmapped read count!
+
+  normBase <- fread('../rebasecall/read_count.txt')
+  #normBase[ , sample := gsub('.fastq', '', file)]
+  #normBase <- normBase[,.(sample, unmapped)]
+  normBase[ , norm_base := unmapped]
+  normBase <- normBase[,.(sample, norm_base)]
+  
+  fig.dir <- paste0(fig.dir, '.norm_host')
+  
+} else if (norm.method == 'WO') {
+  
+  ## NO normalization of counts
+
+  normBase <- fread('../rebasecall/read_count.txt')
+  normBase[ , norm_base := 1]
+  normBase <- normBase[,.(sample, norm_base)]
+  
+  fig.dir <- paste0(fig.dir, '.norm_Without')
+  
+}
+
+try({ dir.create(fig.dir) })
+
+##
+normBase <- normBase[order(normBase$sample, colnames(orf.counts)[-c(1:6)]), ]
+stopifnot(all(normBase$sample == colnames(orf.counts)[-c(1:6)] ))
+
+orf.perc <- merge(normBase, orf.sum, by='sample')
+orf.perc[,read_count := read_count / norm_base]
+
+```
+
+
+
+
+# Counts based on iterative GFF-compare results  
+
+This was done as follows:  
+
+1. The reference transcripts were compared individually/iteratively to the reads.  
+2. The distances between the reads and each reference transcript hit were calculated.
+3. For each read, the most similar reference transcript was assigned (lowest distance).  
+4. Additionally, these distances must had fulfill the following rules: 
+*max prime5 distance <= 10*  
+*max prime3 distance <= 10*  
+*exon/intron junction difference <= 2*  
+
+5. Thus based on these, the read counts for each reference transcript were assessed.
+6. The transcripts were then assigned to their parent genes (by Torma G) and their ratio (isoform ratio) was calculated as follows:  
+*isoform ratio = transcript isoform count / total gene count*  
+
+7. Those reads that could not be assigned to the reference transcripts were assigned to their parent genes, based on their 5-prime ends and independently to their parent gene cluster, based on their 3-prime ends.  
+So the reads are either:  
+- assigned to a reference transcript
+- could not not be assigned to a ref TR, in which case they were:  
+  1. assigned to their parent gene based on their *5-prime* end overlapping with the gene's *TSS*  
+  2. assigned to their parent gene-cluster based on their *3-prime* end overlapping with the cluster's *TES*  
+  3. assigned to both  
+
+
+
+## 1. Kinetics of Reference Transcript Isoforms, according to their host gene {.tabset}
+
+The reads were assigned to their parent gene based on their *5-prime* end overlapping with the gene's *TSS*  
+(but not necessarily with the gene cluster's TES)
+
+```{r}
+#### NO NORMALIZATION HERE
+orf.perc[,norm_base := 1]
+
+#### Keep only those reads, which could be assigned to a gene (based on '=' ref transcripts or 5-prime overlaps)
+orf.sum <- orf.perc[!is.na(gene),]
+
+
+#### Summarize the counts on Ref_Class and Gene
+ref.sum      <- orf.sum[, 
+                        .(read_count = sum(read_count)),
+                        by=.(seqnames, gene, Ref_Class)]
+
+#### Exclude Reference Isoforms with counts below the threshold
+Ref.class.thresh <- 5
+Ref.class.tofilt <- ref.sum[read_count < Ref.class.thresh, Ref_Class]
+
+if(length(Ref.class.tofilt) > 0) {
+  message('The following Reference Isoforms (n=', length(Ref.class.tofilt), ') had total counts below the threshold (', Ref.class.thresh, ')
+across every sample, and thus were filtered out from the counting: \n', 
+  paste(Ref.class.tofilt, collapse = '\n'))
+  
+  orf.sum <- orf.sum[!Ref_Class %in% Ref.class.tofilt]
+  
+} else (message('No Reference Isoforms were filtered out for counting!'))
+
+
+
+#### Overwite Ref_class for simplicity (either Reference Isoform name or class code)
+orf.sum[,Ref_Class := ifelse(class_code == '=', cmp_ref, class_code)]
+
+
+#### DO NOT !! Summarize the counts on Ref_Class and Gene
+#### WHY NOT ???? 
+#orf.sum      <- orf.sum[, .(read_count = sum(read_count)),
+#                        by=.(seqnames, gene, Ref_Class, Kinetic_class, sample, norm_base, group, hpi, Time, cell_line)]
+##
+orf.sum.perc <- orf.sum
+
+
+### Summarise counts to get mean count per gene
+## sum counts per gene
+orf.sum.perc[,sum_read_count  := sum(read_count),  
+             by=.(seqnames, gene, norm_base, sample, group, hpi, Time, cell_line)]
+## normalize counts per gene
+orf.sum.perc[,norm_read_count := read_count / sum_read_count] 
+orf.sum.perc[is.na(norm_read_count), norm_read_count := 0] 
+
+
+## statistics of normalized counts
+orf.perc.mean <- orf.sum.perc[,.(mean=mean(norm_read_count), sd=sd(norm_read_count), varcoeff=sd(norm_read_count) / mean(norm_read_count)), 
+                             by=.(seqnames, gene, gene_cluster, gene_region, Ref_Class, Kinetic_class, group, hpi, Time, cell_line)]
+
+## merge back summary with counts
+orf.sum.perc <- merge(orf.sum.perc, orf.perc.mean, 
+                      by=c('seqnames', 'Ref_Class', 'gene', 'gene_cluster', 'gene_region', 'Kinetic_class',  'hpi', 'Time', 'cell_line', 'group'))
+
+
+
+## add a group ID to the isoforms
+TR.genes.ID <- unique(orf.sum.perc[,.(gene, Ref_Class)])
+TR.genes.ID[,Isoform_nr :=  seq(1,n_distinct(Ref_Class)), by=.(gene)]
+TR.genes.ID[,Isoform_nr :=  as.factor(as.character(Isoform_nr))]
+
+orf.sum.perc <- merge(orf.sum.perc, TR.genes.ID, by=c('gene', 'Ref_Class'), allow_cartesian=T)
+
+## Merge with gff-compare class-code descriptions 
+
+orf.sum.perc <- merge(orf.sum.perc, gff_compare_classes[,.(`Class Code`, Description = `One-word Description`)], by.x=c('Ref_Class'), by.y=c('Class Code'), all.x=T)
+
+orf.sum.perc[ , Ref_Class := fifelse(is.na(Description), Ref_Class, paste0(Description, ' ("', Ref_Class, '")')) ]
+
+
+## Add replicate nr.
+orf.sum.perc[, rep := factor(gsub('.*h_', '', sample))]
+orf.sum.perc[, hpi := factor(hpi, levels=as.character(levels(metafilt$hpi)))]
+
+## Include novel combinations
+#genes_and_clusters <- na.omit(unique(orf.sum.perc[, .(gene, gene_cluster)]))[, .(CompleteList = append_cluster(gene, gene_cluster)), by = gene_cluster]
+
+# Combine all results into one vector and ensure uniqueness
+#gene_regions  <- unique(c(gene_regions, unique(unlist(genes_and_clusters$CompleteList)) ))
+
+
+
+## Factorize genes and clusters
+
+gm  <-  setdiff(unique(na.omit(orf.sum.perc[,gene])), gene_regions)
+gcm <-  setdiff(unique(na.omit(orf.sum.perc[,gene_cluster])), gene_regions)
+grm <-  setdiff(unique(na.omit(orf.sum.perc[,gene_region])), gene_regions)
+ga  <-  unique(c(gm, gcm, grm))
+
+if(length(ga) != 0 ) {
+  gene_regions <- c(ga, gene_regions)
+  message(paste0(ga, collapse=' ;'), ' was (were) not in the gene list, so it (they) was (were) added!')
+}
+
+orf.sum.perc[,gene         := factor(gene,         levels=gene_regions)]
+orf.sum.perc[,gene_cluster := factor(gene_cluster, levels=gene_regions)]
+orf.sum.perc[,gene_region  := factor(gene_region,  levels=gene_regions)]
+
+# sum read counts in 1h
+#orf.perc[grepl('1h', sample),.(sum_read_count=sum(read_count)), by=.(gene, sample)][sum_read_count != 0]
+#orf.sum.perc[grepl('1h', sample),.(sum_read_count=sum(read_count)), by=.(gene, sample)][sum_read_count != 0]
+```
+
+
+Merge annotation with RefClass
+```{r}
+
+TR.merged.data <- merge(unique(TR.ref.sum[,.(cmp_ref, Ref_Class, gene, gene_cluster, gene_region)]),
+                        #unique(orf.sum.perc[,.(cmp_ref, Ref_Class, gene, gene_cluster, gene_region)]), 
+                        TR.merged.data, 
+                        by.x='cmp_ref', by.y='transcript_id', all.y=T)
+colnames(TR.merged.data)[1] <- 'transcript_id'
+
+
+TR.merged.data.gene <- data.table(as.data.frame(TR.merged.data))
+```
+
+
+
+Exclude those ref transcripts that were not observed (or observed under the threshold) from the annotation as well
+```{r, eval=T}
+## exclude those ref transcripts that were not observed (or observed under the threshold)
+## from the annotation as well
+
+TRs.to.plot <- unique(orf.sum.perc$cmp_ref)
+
+
+TR.merged.data.gene <- TR.merged.data.gene[transcript_id %in% TRs.to.plot,]
+
+```
+
+
+```{r}
+
+#TR.merged.data.gene[grep('novTX', transcript_id), Ref_Class := paste0(gene, '-')]
+#orf.sum.perc[grep('novTX', cmp_ref), Ref_Class := paste0(Ref_Class, ' - this work')]
+
+orf.sum.perc[grep('novTX', cmp_ref), Ref_Class := cmp_ref]
+
+```
+
+
+```{r}
+## Filter based on transcript ratio
+orf.sum <- orf.sum.perc
+orf.sum[, sum_abundance  := sum(norm_read_count), by=.(Ref_Class, gene, hpi)]
+orf.sum[, mean_abundance := max(norm_read_count), by=.(Ref_Class, gene, hpi)]
+orf.sum[, min_abundance  := min(norm_read_count), by=.(Ref_Class, gene)]
+orf.sum[, max_abundance  := max(norm_read_count), by=.(Ref_Class, gene)]
+
+
+orf.sum <- unique(orf.sum[,.(Ref_Class, gene, hpi, mean_abundance, sum_abundance, min_abundance, max_abundance)])
+
+trs.tofilt <- unique(orf.sum[max_abundance < 0.01, Ref_Class])
+
+
+orf.sum.perc        <- orf.sum.perc[!Ref_Class %in% trs.tofilt,]
+TR.merged.data.gene <- TR.merged.data.gene[!Ref_Class %in% trs.tofilt,]
+
+```
+
+
+# Plotting
+
+
+Annotation plotting function
+```{r}
+
+figw  <- 20
+figh  <- 9
+
+gene.sizes <- data.frame(gene_arrowhead_height=4,
+                         gene_arrow_body_height=3,
+                         gene_label_height=2.7,   ## size of gene label text
+                         gene_feature_height=2, ## lineheight of feature line
+                         gene_feature_width=5,
+                         gene_feature_label_height=-5.0, ## distance of gene label from gene arrow
+                         gene_feature_label_text=5,
+                         unstranded_rect_height=0.5,
+                         unstranded_feature_height=6,
+                         unstranded_feature_width=6,
+                         unstranded_feature_label_height=5,
+                         unstranded_feature_label_text=6,
+                         genome_feature_arrowhead_height=2.5,
+                         genome_feature_arrow_body_height=2.5
+)
+
+transcript.sizes <- data.frame(
+  transcript.label.size = 2,
+  exon.rect_height = 0.1, exon.rect.linewidth=0.01,  
+  intron.linetype = 'dashed', intron.linewidth = 0.1)
+
+sizes <- 6
+
+
+scales <- 'fixed'
+
+## scale of annotation to coverage
+genomplot.scale <- 6
+
+breakseq <- 2000
+
+## plot size
+width <- 35; height <- 14
+
+
+ylims.gene <- c(10, -5) ## NULL
+
+gene_to_plot <- 'NOIR'
+
+vis_win <- 500
+
+ann.plotfun <- function(gene_to_plot, plot.data=plot.data, 
+                        visfrom = NULL, visto = NULL, vis_win=500, 
+                        TR.merged.data.gene = NULL, 
+                        breakseq=5000,
+                        ...) {
+  
+  if(is.null(visfrom) & is.null(visto)) {
+    visfrom <- min(gene.plotdata$start[gene.plotdata$gene_name == gene_to_plot]) - vis_win
+    visto   <- max(gene.plotdata$end  [gene.plotdata$gene_name == gene_to_plot]) + vis_win
+  }
+
+  
+  ggann <- plot.genome.region(visfrom = visfrom, visto = visto, 
+                     genome=genome, plot.data=plot.data, gene.plotdata=gene.plotdata, TR.merged.data=TR.merged.data.gene,
+             geom = geom_bar(), geom2 = NULL,
+             prime='prime5', crop.FALSE=F, samples=NA, comb.all.samples=NA,
+             sum.counts.in.window=T, bin_width = 200, sum.fun='sum', add.all.pos=F, y.thresh=0, minus.strand.down=T,
+             #what.to.plot = c('coverage', 'gene annotation', 'transcripts'), 
+             add.coverage=F, add.transcripts.plot=T, add.genome.plot=T, flip.panels=F, genome.only=F, transcripts.only=F,
+             genome.and.transcripts=T, transcript.plot.scale=2,
+             add.cageTSS=F, cagefr.clust=NULL, cagefr.clust.dist=6, asterisk.size = 2,
+             gene_name_col = 'gene_name', 
+             gene.label=T, add.unstranded=T, add.feature=T, gene.feature.width.thresh=700, flip.gene.y=T, force.gene.y=T,
+             force.all.gene.down=T, angle=0, force.one.lab.per.gene=T, force.all.gene.up.and.down=F,
+             transcript.sizes=transcript.sizes, tr.size.multip = 0.75,
+             
+             sizes=sizes, gene.sizes=gene.sizes, gene.label.col='black', alpha=alpha, plot.title=NA, 
+             palette=palette[1:3], tr.palette = colorvec, # palette[c(15,18)],
+             tolower=F, vline=NULL, vline2=NULL, breakseq=breakseq, margins=NULL, #unit(c(1,1,1,1), "cm"),
+             scales=scales, genomplot.scale=5.5, ylim=c(0, NA), y.log10=F, y.log2=F, ylims.gene=ylims.gene, y.multip=1.5, 
+             ybreaks=NULL, ybreak_n=10,
+             strip.text =  element_text(angle = 45, size = sizes*1.5, hjust = 0.5), facet_space=1,
+             gene.aes = aes(xmin = start, xmax = end, y = ymin, fill = strand, forward = orientation, label = gene),
+             facet_cropF = NULL, # facet_nested(rows = vars(hpi), cols=NULL, scales ),
+             labels=NULL, legend.position.prime = 'top', theme_general = theme_bw(), 
+             return.plot.data=F
+             , ...
+             )
+             
+  
+  ggann
+
+}
+
+
+#ann.plotfun(visfrom = visfrom, visto = visto, gene_to_plot, orf.sum.perc, vis_win)
+
+```
+
+## With annnotation
+
+```{r}
+### 
+
+max_ncol   <- 6
+row_multip <- 6
+col_multip <- 4
+
+plotfun <- function(DT, 
+                    geom1 = geom_point(aes(x=Time, y=norm_read_count, colour = Ref_Class)),
+                    #geom1 = geom_pointrange(aes(x=Time, y=mean, ymin = mean-sd, ymax = mean+sd, colour = Ref_Class)),
+                    geom2 = geom_smooth(aes(x=Time, y=norm_read_count, color=Ref_Class, group = Ref_Class)),
+                    geom3 = NULL,
+                    ncol = 10, title = NULL, #"Normalized ORF counts", 
+                    strip.backgr = pal_d3()(10)[2], palette=colorvec[],
+                    save.plot=T, filename='plot.jpg', figw=12, figh=9,
+                    legend.position= 'right', 
+                    legend.name    = '',
+                    ...) {
+  
+  if (nrow(DT) == 0) { 
+    ggp <- NULL } else {   # try({ 
+      
+    gene_N <- length(unique(DT[,gene]))
+  
+    ggp <- 
+      ggplot(DT) + 
+      geom1 +
+      geom2 + 
+      geom3 +
+      
+      ## Color and Fill Scales
+      #guides( color = guide_legend("Ref. Isoform") ) +
+      scale_color_manual(values = palette, name=legend.name) +
+      scale_fill_manual( values = palette, name=legend.name) +
+     
+      ## Axis limits and labels
+      scale_y_continuous(name = 'Transcript Isoform ratio', limits = c(0, 1)) +
+      scale_x_continuous(name = 'Hours past infection') +
+      
+      #coord_cartesian(ylim = c(0, NULL)) +
+      
+      
+      ## Theme elements
+      theme_bw() +
+      theme( text = element_text(size = 8),
+             legend.position = legend.position, 
+            # plot.margin = unit(c(1,1,1,1), 'mm'),
+            # strip.background = element_rect(fill = alpha(strip.backgr, 0.4))
+            #margins=unit(c(1,1,1,1), "cm"),
+            ...) +
+      
+      ## Faceting
+      #facet_wrap(~ gene, scales = 'free', ncol = ncol) +
+      #facet_nested_wrap(~ gene, scales = 'free', ncol = ncol) +
+      #facet_nested(cols=vars(gene, cell_line), scales = 'free', independent=T) + 
+      
+      ## Plot title
+      ggtitle(title)
+   
+  if (gene_N < ncol) { 
+    #ggp <- cowplot::plot_grid(ggp, NULL, rel_widths = c(gene_N, ncol - gene_N ), nrow=1)
+  }
+  
+  }   # })
+  
+  if(save.plot) {
+    message('saving plot to: ', filename, '...')
+    ggsave(filename, ggp, width = figw, height = figh)
+  }
+  
+  return(ggp)
+ 
+}
+
+
+strip.background <- palette[10]
+```
+
+
+
+```{r}
+
+figw  <- 10
+figh  <- 6
+
+```
+
+
+
+START PLOTTING
+
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+#DT <- orf.sum.perc
+
+mapfun <- function(gene_to_plot, DT=orf.sum.perc, recalc = F,
+                   TR.annot.data = TR.merged.data.gene,
+                   visfrom = NULL, visto = NULL, strand_to_plot = c('+', '-'),
+                   rel_widths = c(5, 5), what2plot = 'annot_and_abund', save.plot=F, 
+                   breakseq=5000,
+                   ...) { 
+  
+    filename <- paste0(fig.dir, '/', 'IF.ratio_and_annotation_', gene_to_plot, '_', 'replicates_loess.jpg')
+  
+    DTsub    <- DT[gene == gene_to_plot & strand %in% strand_to_plot]
+    
+    ## recalculate ratios 
+    if (recalc) {
+      DTsub[, sum_read_count  := sum(read_count), by=.(sample, Time, gene, Kinetic_class)]
+      DTsub[, norm_read_count := read_count / sum_read_count]
+      DTsub[is.na(norm_read_count), norm_read_count := 0]
+      DTsub[, mean            := mean(norm_read_count, na.rm=T), by=.(Time, gene, Ref_Class)]
+      DTsub[, sd := sd(norm_read_count, na.rm=T), by=.(Time, gene, Ref_Class)]
+    }
+    
+    ggrt  <- plotfun(DTsub, 
+                    geom1 = geom_linerange(aes(x=Time, y=mean, ymin = mean-sd, ymax = mean+sd)),
+                    geom3 = geom_point(aes(x=Time, y=mean, fill = Ref_Class), shape=21, size=3),
+                    geom2 = geom_line(aes(x=Time, y=mean, color=Ref_Class, group = Ref_Class), linewidth = 0.85),
+                    #geom2 = geom_pointrange(aes(x=Time, y=mean, ymin = mean-sd, ymax = mean+sd, colour = Ref_Class)),
+                    #geom3 = geom_smooth(aes(x=Time, y=mean, color=Ref_Class, group = Ref_Class), se = F, method = 'gam'),
+                    save.plot = F, ...) 
+  
+    
+    ggtr <- NULL
+    try({
+      
+      TR.annot.data.filt <- as.data.frame(TR.annot.data)
+      TR.annot.data.filt$Ref_Class[TR.annot.data.filt$gene != gene_to_plot] <- NA
+      setDT(TR.annot.data.filt)
+      
+      if(is.null(visfrom) & is.null(visto)) {
+        visfrom <- min(TR.annot.data.filt[gene == gene_to_plot, start]) - vis_win
+        visto   <- max(TR.annot.data.filt[gene == gene_to_plot, end  ]) + vis_win
+      }
+     
+      TR.annot.data.filt <- TR.annot.data.filt[strand %in% strand_to_plot]
+    
+      ggtr <- ann.plotfun(gene_to_plot, vis_win=vis_win, 
+                          visfrom = visfrom, visto = visto,
+                          TR.merged.data=TR.annot.data.filt,
+                          annot_fill_column = 'Ref_Class',
+                          add.TR.labels=T, breakseq=breakseq)
+    })
+    
+    
+    if (what2plot == 'annot_and_abund') {
+    
+      if (is.null('ggtr')) {
+        ggcomb <- cowplot::plot_grid(ggrt, ggtr, nrow = 1, rel_widths = c(3, 0.5), align = 'v', axis = 'tb')
+      } else {
+        ggcomb <- cowplot::plot_grid(ggrt, ggtr, nrow = 1, rel_widths = rel_widths, align = 'v', axis = 'tb')
+      }
+      
+    } else if (what2plot == 'annot_only') {
+      
+      ggcomb <- ggtr
+      
+    } else if (what2plot == 'abund_only') {
+      
+      ggcomb <- ggrt
+      
+    }
+      
+    if(save.plot) { ggsave(filename, ggcomb, width = figw, height = figh) }
+    
+    ggcomb
+  
+  
+}
+
+
+
+#purrr::map(unique(orf.sum.perc[,gene]), mapfun, orf.sum.perc)
+```
+
+
+## Tests
+```{r, fig.show='hold',  fig.width = 10, fig.height = 10, eval=T}
+
+gene_to_plot <- 'ORF14'
+mapfun(gene_to_plot,  orf.sum.perc, 
+       TR.annot.data = TR.merged.data.gene,
+       strand_to_plot = '+',
+       #visfrom = min(TR.merged.data.gene[gene == gene_to_plot & strand == '+', start]) - vis_win,
+       #visto   = max(TR.merged.data.gene[gene == gene_to_plot & strand == '+', end  ]) + vis_win,
+       visfrom =NULL, visto =NULL,
+       legend.position='right',  rel_widths=c(1, 1), title = 'ORF11', what2plot = 'annot_only')
+
+
+
+mapfun(gene_to_plot,  orf.sum.perc, 
+       TR.annot.data = TR.merged.data.gene,
+       strand_to_plot = '+',
+       #visfrom = min(TR.merged.data.gene[gene == gene_to_plot & strand == '+', start]) - vis_win,
+       #visto   = max(TR.merged.data.gene[gene == gene_to_plot & strand == '+', end  ]) + vis_win,
+       visfrom =NULL, visto =NULL,
+       legend.position='right',  rel_widths=c(1, 1), title = 'ORF11', what2plot = 'abund_only')
+
+
+```
+
+# REVIEW
+## New arrangement
+
+### Figure 7 Review
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+
+dir.create('Figures')
+
+Fig.abunds1 <- cowplot::plot_grid(plotlist = list(
+  mapfun('ORF11', orf.sum.perc, legend.position='right', title = 'A', what2plot = 'abund_only',
+         recalc=F,
+         strand_to_plot = '+',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF11' & strand == '+', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF11' & strand == '+', end  ]) + vis_win), 
+  mapfun('ORF13', orf.sum.perc, legend.position='right', title = 'B', what2plot = 'abund_only',
+         recalc=F,
+         strand_to_plot = '+',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF13' & strand == '+', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF13' & strand == '+', end  ]) + vis_win),
+  mapfun('ORF14', orf.sum.perc, legend.position='right', title = 'C', what2plot = 'abund_only',
+         recalc=F,
+         strand_to_plot = '+',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF14' & strand == '+', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF14' & strand == '+', end  ]) + vis_win)
+  #mapfun('ORF19', orf.sum.perc, legend.position='right', title = 'D', what2plot = 'abund_only'),
+  #mapfun('ORF40', orf.sum.perc, legend.position='right', title = 'E', what2plot = 'abund_only'),
+  #mapfun('ORF54', orf.sum.perc, legend.position='right', title = 'F', what2plot = 'abund_only')
+), ncol = 1, align = 'v', axis = 'tlbr')
+
+
+Fig.annots1 <- cowplot::plot_grid(plotlist = list(
+  mapfun('ORF11', orf.sum.perc, what2plot = 'annot_only',
+         recalc=F,
+         strand_to_plot = '+',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF11' & strand == '+', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF11' & strand == '+', end  ]) + vis_win),  
+  mapfun('ORF13', orf.sum.perc, what2plot = 'annot_only',
+         recalc=F,
+         strand_to_plot = '+',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF13' & strand == '+', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF13' & strand == '+', end  ]) + vis_win),
+  mapfun('ORF14', orf.sum.perc, what2plot = 'annot_only',
+         recalc=F,
+         strand_to_plot = '+',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF14' & strand == '+', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF14' & strand == '+', end  ]) + vis_win)
+  #mapfun('ORF19', orf.sum.perc, what2plot = 'annot_only'),
+  #mapfun('ORF40', orf.sum.perc, what2plot = 'annot_only'),
+  #mapfun('ORF54', orf.sum.perc, what2plot = 'annot_only')
+), ncol = 1, align = 'v', axis = 'tlbr')
+
+
+Fig.isoforms1 <- cowplot::plot_grid(Fig.abunds1, Fig.annots1, ncol=2, rel_widths = c(1, 0.65), align = 'vh', axis = 'l')
+
+
+
+Fig.abunds2 <- cowplot::plot_grid(plotlist = list(
+  #mapfun('ORF11', orf.sum.perc, legend.position='right', title = 'A', what2plot = 'abund_only'), 
+  #mapfun('ORF13', orf.sum.perc, legend.position='right', title = 'B', what2plot = 'abund_only'),
+  #mapfun('ORF14', orf.sum.perc, legend.position='right', title = 'C', what2plot = 'abund_only'),
+  mapfun('ORF19', orf.sum.perc, legend.position='right', title = 'D', what2plot = 'abund_only',
+         recalc=F,
+         strand_to_plot = '+',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF19' & strand == '+', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF19' & strand == '+', end  ]) + vis_win),
+  mapfun('ORF40', orf.sum.perc, legend.position='right', title = 'E', what2plot = 'abund_only',
+         recalc=F,
+         strand_to_plot = '-',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF40' & strand == '-', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF40' & strand == '-', end  ]) + vis_win),
+  mapfun('ORF54', orf.sum.perc, legend.position='right', title = 'F', what2plot = 'abund_only',
+         recalc=F,
+         strand_to_plot = '+',
+         visfrom = min(TR.merged.data.gene[gene == 'NOIR' & strand == '+', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'NOIR' & strand == '+', end  ]) + vis_win)
+), ncol = 1, align = 'vh', axis = 'tlbr')
+
+
+Fig.annots2 <- cowplot::plot_grid(plotlist = list(
+  #mapfun('ORF11', orf.sum.perc, what2plot = 'annot_only'),  
+  #mapfun('ORF13', orf.sum.perc, what2plot = 'annot_only'),
+  #mapfun('ORF14', orf.sum.perc, what2plot = 'annot_only'),
+  mapfun('ORF19', orf.sum.perc, what2plot = 'annot_only',
+         recalc=F,
+         strand_to_plot = '+',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF19' & strand == '+', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF19' & strand == '+', end  ]) + vis_win),
+  mapfun('ORF40', orf.sum.perc, what2plot = 'annot_only',
+         recalc=F,
+         strand_to_plot = '-',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF40' & strand == '-', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF40' & strand == '-', end  ]) + vis_win),
+  mapfun('ORF54', orf.sum.perc, what2plot = 'annot_only',
+         recalc=F,
+         strand_to_plot = '+',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF54' & strand == '+', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF54' & strand == '+', end  ]) + vis_win)
+), ncol = 1, align = 'vh', axis = 'tlbr')
+
+
+Fig.isoforms2 <- cowplot::plot_grid(Fig.abunds2, Fig.annots2, ncol=2, rel_widths = c(1, 0.85), align = 'vh', axis = 'l')
+
+
+
+Fig.isoforms <- cowplot::plot_grid(Fig.isoforms1, Fig.isoforms2, ncol=2, rel_widths = c(1, 0.85))
+
+#ggsave('./Figures/Figure 7_REVIEW_ori.tif', Fig.isoforms, height = 12, width = 24, dpi = 300)
+ggsave('./Figures/Figure 7_REVIEW.jpg', Fig.isoforms, height = 12, width = 24)
+
+#Fig.isoforms
+```
+
+
+
+### Figure 3 Review
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+
+
+Fig.abunds1 <- cowplot::plot_grid(plotlist = list(
+  mapfun('NOIR', orf.sum.perc, legend.position='right', title = 'A', what2plot = 'abund_only',
+         breakseq=1500,
+         recalc=F,
+         strand_to_plot = '+',
+         visfrom = min(TR.merged.data.gene[gene == 'NOIR' & strand == '+', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'NOIR' & strand == '+', end  ]) + vis_win
+         ),
+  mapfun('ORF9', orf.sum.perc, legend.position='right', title = 'B', what2plot = 'abund_only',
+         breakseq=1500,
+         recalc=F,
+         strand_to_plot = '-',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF9' & strand == '-', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF9' & strand == '-', end  ]) + vis_win
+         )
+  #mapfun('ORF38', orf.sum.perc, legend.position='right', title = 'C', what2plot = 'abund_only')
+  #mapfun('ORF65', orf.sum.perc, legend.position='right', title = 'D', what2plot = 'abund_only')
+), ncol = 1, align = 'vh', axis = 'tlbr')
+
+
+Fig.annots1 <- cowplot::plot_grid(plotlist = list(
+  mapfun('NOIR', orf.sum.perc, what2plot = 'annot_only',
+          breakseq=1500,
+          recalc=T,
+          strand_to_plot = '+',
+          visfrom = min(TR.merged.data.gene[gene == 'NOIR' & strand == '+', start]) - vis_win,
+          visto   = max(TR.merged.data.gene[gene == 'NOIR' & strand == '+', end  ]) + vis_win
+         ),  
+  mapfun('ORF9', orf.sum.perc, what2plot = 'annot_only',
+         breakseq=1500,
+         recalc=T,
+         strand_to_plot = '-',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF9' & strand == '-', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF9' & strand == '-', end  ]) + vis_win
+         )
+  #mapfun('ORF38', orf.sum.perc, what2plot = 'annot_only'),
+  #mapfun('ORF65', orf.sum.perc, what2plot = 'annot_only')
+), ncol = 1, align = 'vh', axis = 'tlbr')
+
+
+Fig.isoforms1 <- cowplot::plot_grid(Fig.abunds1, Fig.annots1, ncol=2, rel_widths = c(2, 1))
+
+
+
+Fig.abunds2 <- cowplot::plot_grid(plotlist = list(
+  #mapfun('NOIR', orf.sum.perc, legend.position='right', title = 'A', what2plot = 'abund_only'), 
+  #mapfun('ORF9', orf.sum.perc, legend.position='right', title = 'B', what2plot = 'abund_only'),
+  mapfun('ORF38', orf.sum.perc, legend.position='right', title = 'C', what2plot = 'abund_only'),
+  mapfun('ORF65',  orf.sum.perc, legend.position='right', title = 'D', what2plot = 'abund_only',
+         breakseq=1500,
+         recalc=F,
+         strand_to_plot = '-',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF65' & strand == '-', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF65' & strand == '-', end  ]) + vis_win)
+), ncol = 1, align = 'vh', axis = 'tlbr')
+
+
+Fig.annots2 <- cowplot::plot_grid(plotlist = list(
+  #mapfun('NOIR', orf.sum.perc, what2plot = 'annot_only'),  
+  #mapfun('ORF9', orf.sum.perc, what2plot = 'annot_only'),
+  mapfun('ORF38', orf.sum.perc, what2plot = 'annot_only'),
+  mapfun('ORF65',  orf.sum.perc, what2plot = 'annot_only',
+         breakseq=1500,
+         recalc=F,
+         strand_to_plot = '-',
+         visfrom = min(TR.merged.data.gene[gene == 'ORF65' & strand == '-', start]) - vis_win,
+         visto   = max(TR.merged.data.gene[gene == 'ORF65' & strand == '-', end  ]) + vis_win)
+), ncol = 1, align = 'vh', axis = 'tlbr')
+
+
+Fig.isoforms2 <- cowplot::plot_grid(Fig.abunds2, Fig.annots2, ncol=2, rel_widths = c(1.4, 1))
+
+
+
+Fig.splice <- cowplot::plot_grid(Fig.isoforms1, Fig.isoforms2, ncol=2, rel_widths = c(1, 1.4))
+
+
+#ggsave('./Figures/Figure 3_REVIEW_ori.tif', Fig.splice, height = 10, width = 24, dpi = 300)
+ggsave('./Figures/Figure 3_REVIEW.jpg', Fig.splice, height = 10, width = 24)
+
+#Fig.splice
+```
+
+
+
+
+```{r}
+## Export data
+if (writetables) {
+  
+  write.table(orf.sum.perc, paste0(fig.dir, '/', EndType, '_counts.norm.tsv'), quote = F, row.names = F, sep = '\t')
+
+}
+```
+
+
+
+```{r bib, include=FALSE}
+# KEEP THIS AT THE END OF THE DOCUMENT TO GENERATE A LOCAL bib FILE FOR PKGS USED
+knitr::write_bib(sub("^package:", "", grep("package", search(), value=TRUE)), file='skeleton.bib')
+```

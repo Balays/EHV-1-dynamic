@@ -1,6 +1,6 @@
 ##gff-version 3
 ##source-version rtracklayer 1.58.0
-##date 2024-11-28
+##date 2024-12-02
 NC_001491.2	Tombácz_et_al	exon	11990	12409	16	+	.	Parent=40;ID=40;transcript_id=40;Ref.TSS=11990;Ref.prime3.TR=13520;TES=4;CAGE_ID=CAGE_cluster_68;TX_nov_ID=40;intron_composition=intron_627
 NC_001491.2	Tombácz_et_al	exon	11990	12409	4	+	.	Parent=43;ID=43;transcript_id=43;Ref.TSS=11990;Ref.prime3.TR=13517;TES=9;CAGE_ID=CAGE_cluster_68;TX_nov_ID=43;intron_composition=intron_627
 NC_001491.2	Tombácz_et_al	exon	11990	12410	4	+	.	Parent=50;ID=50;transcript_id=50;Ref.TSS=11990;Ref.prime3.TR=13520;TES=4;CAGE_ID=CAGE_cluster_68;TX_nov_ID=50;intron_composition=intron_1205

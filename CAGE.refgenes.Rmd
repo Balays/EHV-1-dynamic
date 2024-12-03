@@ -1398,7 +1398,9 @@ rtracklayer::export.gff3(as.data.frame(final_tx_nov_filt_gff), 'final_tx_nov_fil
 
 
 ```
-END
+### END
+##
+
 
 ## Spliced reads to transcripts
 ```{r}
@@ -1406,10 +1408,12 @@ END
 ## 1.) compare to CAGE TSS
 
 ## 2.) compare to ref TES
-trids.spliced.gff
-trids.spliced
+#trids.spliced.gff
+#trids.spliced
 ## 3.) compare to ref introns
 
+
+## -->> I carried out the analysis but we decided not to include the novel splice sites
 
 ```
 
@@ -1578,26 +1582,6 @@ TX_nov_TSS <- merge(TX_nov,
 ```
 
 
-```{r, eval=F}
-## make transcritps from these
-TX_nov_splice_clust <- unique(TX_nov_splice[!is.na(intron_ID), .(seqnames, strand, TX_ID, sum_TX_count, intron_composition, intron_ID, intron_number, n_intron)])
-
-
-TX_nov_splice_clust <- merge(TX_nov_splice_clust, ref.introns, by=c('seqnames', 'strand', 'intron_ID'), all.x=T)
-
-
-TX_nov_splice_clust <- merge(TX_nov_splice_clust,
-                             unique(TX_nov_splice[, .(seqnames, strand, TX_ID, start, end, exon_number, n_exon, intron_number)]),
-                             by=c('seqnames', 'strand', 'TX_ID', 'intron_number'),
-                             all=T)
-
-TX_nov_splice_clust <- merge(TX_nov_splice_clust,
-                             unique(TX_nov_splice[, .(seqnames, strand, TX_ID, Ref.TSS, CAGE_ID, Ref.prime3.TR, TES)]),
-                             by=c('seqnames', 'strand', 'TX_ID'),
-                             all.x=T)
-```
-
-
 ```{r}
 ### Filtering and Refine TSSs
 TX_nov_splice <- TX_nov_TSS
@@ -1647,7 +1631,6 @@ TX_nov_splice_clust_filt <- TX_nov_splice_clust[sum_TX_count >= 5]
 ```
 
 
-
 ```{r}
 ## make gff from the Novel Spliced Transcripts
 final_tx_nov_splice_gff_ex <- unique(TX_nov_splice_clust_filt[, .(seqnames, strand, type='exon', 
@@ -1660,6 +1643,7 @@ final_tx_nov_splice_gff_tr <- unique(TX_nov_splice_clust_filt[, .(seqnames, stra
                                                         ID = TX_nov_ID, 
                                                         transcript_id = TX_nov_ID, 
                                                         start = min(start), end=max(end), Ref.TSS, Ref.prime3.TR, TES, CAGE_ID, score=sum_TX_count, intron_composition), by=TX_nov_ID])
+
 
 final_tx_nov_splice_gff <- rbind(final_tx_nov_splice_gff_ex, 
                                  final_tx_nov_splice_gff_tr,
@@ -1713,7 +1697,6 @@ TX_nov_splice_clust_filt <- TX_nov_splice_clust[sum_TX_count >= 3]
 ```
 
 
-
 ```{r}
 ## make gff from the Novel Spliced Transcripts
 final_tx_nov_splice_gff_ex <- unique(TX_nov_splice_clust_filt[, .(seqnames, strand, type='exon', 
@@ -1727,24 +1710,29 @@ final_tx_nov_splice_gff_tr <- unique(TX_nov_splice_clust_filt[, .(seqnames, stra
                                                         transcript_id = TX_nov_ID, 
                                                         start = min(start), end=max(end), Ref.TSS, Ref.prime3.TR, TES, CAGE_ID, score=sum_TX_count, intron_composition), by=TX_nov_ID])
 
-final_tx_nov_splice_gff <- rbind(final_tx_nov_splice_gff_ex, 
+
+
+final_tx_nov_splice_gff_nov <- rbind(final_tx_nov_splice_gff_ex, 
                                  final_tx_nov_splice_gff_tr,
                                  fill=TRUE)
 
 
-final_tx_nov_splice_gff[, ':=' (source = 'Tombácz_et_al', phase=NA), ]
+final_tx_nov_splice_gff_nov[, ':=' (source = 'Tombácz_et_al', phase=NA), ]
 
 
-rtracklayer::export.gff3(as.data.frame(final_tx_nov_splice_gff), 'final_tx_nov_splice_nov.gff3')
+rtracklayer::export.gff3(as.data.frame(final_tx_nov_splice_gff_nov), 'final_tx_nov_splice_nov.gff3')
 
+final_tx_nov_splice_gff_nov <-  as.data.table(as.data.frame(rtracklayer::import.gff3('final_tx_nov_splice_nov.gff3')))
 
 ```
 
 
-
+### Export
 ```{r}
-TR.adapt.count[,.N,sample]
+fwrite(data.table(transcript_id=trids), 'TR_IDs_nov.tsv', sep='\t')
+fwrite(final_tx_nov_clust, 'final_tx_nov_clust.tsv', sep='\t')
 ```
+
 
 
 
@@ -1753,9 +1741,7 @@ TR.adapt.count[,.N,sample]
 #### 
 
 
-
-
-```{r}
+```{r, eval=F}
 
 TR.adapt.filt_nov <- merge(TR.adapt.filt, tx_uni, 
                            by.x=c('seqnames', 'strand', 'transcript_id'), 
@@ -1766,8 +1752,8 @@ TR.adapt.filt_nov.only[,.(sum_count = sum(count)), by=.(seqnames, strand, TX_nov
 TR.adapt.filt_nov.only[,max_TSS := max(count)]
 
 
-TR.merged.data.gene
-orf.perc
+#TR.merged.data.gene
+#orf.perc
 
 TR.gff.compare.uni.CAGE.ref.counts.melt.hpi
 length(unique(TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[,transcript_id]))
@@ -1780,8 +1766,7 @@ length(unique(TR.adapt.filt[,transcript_id]))
 ```
 
 
-
-```{r}
+```{r, eval=F}
 ggplot(TX_nov) + 
   geom_bar(aes(sum_TX_count))
   
@@ -1818,7 +1803,7 @@ TX_nov[,.N,by=.(CAGE_significance, support)]
 ```
 
 
-```{r}
+```{r, eval=F}
 
 ggplot(TX_nov) + 
   geom_point(aes(sum_TX_count, score, color=CAGE_significance)) +
@@ -1827,7 +1812,7 @@ ggplot(TX_nov) +
 ```
 
 
-
+####
 
 
 
@@ -2037,6 +2022,7 @@ START PLOTTING
 #DT <- orf.sum.perc
 
 mapfun <- function(gene_to_plot, DT, recalc = F,
+                   TR.annot.data = TR.merged.data.gene,
                    visfrom = NULL, visto = NULL, strand_to_plot = c('+', '-'),
                    rel_widths = c(5, 5), what2plot = 'annot_and_abund', save.plot=F, ...) { 
   
@@ -2065,18 +2051,18 @@ mapfun <- function(gene_to_plot, DT, recalc = F,
     ggtr <- NULL
     try({
       
-      TR.merged.data.gene <- as.data.frame(TR.merged.data)
-      TR.merged.data.gene$Ref_Class[TR.merged.data.gene$gene != gene_to_plot] <- NA
-      setDT(TR.merged.data.gene)
+      TR.annot.data.filt <- as.data.frame(TR.annot.data)
+      TR.annot.data.filt$Ref_Class[TR.annot.data.filt$gene != gene_to_plot] <- NA
+      setDT(TR.annot.data.filt)
       
       if(is.null(visfrom) & is.null(visto)) {
-        visfrom <- min(TR.merged.data.gene[gene == gene_to_plot, start]) - vis_win
-        visto   <- max(TR.merged.data.gene[gene == gene_to_plot, end  ]) + vis_win
+        visfrom <- min(TR.annot.data.filt[gene == gene_to_plot, start]) - vis_win
+        visto   <- max(TR.annot.data.filt[gene == gene_to_plot, end  ]) + vis_win
       }
       
       ggtr <- ann.plotfun(gene_to_plot, vis_win=vis_win, 
                           visfrom = visfrom, visto = visto,
-                          TR.merged.data=TR.merged.data.gene,
+                          TR.merged.data=TR.annot.data.filt,
                           annot_fill_column = 'Ref_Class',
                           add.TR.labels=T)
     })
@@ -2116,7 +2102,7 @@ mapfun <- function(gene_to_plot, DT, recalc = F,
 ### Tests
 ```{r, fig.show='hold',  fig.width = 10, fig.height = 10, eval=T}
 
-gene_to_plot <- 'NOIR'
+gene_to_plot <- 'ORF67'
 mapfun(gene_to_plot,  orf.sum.perc, 
        visfrom = min(TR.merged.data.gene[gene == gene_to_plot & strand == '+', start]) - vis_win,
        visto   = max(TR.merged.data.gene[gene == gene_to_plot & strand == '+', end  ]) + vis_win,
