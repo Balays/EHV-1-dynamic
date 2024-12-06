@@ -925,8 +925,8 @@ ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.Literature.Clu
 if (writetables) {
   fwrite(orf.sum.perc,       paste0(fig.dir, '/', norm.method, '_', EndType, '_counts.norm.tsv'), sep = '\t')
   fwrite(orf.perc.mean,      paste0(fig.dir, '/', norm.method, '_', EndType, '_abund.mean.tsv'), sep = '\t')
-  fwrite(DE_cluster_results, paste0(fig.dir, '/', norm.method, '_', EndType, '_moanin_DE_results.tsv'), sep = '\t')
-
+  
+  fwrite(class.dt,           paste0(fig.dir, '/', norm.method, '_', EndType, '_hclust_results.tsv'), sep = '\t')
 }
 ```
 
