@@ -142,7 +142,7 @@ setDT(orf.sum)
 
 
 #### Normalization method
-norm.method <- 'viral_read.count'
+norm.method <- 'VST'
 multip      <- 10000
 
  if (norm.method == 'average_genome') {
@@ -205,9 +205,15 @@ multip      <- 10000
   
   fig.dir <- paste0(fig.dir, '.norm_Without')
   
-}
+} else if (norm.method == 'VST') {
+    
+  ## DESeqs VSTViral read count method
 
-try({ dir.create(fig.dir) })
+  normBase <- data.table(sample = metafilt$sample, norm_base = 1)
+  
+  fig.dir <- paste0(fig.dir, '.norm_VST')
+  
+} 
 
 ##
 normBase <- normBase[order(normBase$sample, colnames(orf.counts[-c(1:6)])), ]
@@ -216,6 +222,9 @@ stopifnot(all(normBase$sample == colnames(orf.counts[-c(1:6)]) ))
 orf.perc <- merge(normBase, orf.sum, by='sample')
 orf.perc[,read_count := read_count / norm_base]
 
+
+
+try({ dir.create(fig.dir) })
 
 #### TO-DO: 
 
@@ -242,7 +251,6 @@ if (!is.null(samples_to_filt)) {
 
 ## Statistics of counts {.tabset}
 ```{r, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
-
 orf.sum.perc <- orf.perc
 
 if (EndType == 'TES') {
@@ -280,7 +288,51 @@ orf.sum.perc <- orf.sum.perc[,.(read_count=sum(read_count)), by=.(seqnames, stra
 orf.sum.perc <- merge(orf.sum.perc, gene_kin.class, by='gene', all=T)
 orf.sum.perc[is.na(Kinetic_class), Kinetic_class := 'unknown']
 orf.sum.perc[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
+```
 
+```{r}
+
+
+if (norm.method == 'VST') {
+  
+  orf.sum.sp     <- dcast.data.table(orf.sum.perc, gene~sample, value.var = 'read_count')
+
+  orf.sum.sp.mat <- as.matrix(data.frame(orf.sum.sp[,-1], row.names = orf.sum.sp$gene))
+  colnames(orf.sum.sp.mat) <- gsub('\\.', '-', colnames(orf.sum.sp.mat))
+  
+  colData = data.frame(metafilt, row.names = metafilt$sample)
+  
+  orf.sum.sp.mat <- orf.sum.sp.mat[,rownames(colData)]
+  
+  deseq <- DESeqDataSetFromMatrix(orf.sum.sp.mat, colData = colData, ~ hpi)
+  deseq <- estimateSizeFactors(deseq, type =  "poscounts")
+  deseq <- DESeq(deseq)
+  results(deseq)
+  
+  vsd   <- varianceStabilizingTransformation(deseq)
+  vsd_mat  <- assay(vsd)
+  vsd_data <- data.table(gene = rownames(vsd_mat), vsd_mat)
+
+  vsd_melt <- melt.data.table(vsd_data, 
+      id.vars = 'gene',
+      value.name = 'norm_read_count', 
+      variable.name = 'sample')
+  #vsd_melt <- merge(vsd_melt, metafilt, by='sample')
+
+  orf.sum.percx <- merge(orf.sum.perc, 
+                        vsd_melt,
+                        by=c('gene', 'sample'))
+  if(nrow(orf.sum.percx) == nrow(orf.sum.perc)) {
+    orf.sum.perc <- orf.sum.percx
+    rm(orf.sum.percx)
+  } else { stop() }
+  
+  
+  
+}
+```
+
+```{r, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
 ### Statistics of gene cluster counts accross samples
 
 ## normalized counts
