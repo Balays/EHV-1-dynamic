@@ -143,7 +143,7 @@ setDT(orf.sum)
 
 #### Normalization method
 norm.method <- 'VST'
-multip      <- 10000
+#multip      <- 10000
 
  if (norm.method == 'average_genome') {
   
@@ -332,7 +332,6 @@ if (norm.method == 'VST') {
   
 }
 ```
-
 
 ```{r, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
 ### Statistics of gene cluster counts accross samples
@@ -784,10 +783,10 @@ ggp
   
 ```{r, fig.show='hold',  fig.width = 15, fig.height = 6, eval=T}
 setDT(orf.perc.mean)
-class.dt <- unique(orf.perc.mean[, .(gene, Kinetic_class, best_label, labels)])
-class.dt <- class.dt[, .N, by=.(Kinetic_class, best_label, labels)]
+gene.kin.and.clusters <- unique(orf.perc.mean[ , .(gene, Kinetic_class, best_label, labels)])
+class.dt              <- gene.kin.and.clusters[, .N, by=.(Kinetic_class, best_label, labels)]
 
-#cluster_labels
+
 
 ggplot(class.dt,
        aes(x=Kinetic_class, y=N, fill=as.factor(best_label))) +
@@ -833,34 +832,63 @@ all.cluster.sum <- orf.sum.perc[,.(sum_read_count=sum(read_count), mean_read_cou
 figw <- 13
 figh <- 6
 ncol <- 10
+
+DT     <- orf.sum.perc
+DT[,rep      := gsub('.*h_', '', sample)]
+DT[,rep_gene := paste0(gene, '::', rep)]
+
 ```
 
 
 
 ### De Novo - Significant
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
-
 ggp <- 
-      ggplot(sig.cluster.sum,
-             aes(Time, mean_read_count, color = cell_line)
+      ggplot(sig.cluster.sum[],
+             aes(Time, mean_read_count, color = as.factor(labels))
                      #, add = 'loess'
                      ) + 
       geom_point() +
       geom_smooth() + 
       scale_color_manual(values = palette[]) +
+      guides(color=guide_legend("de-novo cluster")) +
       #scale_y_continuous(labels = scales::percent_format()) +
+      scale_x_continuous(breaks = c(1,2,4,6,8,12,24,48)) +
       theme_ipsum() +
-      theme(plot.margin = unit(c(10,1,1,1), 'mm')) +
+      theme(plot.margin = unit(c(10,1,1,1), 'mm'),
+            legend.position = 'bottom') +
       #theme(strip.background.y = element_rect(fill = alpha(strip.backgr, 0.4))) +
       # theme(strip.text.y = element_blank()) +
       #ggtitle(title) +
-      # facet_nested(rows=vars(norm.method), cols=vars(labels), scales = "free_y") ## cols=vars(norm.method)
-      facet_wrap(~ labels, scales = 'free_y', ncol = ncol)
+      facet_nested_wrap(~labels, nrow = 2, scales = "free_y") ## cols=vars(norm.method)
+      # facet_wrap(~ labels, scales = 'free_y', ncol = ncol)
 
 
 ggp
 
 ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.DeNovo.Sig.Clusters.', '_points.loess.jpg'), ggp, width = figw, height = figh, limitsize = F)
+```
+
+
+```{r, fig.show='hold',  fig.width = 9, fig.height = 12, eval=T}
+
+
+gg <- ggplot(DT,
+             aes(x=Time, y=read_count)) +
+    #geom_line(aes(group=rep_gene, color=as.factor(best_label))) +
+    geom_smooth(aes(group=rep_gene, color=as.factor(labels))) +
+    #ggtitle(cluster_toplot) + 
+    scale_color_manual(values = palette[]) +
+    guides(color=guide_legend("de-novo cluster")) +
+    scale_x_continuous(breaks = c(1,2,4,6,8,12,24,48)) +
+    theme_ipsum() +
+    theme(legend.position = 'right') +
+    facet_nested(rows=vars(labels),
+                 scales = "free_y"
+                 #,rows=vars(as.factor(best_label))
+                 ) 
+gg
+
 
 ```
 
@@ -869,26 +897,50 @@ ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.DeNovo.Sig.Clu
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
 
 ggp <- 
-      ggplot(all.cluster.sum,
-             aes(Time, mean_read_count, color = cell_line)
+      ggplot(all.cluster.sum[],
+             aes(Time, mean_read_count, color = as.factor(best_label))
                      #, add = 'loess'
                      ) + 
       geom_point() +
       geom_smooth() + 
       scale_color_manual(values = palette[]) +
+      guides(color=guide_legend("de-novo cluster")) +
       #scale_y_continuous(labels = scales::percent_format()) +
+      scale_x_continuous(breaks = c(1,2,4,6,8,12,24,48)) +
       theme_ipsum() +
-      theme(plot.margin = unit(c(10,1,1,1), 'mm')) +
-      #theme(strip.background.y = element_rect(fill = alpha(strip.backgr, 0.4))) +
+      theme(plot.margin = unit(c(10,1,1,1), 'mm'),
+            legend.position = 'bottom') +
+       #theme(strip.background.y = element_rect(fill = alpha(strip.backgr, 0.4))) +
       # theme(strip.text.y = element_blank()) +
       #ggtitle(title) +
-      # facet_nested(rows=vars(norm.method), cols=vars(labels), scales = "free_y") ## cols=vars(norm.method)
-      facet_wrap(~ best_label, scales = 'free_y', ncol = ncol)
+      facet_nested_wrap(~best_label, nrow = 2, scales = "free_y") ## cols=vars(norm.method)
+      # facet_wrap(~ labels, scales = 'free_y', ncol = ncol)
 
 
 ggp
 
 ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.DeNovo.All.Clusters.', '_points.loess.jpg'), ggp, width = figw, height = figh, limitsize = F)
+
+```
+```{r, fig.show='hold',  fig.width = 9, fig.height = 12, eval=T}
+
+
+gg <- ggplot(DT,
+             aes(x=Time, y=read_count)) +
+    #geom_line(aes(group=rep_gene, color=as.factor(best_label))) +
+    geom_smooth(aes(group=rep_gene, color=as.factor(best_label))) +
+    #ggtitle(cluster_toplot) + 
+    scale_color_manual(values = palette[]) +
+    guides(color=guide_legend("de-novo cluster")) +
+    scale_x_continuous(breaks = c(1,2,4,6,8,12,24,48)) +
+    theme_ipsum() +
+    theme(legend.position = 'right') +
+    facet_nested(rows=vars(best_label),
+                 scales = "free_y"
+                 #,rows=vars(as.factor(best_label))
+                 ) 
+gg
+
 
 ```
 
@@ -898,16 +950,18 @@ ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.DeNovo.All.Clu
 
 ggp <- 
       ggplot(kin.class.sum,
-             aes(Time, mean_read_count, color = cell_line)
+             aes(Time, mean_read_count, color = Kinetic_class)
                      #, add = 'loess'
                      ) + 
       geom_point() +
       geom_smooth() + 
       scale_color_manual(values = palette[]) +
+      guides(color=guide_legend("Kinetic Class")) +
       #scale_y_continuous(labels = scales::percent_format()) +
+      scale_x_continuous(breaks = c(1,2,4,6,8,12,24,48)) +
       theme_ipsum() +
-      theme(plot.margin = unit(c(10,1,1,1), 'mm')) +
-      #theme(strip.background.y = element_rect(fill = alpha(strip.backgr, 0.4))) +
+      theme(plot.margin = unit(c(10,1,1,1), 'mm'),
+            legend.position = 'bottom') +
       # theme(strip.text.y = element_blank()) +
       #ggtitle(title) +
       # facet_nested(rows=vars(norm.method), cols=vars(labels), scales = "free_y") ## cols=vars(norm.method)
@@ -919,15 +973,35 @@ ggp
 ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.Literature.Clusters.', '_points.loess.jpg'), ggp, width = figw, height = figh, limitsize = F)
 
 ```
+```{r, fig.show='hold',  fig.width = 9, fig.height = 12, eval=T}
 
+
+gg <- ggplot(DT,
+             aes(x=Time, y=read_count)) +
+    #geom_line(aes(group=rep_gene, color=as.factor(best_label))) +
+    geom_smooth(aes(group=rep_gene, color=as.factor(Kinetic_class))) +
+    #ggtitle(cluster_toplot) + 
+    scale_color_manual(values = palette[]) +
+    guides(color=guide_legend("Kinetic Class")) +
+    scale_x_continuous(breaks = c(1,2,4,6,8,12,24,48)) +
+    theme_ipsum() +
+    theme(legend.position = 'right') +
+    facet_nested(rows=vars(Kinetic_class),
+                 scales = "free_y"
+                 #,rows=vars(as.factor(best_label))
+                 ) 
+gg
+
+
+```
 
 ```{r}
 ## Export data
 if (writetables) {
-  fwrite(orf.sum.perc,       paste0(fig.dir, '/', norm.method, '_', EndType, '_counts.norm.tsv'), sep = '\t')
-  fwrite(orf.perc.mean,      paste0(fig.dir, '/', norm.method, '_', EndType, '_abund.mean.tsv'), sep = '\t')
-  fwrite(DE_cluster_results, paste0(fig.dir, '/', norm.method, '_', EndType, '_moanin_DE_results.tsv'), sep = '\t')
-
+  fwrite(orf.sum.perc,          paste0(fig.dir, '/', norm.method, '_', EndType, '_counts.norm.tsv'), sep = '\t')
+  fwrite(orf.perc.mean,         paste0(fig.dir, '/', norm.method, '_', EndType, '_abund.mean.tsv'), sep = '\t')
+  
+  fwrite(gene.kin.and.clusters, paste0(fig.dir, '/', norm.method, '_', EndType, '_Hclust.genes.and.kin.classes.tsv'), sep = '\t')
 }
 ```
 

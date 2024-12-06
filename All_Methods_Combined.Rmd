@@ -1,0 +1,1103 @@
+---
+title: "EHV-1 TSS dynamics"
+author: Balázs Kakuk
+output: 
+  html_document:
+    theme: cosmo
+    toc: yes
+    toc_float:
+      collapsed: false
+---
+
+```{css, echo=FALSE}
+    body .main-container {
+      max-width: 90% !important;
+      width: 90% !important;
+    }
+    body {
+      max-width: 90% !important;
+      margin-left: auto;
+      margin-right: auto;
+    }
+```
+
+
+```{r include=FALSE}
+## hrbrthemes::ipsum:
+
+knitr::opts_chunk$set(fig.retina=2, echo = FALSE, fig.align = 'center', message = F, warning = F)
+```
+
+```{r ipsum_setup, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+library(prettydoc)
+library(hrbrthemes, quietly = T)
+#library(GenomicFeatures, quietly = T)
+library(DESeq2, quietly = T)
+library(ggpubr, quietly = T)
+#library(misc, quietly = T)
+library(dplyr, quietly = T)
+#library(tidyverse, quietly = T)
+library(ggsci, quietly = T)
+#library(Gviz, quietly = T)
+library(dplyr, quietly = T)
+library(tidyr)
+library(scales)
+#library(plyr)
+library(moanin, quietly = T)
+library(grid, quietly = T)
+library(gridExtra, quietly = T) 
+library(ggpubr, quietly = T)
+library(data.table)
+library(ggh4x)
+library(knitr)
+library(formattable)
+
+
+###
+source('_WF.part0.R')
+
+#### Settings ####
+
+orf.mean.average_genome  <- NULL
+orf.mean.viral_read.count  <- NULL
+orf.mean.total_read.count  <- NULL
+orf.mean.host_read.count  <- NULL
+orf.mean.raw_read.count  <- NULL
+orf.sum.average_genome  <- NULL
+orf.sum.viral_read.count  <- NULL
+orf.sum.total_read.count  <- NULL
+orf.sum.host_read.count  <- NULL
+orf.sum.raw_read.count  <- NULL
+
+orf.perc.mean.TSS.only  <- NULL
+orf.perc.mean.TES.only  <- NULL
+orf.perc.mean.TSS.TES  <- NULL
+
+
+orf.perc.sum.TSS.only  <- NULL
+orf.perc.sum.TES.only  <- NULL
+orf.perc.sum.TSS.TES  <- NULL
+
+
+
+```
+
+
+# Combine all ORF counting methods
+
+*Now we combine the TSS-only, the TES-only and the TSS.TES methods for all 5 normalization methods*
+
+
+## Project info
+*Samples: dcDNA Seq*  
+*pychopper: no*  
+*mapping version: v6*  
+*LoRTIA: yes (stranded only)*  
+
+
+
+# TSS only
+
+## Only those reads were counted, where LoRTIA   
+found the *5-prime* adapters!
+
+```{r message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+## Main
+#save.data <- 'PRV.rebase.RData'
+EndType <- 'TSS'
+
+project_config  <- fread('project_config.txt')
+outdir  <- project_config$outdir
+res.dir <- outdir; try({ dir.create(res.dir) })
+fig.dir <- paste0(res.dir, '/', EndType, '_abund'); # try({ dir.create(fig.dir) })## save plots to this directory
+
+## Miscallenaous
+palette <- pal_npg()(10)
+
+writetables <- T
+
+
+
+```
+
+```{r, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+#### Import results of all Normalization methods
+
+##
+try({
+norm.method   <- 'average_genome'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.average_genome <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.average_genome <- orf.sum.perc
+
+##
+norm.method   <- 'viral_read.count'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.viral_read.count <- orf.perc.mean
+
+orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.viral_read.count <- orf.sum.perc
+
+##
+norm.method   <- 'total_read.count'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.total_read.count <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.total_read.count <- orf.sum.perc
+
+##
+norm.method   <- 'host_read.count'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.host_read.count <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.host_read.count <- orf.sum.perc
+
+##
+norm.method   <- 'WO'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_abund.mean.tsv')) 
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.raw_read.count <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.raw_read.count <- orf.sum.perc
+
+
+###
+orf.perc.mean <- rbind(
+  orf.mean.average_genome,
+  orf.mean.viral_read.count,
+  orf.mean.total_read.count,
+  orf.mean.host_read.count,
+  orf.mean.raw_read.count
+)
+
+orf.perc.mean[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
+
+###
+orf.perc.sum <- rbind(
+  orf.sum.average_genome,
+  orf.sum.viral_read.count,
+  orf.sum.total_read.count,
+  orf.sum.host_read.count,
+  orf.sum.raw_read.count
+)
+
+orf.perc.sum[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
+
+orf.perc.mean[, EndType := EndType]
+orf.perc.sum[,  EndType := EndType]
+
+orf.perc.mean.TSS.only <- orf.perc.mean
+orf.perc.sum.TSS.only  <- orf.perc.sum
+})
+```
+
+
+# TES only
+
+## Only those reads were counted, where LoRTIA   
+found the *3-prime* adapters!
+
+```{r message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+## Main
+#save.data <- 'PRV.rebase.RData'
+EndType <- 'TES'
+
+project_config  <- fread('project_config.txt')
+outdir  <- project_config$outdir
+res.dir <- outdir; try({ dir.create(res.dir) })
+fig.dir <- paste0(res.dir, '/', EndType, '_abund'); # try({ dir.create(fig.dir) })## save plots to this directory
+
+## Miscallenaous
+palette <- pal_npg()(10)
+
+writetables <- T
+
+
+
+```
+
+```{r, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+#### Import results of all Normalization methods
+
+##
+try({
+norm.method   <- 'average_genome'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.average_genome <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.average_genome <- orf.sum.perc
+
+##
+norm.method   <- 'viral_read.count'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.viral_read.count <- orf.perc.mean
+
+orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.viral_read.count <- orf.sum.perc
+
+##
+norm.method   <- 'total_read.count'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.total_read.count <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.total_read.count <- orf.sum.perc
+
+##
+norm.method   <- 'host_read.count'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.host_read.count <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.host_read.count <- orf.sum.perc
+
+##
+norm.method   <- 'WO'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_abund.mean.tsv')) 
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.raw_read.count <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.raw_read.count <- orf.sum.perc
+
+
+###
+orf.perc.mean <- rbind(
+  orf.mean.average_genome,
+  orf.mean.viral_read.count,
+  orf.mean.total_read.count,
+  orf.mean.host_read.count,
+  orf.mean.raw_read.count
+)
+
+orf.perc.mean[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
+
+###
+orf.perc.sum <- rbind(
+  orf.sum.average_genome,
+  orf.sum.viral_read.count,
+  orf.sum.total_read.count,
+  orf.sum.host_read.count,
+  orf.sum.raw_read.count
+)
+
+orf.perc.sum[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
+
+
+orf.perc.mean[, EndType := EndType]
+orf.perc.sum[,  EndType := EndType] 
+
+orf.perc.mean.TES.only <- orf.perc.mean
+orf.perc.sum.TES.only  <- orf.perc.sum
+})
+```
+
+
+
+
+# TSS.TES
+
+## Only those reads were counted, where LoRTIA   
+found *both 5-prime AND 3-prime* adapters!
+
+```{r message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+## Main
+#save.data <- 'PRV.rebase.RData'
+EndType <- 'TSS.TES'
+
+project_config  <- fread('project_config.txt')
+outdir  <- project_config$outdir
+res.dir <- outdir; try({ dir.create(res.dir) })
+fig.dir <- paste0(res.dir, '/', EndType, '_abund'); # try({ dir.create(fig.dir) })## save plots to this directory
+
+## Miscallenaous
+palette <- pal_npg()(10)
+
+writetables <- T
+
+
+
+```
+
+```{r, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+#### Import results of all Normalization methods
+
+##
+try({
+norm.method   <- 'average_genome'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.average_genome <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.average_genome <- orf.sum.perc
+
+##
+norm.method   <- 'viral_read.count'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.viral_read.count <- orf.perc.mean
+
+orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.viral_read.count <- orf.sum.perc
+
+##
+norm.method   <- 'total_read.count'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.total_read.count <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.total_read.count <- orf.sum.perc
+
+##
+norm.method   <- 'host_read.count'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.host_read.count <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.host_read.count <- orf.sum.perc
+
+##
+norm.method   <- 'WO'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_abund.mean.tsv')) 
+orf.perc.mean[,norm.method := norm.method]
+orf.mean.raw_read.count <- orf.perc.mean
+
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc[,norm.method := norm.method]
+orf.sum.raw_read.count <- orf.sum.perc
+
+
+###
+orf.perc.mean <- rbind(
+  orf.mean.average_genome,
+  orf.mean.viral_read.count,
+  orf.mean.total_read.count,
+  orf.mean.host_read.count,
+  orf.mean.raw_read.count
+)
+
+orf.perc.mean[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
+
+###
+orf.perc.sum <- rbind(
+  orf.sum.average_genome,
+  orf.sum.viral_read.count,
+  orf.sum.total_read.count,
+  orf.sum.host_read.count,
+  orf.sum.raw_read.count
+)
+
+orf.perc.sum[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
+
+orf.perc.mean[, EndType := EndType]
+orf.perc.sum[,  EndType := EndType]
+
+orf.perc.mean.TSS.TES  <- orf.perc.mean
+orf.perc.sum.TSS.TES   <- orf.perc.sum
+})
+```
+
+
+
+
+
+# Combine dynamics
+```{r}
+orf.perc.mean <- rbind(
+  orf.perc.mean.TSS.only,
+  orf.perc.mean.TES.only,
+  orf.perc.mean.TSS.TES)
+
+
+orf.perc.sum <- rbind(
+  orf.perc.sum.TSS.only,
+  orf.perc.sum.TES.only,
+  orf.perc.sum.TSS.TES)
+
+```
+
+
+```{r, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+### Summarise based on literature kinetic class
+kin.class.sum  <- orf.perc.sum[,.(sum_read_count=sum(read_count), mean_read_count=mean(read_count), sd_read_count=sd(read_count)), 
+                              by=.(EndType, Kinetic_class, hpi, Time, cell_line, seqnames, norm_base, sample, group, norm.method)]
+
+
+### Summarise based on SIGNIFICANT de-novo kinetic cluster
+sig.cluster.sum <- orf.perc.sum[,.(sum_read_count=sum(read_count), mean_read_count=mean(read_count), sd_read_count=sd(read_count)), 
+                              by=.(EndType, labels, hpi, Time, cell_line, seqnames, norm_base, sample, group, norm.method)]
+
+
+### Summarise based on all de-novo kinetic cluster
+all.cluster.sum <- orf.perc.sum[,.(sum_read_count=sum(read_count), mean_read_count=mean(read_count), sd_read_count=sd(read_count)), 
+                              by=.(EndType, best_label, hpi, Time, cell_line, seqnames, norm_base, sample, group, norm.method)]
+
+
+
+###
+norm.method <- 'All_Methods_Combined'
+```
+
+
+```{r message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+## Main
+#save.data <- 'PRV.rebase.RData'
+EndType <- 'All_Methods_Combined'
+
+project_config  <- fread('project_config.txt')
+outdir  <- project_config$outdir
+res.dir <- outdir; try({ dir.create(res.dir) })
+fig.dir <- paste0(res.dir, '/', EndType, '_abund'); try({ dir.create(fig.dir) })## save plots to this directory
+
+## Miscallenaous
+palette <- pal_npg()(10)
+
+writetables <- T
+
+```
+
+
+## Gene dynamics, according to literature-based kinetic classes {.tabset}
+
+```{r, fig.show='hold',  fig.width = 30, fig.height = 4, eval=T}
+plotfun <- function(DT, 
+                    geom1 = geom_pointrange(aes(ymin = mean-sd, ymax = mean+sd, colour = cell_line)),
+                    geom2 = geom_line(aes(x=Time, y=mean, color=cell_line)),
+                    #geom2 = geom_smooth(aes(x=Time, y=mean, color=cell_line)),
+                    ncol = 10, title = NULL, #"Normalized ORF counts", 
+                    strip.backgr = pal_d3()(10)[2],
+                    ...) {
+  
+  if (nrow(DT) == 0) { 
+    ggp <- NULL } else { # try({ 
+
+    ggp <- 
+      ggplot(DT[, ],
+             aes(Time, mean, color = cell_line)
+                     ) + 
+      geom1 +
+      geom2 + 
+      #scale_color_manual(values = palette) +
+      #scale_y_continuous(labels = scales::percent_format()) +
+      scale_x_continuous(breaks = unique(DT$Time)) +
+      theme_ipsum() +
+      theme(plot.margin = unit(c(10,1,1,1), 'mm'),
+            legend.position = 'none',
+            ...) +
+      facet_nested(cols=vars(EndType, norm.method, gene),
+                   scales = "free_y") #, rows=vars(gene))
+      
+      if(!is.null(title)) { ggp <- ggp + ggtitle(title) }
+    
+  
+  }   # })
+  
+  return(ggp)
+
+}
+
+
+figw     <- 24
+figh     <- 18
+
+length(unique(orf.perc.mean[, gene])) == length(unique(orf.perc.sum[, gene]))
+## OK!
+
+DT <- orf.perc.mean
+normMethods <- c('viral_read.count','host_read.count')
+
+genestoplot <- unique(orf.perc.mean[, gene])
+genetoplot <- 'ORF1'
+pattern <- paste0("\\b", genetoplot, "\\b")
+
+grep(pattern, genestoplot, value = T)
+
+
+mapfun <- function(i, genestoplot, normMethods, DT, palette, ...) {
+  genetoplot <- genestoplot[i]
+  pattern <- paste0("\\b", genetoplot, "\\b")
+  DTsub <- DT[norm.method %in% normMethods & grepl(pattern, gene)]
+  gg <- plotfun(DTsub, title = genetoplot, ...) + scale_color_manual(values = palette[i])
+  ggsave(paste0(fig.dir, '/', genetoplot, '.jpg'), 
+         gg, height = 9, width = 24)
+  gg
+}
+
+colorvec <- rep(na.omit(colorvec), 2)
+
+mapfun(4, unique(orf.perc.mean$gene), c('viral_read.count','host_read.count'), orf.perc.mean, colorvec)
+
+ggsave('TEST.jpg', height = 24, width = 24)
+
+```
+
+
+### Mean and SD with linear connection
+```{r, fig.show='hold',  fig.width = 30, fig.height = 360, eval=T}
+plotlist <- purrr::map(1:length(unique(orf.perc.mean$gene)), mapfun,
+                       unique(orf.perc.mean$gene), c('viral_read.count','host_read.count'), orf.perc.mean, colorvec)
+
+cowplot::plot_grid(plotlist = plotlist, ncol=1)
+
+```
+
+### Mean and SD with loess function
+```{r, fig.show='hold',  fig.width = 30, fig.height = 240, eval=F}
+plotlist <- purrr::map(1:length(unique(orf.perc.mean$gene)), mapfun,
+                       unique(orf.perc.mean$gene), c('viral_read.count','host_read.count'), orf.perc.mean, colorvec,
+                       geom2 = geom_smooth(aes(x=Time, y=mean, color=cell_line)))
+
+cowplot::plot_grid(plotlist = plotlist, ncol=1)
+
+```
+
+
+### Barplots
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+figw     <- 24
+figh     <- 18
+
+```
+
+
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=F}
+top       <- 10
+
+orf.perc.mean[, rank := frank(-mean, ties.method = "average"), by = .(hpi, Time, cell_line, norm.method)]
+
+top_genes <- unique(orf.perc.mean[,.(hpi, Time, cell_line, norm.method, rank, gene, Kinetic_class)])
+
+#dcast(top_genes[cell_line == 'C6' & norm.method == 'WO' & Time == 4,], 
+#      hpi + Time + cell_line + norm.method ~ rank, value.var = 'gene')
+
+# there are many ties
+
+top_genes <- unique(top_genes[rank <= top, .(gene, rank)])
+top_genes <- unique(top_genes$gene)
+
+orf.perc.top <- orf.perc.mean[!gene %in% top_genes, .(mean = sum(mean), sd=mean(sd)), by=.(hpi, Time, cell_line, norm.method, Kinetic_class)]
+orf.perc.top$gene <- NA
+orf.perc.top$Kinetic_class <- NA
+
+orf.perc.top <- rbind(orf.perc.top, 
+                      orf.perc.mean[gene %in% top_genes,.(hpi, Time, cell_line, norm.method, gene, Kinetic_class, mean, sd)]
+                      )
+
+plotbar <- function(DT, title, subtitle) {
+
+  ggp <- ggplot(DT) +
+    geom_col(aes(x = cell_line, y = mean, fill = gene), color='black') +
+    ggtitle( title, subtitle) + 
+    coord_flip() +
+    scale_fill_manual(values = na.omit(colorvec)) +
+    theme_bw() +
+    theme(#strip.text.y = element_blank(),
+          strip.backgr = pal_d3()(10)[1]) +
+    facet_nested(rows=vars(Time, cell_line), cols=vars(Kinetic_class), scales = "free_y")
+  
+  ggp
+
+}
+
+title <- paste0('Top ', top, ' genes')
+
+ggp <- suppressWarnings(plotbar(orf.perc.top[norm.method == 'average_genome'], subtitle = 'Average viral genome coverage', title=title) )
+ggsave(paste0(fig.dir, '/', EndType, '_average_genome_Bar.jpg'), ggp, width = figw, height = figh, limitsize = F)
+
+ggp <- suppressWarnings(plotbar(orf.perc.top[norm.method == 'viral_read.count'], subtitle = 'Viral read count', title=title) )
+ggsave(paste0(fig.dir, '/', EndType, '_viral_read.count_Bar.jpg'), ggp, width = figw, height = figh, limitsize = F)
+
+ggp <- suppressWarnings(plotbar(orf.perc.top[norm.method == 'total_read.count'], subtitle = 'Total read count', title=title) )
+ggsave(paste0(fig.dir, '/', EndType, '_total_read.count_Bar.jpg'), ggp, width = figw, height = figh, limitsize = F)
+
+ggp <- suppressWarnings(plotbar(orf.perc.top[norm.method == 'host_read.count'], subtitle = 'Host read count', title=title) )
+ggsave(paste0(fig.dir, '/', EndType, '_host_read.count_Bar.jpg'), ggp, width = figw, height = figh, limitsize = F)
+
+ggp <- suppressWarnings(plotbar(orf.perc.top[norm.method == 'WO'], subtitle = 'Without normalization', title=title) )
+ggsave(paste0(fig.dir, '/', EndType, '_WO_Bar.jpg'), ggp, width = figw, height = figh, limitsize = F)
+```
+
+### Dotplots
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+figw     <- 18
+figh     <- 12
+
+```
+
+
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=F}
+plotdot <- function(DT,  title, subtitle) {
+  ggp <- ggplot(DT) +
+    geom_point(aes(x = Time, y = mean, fill = cell_line), color='black', shape = 21) +
+    geom_line(aes(x = Time, y = mean, color = cell_line)) +
+    ggtitle( title, subtitle) + 
+    #coord_flip() +
+    scale_fill_manual(values = na.omit(colorvec)) +
+    theme_bw() +
+    theme(#strip.text.y = element_blank(),
+          strip.backgr = pal_d3()(10)[1]) +
+    facet_nested_wrap(~gene, ncol=8, scales = "free_y")
+  
+  ggp
+
+}
+
+ggp <- suppressWarnings(plotdot(orf.perc.top[norm.method == 'average_genome'], subtitle = 'Average viral genome coverage', title=title) )
+ggsave(paste0(fig.dir, '/', EndType, '_average_genome_Dot.jpg'), ggp, width = figw, height = figh, limitsize = F)
+
+ggp <- suppressWarnings(plotdot(orf.perc.top[norm.method == 'viral_read.count'], subtitle = 'Viral read count', title=title) )
+ggsave(paste0(fig.dir, '/', EndType, '_viral_read.count_Dot.jpg'), ggp, width = figw, height = figh, limitsize = F)
+
+ggp <- suppressWarnings(plotdot(orf.perc.top[norm.method == 'total_read.count'], subtitle = 'Total read count', title=title) )
+ggsave(paste0(fig.dir, '/', EndType, '_total_read.count_Dot.jpg'), ggp, width = figw, height = figh, limitsize = F)
+
+ggp <- suppressWarnings(plotdot(orf.perc.top[norm.method == 'host_read.count'], subtitle = 'Host read count', title=title) )
+ggsave(paste0(fig.dir, '/', EndType, '_host_read.count_Dot.jpg'), ggp, width = figw, height = figh, limitsize = F)
+
+ggp <- suppressWarnings(plotdot(orf.perc.top[norm.method == 'WO'], subtitle = 'Without normalization', title=title) )
+ggsave(paste0(fig.dir, '/', EndType, '_WO_Dot.jpg'), ggp, width = figw, height = figh, limitsize = F)
+
+
+```
+
+
+
+## Combined dynamics of kinetic classes/clusters
+
+```{r}
+figw <- 20
+figh <- 12
+ncol <- 10
+DT <- orf.perc.mean
+normMethods <- c('viral_read.count','host_read.count')
+
+```
+
+
+### De Novo - Significant
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+ggp <- 
+      ggplot(sig.cluster.sum[norm.method %in% normMethods],
+             aes(Time, mean_read_count, color = as.factor(labels))
+                     #, add = 'loess'
+                     ) + 
+      geom_point() +
+      geom_smooth() + 
+      scale_color_manual(values = palette[]) +
+      #scale_y_continuous(labels = scales::percent_format()) +
+      theme_ipsum() +
+      theme(plot.margin = unit(c(10,1,1,1), 'mm')) +
+      #theme(strip.background.y = element_rect(fill = alpha(strip.backgr, 0.4))) +
+      # theme(strip.text.y = element_blank()) +
+      #ggtitle(title) +
+      facet_nested(rows=vars(EndType, norm.method), cols=vars(labels), scales = "free_y") ## cols=vars(norm.method)
+      # facet_wrap(~ labels, scales = 'free_y', ncol = ncol)
+
+
+ggp
+
+ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.DeNovo.Sig.Clusters.', '_points.loess.jpg'), ggp, width = figw, height = figh, limitsize = F)
+```
+
+```{r, fig.show='hold',  fig.width = 24, fig.height = 16, eval=F}
+gg <- ggplot(orf.perc.sum[norm.method %in% normMethods], #[gene %in% c('ORF18', 'ORF19')], 
+             aes(x=Time, y=read_count)) +
+    #geom_line(aes(group=rep_gene, color=as.factor(best_label))) +
+    geom_smooth(aes(group=rep_gene, color=as.factor(labels))) +
+    #ggtitle(cluster_toplot) + 
+    scale_color_manual(values = palette) +
+    theme_ipsum() +
+    facet_nested(cols=vars(norm.method, EndType),
+                 scales = "free_y",
+                 rows=vars(as.factor(labels))
+                 ) 
+  
+
+#gg
+```
+
+```{r, fig.show='hold',  fig.width = 24, fig.height = 16, eval=T}
+DT <- orf.perc.sum
+DT[,rep      := gsub('.*h_', '', sample)]
+DT[,rep_gene := paste0(gene, '::', rep)]
+
+mapfun <- function(i, clusters_toplot, cluster_name, normMethods, DT) {
+  
+  cluster_toplot <- clusters_toplot[i]
+  
+  DTsub <- as.data.frame(DT[norm.method %in% normMethods])
+  
+  DTsub <- as.data.table(DTsub[DTsub[,cluster_name] == cluster_toplot &
+                               !is.na(DTsub[,cluster_name]), ])
+  
+  gg <- ggplot(DTsub ,
+             aes(x=Time, y=read_count)) +
+    #geom_line(aes(group=rep_gene, color=as.factor(best_label))) +
+    geom_smooth(aes(group=rep_gene, color=as.factor(labels))) +
+    ggtitle(cluster_toplot) + 
+    scale_color_manual(values = palette[i]) +
+    theme_ipsum() +
+    theme(legend.position = 'none') +
+    facet_nested(rows=vars(norm.method, EndType),
+                 scales = "free_y"
+                 #,rows=vars(as.factor(best_label))
+                 ) 
+  gg
+  
+}
+
+plotlist <- purrr::map(1:length(unique(na.omit(DT$labels))), mapfun, unique(na.omit(DT$labels)), 'labels', c("viral_read.count", "host_read.count"), DT)
+
+cowplot::plot_grid(plotlist=plotlist, nrow=1, align = 'vh', axis = 'tlbr')
+  
+
+```
+
+
+
+### De Novo - All clusters
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+
+ggp <- 
+      ggplot(all.cluster.sum[norm.method %in% normMethods],
+             aes(Time, mean_read_count, color = as.factor(best_label))
+                     #, add = 'loess'
+                     ) + 
+      geom_point() +
+      geom_smooth() + 
+      scale_color_manual(values = palette[]) +
+      #scale_y_continuous(labels = scales::percent_format()) +
+      theme_ipsum() +
+      theme(plot.margin = unit(c(10,1,1,1), 'mm')) +
+      #theme(strip.background.y = element_rect(fill = alpha(strip.backgr, 0.4))) +
+      # theme(strip.text.y = element_blank()) +
+      #ggtitle(title) +
+      facet_nested(rows=vars(EndType, norm.method), cols=vars(best_label), scales = "free_y") ## cols=vars(norm.method)
+      #facet_wrap(~ best_label, scales = 'free_y', ncol = ncol)
+
+
+ggp
+
+ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.DeNovo.All.Clusters.', '_points.loess.jpg'), ggp, width = figw, height = figh, limitsize = F)
+
+```
+
+```{r, fig.show='hold',  fig.width = 24, fig.height = 16, eval=T}
+DT <- orf.perc.sum
+DT[,rep      := gsub('.*h_', '', sample)]
+DT[,rep_gene := paste0(gene, '::', rep)]
+
+
+mapfun <- function(i, clusters_toplot, cluster_name, normMethods, DT) {
+  
+  cluster_toplot <- clusters_toplot[i]
+  
+  DTsub <- as.data.frame(DT[norm.method %in% normMethods])
+  DTsub <- as.data.table(DTsub[DTsub[,cluster_name] == cluster_toplot, ])
+  
+  gg <- ggplot(DTsub ,
+             aes(x=Time, y=read_count)) +
+    #geom_line(aes(group=rep_gene, color=as.factor(best_label))) +
+    geom_smooth(aes(group=rep_gene, color=as.factor(best_label))) +
+    ggtitle(cluster_toplot) + 
+    scale_color_manual(values = palette[i]) +
+    theme_ipsum() +
+    theme(legend.position = 'none') +
+    facet_nested(rows=vars(norm.method, EndType),
+                 scales = "free_y"
+                 #,rows=vars(as.factor(best_label))
+                 ) 
+  gg
+  
+}
+
+plotlist <- purrr::map(1:length(unique(DT$best_label)), mapfun, unique(DT$best_label), 'best_label', c("viral_read.count", "host_read.count"), DT)
+
+cowplot::plot_grid(plotlist=plotlist, nrow=1, align = 'vh', axis = 'tlbr')
+  
+
+```
+
+
+### Literature clusters
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+ggp <- 
+      ggplot(kin.class.sum[norm.method %in% normMethods],
+             aes(Time, mean_read_count, color = Kinetic_class)
+                     #, add = 'loess'
+                     ) + 
+      geom_point() +
+      geom_smooth() + 
+      scale_color_manual(values = palette[]) +
+      #scale_y_continuous(labels = scales::percent_format()) +
+      theme_ipsum() +
+      theme(plot.margin = unit(c(10,1,1,1), 'mm')) +
+      #theme(strip.background.y = element_rect(fill = alpha(strip.backgr, 0.4))) +
+      # theme(strip.text.y = element_blank()) +
+      #ggtitle(title) +
+      facet_nested(rows=vars(EndType, norm.method), cols=vars(Kinetic_class), scales = "free_y") ## cols=vars(norm.method)
+      #facet_wrap(~ Kinetic_class, scales = 'free_y', ncol = ncol)
+
+
+ggp
+
+ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.Literature.Clusters.', '_points.loess.jpg'), ggp, width = figw, height = figh, limitsize = F)
+```
+
+```{r, fig.show='hold',  fig.width = 24, fig.height = 16, eval=F}
+gg <- ggplot(orf.perc.sum[norm.method %in% normMethods], #[gene %in% c('ORF18', 'ORF19')], 
+             aes(x=Time, y=read_count)) +
+    #geom_line(aes(group=rep_gene, color=as.factor(best_label))) +
+    geom_smooth(aes(group=rep_gene, color=Kinetic_class)) +
+    #ggtitle(cluster_toplot) + 
+    scale_color_manual(values = palette) +
+    #theme_ipsum() +
+    facet_wrap(~norm.method + EndType + Kinetic_class, ncol=5,
+                 scales = "free_y") 
+  
+
+#gg
+```
+
+```{r, fig.show='hold',  fig.width = 24, fig.height = 16, eval=T}
+DT <- orf.perc.sum
+DT[,rep      := gsub('.*h_', '', sample)]
+DT[,rep_gene := paste0(gene, '::', rep)]
+
+mapfun <- function(i, clusters_toplot, cluster_name, normMethods, DT) {
+  
+  cluster_toplot <- clusters_toplot[i]
+  
+  DTsub <- as.data.frame(DT[norm.method %in% normMethods])
+  DTsub <- as.data.table(DTsub[DTsub[,cluster_name] == cluster_toplot, ])
+  
+  gg <- ggplot(DTsub ,
+             aes(x=Time, y=read_count)) +
+    #geom_line(aes(group=rep_gene, color=as.factor(best_label))) +
+    geom_smooth(aes(group=rep_gene, color=as.factor(Kinetic_class))) +
+    ggtitle(cluster_toplot) + 
+    scale_color_manual(values = palette[i]) +
+    theme_ipsum() +
+    theme(legend.position = 'none') +
+    facet_nested(rows=vars(norm.method, EndType),
+                 scales = "free_y"
+                 #,rows=vars(as.factor(best_label))
+                 ) 
+  gg
+  
+}
+
+plotlist <- purrr::map(1:length(unique(DT$Kinetic_class)), mapfun, unique(DT$Kinetic_class), 'Kinetic_class', c("viral_read.count", "host_read.count"), DT)
+
+cowplot::plot_grid(plotlist=plotlist, nrow=1, align = 'vh', axis = 'tlbr')
+  
+
+```
+
+
+
+
+
+## Compare literature and de novo kinetic classes
+
+*NA shows the number of genes where the clustering did not yield an unambiguous result.*
+  
+```{r, fig.show='hold',  fig.width = 18, fig.height = 14, eval=T}
+setDT(orf.perc.mean)
+class.dt <- unique(orf.perc.mean[, .(EndType, norm.method, gene, Kinetic_class, best_label, labels)])
+class.dt <- class.dt[, .N, by=.(EndType, norm.method, Kinetic_class, best_label, labels)]
+
+#cluster_labels
+
+ggplot(class.dt[norm.method %in% normMethods],
+       aes(x=Kinetic_class, y=N, fill=as.factor(best_label))) +
+  geom_col(position = 'dodge') +
+  scale_fill_manual(values = palette) +
+  #scale_y_continuous(labels = scales::percent_format()) +
+  theme_ipsum() +
+  facet_nested(cols=vars(labels), rows=vars(EndType, norm.method))
+
+
+ggplot(class.dt[norm.method %in% normMethods],
+       aes(x=as.factor(best_label), y=N, fill=Kinetic_class)) +
+  geom_col(position = 'stack') +
+  scale_fill_manual(values = palette) +
+  #scale_y_continuous(labels = scales::percent_format()) +
+  theme_ipsum() +
+  facet_nested(cols=vars(labels), rows=vars(EndType, norm.method))
+
+
+```
+
+
+
+
+
+## Gene-pair ratios
+
+These pairs were analyzed: 
+ie180/us1, ie180/ep0, us1/ep0, noir1/noir2, noir1/ie180, noir2/ie180
+
+```{r, fig.show='hold',  fig.width = 10, fig.height = 7, eval=F}
+
+
+
+
+ab.ORF65    <- setnames(orf.perc.sum[gene == 'ORF65_1',    .(hpi, Time, cell_line, sample, group, norm.method, read_count)], "read_count", 'ORF65')
+
+ab.ORF64  <- setnames(orf.perc.sum[gene == 'ORF64_1',  .(hpi, Time, cell_line, sample, group, norm.method, read_count)], "read_count", 'ORF64')
+
+ab.ORF63    <- setnames(orf.perc.sum[gene == 'ORF63',    .(hpi, Time, cell_line, sample, group, norm.method, read_count)], "read_count", 'ORF63')
+
+#ab.noir   <- setnames(orf.perc.sum[gene == 'NOIR_1',   .(hpi, Time, cell_line, sample, group, norm.method, read_count)], "read_count", 'NOIR_1')
+
+#ab.noir2  <- setnames(orf.perc.sum[gene == 'NOIR-2', .(hpi, Time, cell_line, sample, group, norm.method, read_count)], "read_count", 'NOIR-2')
+
+
+ab.merged <- merge(ab.ORF65,    ab.ORF64,  by=c(metacols, 'norm.method'))
+ab.merged <- merge(ab.merged, ab.ORF63,    by=c(metacols, 'norm.method'))
+#ab.merged <- merge(ab.merged, ab.noir,   by=c(metacols, 'norm.method'))
+#ab.merged <- merge(ab.merged, ab.noir2,  by=c(metacols, 'norm.method'))
+
+ab.merged[, ORF64_ORF65   :=  ORF64   /  ORF65]
+ab.merged[, ORF64_ORF63   :=  ORF64   /  ORF63]
+ab.merged[, ORF65_ORF63     :=  ORF65     /  ORF63]
+#ab.merged[, NOIR1_NOIR2 :=  NOIR    / `NOIR-2`]
+#ab.merged[, NOIR_ORF64  :=  NOIR    /  ORF64]
+#ab.merged[, NOIR2_ORF64 := `NOIR-2` /  ORF64]
+
+#ab.merged[, ORF65_ORF64   :=  ORF65     / ORF64     ]
+#ab.merged[, ORF63_ORF64   :=  ORF63     / ORF64     ]
+#ab.merged[, ORF63_ORF65     :=  ORF63     / ORF65       ]
+#ab.merged[, NOIR2_NOIR1 := `NOIR-2` / NOIR      ]
+#ab.merged[, ORF64_NOIR  :=  ORF64   / NOIR_1      ]
+#ab.merged[, ORF64_NOIR2 :=  ORF64   / `NOIR-2`  ]
+
+gpairs <- c(
+'ORF64_ORF65' , 
+'ORF64_ORF63'  , 
+'ORF65_ORF63' 
+#'NOIR1_NOIR2' ,
+#'NOIR_ORF64'  ,
+#'NOIR2_ORF64' ,
+
+#,'ORF65_ORF64'   ,
+#,'ORF63_ORF64'   ,
+#,'ORF63_ORF65'     ,
+#,'NOIR2_NOIR1' ,
+#;'ORF64_NOIR'
+#,'ORF64_NOIR2' 
+)
+gpairs <- gsub('_', '/', gpairs)
+
+ab.merged.gt <- ab.merged[,-c(7:9)]
+
+ab.merged.gt <- melt(ab.merged.gt, variable.name = 'gene_pair', value.name = 'ratio', id.vars = c(1:6))
+
+ab.merged.gt$gene_pair <- gsub('_', '/', ab.merged.gt$gene_pair)
+ab.merged.gt[,gene_pair := factor(gene_pair, levels = gpairs)]
+
+ab.merged.gt[,mean := mean(ratio),   by=.(hpi, Time, cell_line, group, norm.method, gene_pair)]
+ab.merged.gt[,sd   := sd  (ratio),   by=.(hpi, Time, cell_line, group, norm.method, gene_pair)]
+ab.merged.gt[,sum  := sum (ratio),   by=.(hpi, Time, cell_line, group, norm.method, gene_pair)]
+
+
+
+plot_data <- ab.merged.gt[norm.method == 'viral_read.count'
+                 # norm.method == 'host_read.count' 
+                 , ]
+
+ggmean <- ggplot(plot_data) + 
+  #geom_point(aes(Time, ratio, color=cell_line)) +
+  geom_line(aes(Time, mean, color=cell_line, group=cell_line)) +
+  geom_pointrange(aes(Time, mean, color=cell_line, group=cell_line, ymin=mean-sd, ymax=mean+sd)) +
+  theme_bw() +
+  #facet_nested(rows = vars(norm.method), cols=vars(Time))
+  facet_wrap(~gene_pair, scales = 'free', ncol=3)
+
+
+ggmean
+ggsave(paste0(fig.dir, '/gene_ratios_mean.jpg'), width = 10, height = 7)
+
+
+ggrep <- ggplot(plot_data[# norm.method == 'viral_read.count'
+                 # norm.method == 'host_read.count' 
+                 , ]) + 
+  geom_point(aes(Time, ratio, color=cell_line)) +
+  geom_smooth(aes(Time, ratio, color=cell_line, group=cell_line)) +
+  #geom_pointrange(aes(Time, mean, color=cell_line, group=cell_line, ymin=mean-sd, ymax=mean+sd)) +
+  theme_bw() +
+  #facet_nested(rows = vars(norm.method), cols=vars(Time))
+  facet_wrap(~gene_pair, scales = 'free')
+
+
+ggrep
+ggsave(paste0(fig.dir, '/gene_ratios_rep.jpg'), width = 10, height = 7)
+
+
+ggsum <- ggplot(plot_data) + 
+  geom_point(aes(Time, sum, color=cell_line)) +
+  geom_line(aes(Time, sum, color=cell_line, group=cell_line)) +
+  #geom_pointrange(aes(Time, mean, color=cell_line, group=cell_line, ymin=mean-sd, ymax=mean+sd)) +
+  theme_bw() +
+  #facet_nested(rows = vars(norm.method), cols=vars(Time))
+  facet_wrap(~gene_pair, scales = 'free', ncol=3)
+
+
+ggsum
+ggsave(paste0(fig.dir, '/gene_ratios_sum.jpg'), width = 10, height = 7)
+
+```
+
+
+
+
+```{r}
+## Export data
+if (writetables) {
+  
+  #fwrite(orf.perc.sum,  paste0(fig.dir, '/', norm.method, '_', EndType, '_kin.class.sum.tsv'), sep = '\t')  
+  #fwrite(orf.perc.sum,  paste0(fig.dir, '/', norm.method, '_', EndType, '_sig.cluster.sum.tsv'), sep = '\t') 
+  #fwrite(orf.perc.sum,  paste0(fig.dir, '/', norm.method, '_', EndType, '_all.cluster.sum.tsv'), sep = '\t') 
+  fwrite(orf.perc.sum,  paste0(fig.dir, '/', norm.method, '_', EndType, '_counts.norm.tsv'), sep = '\t')
+  fwrite(orf.perc.mean, paste0(fig.dir, '/', norm.method, '_', EndType, '_abund.mean.tsv'), sep = '\t')
+  
+}
+```
+
+
+```{r bib, include=FALSE}
+# KEEP THIS AT THE END OF THE DOCUMENT TO GENERATE A LOCAL bib FILE FOR PKGS USED
+knitr::write_bib(sub("^package:", "", grep("package", search(), value=TRUE)), file='skeleton.bib')
+```
