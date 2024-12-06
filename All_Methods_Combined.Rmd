@@ -125,14 +125,6 @@ writetables <- T
 
 ##
 try({
-norm.method   <- 'average_genome'
-orf.perc.mean <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
-orf.perc.mean[,norm.method := norm.method]
-orf.mean.average_genome <- orf.perc.mean
-
-orf.sum.perc <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
-orf.sum.perc[,norm.method := norm.method]
-orf.sum.average_genome <- orf.sum.perc
 
 ##
 norm.method   <- 'viral_read.count'
@@ -143,18 +135,10 @@ orf.mean.viral_read.count <- orf.perc.mean
 orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
 orf.sum.perc[,norm.method := norm.method]
 orf.sum.viral_read.count <- orf.sum.perc
+})
 
 ##
-norm.method   <- 'total_read.count'
-orf.perc.mean <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
-orf.perc.mean[,norm.method := norm.method]
-orf.mean.total_read.count <- orf.perc.mean
-
-orf.sum.perc <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
-orf.sum.perc[,norm.method := norm.method]
-orf.sum.total_read.count <- orf.sum.perc
-
-##
+try({
 norm.method   <- 'host_read.count'
 orf.perc.mean <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
 orf.perc.mean[,norm.method := norm.method]
@@ -163,36 +147,38 @@ orf.mean.host_read.count <- orf.perc.mean
 orf.sum.perc <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
 orf.sum.perc[,norm.method := norm.method]
 orf.sum.host_read.count <- orf.sum.perc
+})
 
 ##
-norm.method   <- 'WO'
-orf.perc.mean <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_abund.mean.tsv')) 
+try({
+norm.method   <- 'VST'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_VST', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
 orf.perc.mean[,norm.method := norm.method]
-orf.mean.raw_read.count <- orf.perc.mean
+orf.mean.host_read.count <- orf.perc.mean
 
-orf.sum.perc <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_VST', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
 orf.sum.perc[,norm.method := norm.method]
-orf.sum.raw_read.count <- orf.sum.perc
-
+orf.sum.host_read.count <- orf.sum.perc
+})
 
 ###
 orf.perc.mean <- rbind(
-  orf.mean.average_genome,
-  orf.mean.viral_read.count,
-  orf.mean.total_read.count,
-  orf.mean.host_read.count,
-  orf.mean.raw_read.count
+  #orf.mean.average_genome,
+  orf.mean.viral_read.count
+  #orf.mean.total_read.count,
+ # orf.mean.host_read.count,
+  #orf.mean.raw_read.count
 )
 
 orf.perc.mean[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
 
 ###
 orf.perc.sum <- rbind(
-  orf.sum.average_genome,
-  orf.sum.viral_read.count,
-  orf.sum.total_read.count,
-  orf.sum.host_read.count,
-  orf.sum.raw_read.count
+  #orf.sum.average_genome,
+  orf.sum.viral_read.count
+  #orf.sum.total_read.count,
+  #orf.sum.host_read.count,
+  #orf.sum.raw_read.count
 )
 
 orf.perc.sum[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
@@ -202,7 +188,7 @@ orf.perc.sum[,  EndType := EndType]
 
 orf.perc.mean.TSS.only <- orf.perc.mean
 orf.perc.sum.TSS.only  <- orf.perc.sum
-})
+
 ```
 
 
@@ -235,14 +221,6 @@ writetables <- T
 
 ##
 try({
-norm.method   <- 'average_genome'
-orf.perc.mean <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
-orf.perc.mean[,norm.method := norm.method]
-orf.mean.average_genome <- orf.perc.mean
-
-orf.sum.perc <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
-orf.sum.perc[,norm.method := norm.method]
-orf.sum.average_genome <- orf.sum.perc
 
 ##
 norm.method   <- 'viral_read.count'
@@ -253,18 +231,10 @@ orf.mean.viral_read.count <- orf.perc.mean
 orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
 orf.sum.perc[,norm.method := norm.method]
 orf.sum.viral_read.count <- orf.sum.perc
+})
 
 ##
-norm.method   <- 'total_read.count'
-orf.perc.mean <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
-orf.perc.mean[,norm.method := norm.method]
-orf.mean.total_read.count <- orf.perc.mean
-
-orf.sum.perc <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
-orf.sum.perc[,norm.method := norm.method]
-orf.sum.total_read.count <- orf.sum.perc
-
-##
+try({
 norm.method   <- 'host_read.count'
 orf.perc.mean <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
 orf.perc.mean[,norm.method := norm.method]
@@ -273,36 +243,38 @@ orf.mean.host_read.count <- orf.perc.mean
 orf.sum.perc <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
 orf.sum.perc[,norm.method := norm.method]
 orf.sum.host_read.count <- orf.sum.perc
+})
 
 ##
-norm.method   <- 'WO'
-orf.perc.mean <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_abund.mean.tsv')) 
+try({
+norm.method   <- 'VST'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_VST', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
 orf.perc.mean[,norm.method := norm.method]
-orf.mean.raw_read.count <- orf.perc.mean
+orf.mean.host_read.count <- orf.perc.mean
 
-orf.sum.perc <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_VST', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
 orf.sum.perc[,norm.method := norm.method]
-orf.sum.raw_read.count <- orf.sum.perc
-
+orf.sum.host_read.count <- orf.sum.perc
+})
 
 ###
 orf.perc.mean <- rbind(
-  orf.mean.average_genome,
-  orf.mean.viral_read.count,
-  orf.mean.total_read.count,
-  orf.mean.host_read.count,
-  orf.mean.raw_read.count
+  #orf.mean.average_genome,
+  orf.mean.viral_read.count
+  #orf.mean.total_read.count,
+ # orf.mean.host_read.count,
+  #orf.mean.raw_read.count
 )
 
 orf.perc.mean[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
 
 ###
 orf.perc.sum <- rbind(
-  orf.sum.average_genome,
-  orf.sum.viral_read.count,
-  orf.sum.total_read.count,
-  orf.sum.host_read.count,
-  orf.sum.raw_read.count
+  #orf.sum.average_genome,
+  orf.sum.viral_read.count
+  #orf.sum.total_read.count,
+  #orf.sum.host_read.count,
+  #orf.sum.raw_read.count
 )
 
 orf.perc.sum[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
@@ -313,7 +285,7 @@ orf.perc.sum[,  EndType := EndType]
 
 orf.perc.mean.TES.only <- orf.perc.mean
 orf.perc.sum.TES.only  <- orf.perc.sum
-})
+
 ```
 
 
@@ -348,14 +320,6 @@ writetables <- T
 
 ##
 try({
-norm.method   <- 'average_genome'
-orf.perc.mean <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
-orf.perc.mean[,norm.method := norm.method]
-orf.mean.average_genome <- orf.perc.mean
-
-orf.sum.perc <- fread(paste0(fig.dir, '.norm_genome', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
-orf.sum.perc[,norm.method := norm.method]
-orf.sum.average_genome <- orf.sum.perc
 
 ##
 norm.method   <- 'viral_read.count'
@@ -366,18 +330,10 @@ orf.mean.viral_read.count <- orf.perc.mean
 orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
 orf.sum.perc[,norm.method := norm.method]
 orf.sum.viral_read.count <- orf.sum.perc
+})
 
 ##
-norm.method   <- 'total_read.count'
-orf.perc.mean <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
-orf.perc.mean[,norm.method := norm.method]
-orf.mean.total_read.count <- orf.perc.mean
-
-orf.sum.perc <- fread(paste0(fig.dir, '.norm_total', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
-orf.sum.perc[,norm.method := norm.method]
-orf.sum.total_read.count <- orf.sum.perc
-
-##
+try({
 norm.method   <- 'host_read.count'
 orf.perc.mean <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
 orf.perc.mean[,norm.method := norm.method]
@@ -386,36 +342,38 @@ orf.mean.host_read.count <- orf.perc.mean
 orf.sum.perc <- fread(paste0(fig.dir, '.norm_host', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
 orf.sum.perc[,norm.method := norm.method]
 orf.sum.host_read.count <- orf.sum.perc
+})
 
 ##
-norm.method   <- 'WO'
-orf.perc.mean <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_abund.mean.tsv')) 
+try({
+norm.method   <- 'VST'
+orf.perc.mean <- fread(paste0(fig.dir, '.norm_VST', '/', norm.method, '_', EndType, '_abund.mean.tsv'))
 orf.perc.mean[,norm.method := norm.method]
-orf.mean.raw_read.count <- orf.perc.mean
+orf.mean.host_read.count <- orf.perc.mean
 
-orf.sum.perc <- fread(paste0(fig.dir, '.norm_Without', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc <- fread(paste0(fig.dir, '.norm_VST', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
 orf.sum.perc[,norm.method := norm.method]
-orf.sum.raw_read.count <- orf.sum.perc
-
+orf.sum.host_read.count <- orf.sum.perc
+})
 
 ###
 orf.perc.mean <- rbind(
-  orf.mean.average_genome,
-  orf.mean.viral_read.count,
-  orf.mean.total_read.count,
-  orf.mean.host_read.count,
-  orf.mean.raw_read.count
+  #orf.mean.average_genome,
+  orf.mean.viral_read.count
+  #orf.mean.total_read.count,
+ # orf.mean.host_read.count,
+  #orf.mean.raw_read.count
 )
 
 orf.perc.mean[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
 
 ###
 orf.perc.sum <- rbind(
-  orf.sum.average_genome,
-  orf.sum.viral_read.count,
-  orf.sum.total_read.count,
-  orf.sum.host_read.count,
-  orf.sum.raw_read.count
+  #orf.sum.average_genome,
+  orf.sum.viral_read.count
+  #orf.sum.total_read.count,
+  #orf.sum.host_read.count,
+  #orf.sum.raw_read.count
 )
 
 orf.perc.sum[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
@@ -425,7 +383,7 @@ orf.perc.sum[,  EndType := EndType]
 
 orf.perc.mean.TSS.TES  <- orf.perc.mean
 orf.perc.sum.TSS.TES   <- orf.perc.sum
-})
+
 ```
 
 

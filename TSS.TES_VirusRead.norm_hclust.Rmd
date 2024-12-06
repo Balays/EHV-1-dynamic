@@ -90,7 +90,7 @@ Count multiplier for DEG analysis: 10000x
 *This is to counter zeros*
 
 
-# TSS dynamics 
+# GENE dynamics ( TSS + TES )
 
 ## Those reads were counted only, where both *3-prime* AND *5-prime* adapters were "correct" (according to LoRTIA)
 
@@ -103,7 +103,7 @@ gene.sample_count.sp <- fread(paste0(res.dir, '/gene.sample.count.sp.tsv'), na.s
 
 
 #### !!! Consider adapters!
-adapters <- 'prime5'
+adapters <- 'both'
 
 source('Gene.counts.R')
 
