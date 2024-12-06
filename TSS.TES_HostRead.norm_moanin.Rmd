@@ -273,29 +273,21 @@ gene_kin.class <- unique(gene_kin.class[,.(gene, Kinetic_class)])
 
 orf.sum.perc[,Kinetic_class := NULL]
 
+
 #### Summarize the counts
 
 ## summarise counts on gene cluster
 orf.sum.perc <- orf.sum.perc[,.(read_count=sum(read_count)), by=.(seqnames, strand, gene, norm_base, sample, group, hpi, Time, cell_line)]
-orf.sum.perc <- merge(orf.sum.perc, gene_kin.class, by='gene', allow.cartesian=T, all=T)
+orf.sum.perc <- merge(orf.sum.perc, gene_kin.class, by='gene', all=T)
+orf.sum.perc[is.na(Kinetic_class), Kinetic_class := 'unknown']
+orf.sum.perc[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
 
 ### Statistics of gene cluster counts accross samples
 
 ## normalized counts
 orf.perc.mean <- 
-  orf.sum.perc %>% group_by(gene, Kinetic_class, hpi, Time, cell_line) %>%
-  dplyr::summarise(mean=mean(read_count), sd=sd(read_count), varcoeff=sd(read_count) / mean(read_count), se=mean_se(read_count))
-orf.perc.mean <- data.table(orf.perc.mean[,1:8], orf.perc.mean$se[])
-
-orf.perc.mean[is.na(Kinetic_class), Kinetic_class := 'unknown']
-orf.perc.mean[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
-
-## non-normalized counts
-#orf.mean <- 
-#  orf.sum %>% group_by(gene, hpi, Time, cell_line) %>%
-#  dplyr::summarise(mean=mean(read_count), sd=sd(read_count), varcoeff=sd(read_count) / mean(read_count), se=mean_se(read_count))
-#orf.mean <- data.table(orf.mean[,1:7], orf.mean$se[])
-
+  orf.sum.perc[,.(mean=mean(read_count), sd=sd(read_count), varcoeff=sd(read_count) / mean(read_count)), 
+               by=.(gene, Kinetic_class, hpi, Time, cell_line)]
 
 
 #### merge back summary with counts
@@ -305,24 +297,18 @@ orf.sum.perc <- merge(orf.sum.perc, orf.perc.mean, by=c('gene', 'Kinetic_class',
 ```
 
 ### Difference from mean
-```{r, fig.width = 9, fig.height = 6, eval=F}
+```{r, fig.width = 9, fig.height = 6, eval=T}
 
 #### Find which replicate is the farthest from the mean in each gene for each group
 
 # find distance from mean
-orf.sum.perc[,dist_from_mean := abs(mean - read_count)]
-
-#
-#orf.sum <- merge(orf.sum, orf.mean, by=c('gene', 'hpi', 'Time', 'cell_line'))
-# find distance from mean
-#orf.sum[,dist_from_mean := abs(mean - read_count)]
-
+orf.sum.perc[ , dist_from_mean := abs(mean - read_count)]
 
 ##
-orf.sum.perc[ , farthest_from_mean := ifelse(dist_from_mean == max(dist_from_mean), T, F), by=.(group, gene)]
+orf.sum.perc[ , farthest_from_mean := fifelse(dist_from_mean == max(dist_from_mean), T, F), by=.(group, gene)]
 # NA, if all is true in each group beacuse then the distance is the same which means probably that the gene has zero counts in that group
 orf.sum.perc[ , farthest_from_mean := if(sum(dist_from_mean) == 0) NA, by=.(group, gene)]
-orf.sum.perc.tes[ , farthest_rep := ifelse(farthest_from_mean, gsub('.*_', '', sample), NA), by=.(sample, gene)]
+orf.sum.perc[ , farthest_rep       := fifelse(!is.na(farthest_from_mean) & farthest_from_mean == T, gsub('.*_', '', sample), 'NA'), by=.(sample, gene)]
 
 plot.data  <- orf.sum.perc[!is.na(farthest_rep), .N, by=.(farthest_rep, hpi, Time, cell_line, group)][order(group)]
 
@@ -331,8 +317,7 @@ ggplot(
   aes(x=hpi, y=N, fill=farthest_rep)) +
   geom_col(position = 'dodge2') +
   scale_fill_d3() +
-  theme_bw() +
-  facet_grid(rows=vars(cell_line))
+  theme_bw() # + facet_grid(rows=vars(hpi))
 
 ```
 
