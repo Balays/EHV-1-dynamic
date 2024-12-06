@@ -1,12 +1,17 @@
+
+
+countData <- countData#[,metafilt$sample]
+
+
 # Example: correlation-based distance
-dist_matrix <- as.dist(1 - cor(t(vsd_mat[ , -1]), method="pearson"))
+dist_matrix <- as.dist(1 - cor(t(vsd_mat[ ,]), method="pearson"))
 hc <- hclust(dist_matrix, method="complete")
 plot(hc)
 # Cut the tree where it makes sense biologically
 clusters <- cutree(hc, k = 5) # for example, 5 clusters
 
 
-vsd_mat <- vsd_mat[,metafilt$sample]
+
 
 # Extract time points from column names
 col_names <- colnames(vsd_mat)
@@ -49,20 +54,20 @@ plot(res)
 
 library(GRENITS)
 
-# GRENITS requires a matrix: genes in rows, time points in columns
-TimeSeries <- avg_mat  # already genes x time
-# Ensure TimeSeries is numeric and log/vst transformed; should be from DESeq2 VST.
 
-# Run GRENITS time-series inference
-# Adjust nIterations, burnin, and thinning as needed.
-# Larger nIterations = more accurate but slower.
+vsd_mat <- vsd_mat[,metafilt$sample]
+
+
+# GRENITS requires a matrix: genes in rows, time points in columns
+resultsFolder <- "GRENITS_output"
 results <- ReplicatesNet_gauss(
-  data = TimeSeries,
-  resultsFolder = "GRENITS_output",
-  nIterations = 50000,
-  burnin = 10000,
-  thinning = 10
+  resultsFolder = resultsFolder,
+  timeSeries = vsd_mat,
+  numReps = 3
+  # add ParamVec, chains, Regulators, fixMe if needed
 )
+
+analyse.output(output.folder = resultsFolder, timeSeries = vsd_mat)
 
 # After this finishes, analyze results:
 plotResults("GRENITS_output", what="network")

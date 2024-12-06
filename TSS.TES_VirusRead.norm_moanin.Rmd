@@ -405,7 +405,10 @@ countData <- as.data.frame(dcast(orf.sum.perc, gene ~ sample, value.var = 'read_
 colnames(countData) <- gsub('-', '_', colnames(countData))
 countData <- countData[,c('gene', sampdat$sample)]
 countData <- as.matrix(data.frame(countData[,-1], row.names = countData$gene))
+```
 
+
+```{r}
 ## multiplication -->> need to test whether this gives difference!!
 
 countData <- countData * multip
