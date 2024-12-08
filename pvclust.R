@@ -1,7 +1,3 @@
-
-
-
-
 # 3. Cluster Stability via pvclust to assess the statistical support for clusters:
 ## euclidean distance
 #fit.gene <- pvclust(t(countData), method.hclust="complete", method.dist="euclidean", nboot=1000)
@@ -14,7 +10,7 @@
 
 ##
 fit.gene <- pvclust(t(countData),
-                     method.hclust="complete", method.dist="uncentered", nboot=1000)
+                    method.hclust="complete", method.dist="uncentered", nboot=1000)
 plot(fit.gene)
 hc <- fit.gene$hclust
 #pvrect(fit.gene, alpha=0.85, pv="si")
@@ -35,5 +31,3 @@ dist_matrix <- pvclust:::dist.pvclust(t(countData), method=fit.gene$hclust$dist.
 #                    method.hclust="complete", method.dist="correlation", nboot=1000)
 #plot(fit.gene2)
 #pvrect(fit.gene2)
-
-
