@@ -62,7 +62,7 @@ metafilt$sample <- factor(metafilt$sample, levels = metafilt$sample)
 
 ## Main
 #save.data <- 'PRV.rebase.RData'
-EndType <- 'TES'
+EndType <- 'TSS.TES'
 
 project_config  <- fread('project_config.txt')
 outdir  <- project_config$outdir
@@ -429,7 +429,7 @@ if (!is.null(samples_to_filt)) {
 ```{r, fig.width=16, fig.height=10}
 countData <- orf.sum.sp.mat#[,metafilt$sample]
 
-cluster_num <- 6
+cluster_num <- 7
 
 ## use pvclust for statistical support
 source('pvclust.R')
@@ -459,10 +459,16 @@ ggclust_stats
 ### Remove genes from clusters ?
 
 ```{r}
-sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene]
+rm.unclustered <- T
 
+unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
 
-#cluster_dt
+if (rm.unclustered) {
+  
+ cluster_dt[gene %in% unclustered, cluster := 'unclustered'] 
+  
+}
+#
 ```
 
 
@@ -472,7 +478,8 @@ sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene]
 
 ### WRITE OUT DEG analyis and clustering RESULTS
 
-cluster_dt <- unique(cluster_dt[,.(gene = gene, cluster=paste0('cluster_', cluster))])
+cluster_dt <- unique(cluster_dt[cluster != 'unclustered',
+                                .(gene = gene, cluster=paste0('cluster_', cluster))])
 cluster_dt[,gene := factor(gene, levels = ORFs)]
 
 ## Add cluster info to counts
