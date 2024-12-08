@@ -1,4 +1,4 @@
-# Let's say we want to consider between 2 and 10 clusters
+# consider between 2 and 10 clusters
 k_values <- 2:10
 
 

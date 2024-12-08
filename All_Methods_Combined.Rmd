@@ -132,7 +132,7 @@ orf.perc.mean <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', En
 orf.perc.mean[,norm.method := norm.method]
 orf.mean.viral_read.count <- orf.perc.mean
 
-orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_abund.tsv'))
 orf.sum.perc[,norm.method := norm.method]
 orf.sum.viral_read.count <- orf.sum.perc
 })
@@ -228,7 +228,7 @@ orf.perc.mean <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', En
 orf.perc.mean[,norm.method := norm.method]
 orf.mean.viral_read.count <- orf.perc.mean
 
-orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_abund.tsv'))
 orf.sum.perc[,norm.method := norm.method]
 orf.sum.viral_read.count <- orf.sum.perc
 })
@@ -327,7 +327,7 @@ orf.perc.mean <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', En
 orf.perc.mean[,norm.method := norm.method]
 orf.mean.viral_read.count <- orf.perc.mean
 
-orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_counts.norm.tsv'))
+orf.sum.perc  <- fread(paste0(fig.dir, '.norm_LoRTIA', '/', norm.method, '_', EndType, '_abund.tsv'))
 orf.sum.perc[,norm.method := norm.method]
 orf.sum.viral_read.count <- orf.sum.perc
 })
@@ -412,14 +412,10 @@ kin.class.sum  <- orf.perc.sum[,.(sum_read_count=sum(read_count), mean_read_coun
                               by=.(EndType, Kinetic_class, hpi, Time, cell_line, seqnames, norm_base, sample, group, norm.method)]
 
 
-### Summarise based on SIGNIFICANT de-novo kinetic cluster
-sig.cluster.sum <- orf.perc.sum[,.(sum_read_count=sum(read_count), mean_read_count=mean(read_count), sd_read_count=sd(read_count)), 
-                              by=.(EndType, labels, hpi, Time, cell_line, seqnames, norm_base, sample, group, norm.method)]
+### Summarise based on de-novo kinetic clusters
+cluster.sum <- orf.perc.sum[,.(sum_read_count=sum(read_count), mean_read_count=mean(read_count), sd_read_count=sd(read_count)), 
+                              by=.(EndType, cluster, hpi, Time, cell_line, seqnames, norm_base, sample, group, norm.method)]
 
-
-### Summarise based on all de-novo kinetic cluster
-all.cluster.sum <- orf.perc.sum[,.(sum_read_count=sum(read_count), mean_read_count=mean(read_count), sd_read_count=sd(read_count)), 
-                              by=.(EndType, best_label, hpi, Time, cell_line, seqnames, norm_base, sample, group, norm.method)]
 
 
 

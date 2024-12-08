@@ -1,48 +1,48 @@
-gene	Kinetic_class	best_label	labels
-CTO	unknown	1	1
-NOIR_1	unknown	2	2
-NOIR_2	unknown	2	2
-ORF1	unknown	3	3
-ORF10, ORF11	L	2	2
-ORF12, ORF13, ORF14	L	1	1
-ORF17	L	3	3
-ORF18	L	2	2
-ORF18, ORF17, ORF16, ORF15	L	4	4
-ORF19	L	4	4
-ORF2	unknown	1	1
-ORF22	L	1	1
-ORF22, ORF21, ORF20	E	3	3
-ORF23	L	1	1
-ORF24	L	1	1
-ORF27, ORF26, ORF25	L	1	1
-ORF28, ORF29	L	2	2
-ORF3	L	2	2
-ORF30	E	3	3
-ORF31	E	3	3
-ORF32, ORF33, ORF34	E/L	2	2
-ORF36	L	1	1
-ORF37	L	2	2
-ORF37, ORF36, ORF35, ORF35.5	L	1	1
-ORF38	L	2	2
-ORF39	L	4	4
-ORF4	unknown	5	5
-ORF40	L	1	1
-ORF41, ORF42, OF43	L	1	1
-ORF44	L	1	1
-ORF45, ORF46	L	4	4
-ORF48, ORF49, ORF50, ORF51	E/L	2	2
-ORF52	L	4	4
-ORF53, ORF54	E	4	4
-ORF57, ORF58	L	4	4
-ORF62, ORF61, ORF60,ORF59	E/L	4	4
-ORF63	E	3	3
-ORF64_1	IE	5	5
-ORF65_1	E	3	3
-ORF66_1	unknown	2	2
-ORF68, ORF67_1	L	3	3
-ORF69, ORF70	E/L	5	5
-ORF7,  ORF6,  ORF5	E/L	3	3
-ORF71, ORF72, ORF73	L	4	4
-ORF74, ORF75, ORF76, ORF67 _2	L	3	3
-ORF8	L	1	1
-ORF9	L	2	2
+gene	Kinetic_class	cluster
+ORF1	unknown	cluster_1
+ORF2	unknown	cluster_2
+ORF3	L	cluster_2
+ORF4	unknown	cluster_1
+ORF7,  ORF6,  ORF5	E/L	cluster_1
+ORF8	L	cluster_3
+ORF9	L	cluster_2
+ORF10, ORF11	L	cluster_2
+ORF12, ORF13, ORF14	L	cluster_3
+ORF18, ORF17, ORF16, ORF15	L	cluster_4
+ORF17	L	cluster_1
+ORF18	L	cluster_2
+ORF19	L	cluster_4
+ORF22, ORF21, ORF20	E	cluster_1
+ORF22	L	cluster_3
+ORF23	L	cluster_3
+ORF24	L	cluster_3
+ORF27, ORF26, ORF25	L	cluster_3
+ORF28, ORF29	L	cluster_2
+ORF30	E	cluster_1
+ORF31	E	cluster_1
+ORF32, ORF33, ORF34	E/L	cluster_2
+ORF37, ORF36, ORF35, ORF35.5	L	cluster_3
+ORF36	L	cluster_3
+ORF37	L	cluster_2
+ORF38	L	cluster_2
+ORF39	L	cluster_5
+CTO	unknown	cluster_3
+ORF40	L	cluster_3
+ORF41, ORF42, OF43	L	cluster_3
+ORF44	L	cluster_3
+ORF45, ORF46	L	cluster_3
+ORF48, ORF49, ORF50, ORF51	E/L	cluster_2
+ORF52	L	cluster_4
+ORF53, ORF54	E	cluster_4
+ORF57, ORF58	L	cluster_4
+ORF62, ORF61, ORF60,ORF59	E/L	cluster_4
+ORF63	E	cluster_1
+ORF64_1	IE	cluster_6
+NOIR_1	unknown	cluster_1
+ORF65_1	E	cluster_1
+ORF66_1	unknown	cluster_2
+ORF68, ORF67_1	L	cluster_1
+ORF69, ORF70	E/L	cluster_5
+ORF71, ORF72, ORF73	L	cluster_4
+ORF74, ORF75, ORF76, ORF67 _2	L	cluster_2
+NOIR_2	unknown	cluster_1

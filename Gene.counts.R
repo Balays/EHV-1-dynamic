@@ -7,30 +7,30 @@ norm_cov_summary <- fread(paste0(outdir, '/norm.cov.summary.tsv'), na.strings = 
 
 
 ## gather (melt)
-TR.gene.ov.counts.gt <- melt(TR.gene.ov.counts, measure.vars = metafilt$sample, variable.name = "sample", value.name = "TR.count")
+TR.gene.ov.counts.gt <- melt(TR.gene.ov.counts, measure.vars = as.character(metafilt$sample), variable.name = "sample", value.name = "TR.count")
 
 
 #### Include adapter-based filtering
 if(adapters == 'both') {
-  TR.gene.ov.counts.gt <- TR.gene.ov.counts.gt[correct_tss == T & correct_tes == T, .(TR.count = sum(TR.count)), 
+  TR.gene.ov.counts.gt <- TR.gene.ov.counts.gt[correct_tss == T & correct_tes == T, .(TR.count = sum(TR.count)),
                                                by=.(transcript_id, seqnames, strand, gene, gene_cluster, Kinetic_class, transcript_start, transcript_end, prime5, prime3, sample)]
-  
+
 } else if(adapters == 'either') {
-  TR.gene.ov.counts.gt <- TR.gene.ov.counts.gt[correct_tss == T | correct_tes == T, .(TR.count = sum(TR.count)), 
+  TR.gene.ov.counts.gt <- TR.gene.ov.counts.gt[correct_tss == T | correct_tes == T, .(TR.count = sum(TR.count)),
                                                by=.(transcript_id, seqnames, strand, gene, gene_cluster, Kinetic_class, transcript_start, transcript_end, prime5, prime3, sample)]
-  
+
 } else if(adapters == 'any') {
-  TR.gene.ov.counts.gt <- TR.gene.ov.counts.gt[, .(TR.count = sum(TR.count)), 
+  TR.gene.ov.counts.gt <- TR.gene.ov.counts.gt[, .(TR.count = sum(TR.count)),
                                                by=.(transcript_id, seqnames, strand, gene, gene_cluster, Kinetic_class, transcript_start, transcript_end, prime5, prime3, sample)]
-  
+
 } else if(adapters == 'prime5') {
-  TR.gene.ov.counts.gt <- TR.gene.ov.counts.gt[correct_tss == T, .(TR.count = sum(TR.count)), 
+  TR.gene.ov.counts.gt <- TR.gene.ov.counts.gt[correct_tss == T, .(TR.count = sum(TR.count)),
                                                by=.(transcript_id, seqnames, strand, gene, gene_cluster, Kinetic_class, transcript_start, transcript_end, prime5, prime3, sample)]
-  
+
 } else if(adapters == 'prime3') {
-  TR.gene.ov.counts.gt <- TR.gene.ov.counts.gt[correct_tes == T, .(TR.count = sum(TR.count)), 
+  TR.gene.ov.counts.gt <- TR.gene.ov.counts.gt[correct_tes == T, .(TR.count = sum(TR.count)),
                                                by=.(transcript_id, seqnames, strand, gene, gene_cluster, Kinetic_class, transcript_start, transcript_end, prime5, prime3, sample)]
-  
+
 }
 
 
@@ -51,7 +51,7 @@ gene.sample_count <- TR.gene.ov.counts.gt[, .(gene_count = sum(TR.count)),  by=.
 
 #gene.sample_count <- unique(TR.gene.ov.counts.gt[,.(seqnames, strand, gene, gene_cluster, Kinetic_class, sample, gene_count)])
 
-gene.sample_count.sp <- dcast(gene.sample_count, 
+gene.sample_count.sp <- dcast(gene.sample_count,
                               #sample, gene_count,
                               seqnames + strand + gene_cluster + gene + Kinetic_class ~ sample, value.var = 'gene_count', #fun.aggregate = sum,
                               fill=0)
@@ -61,7 +61,7 @@ gene.sample_count.sp <- dcast(gene.sample_count,
 gene.sample_norm.count <- TR.gene.ov.counts.gt[,  .(gene_count = sum(TR.count)), by=.(seqnames, strand, gene, gene_cluster, Kinetic_class, sample, average_coverage)]
 gene.sample_norm.count[, gene_count.norm := gene_count / average_coverage]
 
-gene.sample_norm.count.sp <- dcast(gene.sample_norm.count, 
+gene.sample_norm.count.sp <- dcast(gene.sample_norm.count,
                                    #sample, gene_count,
                                    seqnames + strand + gene_cluster + gene + Kinetic_class ~ sample, value.var = 'gene_count.norm', #fun.aggregate = sum,
                                    fill=0)

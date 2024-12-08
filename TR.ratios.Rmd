@@ -1235,7 +1235,7 @@ Fig.test
 
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
 
-ORFs_toplot <- c("ORF38", "ORF45", "ORF50", "ORF54", "ORF67", "ORF70")
+ORFs_toplot <- c("ORF38", "ORF45", "ORF50", "ORF54", "ORF67", "ORF70", "ORF75")
 
 
 ###
