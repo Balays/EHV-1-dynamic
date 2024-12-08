@@ -1,5 +1,5 @@
 ---
-title: "EHV-1 TSS dynamics"
+title: "EHV-1 Gene dynamics"
 author: Balázs Kakuk
 output: 
   html_document:
@@ -83,9 +83,9 @@ orf.perc.sum.TSS.TES  <- NULL
 ```
 
 
-# Combine all ORF counting methods
+# Combine all Gene counting methods
 
-*Now we combine the TSS-only, the TES-only and the TSS.TES methods for all 5 normalization methods*
+*Now we combine the TSS-only, the TES-only and the TSS.TES methods for all normalization methods*
 
 
 ## Project info
@@ -662,8 +662,8 @@ normMethods <- c('viral_read.count','host_read.count')
 ### De Novo - Significant
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
 ggp <- 
-      ggplot(sig.cluster.sum[norm.method %in% normMethods],
-             aes(Time, mean_read_count, color = as.factor(labels))
+      ggplot(cluster.sum[norm.method %in% normMethods],
+             aes(Time, mean_read_count, color = as.factor(cluster))
                      #, add = 'loess'
                      ) + 
       geom_point() +
@@ -675,13 +675,13 @@ ggp <-
       #theme(strip.background.y = element_rect(fill = alpha(strip.backgr, 0.4))) +
       # theme(strip.text.y = element_blank()) +
       #ggtitle(title) +
-      facet_nested(rows=vars(EndType, norm.method), cols=vars(labels), scales = "free_y") ## cols=vars(norm.method)
+      facet_nested(rows=vars(EndType, norm.method), cols=vars(cluster), scales = "free_y") ## cols=vars(norm.method)
       # facet_wrap(~ labels, scales = 'free_y', ncol = ncol)
 
 
 ggp
 
-ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.DeNovo.Sig.Clusters.', '_points.loess.jpg'), ggp, width = figw, height = figh, limitsize = F)
+ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.DeNovo.Clusters.', '_points.loess.jpg'), ggp, width = figw, height = figh, limitsize = F)
 ```
 
 ```{r, fig.show='hold',  fig.width = 24, fig.height = 16, eval=F}
@@ -694,7 +694,7 @@ gg <- ggplot(orf.perc.sum[norm.method %in% normMethods], #[gene %in% c('ORF18', 
     theme_ipsum() +
     facet_nested(cols=vars(norm.method, EndType),
                  scales = "free_y",
-                 rows=vars(as.factor(labels))
+                 rows=vars(as.factor(cluster))
                  ) 
   
 
@@ -718,7 +718,7 @@ mapfun <- function(i, clusters_toplot, cluster_name, normMethods, DT) {
   gg <- ggplot(DTsub ,
              aes(x=Time, y=read_count)) +
     #geom_line(aes(group=rep_gene, color=as.factor(best_label))) +
-    geom_smooth(aes(group=rep_gene, color=as.factor(labels))) +
+    geom_smooth(aes(group=rep_gene, color=as.factor(cluster))) +
     ggtitle(cluster_toplot) + 
     scale_color_manual(values = palette[i]) +
     theme_ipsum() +
@@ -731,7 +731,7 @@ mapfun <- function(i, clusters_toplot, cluster_name, normMethods, DT) {
   
 }
 
-plotlist <- purrr::map(1:length(unique(na.omit(DT$labels))), mapfun, unique(na.omit(DT$labels)), 'labels', c("viral_read.count", "host_read.count"), DT)
+plotlist <- purrr::map(1:length(unique(na.omit(DT$cluster))), mapfun, unique(na.omit(DT$cluster)), 'cluster', c("viral_read.count", "host_read.count"), DT)
 
 cowplot::plot_grid(plotlist=plotlist, nrow=1, align = 'vh', axis = 'tlbr')
   
@@ -739,69 +739,6 @@ cowplot::plot_grid(plotlist=plotlist, nrow=1, align = 'vh', axis = 'tlbr')
 ```
 
 
-
-### De Novo - All clusters
-```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
-
-ggp <- 
-      ggplot(all.cluster.sum[norm.method %in% normMethods],
-             aes(Time, mean_read_count, color = as.factor(best_label))
-                     #, add = 'loess'
-                     ) + 
-      geom_point() +
-      geom_smooth() + 
-      scale_color_manual(values = palette[]) +
-      #scale_y_continuous(labels = scales::percent_format()) +
-      theme_ipsum() +
-      theme(plot.margin = unit(c(10,1,1,1), 'mm')) +
-      #theme(strip.background.y = element_rect(fill = alpha(strip.backgr, 0.4))) +
-      # theme(strip.text.y = element_blank()) +
-      #ggtitle(title) +
-      facet_nested(rows=vars(EndType, norm.method), cols=vars(best_label), scales = "free_y") ## cols=vars(norm.method)
-      #facet_wrap(~ best_label, scales = 'free_y', ncol = ncol)
-
-
-ggp
-
-ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.DeNovo.All.Clusters.', '_points.loess.jpg'), ggp, width = figw, height = figh, limitsize = F)
-
-```
-
-```{r, fig.show='hold',  fig.width = 24, fig.height = 16, eval=T}
-DT <- orf.perc.sum
-DT[,rep      := gsub('.*h_', '', sample)]
-DT[,rep_gene := paste0(gene, '::', rep)]
-
-
-mapfun <- function(i, clusters_toplot, cluster_name, normMethods, DT) {
-  
-  cluster_toplot <- clusters_toplot[i]
-  
-  DTsub <- as.data.frame(DT[norm.method %in% normMethods])
-  DTsub <- as.data.table(DTsub[DTsub[,cluster_name] == cluster_toplot, ])
-  
-  gg <- ggplot(DTsub ,
-             aes(x=Time, y=read_count)) +
-    #geom_line(aes(group=rep_gene, color=as.factor(best_label))) +
-    geom_smooth(aes(group=rep_gene, color=as.factor(best_label))) +
-    ggtitle(cluster_toplot) + 
-    scale_color_manual(values = palette[i]) +
-    theme_ipsum() +
-    theme(legend.position = 'none') +
-    facet_nested(rows=vars(norm.method, EndType),
-                 scales = "free_y"
-                 #,rows=vars(as.factor(best_label))
-                 ) 
-  gg
-  
-}
-
-plotlist <- purrr::map(1:length(unique(DT$best_label)), mapfun, unique(DT$best_label), 'best_label', c("viral_read.count", "host_read.count"), DT)
-
-cowplot::plot_grid(plotlist=plotlist, nrow=1, align = 'vh', axis = 'tlbr')
-  
-
-```
 
 
 ### Literature clusters
@@ -889,27 +826,27 @@ cowplot::plot_grid(plotlist=plotlist, nrow=1, align = 'vh', axis = 'tlbr')
   
 ```{r, fig.show='hold',  fig.width = 18, fig.height = 14, eval=T}
 setDT(orf.perc.mean)
-class.dt <- unique(orf.perc.mean[, .(EndType, norm.method, gene, Kinetic_class, best_label, labels)])
-class.dt <- class.dt[, .N, by=.(EndType, norm.method, Kinetic_class, best_label, labels)]
+class.dt <- unique(orf.perc.mean[, .(EndType, norm.method, gene, Kinetic_class, cluster)])
+class.dt <- class.dt[, .N, by=.(EndType, norm.method, Kinetic_class, cluster)]
 
 #cluster_labels
 
 ggplot(class.dt[norm.method %in% normMethods],
-       aes(x=Kinetic_class, y=N, fill=as.factor(best_label))) +
+       aes(x=Kinetic_class, y=N, fill=as.factor(cluster))) +
   geom_col(position = 'dodge') +
   scale_fill_manual(values = palette) +
   #scale_y_continuous(labels = scales::percent_format()) +
   theme_ipsum() +
-  facet_nested(cols=vars(labels), rows=vars(EndType, norm.method))
+  facet_nested(cols=vars(cluster), rows=vars(EndType, norm.method))
 
 
 ggplot(class.dt[norm.method %in% normMethods],
-       aes(x=as.factor(best_label), y=N, fill=Kinetic_class)) +
+       aes(x=as.factor(cluster), y=N, fill=Kinetic_class)) +
   geom_col(position = 'stack') +
   scale_fill_manual(values = palette) +
   #scale_y_continuous(labels = scales::percent_format()) +
   theme_ipsum() +
-  facet_nested(cols=vars(labels), rows=vars(EndType, norm.method))
+  facet_nested(cols=vars(cluster), rows=vars(EndType, norm.method))
 
 
 ```
