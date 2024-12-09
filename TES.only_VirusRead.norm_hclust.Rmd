@@ -449,7 +449,7 @@ source('hclust.wss.R')
 ### Cut the tree at an optimal number of clusters {.tabset}
 
 #### Clustering statistics: Cluster number: 5
-```{r, fig.height=14, fig.width=12}
+```{r, fig.height=18, fig.width=12}
 
 cluster_num <- 5
 
@@ -466,7 +466,7 @@ length(unclustered)
 
 #### Clustering statistics: Cluster number: 6
 
-```{r, fig.height=14, fig.width=12}
+```{r, fig.height=18, fig.width=12}
 
 cluster_num <- 6
 
@@ -482,7 +482,7 @@ length(unclustered)
 ```
 
 #### Clustering statistics: Cluster number: 7
-```{r, fig.height=14, fig.width=12}
+```{r, fig.height=18, fig.width=12}
 
 cluster_num <- 7
 
@@ -499,7 +499,7 @@ length(unclustered)
 
 
 ### Selected number of clusters: 6
-```{r, fig.height=14, fig.width=12}
+```{r, fig.height=18, fig.width=12}
 
 cluster_num <- 6
 
@@ -516,14 +516,21 @@ length(unclustered)
 
 
 ### Remove genes from clusters ?
-```{r}
+```{r, message = T}
 cluster_dt[, cluster := paste0('cluster_', cluster)]
 
-rm.unclustered <- F
+rm.unclustered <- T
 
 if (rm.unclustered) {
+
+  message('The following genes were removed from their corresponding clusters 
+           as their silhouette widths were lower than 0.1 and their distance from the group centroid was higher than 0.5: \n', 
+          paste(unclustered, collapse = '\n'))
+  cluster_dt[gene %in% unclustered, cluster := 'unclustered'] 
   
- cluster_dt[gene %in% unclustered, cluster := 'unclustered'] 
+} else {
+  
+  message('No genes were removed from their corresponding clusters.')
   
 }
 #
@@ -552,11 +559,16 @@ kin.class.sum   <- orf.sum.perc[,.(sum_read_count=sum(read_count), mean_read_cou
 cluster.sum <- orf.sum.perc[,.(sum_read_count=sum(read_count), mean_read_count=mean(read_count), sd_read_count=sd(read_count)), 
                               by=.(cluster, hpi, Time, cell_line, seqnames, norm_base, sample, group)]
 
+cluster.sum.hpi  <- orf.sum.perc[,.(sum_read_count=sum(read_count), mean_read_count=mean(read_count), sd_read_count=sd(read_count)), 
+                              by=.(cluster, hpi, Time, seqnames)]
+
+cluster.sum.hpi.cast <- dcast(cluster.sum.hpi, cluster ~ hpi, value.var = 'mean_read_count')
 
 cluster_dt    <- unique(orf.perc.mean[ , .(gene, Kinetic_class, cluster  )])
 class.dt      <- cluster_dt[   , .N, by=.(Kinetic_class, cluster )]
 
 
+cluster_dt    <- merge(cluster_dt, sil_df[,.(gene, gene_to_centroid_dist, sil_width)], by='gene', all.x=T)
 ```
 
 
@@ -1049,9 +1061,11 @@ ggp
 
 ## Compare literature and de novo kinetic classes
 
-*NA shows the number of genes where the clustering did not yield an unambiguous result.*
+
   
-```{r, fig.show='hold',  fig.width = 9, fig.height = 16, eval=T}
+```{r, fig.show='hold',  fig.width = 12, fig.height = 14, eval=T}
+#*NA shows the number of genes where the clustering did not yield an unambiguous result.*
+  
 ggplot(cluster_dt,
        aes(x=Kinetic_class, y=gene, fill=as.factor(cluster))) +
   geom_tile() +
@@ -1092,14 +1106,15 @@ ggplot(class.dt,
   geom_col(position = 'stack') +
   scale_fill_manual(values = palette) +
   #scale_y_continuous(labels = scales::percent_format()) +
-  theme_ipsum() +
-  facet_nested_wrap(~cluster, nrow = 1)
+  theme_ipsum() 
+  #+facet_nested_wrap(~cluster, nrow = 1)
 
 
 ```
 
-## Combined Kinetic classes
 
+
+## Combined Kinetic classes
 
 ```{r}
 figw <- 13
@@ -1112,10 +1127,8 @@ DT[,rep_gene := paste0(gene, '::', rep)]
 
 ```
 
-
-
 ### De Novo Clusters
-```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+```{r, fig.show='hold',  fig.width = 16, fig.height = 8, eval=T}
 ggp <- 
       ggplot(cluster.sum[],
              aes(Time, mean_read_count, color = as.factor(cluster))
@@ -1167,7 +1180,7 @@ gg
 
 
 ### Literature clusters
-```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+```{r, fig.show='hold',  fig.width = 7, fig.height = 12, eval=T}
 
 ggp <- 
       ggplot(kin.class.sum,
@@ -1194,6 +1207,7 @@ ggp
 ggsave(paste0(fig.dir, '/', EndType, '_', norm.method, '_Combined.Literature.Clusters.', '_points.loess.jpg'), ggp, width = figw, height = figh, limitsize = F)
 
 ```
+
 ```{r, fig.show='hold',  fig.width = 9, fig.height = 12, eval=T}
 
 
@@ -1217,13 +1231,23 @@ gg
 ```
 
 ```{r}
+cluster.cds.df <- as.data.table(copy(cluster_dt))
+cluster.cds.df[, gene := gsub('_.*', '', gene)]
+cluster.cds.df <- merge(CDS.df, cluster.cds.df, by='gene', all=T)
+
+
 ## Export data
 if (writetables) {
   fwrite(orf.sum.perc,          paste0(fig.dir, '/', norm.method, '_', EndType, '_abund.tsv'), sep = '\t')
   fwrite(orf.sum.perc.cast,     paste0(fig.dir, '/', norm.method, '_', EndType, '_abund.cast.tsv'), sep = '\t')
   fwrite(orf.perc.mean,         paste0(fig.dir, '/', norm.method, '_', EndType, '_abund.mean.tsv'), sep = '\t')
   fwrite(orf.perc.mean.cast,    paste0(fig.dir, '/', norm.method, '_', EndType, '_abund.mean.cast.tsv'), sep = '\t')
+  
+  
+  fwrite(cluster.cds.df,      paste0(fig.dir, '/', norm.method, '_', EndType, '_cluster.cds.df.tsv'), sep = '\t')
+
   fwrite(cluster_dt,            paste0(fig.dir, '/', norm.method, '_', EndType, '_Hclust.genes.and.kin.classes.tsv'), sep = '\t')
+  fwrite(cluster.sum.hpi.cast,  paste0(fig.dir, '/', norm.method, '_', EndType, '_cluster.sum.hpi.cast.tsv'), sep = '\t')
 }
 ```
 

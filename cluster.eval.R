@@ -40,7 +40,7 @@ for (i in seq_len(nrow(countData))) {
   gene_to_centroid_dist[i] <- sqrt(sum((gene_expr - centroid)^2))
 }
 
-gene_to_centroid_dist
+
 # gene_to_centroid_dist now holds a measure of how close each gene is to the centroid of its cluster.
 # Lower distance means the gene is more "typical" of that cluster's expression pattern.
 
@@ -70,12 +70,12 @@ sil_df$scaled_dist <- sil_df$gene_to_centroid_dist / max_dist
 
 setDT(sil_df)
 
-ggclust_stats <- ggplot(sil_df, aes(x = gene_order, y = sil_width, fill = factor(cluster))) +
+ggclust_stats <- ggplot(sil_df, aes(x = gene, y = sil_width, fill = factor(cluster))) +
   # Bars for silhouette widths
   geom_bar(stat="identity", width=0.8) +
   # Points for scaled distance
   geom_point(aes(y = scaled_dist), color = "red", size = 1.5) +
-  facet_wrap(~ cluster, scales = "free_x") +
+  facet_wrap(~ cluster, scales = "free_x", ncol=2) +
   # Primary axis for silhouette, secondary axis for distance
   scale_y_continuous(
     name = "Silhouette Width",
@@ -87,7 +87,7 @@ ggclust_stats <- ggplot(sil_df, aes(x = gene_order, y = sil_width, fill = factor
   theme(
     legend.position = "none",
     strip.text = element_text(face = "bold", size = 12),
-    axis.text.x = element_blank(),
+    axis.text.x = element_text(face = "italic", angle = 90, vjust = 0.5),
     axis.ticks.x = element_blank()
   )
 
