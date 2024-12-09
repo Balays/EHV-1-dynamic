@@ -447,9 +447,13 @@ source('hclust.wss.R')
 ```
 
 ### Cut the tree at an optimal number of clusters {.tabset}
+```{r}
+sil_width_thresh   <- 0
+scaled_dist_thresh <- 20
+```
 
 #### Clustering statistics: Cluster number: 5
-```{r, fig.height=18, fig.width=12}
+```{r, fig.height=12, fig.width=12}
 
 cluster_num <- 5
 
@@ -459,14 +463,14 @@ source('cluster.eval.R')
 
 ggclust_stats
 
-unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered <- unique(sil_df[sil_width < sil_width_thresh | scaled_dist >= scaled_dist_thresh, gene])
 unclustered
 length(unclustered)
 ```
 
 #### Clustering statistics: Cluster number: 6
 
-```{r, fig.height=18, fig.width=12}
+```{r, fig.height=12, fig.width=12}
 
 cluster_num <- 6
 
@@ -476,13 +480,13 @@ source('cluster.eval.R')
 
 ggclust_stats
 
-unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered <- unique(sil_df[sil_width < sil_width_thresh | scaled_dist >= scaled_dist_thresh, gene])
 unclustered
 length(unclustered)
 ```
 
 #### Clustering statistics: Cluster number: 7
-```{r, fig.height=18, fig.width=12}
+```{r, fig.height=12, fig.width=12}
 
 cluster_num <- 7
 
@@ -492,16 +496,16 @@ source('cluster.eval.R')
 
 ggclust_stats
 
-unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered <- unique(sil_df[sil_width < sil_width_thresh | scaled_dist >= scaled_dist_thresh, gene])
 unclustered
 length(unclustered)
 ```
 
 
-### Selected number of clusters: 6
-```{r, fig.height=18, fig.width=12}
+### Selected number of clusters: 7
+```{r, fig.height=12, fig.width=12}
 
-cluster_num <- 6
+cluster_num <- 7
 
 source('pvclust.cut.R')
 
@@ -509,7 +513,7 @@ source('cluster.eval.R')
 
 ggclust_stats
 
-unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered <- unique(sil_df[sil_width < sil_width_thresh | scaled_dist >= scaled_dist_thresh, gene])
 unclustered
 length(unclustered)
 ```
@@ -522,7 +526,7 @@ cluster_dt[, cluster := paste0('cluster_', cluster)]
 rm.unclustered <- T
 
 if (rm.unclustered) {
-
+  
   message('The following genes were removed from their corresponding clusters 
            as their silhouette widths were lower than 0.1 and their distance from the group centroid was higher than 0.5: \n', 
           paste(unclustered, collapse = '\n'))
@@ -1060,7 +1064,6 @@ ggp
 
 
 ## Compare literature and de novo kinetic classes
-
 
   
 ```{r, fig.show='hold',  fig.width = 12, fig.height = 14, eval=T}

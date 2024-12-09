@@ -1,0 +1,7 @@
+cluster,gene,product,Kinetic_class,dominant_class,gene_to_centroid_dist,sil_width
+cluster_1,"NOIR, NOIR, ORF1, ORF10, ORF17, ORF34, ORF4, ORF50, ORF56","membrane protein UL56, envelope glycoprotein N, envelope protein UL43, protein V32, nuclear protein UL55, deoxyribonuclease, capsid portal protein","unknown, L",E,0.08008931900532157,0.464823489473656
+cluster_2,"ORF51, ORF66","myristylated tegument protein, virion protein US10","E, unknown",L,0.01047950403686445,0.429123901890499
+cluster_4,CTO,,unknown,L,0.0575810700664396,0.500095128933213
+cluster_5,"ORF15, ORF54, ORF71","membrane protein UL45, helicase-primase subunit, envelope glycoprotein J","unknown, E",L,0.11635795868428346,0.7728175144629202
+cluster_7,ORF75,membrane protein US8A,unknown,IE,0.200146927151082,0.512673212980804
+unclustered,"ORF2, ORF32","membrane protein V1, DNA packaging terminase subunit 2","unknown, E",L,0.02404341998326235,-0.0022755213125724497
