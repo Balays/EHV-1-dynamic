@@ -1242,9 +1242,8 @@ if (writetables) {
   fwrite(orf.perc.mean,         paste0(fig.dir, '/', norm.method, '_', EndType, '_abund.mean.tsv'), sep = '\t')
   fwrite(orf.perc.mean.cast,    paste0(fig.dir, '/', norm.method, '_', EndType, '_abund.mean.cast.tsv'), sep = '\t')
   
-  
+  fwrite(cluster_stats,      paste0(fig.dir, '/', norm.method, '_', EndType, '_cluster.cds.df.tsv'), sep = '\t')
   fwrite(cluster.cds.df,      paste0(fig.dir, '/', norm.method, '_', EndType, '_cluster.cds.df.tsv'), sep = '\t')
-
   fwrite(cluster_dt,            paste0(fig.dir, '/', norm.method, '_', EndType, '_Hclust.genes.and.kin.classes.tsv'), sep = '\t')
   fwrite(cluster.sum.hpi.cast,  paste0(fig.dir, '/', norm.method, '_', EndType, '_cluster.sum.hpi.cast.tsv'), sep = '\t')
 }

@@ -1,5 +1,32 @@
 ## Clustering statistics
 
+# Extract gene names and cut the tree
+gene_clusters <- cutree(fit.gene$hclust, k = cluster_num)
+
+# Create a data.table with genes and their cluster assignments
+gene_cluster_dt <- data.table(
+  gene    = rownames(countData),
+  cluster = gene_clusters
+)
+
+# Extract statistics for the tree edges
+edges_stats <- as.data.table(fit.gene$edges)
+
+# Add the `au` values to the clusters (merge based on hierarchical structure if needed)
+# This is indirect because `edges_stats` corresponds to branches, not directly to clusters.
+# First, calculate the cluster ID at the tree cut level:
+edge_cluster_map <- as.data.table(data.frame(cluster = cutree(fit.gene$hclust, k = cluster_num)))
+edges_stats[, cluster := .I] # Assign cluster IDs to edges
+merged_stats <- merge(gene_cluster_dt, edges_stats, by = "cluster", all.x = TRUE)
+
+# View the resulting table
+print(merged_stats)
+
+cluster_stats <- unique(merged_stats[,-2])
+
+
+## Silhouttes
+
 library(cluster)
 
 # Convert clusters to a factor for clarity

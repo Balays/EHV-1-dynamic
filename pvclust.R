@@ -7,10 +7,15 @@
 # Cut the tree where it makes sense biologically
 #clusters <- cutree(fit.gene$hclust, k = 5) # for example, 5 clusters
 
+## NOT GOOD:
+#method.dist="manhattan"
 
+# method.hclust= all yield very similar results if uncentered distance measure was used
+# "average", "complete", "ward.D2"
 ##
-fit.gene <- pvclust(t(countData),
-                    method.hclust="complete", method.dist="uncentered", nboot=1000)
+fit.gene  <- pvclust(t(countData),
+                     method.hclust="complete", method.dist="uncentered", nboot=1000)
+
 #plot(fit.gene)
 hc <- fit.gene$hclust
 #pvrect(fit.gene, alpha=0.85, pv="si")
@@ -18,6 +23,9 @@ hc <- fit.gene$hclust
 
 # Cut the tree where it makes sense biologically
 #clusters <- cutree(hc, k = cluster_num) # for example, 5 clusters
+
+
+
 
 
 #cluster_dt <- data.table(cluster=clusters, gene=rownames(countData))
