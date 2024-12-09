@@ -45,7 +45,7 @@ ORF41	L	cluster_5
 ORF42	L	cluster_4
 ORF43	L	cluster_4
 ORF44	L	cluster_4
-ORF45	L	cluster_5
+ORF45	L	cluster_6
 ORF46	L	cluster_4
 ORF48	L	cluster_5
 ORF49	L	cluster_4
@@ -63,7 +63,7 @@ ORF60	L	cluster_5
 ORF61	E	cluster_1
 ORF62	L	cluster_4
 ORF63	E	cluster_1
-ORF64_1	IE	cluster_6
+ORF64_1	IE	cluster_7
 NOIR_1	unknown	cluster_1
 ORF65_1	E	cluster_1
 ORF66_1	unknown	cluster_2
@@ -75,6 +75,6 @@ ORF71	unknown	cluster_5
 ORF72	L	cluster_5
 ORF73	L	cluster_2
 ORF74	L	cluster_4
-ORF75	unknown	cluster_6
+ORF75	unknown	cluster_7
 ORF76	L	cluster_2
 NOIR_2	unknown	cluster_1

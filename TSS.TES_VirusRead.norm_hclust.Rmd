@@ -262,9 +262,11 @@ if (EndType == 'TES') {
 } else if (EndType == 'TSS.TES') {
   
   #### Keep those where noth the TSS and TES were correct
-  message('Keeping those where noth the TSS and TES were correct !')
-  orf.sum.perc[,gene_cluster   := gene]
+  message('Keeping those where both the TSS and TES were correct !')
+  orf.sum.perc <- orf.sum.perc[!is.na(gene_cluster), ]
   orf.sum.perc <- orf.sum.perc[!is.na(gene), ]
+  orf.sum.perc[,gene_cluster   := gene]
+  
 }
 
 gene_kin.class <- na.omit(unique(orf.sum.perc[,.(gene, Kinetic_class)]))
@@ -429,8 +431,6 @@ if (!is.null(samples_to_filt)) {
 ```{r, fig.width=16, fig.height=10}
 countData <- orf.sum.sp.mat#[,metafilt$sample]
 
-cluster_num <- 7
-
 ## use pvclust for statistical support
 source('pvclust.R')
 
@@ -446,22 +446,95 @@ source('hclust.wss.R')
 
 ```
 
+### Cut the tree at an optimal number of clusters {.tabset}
 
+#### Clustering statistics: Cluster number: 5
+```{r, fig.height=9, fig.width=12}
 
-### Clustering statistics
-```{r}
+cluster_num <- 5
+
+source('pvclust.cut.R')
 
 source('cluster.eval.R')
 
 ggclust_stats
 
+unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered
+length(unclustered)
 ```
-### Remove genes from clusters ?
 
-```{r}
-rm.unclustered <- T
+#### Clustering statistics: Cluster number: 6
+```{r, fig.height=9, fig.width=12}
+
+cluster_num <- 6
+
+source('pvclust.cut.R')
+
+source('cluster.eval.R')
+
+ggclust_stats
 
 unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered
+length(unclustered)
+```
+
+#### Clustering statistics: Cluster number: 7
+```{r, fig.height=9, fig.width=12}
+
+cluster_num <- 7
+
+source('pvclust.cut.R')
+
+source('cluster.eval.R')
+
+ggclust_stats
+
+unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered
+length(unclustered)
+```
+#### Clustering statistics: Cluster number: 8
+```{r, fig.height=9, fig.width=12}
+
+cluster_num <- 8
+
+source('pvclust.cut.R')
+
+source('cluster.eval.R')
+
+ggclust_stats
+
+unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered
+length(unclustered)
+```
+
+
+
+### Selected number of clusters: 6
+```{r, fig.height=9, fig.width=12}
+
+cluster_num <- 6
+
+source('pvclust.cut.R')
+
+source('cluster.eval.R')
+
+ggclust_stats
+
+unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered
+length(unclustered)
+```
+
+
+### Remove genes from clusters ?
+```{r}
+cluster_dt[, cluster := paste0('cluster_', cluster)]
+
+rm.unclustered <- F
 
 if (rm.unclustered) {
   
@@ -474,12 +547,7 @@ if (rm.unclustered) {
 
 ### Assigning genes to clusters
 ```{r}
-
-
-### WRITE OUT DEG analyis and clustering RESULTS
-
-cluster_dt <- unique(cluster_dt[cluster != 'unclustered',
-                                .(gene = gene, cluster=paste0('cluster_', cluster))])
+## Factorize
 cluster_dt[,gene := factor(gene, levels = ORFs)]
 
 ## Add cluster info to counts
@@ -539,7 +607,9 @@ p <- ggplot(orf.perc.mean.melt, aes(x = hpi, y = gene, fill = mean)) +
         plot.margin = unit(c(1,1,1,0), 'mm'),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         axis.text.y = element_blank(),
-        axis.title  = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
         panel.spacing = unit(0.5, 'mm')) +
   facet_nested(cols=vars(hpi), scales = 'free')
 
@@ -559,7 +629,7 @@ pclust <- ggplot(melt(
         panel.spacing = unit(0.5, 'mm')) 
 
 
-cowplot::plot_grid(pclust, p, rel_widths = c(0.2,1), align = 'vh', axis = 'tlbr')
+cowplot::plot_grid(pclust, p, rel_widths = c(0.2,1), align = 'vh', axis = 'tb')
 
 ```
 
@@ -596,7 +666,7 @@ p <- ggplot(orf.perc.mean.6h_norm.melt, aes(x = hpi, y = gene, fill = delta6_mea
   geom_tile() +
   scale_fill_gradient2(#low = "#d73027", mid = "white", high = "#4575b4",
     low = "#d73027", mid = "white", high = "#4575b4",
-    midpoint = mean(orf.perc.mean.6h_norm.melt$delta6_mean, na.rm = TRUE), 
+    midpoint = median(orf.perc.mean.6h_norm.melt$delta6_mean, na.rm = TRUE), 
     limit    = range(orf.perc.mean.6h_norm.melt$delta6_mean, na.rm = TRUE), #c(0, 1), #
     name="Expression delta ~ 6 hpi") +
   theme_minimal() +
@@ -604,7 +674,9 @@ p <- ggplot(orf.perc.mean.6h_norm.melt, aes(x = hpi, y = gene, fill = delta6_mea
         plot.margin = unit(c(1,1,1,0), 'mm'),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         axis.text.y = element_blank(),
-        axis.title  = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
         panel.spacing = unit(0.5, 'mm'))
  
 
@@ -624,7 +696,7 @@ pclust <- ggplot(melt(
         panel.spacing = unit(0.5, 'mm')) 
 
 
-cowplot::plot_grid(pclust, p, rel_widths = c(0.2,1), align = 'vh', axis = 'tlbr')
+cowplot::plot_grid(pclust, p, rel_widths = c(0.2,1), align = 'vh', axis = 'tb')
 
 ```
 
@@ -643,13 +715,37 @@ calculate_z_scores <- function(data, time_points) {
 
 
 # Calculate z-scores
-z_scores_data <- calculate_z_scores(data=orf.perc.mean.6h_norm, time_points)
-z_scores_data[,z_6h := 0]
+z_scores_data <- calculate_z_scores(data=orf.perc.mean.cast, time_points)
+#z_scores_data[,z_6h := 0]
 
+
+# Identify numeric columns
+numeric_cols <- names(orf.perc.mean.cast)[sapply(orf.perc.mean.cast, is.numeric)]
+
+# Calculate z-scores for numeric columns
+dt_z <- copy(orf.perc.mean.cast)  # Create a copy to store z-scores
+dt_z[, (numeric_cols) := lapply(.SD, function(x) (x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE)), .SDcols = numeric_cols]
+colnames(dt_z)
+z_scores_data   <- dt_z
 
 melted_z_scores <- melt(z_scores_data, variable.name = 'hpi', id.vars = c('gene', 'Kinetic_class', 'cluster'))
-melted_z_scores <- melted_z_scores[grepl('z_', hpi), ]
-melted_z_scores[,hpi := gsub('z_', '', hpi)]
+#melted_z_scores <- melted_z_scores[grepl('z_', hpi), ]
+#melted_z_scores[,hpi := gsub('z_', '', hpi)]
+melted_z_scores[,hpi := factor(hpi, levels = time_points)]
+
+
+
+# Normalize across rows
+dt <- orf.perc.mean.cast
+dt_row_normalized <- copy(dt)
+dt_row_normalized[, (numeric_cols) := lapply(.SD, function(x) (x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE)), .SDcols = numeric_cols]
+
+# Normalize across columns
+dt_col_normalized <- copy(dt_row_normalized)
+dt_col_normalized[, (numeric_cols) := lapply(.SD, function(x) (x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE)), .SDcols = numeric_cols]
+
+
+melted_z_scores <- melt(dt_col_normalized, variable.name = 'hpi', id.vars = c('gene', 'Kinetic_class', 'cluster'))
 melted_z_scores[,hpi := factor(hpi, levels = time_points)]
 
 # Plot the heatmap using ggplot2
@@ -657,7 +753,7 @@ p <- ggplot(melted_z_scores, aes(x = hpi, y = gene, fill = value)) +
   geom_tile() +
   scale_fill_gradient2(#low = "#d73027", mid = "white", high = "#4575b4",
     low = "#d73027", mid = "white", high = "#4575b4",
-    midpoint = 0, #median(melted_dists$distance, na.rm = TRUE), 
+    midpoint = median(melted_z_scores$value, na.rm = TRUE), 
     limit    = range(melted_z_scores$value, na.rm = TRUE), #c(-1, 1), #
     name="Z-score of expression delta ~ 6 hpi") +
   theme_minimal() +
@@ -665,7 +761,9 @@ p <- ggplot(melted_z_scores, aes(x = hpi, y = gene, fill = value)) +
         plot.margin = unit(c(1,1,1,0), 'mm'),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         axis.text.y = element_blank(),
-        axis.title  = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
         panel.spacing = unit(0.5, 'mm'))
  
 
@@ -685,7 +783,7 @@ pclust <- ggplot(melt(
         panel.spacing = unit(0.5, 'mm')) 
 
 
-cowplot::plot_grid(pclust, p, rel_widths = c(0.2,1), align = 'vh', axis = 'tlbr')
+cowplot::plot_grid(pclust, p, rel_widths = c(0.2,1), align = 'vh', axis = 'tb')
 
 ```
 

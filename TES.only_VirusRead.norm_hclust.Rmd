@@ -89,7 +89,7 @@ LoRTIA: yes (stranded only output)
 ## Normalization: Viral read count
 
 
-# TES dynamics 
+# TES dynamics
 
 ## Those reads were counted only, where the *3-prime* adapters were "correct" (according to LoRTIA)
 
@@ -131,9 +131,17 @@ orf.sum$ID            <- factor(orf.sum$ID,    levels=ORFs)
 orf.sum$Kinetic_class <- factor(orf.sum$Kinetic_class, levels=c('IE', 'E', 'L'))
 
 ## Order
-orf.sum        <- orf.sum[order(Kinetic_class, gene),]
-orf.sum        <- melt(orf.sum, id.vars = c('ID', 'seqnames', 'strand', 'gene_cluster', 'gene', 'Kinetic_class'), 
+orf.sum        <- orf.sum[order(gene, Kinetic_class),]
+orf.sum        <- melt(orf.sum, 
+                       id.vars = c('ID', 'seqnames', 'strand', 'gene_cluster', 'gene', 'Kinetic_class'), 
                        variable.name = 'sample', value.name = 'read_count')
+
+ORFs <- unique(c(ORFs, unique(na.omit(orf.sum$gene_cluster))))
+
+orf.sum$gene_cluster   <- factor(orf.sum$gene_cluster, 
+                                 levels=unique(na.omit(orf.sum$gene_cluster)))
+
+
 
 ## Metadata
 orf.sum        <- merge(orf.sum, metafilt[,metacols], by='sample')
@@ -255,8 +263,10 @@ if (EndType == 'TES') {
   
   #### Keep those where noth the TSS and TES were correct
   message('Keeping those where noth the TSS and TES were correct !')
-  orf.sum.perc[,gene_cluster   := gene]
+  orf.sum.perc <- orf.sum.perc[!is.na(gene_cluster), ]
   orf.sum.perc <- orf.sum.perc[!is.na(gene), ]
+  orf.sum.perc[,gene_cluster   := gene]
+  
 }
 
 gene_kin.class <- na.omit(unique(orf.sum.perc[,.(gene, Kinetic_class)]))
@@ -421,8 +431,6 @@ if (!is.null(samples_to_filt)) {
 ```{r, fig.width=16, fig.height=10}
 countData <- orf.sum.sp.mat#[,metafilt$sample]
 
-cluster_num <- 6
-
 ## use pvclust for statistical support
 source('pvclust.R')
 
@@ -438,33 +446,93 @@ source('hclust.wss.R')
 
 ```
 
+### Cut the tree at an optimal number of clusters {.tabset}
 
+#### Clustering statistics: Cluster number: 5
+```{r, fig.height=14, fig.width=12}
 
-### Clustering statistics
-```{r}
+cluster_num <- 5
+
+source('pvclust.cut.R')
 
 source('cluster.eval.R')
 
 ggclust_stats
 
+unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered
+length(unclustered)
 ```
+
+#### Clustering statistics: Cluster number: 6
+
+```{r, fig.height=14, fig.width=12}
+
+cluster_num <- 6
+
+source('pvclust.cut.R')
+
+source('cluster.eval.R')
+
+ggclust_stats
+
+unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered
+length(unclustered)
+```
+
+#### Clustering statistics: Cluster number: 7
+```{r, fig.height=14, fig.width=12}
+
+cluster_num <- 7
+
+source('pvclust.cut.R')
+
+source('cluster.eval.R')
+
+ggclust_stats
+
+unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered
+length(unclustered)
+```
+
+
+### Selected number of clusters: 6
+```{r, fig.height=14, fig.width=12}
+
+cluster_num <- 6
+
+source('pvclust.cut.R')
+
+source('cluster.eval.R')
+
+ggclust_stats
+
+unclustered <- unique(sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene])
+unclustered
+length(unclustered)
+```
+
+
 ### Remove genes from clusters ?
-
 ```{r}
-sil_df[sil_width < 0.1 | gene_to_centroid_dist >= 0.5, gene]
+cluster_dt[, cluster := paste0('cluster_', cluster)]
 
+rm.unclustered <- F
 
-#cluster_dt
+if (rm.unclustered) {
+  
+ cluster_dt[gene %in% unclustered, cluster := 'unclustered'] 
+  
+}
+#
 ```
 
 
 ### Assigning genes to clusters
 ```{r}
-
-
-### WRITE OUT DEG analyis and clustering RESULTS
-
-cluster_dt <- unique(cluster_dt[,.(gene = gene, cluster=paste0('cluster_', cluster))])
+## Factorize
 cluster_dt[,gene := factor(gene, levels = ORFs)]
 
 ## Add cluster info to counts
@@ -524,7 +592,9 @@ p <- ggplot(orf.perc.mean.melt, aes(x = hpi, y = gene, fill = mean)) +
         plot.margin = unit(c(1,1,1,0), 'mm'),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         axis.text.y = element_blank(),
-        axis.title  = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x  = element_blank(),
         panel.spacing = unit(0.5, 'mm')) +
   facet_nested(cols=vars(hpi), scales = 'free')
 
@@ -544,7 +614,7 @@ pclust <- ggplot(melt(
         panel.spacing = unit(0.5, 'mm')) 
 
 
-cowplot::plot_grid(pclust, p, rel_widths = c(0.2,1), align = 'vh', axis = 'tlbr')
+cowplot::plot_grid(pclust, p, rel_widths = c(0.4, 1), align = 'vh', axis = 'tb')
 
 ```
 
@@ -589,7 +659,9 @@ p <- ggplot(orf.perc.mean.6h_norm.melt, aes(x = hpi, y = gene, fill = delta6_mea
         plot.margin = unit(c(1,1,1,0), 'mm'),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         axis.text.y = element_blank(),
-        axis.title  = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
         panel.spacing = unit(0.5, 'mm'))
  
 
@@ -609,7 +681,7 @@ pclust <- ggplot(melt(
         panel.spacing = unit(0.5, 'mm')) 
 
 
-cowplot::plot_grid(pclust, p, rel_widths = c(0.2,1), align = 'vh', axis = 'tlbr')
+cowplot::plot_grid(pclust, p, rel_widths = c(0.2,1), align = 'vh', axis = 'tb')
 
 ```
 
@@ -650,7 +722,9 @@ p <- ggplot(melted_z_scores, aes(x = hpi, y = gene, fill = value)) +
         plot.margin = unit(c(1,1,1,0), 'mm'),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         axis.text.y = element_blank(),
-        axis.title  = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
         panel.spacing = unit(0.5, 'mm'))
  
 
@@ -670,7 +744,7 @@ pclust <- ggplot(melt(
         panel.spacing = unit(0.5, 'mm')) 
 
 
-cowplot::plot_grid(pclust, p, rel_widths = c(0.2,1), align = 'vh', axis = 'tlbr')
+cowplot::plot_grid(pclust, p, rel_widths = c(0.2,1), align = 'vh', axis = 'tb')
 
 ```
 

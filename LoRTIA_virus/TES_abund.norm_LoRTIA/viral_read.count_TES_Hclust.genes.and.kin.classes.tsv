@@ -1,48 +1,48 @@
 gene	Kinetic_class	cluster
 ORF1	unknown	cluster_1
-ORF2	unknown	
+ORF2	unknown	cluster_2
 ORF3	L	cluster_2
-ORF4	unknown	cluster_1
-ORF7,  ORF6,  ORF5	E/L	cluster_3
-ORF8	L	cluster_4
+ORF4	unknown	cluster_3
+ORF7,  ORF6,  ORF5	E/L	cluster_1
+ORF8	L	cluster_2
 ORF9	L	cluster_2
-ORF10, ORF11	L	cluster_2
-ORF12, ORF13, ORF14	L	cluster_4
-ORF18, ORF17, ORF16, ORF15	L	cluster_5
+ORF10, ORF11	L	cluster_1
+ORF12, ORF13, ORF14	L	cluster_2
+ORF18, ORF17, ORF16, ORF15	L	cluster_4
 ORF17	L	cluster_1
 ORF18	L	cluster_2
-ORF19	L	cluster_5
+ORF19	L	cluster_4
 ORF22, ORF21, ORF20	E	cluster_1
-ORF22	L	cluster_4
-ORF23	L	cluster_4
+ORF22	L	cluster_2
+ORF23	L	cluster_2
 ORF24	L	cluster_4
-ORF27, ORF26, ORF25	L	
+ORF27, ORF26, ORF25	L	cluster_2
 ORF28, ORF29	L	cluster_2
 ORF30	E	cluster_1
 ORF31	E	cluster_1
-ORF32, ORF33, ORF34	E/L	
-ORF37, ORF36, ORF35, ORF35.5	L	cluster_4
-ORF36	L	cluster_4
+ORF32, ORF33, ORF34	E/L	cluster_1
+ORF37, ORF36, ORF35, ORF35.5	L	cluster_2
+ORF36	L	cluster_2
 ORF37	L	cluster_2
 ORF38	L	cluster_2
-ORF39	L	cluster_6
-CTO	unknown	cluster_4
-ORF40	L	cluster_4
-ORF41, ORF42, OF43	L	cluster_4
-ORF44	L	cluster_4
-ORF45, ORF46	L	cluster_4
+ORF39	L	cluster_5
+CTO	unknown	cluster_2
+ORF40	L	cluster_2
+ORF41, ORF42, OF43	L	cluster_2
+ORF44	L	cluster_2
+ORF45, ORF46	L	cluster_5
 ORF48, ORF49, ORF50, ORF51	E/L	cluster_2
-ORF52	L	cluster_5
-ORF53, ORF54	E	cluster_5
-ORF57, ORF58	L	cluster_5
-ORF62, ORF61, ORF60,ORF59	E/L	cluster_5
+ORF52	L	cluster_4
+ORF53, ORF54	E	cluster_4
+ORF57, ORF58	L	cluster_4
+ORF62, ORF61, ORF60,ORF59	E/L	cluster_4
 ORF63	E	cluster_1
-ORF64_1	IE	
+ORF64_1	IE	cluster_6
 NOIR_1	unknown	cluster_1
-ORF65_1	E	cluster_3
+ORF65_1	E	cluster_1
 ORF66_1	unknown	cluster_2
-ORF68, ORF67_1	L	cluster_3
-ORF69, ORF70	E/L	cluster_6
-ORF71, ORF72, ORF73	L	cluster_5
-ORF74, ORF75, ORF76, ORF67 _2	L	cluster_2
+ORF68, ORF67_1	L	cluster_1
+ORF69, ORF70	E/L	cluster_3
+ORF71, ORF72, ORF73	L	cluster_4
+ORF74, ORF75, ORF76, ORF67 _2	L	cluster_1
 NOIR_2	unknown	cluster_1
