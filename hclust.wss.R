@@ -1,5 +1,5 @@
 # consider between 2 and 10 clusters
-k_values <- 2:10
+k_values <- 2:12
 
 
 wss_for_k <- function(data, k, hc) {

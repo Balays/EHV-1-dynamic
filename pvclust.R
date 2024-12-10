@@ -14,7 +14,9 @@
 # "average", "complete", "ward.D2"
 ##
 fit.gene  <- pvclust(t(countData),
-                     method.hclust="complete", method.dist="uncentered", nboot=1000)
+                     method.hclust="complete",
+                     method.dist="uncentered",
+                     nboot=1000)
 
 #plot(fit.gene)
 hc <- fit.gene$hclust
@@ -23,7 +25,6 @@ hc <- fit.gene$hclust
 
 # Cut the tree where it makes sense biologically
 #clusters <- cutree(hc, k = cluster_num) # for example, 5 clusters
-
 
 
 

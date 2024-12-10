@@ -25,6 +25,26 @@ print(merged_stats)
 cluster_stats <- unique(merged_stats[,-2])
 
 
+ggclust_sigstats <- ggplot(merged_stats, aes(x = gene, y = au, fill = factor(cluster))) +
+  # Points for significance
+  geom_point(shape=21, size=3) +
+  scale_fill_manual(values = colorvec) +
+  scale_y_continuous(
+    limits = c(0.9, 1),
+    name = "approximately unbiased (AU) p-value"
+  ) +
+  geom_hline(yintercept = 0.95, color='red', linetype='dashed') +
+  labs(x = "Genes (ordered by silhouette width)",
+       title = "AU value by Cluster") +
+  facet_wrap(~ cluster, scales = "free_x", ncol=round((cluster_num/3),0)) +
+  theme_bw() +
+  theme(
+    legend.position = "none",
+    strip.text = element_text(face = "bold", size = 12),
+    axis.text.x = element_text(face = "italic", angle = 90, vjust = 0.5),
+    axis.ticks.x = element_blank()
+  )
+
 ## Silhouttes
 
 library(cluster)
