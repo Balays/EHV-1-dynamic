@@ -1,5 +1,5 @@
 ---
-title: "EHV-1 Gene dynamics (TSS ~ TES)"
+title: "EHV-1 Canonic Transcript dynamics (TSS ~ TES)"
 author: Balázs Kakuk
 output: 
   html_document:
@@ -102,7 +102,7 @@ LoRTIA: yes (stranded only output)
 ## Normalization: Viral read count
 
 
-# Gene dynamics (TSS ~ TES)
+# Canonic Transcript dynamics (TSS ~ TES)
 
 ## Those reads were counted only, where *both* the *3-prime* AND the *5-prime* adapters were "correct" (according to LoRTIA)
 

@@ -79,6 +79,11 @@ orf.perc.sum.TES.only  <- NULL
 orf.perc.sum.TSS.TES  <- NULL
 
 
+## Miscallenaous
+palette <-  colorvec[-c(9,13)] #pal_npg()(10)
+
+writetables <- T
+
 
 ```
 
@@ -110,11 +115,6 @@ project_config  <- fread('project_config.txt')
 outdir  <- project_config$outdir
 res.dir <- outdir; try({ dir.create(res.dir) })
 fig.dir <- paste0(res.dir, '/', EndType, '_abund'); # try({ dir.create(fig.dir) })## save plots to this directory
-
-## Miscallenaous
-palette <- pal_npg()(10)
-
-writetables <- T
 
 
 
@@ -207,11 +207,6 @@ outdir  <- project_config$outdir
 res.dir <- outdir; try({ dir.create(res.dir) })
 fig.dir <- paste0(res.dir, '/', EndType, '_abund'); # try({ dir.create(fig.dir) })## save plots to this directory
 
-## Miscallenaous
-palette <- pal_npg()(10)
-
-writetables <- T
-
 
 
 ```
@@ -291,7 +286,7 @@ orf.perc.sum.TES.only  <- orf.perc.sum
 
 
 
-# TSS.TES
+# Canonic TSS.TES
 
 ## Only those reads were counted, where LoRTIA   
 found *both 5-prime AND 3-prime* adapters!
@@ -305,11 +300,6 @@ project_config  <- fread('project_config.txt')
 outdir  <- project_config$outdir
 res.dir <- outdir; try({ dir.create(res.dir) })
 fig.dir <- paste0(res.dir, '/', EndType, '_abund'); # try({ dir.create(fig.dir) })## save plots to this directory
-
-## Miscallenaous
-palette <- pal_npg()(10)
-
-writetables <- T
 
 
 
@@ -388,8 +378,6 @@ orf.perc.sum.TSS.TES   <- orf.perc.sum
 
 
 
-
-
 # Combine dynamics
 ```{r}
 orf.perc.mean <- rbind(
@@ -434,10 +422,6 @@ outdir  <- project_config$outdir
 res.dir <- outdir; try({ dir.create(res.dir) })
 fig.dir <- paste0(res.dir, '/', EndType, '_abund'); try({ dir.create(fig.dir) })## save plots to this directory
 
-## Miscallenaous
-palette <- pal_npg()(10)
-
-writetables <- T
 
 ```
 
