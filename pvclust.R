@@ -27,8 +27,6 @@ hc <- fit.gene$hclust
 #clusters <- cutree(hc, k = cluster_num) # for example, 5 clusters
 
 
-
-
 #cluster_dt <- data.table(cluster=clusters, gene=rownames(countData))
 
 ## store the distance matrix as well for the silhoutte
