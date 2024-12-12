@@ -45,7 +45,7 @@ gene.sizes <- data.frame(gene_arrowhead_height=8,
                          genome_feature_arrowhead_height=2.5,
                          genome_feature_arrow_body_height=2.5,
                          ## introns
-                         linetype='dashed', 
+                         linetype='dashed',
                          linewidth=0.01
 )
 
@@ -70,7 +70,7 @@ gene.plotdata <- as.data.frame(genome.plotdata)
 
 ##
 make.fromto <- function(start=1, l=l_genome, n=4) {
-  
+
   fromto    <- data.frame(from=round(seq(start, l, l/n),0))
   fromto$to <- c(fromto$from[-1], l)
   return(fromto)
@@ -121,8 +121,8 @@ if (adapter.setting == 'v1' ){
   plot.all.ends        <- T
   crop.FALSE           <- T
   message('adapter.setting: ', adapter.setting )
-} else 
-  
+} else
+
   ## This combination will keep FALSE adaptered reads  and plot them on another facet
   if (adapter.setting == 'v2' ){
     keep.FALSE.at.TRUE   <- F
@@ -130,8 +130,8 @@ if (adapter.setting == 'v1' ){
     plot.all.ends        <- F
     crop.FALSE           <- F
     message('adapter.setting: ', adapter.setting )
-  } else 
-    
+  } else
+
     ## This combination will keep FALSE adaptered reads but if there was a TRUE site it will plot them on another facet
     if (adapter.setting == 'v3' ){
       keep.FALSE.at.TRUE   <- F
@@ -140,7 +140,7 @@ if (adapter.setting == 'v1' ){
       crop.FALSE           <- F
       message('adapter.setting: ', adapter.setting )
     } else
-      
+
       ## This combination will keep FALSE adaptered reads
       if (adapter.setting == 'v4' ){
         keep.FALSE.at.TRUE   <- F
@@ -190,11 +190,11 @@ if (sum.counts) {
     #summarise(count=n()) %>%
     spread(hpi, count, fill = 0) %>% gather(hpi, count, -c(1:3)) %>%
     spread(strand, count, fill=0) %>% gather(strand, count, -c(1:3))
-  
+
   ### start, end, prime3,correct_tes,
   plot.sum[,'start']  <- plot.sum[,prime]
   plot.sum[,'end']    <- plot.sum[,prime]
-  
+
 } else {
   plot.sum <- plot.data
 }
@@ -210,23 +210,23 @@ visto    <- l_genome # 25000 # Ori.virus$visto[Ori.virus$ID   == Ori]
 bin_width  <- 50
 breakseq   <- 5000
 #ylim       <- NULL #c(0, 50) # c(-1000, 1000)
-ylims.gene <- NULL # c(10, -20) ## 
+ylims.gene <- c(-2, 3.5) # NULL # c(10, -20) ##
 scales     <- 'free_y'
 
 genomplot.scale <- 7
 
 plotfun   <- function(samples=NA) {
-  
+
   FigY.p    <- plot.genome.region(visfrom=visfrom,	visto=visto, samples = samples,
                                   facet_cropF = facet_nested(rows=vars(hpi), scales='fixed', drop=T),
-                                  plot.data=plot.sum[plot.sum$strand == '+',], 
+                                  plot.data=plot.sum[plot.sum$strand == '+',],
                                   #[TIS.df.sum.all$tss == tss,],
                                   add.genome.plot=F, genome.only = F,
                                   gene.plotdata=gene.plotdata, genome=genome, prime = prime,
                                   sum.counts.in.window=T, bin_width = bin_width, add.all.pos=T, y.thresh=NA,
-                                  gene.label=T, 
-                                  add.unstranded=T, 
-                                  add.feature=F, 
+                                  gene.label=T,
+                                  add.unstranded=T,
+                                  add.feature=F,
                                   force.all.gene.down=T, angle = angle,
                                   add.cageTSS=F, cagefr.clust=NA,
                                   crop.FALSE = crop.FALSE, scales = 'free_y',
@@ -234,29 +234,29 @@ plotfun   <- function(samples=NA) {
                                   #geom    = geom_point(aes(x=prime5, y = count, color=strand), alpha=alpha$cov_geom, size=0.1),
                                   palette=palette, alpha=alpha, genomplot.scale=5, #genomplot.scale,
                                   gene.sizes = gene.sizes, sizes = sizes,
-                                  y.multip     = 2, y.log10 = F, ylim={if(is.null(ylim)) {ylim} else {c(0, ylim[2])}}, #ybreaks = -5:5, 
+                                  y.multip     = 2, y.log10 = F, ylim={if(is.null(ylim)) {ylim} else {c(0, ylim[2])}}, #ybreaks = -5:5,
                                   ylims.gene = ylims.gene,
-                                  force.gene.y = T, 
+                                  force.gene.y = T,
                                   gene.label.col='black',
                                   legend.position='top', plot.title = NA, #letters[2], #paste0(virus, '_', Ori),
-                                  breakseq=breakseq, 
+                                  breakseq=breakseq,
                                   margins=unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
                                   gene.aes = aes(xmin = start, xmax = end, y = ymin, fill = strand, forward = orientation, label = gene),
                                   #legend.position.prime='top',
                                   labels=labs(fill = "Strand"),
                                   vline=NULL,
                                   return.plot.data=F)
-  
+
   FigY.ann    <- plot.genome.region(visfrom=visfrom,	visto=visto, samples = samples,
                                     facet_cropF = facet_nested(rows=vars(hpi), scales='fixed', drop=T),
-                                    plot.data=plot.sum[plot.sum$strand == '+',],  
+                                    plot.data=plot.sum[plot.sum$strand == '+',],
                                     #[TIS.df.sum.all$tss == tss,],
                                     add.genome.plot=T, genome.only = T,
                                     gene.plotdata=gene.plotdata, genome=genome, prime = prime,
                                     sum.counts.in.window=T, bin_width = bin_width, add.all.pos=T, y.thresh=NA,
-                                    gene.label=T, 
-                                    add.unstranded=T, 
-                                    add.feature=F, 
+                                    gene.label=T,
+                                    add.unstranded=T,
+                                    add.feature=F,
                                     force.all.gene.down=T, angle = angle,
                                     add.cageTSS=add.cageTSS, cagefr.clust=cagefr.clust, cagefr.clust.dist=3,
                                     #cluster.aes = aes(xmin = region_start, xmax = region_end, y = y, forward = orientation, fill = strand, xsubmin = start, xsubmax = end, color=strand),
@@ -265,29 +265,29 @@ plotfun   <- function(samples=NA) {
                                     #geom    = geom_point(aes(x=prime5, y = count, color=strand), alpha=alpha$cov_geom, size=0.1),
                                     palette=palette, alpha=alpha, genomplot.scale=5, #genomplot.scale,
                                     gene.sizes = gene.sizes, sizes = sizes,
-                                    y.multip     = 5, y.log10 = T, ylim=ylim, #ybreaks = -5:5, 
-                                    ylims.gene = ylims.gene, # 
-                                    force.gene.y = T, 
+                                    y.multip     = 5, y.log10 = T, ylim=ylim, #ybreaks = -5:5,
+                                    ylims.gene = ylims.gene, #
+                                    force.gene.y = T,
                                     gene.label.col='black',
                                     legend.position='top', plot.title = NA, #letters[2], #paste0(virus, '_', Ori),
-                                    breakseq=breakseq, 
+                                    breakseq=breakseq,
                                     margins=unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
                                     gene.aes = aes(xmin = start, xmax = end, y = ymin, fill = strand, forward = orientation, label = gene),
                                     #legend.position.prime='top',
                                     labels=labs(fill = "Strand"),
                                     vline=NULL,
                                     return.plot.data=F)
-  
+
   FigY.m    <- plot.genome.region(visfrom=visfrom,	visto=visto, samples = samples,
                                   facet_cropF = facet_nested(rows=vars(hpi), scales='fixed', drop=T),
-                                  plot.data=plot.sum[plot.sum$strand == '-',],  
+                                  plot.data=plot.sum[plot.sum$strand == '-',],
                                   #[TIS.df.sum.all$tss == tss,],
                                   add.genome.plot=F, genome.only = F,
                                   gene.plotdata=gene.plotdata, genome=genome, prime = prime,
                                   sum.counts.in.window=T, bin_width = bin_width, add.all.pos=T, y.thresh=NA,
-                                  gene.label=T, 
-                                  add.unstranded=T, 
-                                  add.feature=F, 
+                                  gene.label=T,
+                                  add.unstranded=T,
+                                  add.feature=F,
                                   force.all.gene.down=T, angle = angle,
                                   add.cageTSS=F, cagefr.clust=NA,
                                   crop.FALSE = crop.FALSE, scales = 'free_y',
@@ -295,43 +295,43 @@ plotfun   <- function(samples=NA) {
                                   #geom    = geom_point(aes(x=prime5, y = count, color=strand), alpha=alpha$cov_geom, size=0.1),
                                   palette=palette[-1], alpha=alpha, genomplot.scale=5, #genomplot.scale,
                                   gene.sizes = gene.sizes, sizes = sizes,
-                                  y.multip     = 2, y.log10 = F, ylim={if(is.null(ylim)) {ylim} else {c(ylim[1], 0)}}, #ybreaks = -5:5, 
+                                  y.multip     = 2, y.log10 = F, ylim={if(is.null(ylim)) {ylim} else {c(ylim[1], 0)}}, #ybreaks = -5:5,
                                   ylims.gene = ylims.gene,
-                                  force.gene.y = T, 
+                                  force.gene.y = T,
                                   gene.label.col='black',
                                   legend.position='top', plot.title = NA, #letters[2], #paste0(virus, '_', Ori),
-                                  breakseq=breakseq, 
+                                  breakseq=breakseq,
                                   margins=unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
                                   gene.aes = aes(xmin = start, xmax = end, y = ymin, fill = strand, forward = orientation, label = gene),
                                   #legend.position.prime='top',
                                   labels=labs(fill = "Strand"),
                                   vline=NULL,
                                   return.plot.data=F)
-  
+
   ## overwrite x-limits
   xlim <- FigY.ann[["coordinates"]][["limits"]]$x
-  
-  
-  FigY <- cowplot::plot_grid(FigY.p + xlim(xlim), 
-                             FigY.ann + xlim(xlim), 
-                             FigY.m + xlim(xlim), 
+
+
+  FigY <- cowplot::plot_grid(FigY.p + xlim(xlim),
+                             FigY.ann + xlim(xlim),
+                             FigY.m + xlim(xlim),
                              rel_heights = c(3,1.25,3), align = 'v', axis=c('tlrb'), ncol = 1)
   #FigY <- FigY.ann
 }
 
 
 plotfun.all   <- function(samples=NA) {
-  
+
   FigY    <- plot.genome.region(visfrom=visfrom,	visto=visto, samples = samples,
                                 facet_cropF = facet_nested(rows=vars(hpi), scales=scales, drop=T),
-                                plot.data=plot.sum, #[plot.sum$strand == '+',], 
+                                plot.data=plot.sum, #[plot.sum$strand == '+',],
                                 #[TIS.df.sum.all$tss == tss,],
                                 add.genome.plot=T, genome.only = F,
                                 gene.plotdata=gene.plotdata, genome=genome, prime = prime,
                                 sum.counts.in.window=T, bin_width = bin_width, add.all.pos=T, y.thresh=NA,
-                                gene.label=T, gene_name_col = 'gene_name', 
-                                add.unstranded=T, 
-                                add.feature=T, 
+                                gene.label=T, gene_name_col = 'gene_name',
+                                add.unstranded=T,
+                                add.feature=T,
                                 force.all.gene.up.and.down = T,
                                 force.all.gene.down=F, angle = angle,
                                 add.cageTSS=add.cageTSS, cagefr.clust=F, cagefr.clust.dist=3,
@@ -340,12 +340,12 @@ plotfun.all   <- function(samples=NA) {
                                 #geom    = geom_point(aes(x=prime5, y = count, color=strand), alpha=alpha$cov_geom, size=0.1),
                                 palette=palette, alpha=alpha, genomplot.scale=genomplot.scale,
                                 gene.sizes = gene.sizes, sizes = sizes,
-                                y.multip   = 3, y.log10 = F, ylim=ylim, #ybreaks = -5:5, 
-                                ylims.gene = c(-2, 3.5),
-                                force.gene.y = T, 
+                                y.multip   = 3, y.log10 = F, ylim=ylim, #ybreaks = -5:5,
+                                ylims.gene = NULL,
+                                force.gene.y = T,
                                 gene.label.col='black',
                                 legend.position='top', plot.title = NA, #letters[2], #paste0(virus, '_', Ori),
-                                breakseq=breakseq, 
+                                breakseq=breakseq,
                                 margins=unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
                                 gene.aes = aes(xmin = start, xmax = end, y = ymin, fill = strand, forward = orientation, label = gene),
                                 #legend.position.prime='top',
@@ -354,6 +354,6 @@ plotfun.all   <- function(samples=NA) {
                                 xlab_name='Genomic Position', ylab_name='Read Count',
                                 return.plot.data=F)
 
-  
+
 }
 

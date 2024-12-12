@@ -267,7 +267,6 @@ if(use_gene_from_annot) {
 ## Correct some genes in the annotation
 ```{r, eval=T}
 
-
 correct_genes_with <- "NC_001491.2.mRNA_correct_genes_with.gff3"
 correct_genes_with <- data.table(as.data.frame(rtracklayer::import.gff(correct_genes_with, version='3')))
 #if(nrow(viral.ref[ID != transcript_id]) != 0 ) { stop('The IDs do not match for these transcripts: ', viral.ref[ID != transcript_id])}
@@ -973,6 +972,7 @@ plotfun <- function(DT,
       theme_bw() +
       theme( text = element_text(size = 8),
              legend.position = legend.position, 
+             plot.title = element_text(face = "bold"),
             # plot.margin = unit(c(1,1,1,1), 'mm'),
             # strip.background = element_rect(fill = alpha(strip.backgr, 0.4))
             #margins=unit(c(1,1,1,1), "cm"),
@@ -1012,10 +1012,10 @@ strip.background <- palette[10]
 
 mapfun <- function(gene_to_plot=NULL,  DT=orf.sum.perc, TRs_to_plot=NULL, recalc = F,
                    TR.annot.data = TR.merged.data.gene,
-                   visfrom = NULL, visto = NULL, strand_to_plot = c('+', '-'),
+                   visfrom = NULL, visto = NULL, strand_to_plot = c('+', '-'), omit_other_genes=F,
                    rel_widths = c(5, 5), what2plot = 'annot_and_abund', save.plot=F, 
                    use_gene_norm_count=T, fscale='fixed', fnrow=1, 
-                   breakseq=5000,
+                   breakseq=5000, min_TIF_ratio = NULL,
                    ...) { 
   
     stopifnot(!(is.null(gene_to_plot) & is.null(TRs_to_plot)))
@@ -1033,7 +1033,7 @@ mapfun <- function(gene_to_plot=NULL,  DT=orf.sum.perc, TRs_to_plot=NULL, recalc
     
     ## recalculate ratios without gene assignment, but with the filtered transcripts
     TR_ratio <- T
-      
+    
     if (recalc) {
       DTsub[, sum_read_count  := sum(read_count), by=.(sample, Time)]
       DTsub[, norm_read_count := read_count / sum_read_count]
@@ -1049,9 +1049,26 @@ mapfun <- function(gene_to_plot=NULL,  DT=orf.sum.perc, TRs_to_plot=NULL, recalc
       DTsub[, sd              := sd(  norm_read_count, na.rm=T), by=.(Time, gene, Ref_Class)]
       TR_ratio <- F
       
+    } else if (recalc & use_gene_norm_count & is.null(TRs_to_plot) ) {
+    ## recalculate ratios with gene assignment AND with the filtered transcripts
+      DTsub[, sum_read_count  := sum(read_count), by=.(sample, gene, Time)]
+      DTsub[, norm_read_count := read_count / sum_read_count]
+      DTsub[is.na(norm_read_count), norm_read_count := 0]
+      DTsub[, mean            := mean(norm_read_count, na.rm=T), by=.(Time, gene, Ref_Class)]
+      DTsub[, sd := sd(norm_read_count, na.rm=T), by=.(Time, gene, Ref_Class)]
+      
+    } else {
+    ### OR use the gene-normalized transcript isoform ratios, calculated previously
     }
-    ### use the gene-normalized transcript isoform ratios, calculated previously
     
+    ### filter by minimum transcript isoform ratio?
+    if(!is.null(min_TIF_ratio)) {
+      DTsub <- DTsub[ norm_read_count >= min_TIF_ratio, ]
+    } 
+    
+    min_TIF_ratio_TRs <- unique(DTsub[,Ref_Class])
+    
+    ### Make the plot
     ggrt  <- plotfun(DTsub, 
                     geom1 = geom_linerange(aes(x=Time, y=mean, ymin = mean-sd, ymax = mean+sd)),
                     geom3 = geom_point(aes(x=Time, y=mean, fill = Ref_Class), shape=21, size=3),
@@ -1074,11 +1091,16 @@ mapfun <- function(gene_to_plot=NULL,  DT=orf.sum.perc, TRs_to_plot=NULL, recalc
       
       if(!is.null(gene_to_plot) & is.null(TRs_to_plot)) {
         
-        #TR.annot.data.filt <- as.data.frame(TR.annot.data)
+        ## Filter for strands
         TR.annot.data.filt <- TR.annot.data[strand %in% strand_to_plot]
+        
+        ## Make other gene's transcripts NA
         TR.annot.data.filt[!gene %in% gene_to_plot, Ref_Class := NA]
-        #TR.annot.data.filt$Ref_Class[!TR.annot.data.filt$gene %in% gene_to_plot] <- NA
-        #setDT(TR.annot.data.filt)
+        
+        ## Completely omit other genes from the plot?
+        if(omit_other_genes) {
+          TR.annot.data.filt <- TR.annot.data.filt[gene %in% gene_to_plot, ]
+        }
         
         if(is.null(visfrom) & is.null(visto)) {
           visfrom <- min(TR.annot.data.filt[gene %in% gene_to_plot, start]) - vis_win
@@ -1089,7 +1111,10 @@ mapfun <- function(gene_to_plot=NULL,  DT=orf.sum.perc, TRs_to_plot=NULL, recalc
         TR.annot.data.filt <- TR.annot.data[Ref_Class %in% TRs_to_plot]
       }
       
-      
+      if(!is.null(min_TIF_ratio)) {
+        TR.annot.data.filt <- TR.annot.data.filt[Ref_Class %in% min_TIF_ratio_TRs, ]
+      } 
+   
       ggtr <- ann.plotfun(gene_to_plot, vis_win=vis_win, 
                           visfrom = visfrom, visto = visto,
                           TR.merged.data = TR.annot.data.filt,
@@ -1323,54 +1348,48 @@ for (gene_to_plot in ORFs_toplot) {
 
 ## REVIEW
 
-### Anomalous transcripts
-```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
-ORFs_toplot <- c("ORF38", "ORF45", "ORF50", "ORF54", "ORF67", "ORF70", "ORF64")
 
+### Figure X - Anomalous transcripts
+
+ORF23, ORF50, ORF67-ORF68, ORF64
+
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
 
 dir.create('Figures')
 
 Fig.abunds1 <- cowplot::plot_grid(plotlist = list(
-  mapfun('ORF38', orf.sum.perc, legend.position='right', title = 'A', what2plot = 'abund_only',
+  mapfun('ORF23', orf.sum.perc, legend.position='right', title = 'A', what2plot = 'abund_only',
          recalc=F,
-         strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF38' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF38' & strand == '+', end  ]) + vis_win), 
-  mapfun('ORF45', orf.sum.perc, legend.position='right', title = 'B', what2plot = 'abund_only',
+         breakseq = 1500,
+         strand_to_plot = '+'
+         #visfrom = min(TR.merged.data.gene[gene == 'ORF45' & strand == '+', start]) - vis_win,
+         #visto   = max(TR.merged.data.gene[gene == 'ORF45' & strand == '+', end  ]) + vis_win
+         ),
+  mapfun('ORF50', orf.sum.perc, legend.position='right', title = 'B', what2plot = 'abund_only',
          recalc=F,
-         strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF45' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF45' & strand == '+', end  ]) + vis_win),
-  mapfun('ORF50', orf.sum.perc, legend.position='right', title = 'C', what2plot = 'abund_only',
-         recalc=F,
+         breakseq = 1500,
          strand_to_plot = '+',
          visfrom = min(TR.merged.data.gene[gene == 'ORF50' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF50' & strand == '+', end  ]) + vis_win)
-  #mapfun('ORF19', orf.sum.perc, legend.position='right', title = 'D', what2plot = 'abund_only'),
-  #mapfun('ORF40', orf.sum.perc, legend.position='right', title = 'E', what2plot = 'abund_only'),
-  #mapfun('ORF54', orf.sum.perc, legend.position='right', title = 'F', what2plot = 'abund_only')
+         visto   = max(TR.merged.data.gene[gene == 'ORF50' & strand == '+', end  ]) + vis_win
+         )
 ), ncol = 1, align = 'v', axis = 'tlbr')
 
 
 Fig.annots1 <- cowplot::plot_grid(plotlist = list(
-  mapfun('ORF38', orf.sum.perc, what2plot = 'annot_only',
+  mapfun('ORF23', orf.sum.perc, what2plot = 'annot_only',
          recalc=F,
+         breakseq = 1500,
          strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF38' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF38' & strand == '+', end  ]) + vis_win),  
-  mapfun('ORF45', orf.sum.perc, what2plot = 'annot_only',
-         recalc=F,
-         strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF45' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF45' & strand == '+', end  ]) + vis_win),
+         #visfrom = min(TR.merged.data.gene[gene == 'ORF45' & strand == '+', start]) - vis_win,
+         #visto   = max(TR.merged.data.gene[gene == 'ORF45' & strand == '+', end  ]) + vis_win
+         ),
   mapfun('ORF50', orf.sum.perc, what2plot = 'annot_only',
          recalc=F,
+         breakseq = 1500,
          strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF50' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF50' & strand == '+', end  ]) + vis_win)
-  #mapfun('ORF19', orf.sum.perc, what2plot = 'annot_only'),
-  #mapfun('ORF40', orf.sum.perc, what2plot = 'annot_only'),
-  #mapfun('ORF54', orf.sum.perc, what2plot = 'annot_only')
+         #visfrom = min(TR.merged.data.gene[gene == 'ORF50' & strand == '+', start]) - vis_win,
+         #visto   = max(TR.merged.data.gene[gene == 'ORF50' & strand == '+', end  ]) + vis_win
+         )
 ), ncol = 1, align = 'v', axis = 'tlbr')
 
 
@@ -1379,48 +1398,38 @@ Fig.isoforms1 <- cowplot::plot_grid(Fig.abunds1, Fig.annots1, ncol=2, rel_widths
 
 
 Fig.abunds2 <- cowplot::plot_grid(plotlist = list(
-  #mapfun('ORF11', orf.sum.perc, legend.position='right', title = 'A', what2plot = 'abund_only'), 
-  #mapfun('ORF13', orf.sum.perc, legend.position='right', title = 'B', what2plot = 'abund_only'),
-  #mapfun('ORF14', orf.sum.perc, legend.position='right', title = 'C', what2plot = 'abund_only'),
-  mapfun('ORF70', orf.sum.perc, legend.position='right', title = 'D', what2plot = 'abund_only',
-         recalc=F,
-         strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF70' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF70' & strand == '+', end  ]) + vis_win),
-  mapfun(c('ORF67', 'ORF68'), orf.sum.perc, legend.position='right', title = 'E', what2plot = 'abund_only',
+  mapfun(c('ORF67', 'ORF68'), orf.sum.perc, legend.position='right', title = 'C', what2plot = 'abund_only',
          recalc=T,
+         breakseq = 1500,
          strand_to_plot = '-',
          #visfrom = min(TR.merged.data.gene[gene == 'ORF67' & strand == '-', start]) - vis_win,
          #visto   = max(TR.merged.data.gene[gene == 'ORF67' & strand == '-', end  ]) + vis_win
          ),
-  mapfun('ORF64', orf.sum.perc, legend.position='right', title = 'F', what2plot = 'abund_only',
+  mapfun('ORF64', orf.sum.perc, legend.position='right', title = 'D', what2plot = 'abund_only',
          recalc=F,
-         strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF64' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF64' & strand == '+', end  ]) + vis_win)
+         breakseq = 1500,
+         #strand_to_plot = '+',
+         visfrom = 111600, # min(TR.merged.data.gene[gene == 'ORF64' & strand == '-', start]) - vis_win,
+         visto   = 118900  # max(TR.merged.data.gene[gene == 'ORF64' & strand == '-', end  ]) + vis_win
+         )
 ), ncol = 1, align = 'vh', axis = 'tlbr')
 
 
 Fig.annots2 <- cowplot::plot_grid(plotlist = list(
-  #mapfun('ORF11', orf.sum.perc, what2plot = 'annot_only'),  
-  #mapfun('ORF13', orf.sum.perc, what2plot = 'annot_only'),
-  #mapfun('ORF14', orf.sum.perc, what2plot = 'annot_only'),
-  mapfun('ORF70', orf.sum.perc, what2plot = 'annot_only',
-         recalc=F,
-         strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF70' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF70' & strand == '+', end  ]) + vis_win),
   mapfun(c('ORF67', 'ORF68'), orf.sum.perc, what2plot = 'annot_only',
          recalc=T,
+         breakseq = 1500,
          strand_to_plot = '-',
          #visfrom = min(TR.merged.data.gene[gene == 'ORF67' & strand == '-', start]) - vis_win,
          #visto   = max(TR.merged.data.gene[gene == 'ORF67' & strand == '-', end  ]) + vis_win
          ),
   mapfun('ORF64', orf.sum.perc, what2plot = 'annot_only',
          recalc=F,
-         strand_to_plot = '-',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF64' & strand == '-', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF64' & strand == '-', end  ]) + vis_win)
+         breakseq = 1500,
+         #strand_to_plot = '-',
+         visfrom = 111600, # min(TR.merged.data.gene[gene == 'ORF64' & strand == '-', start]) - vis_win,
+         visto   = 118900  # max(TR.merged.data.gene[gene == 'ORF64' & strand == '-', end  ]) + vis_win
+         )
 ), ncol = 1, align = 'vh', axis = 'tlbr')
 
 
@@ -1431,15 +1440,17 @@ Fig.isoforms2 <- cowplot::plot_grid(Fig.abunds2, Fig.annots2, ncol=2, rel_widths
 Fig.isoforms <- cowplot::plot_grid(Fig.isoforms1, Fig.isoforms2, ncol=2, rel_widths = c(1, 0.85))
 
 #ggsave('./Figures/Figure 7_REVIEW_ori.tif', Fig.isoforms, height = 12, width = 24, dpi = 300)
-ggsave('./Figures/Figure X_Anomaluous transcripts.jpg', Fig.isoforms, height = 12, width = 24)
+ggsave('./Figures/Figure X_Anomaluous transcripts.jpg', Fig.isoforms, height = 10, width = 20)
 
 #Fig.isoforms
 ```
 
 
 
+### Figure 7 - DTU transcripts -->> OK
 
-### Figure 7 Review
+ORF11, ORF13, ORF14, ORF19, ORF40, ORF54
+
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
 
 dir.create('Figures')
@@ -1453,17 +1464,19 @@ Fig.abunds1 <- cowplot::plot_grid(plotlist = list(
   mapfun('ORF13', orf.sum.perc, legend.position='right', title = 'B', what2plot = 'abund_only',
          recalc=F,
          strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF13' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF13' & strand == '+', end  ]) + vis_win),
+         breakseq = 1500,
+         visfrom  = 14980,    # min(TR.merged.data.gene[gene == 'ORF13' & strand == '+', start]) - vis_win,
+         visto    = 21600 ),  # max(TR.merged.data.gene[gene == 'ORF13' & strand == '+', end  ]) + vis_win),
   mapfun('ORF14', orf.sum.perc, legend.position='right', title = 'C', what2plot = 'abund_only',
          recalc=F,
          strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF14' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF14' & strand == '+', end  ]) + vis_win)
+         breakseq = 1500,
+         visfrom  = 14980,    # min(TR.merged.data.gene[gene == 'ORF13' & strand == '+', start]) - vis_win,
+         visto    = 21600 )   # max(TR.merged.data.gene[gene == 'ORF13' & strand == '+', end  ]) + vis_win),
   #mapfun('ORF19', orf.sum.perc, legend.position='right', title = 'D', what2plot = 'abund_only'),
   #mapfun('ORF40', orf.sum.perc, legend.position='right', title = 'E', what2plot = 'abund_only'),
   #mapfun('ORF54', orf.sum.perc, legend.position='right', title = 'F', what2plot = 'abund_only')
-), ncol = 1, align = 'v', axis = 'tlbr')
+), ncol = 1, align = 'v', axis = 'tlbr', rel_heights = c(0.7, 0.8, 1))
 
 
 Fig.annots1 <- cowplot::plot_grid(plotlist = list(
@@ -1475,17 +1488,19 @@ Fig.annots1 <- cowplot::plot_grid(plotlist = list(
   mapfun('ORF13', orf.sum.perc, what2plot = 'annot_only',
          recalc=F,
          strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF13' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF13' & strand == '+', end  ]) + vis_win),
+         breakseq = 1500,
+         visfrom  = 14980,    # min(TR.merged.data.gene[gene == 'ORF13' & strand == '+', start]) - vis_win,
+         visto    = 21600 ),  # max(TR.merged.data.gene[gene == 'ORF13' & strand == '+', end  ]) + vis_win),
   mapfun('ORF14', orf.sum.perc, what2plot = 'annot_only',
          recalc=F,
          strand_to_plot = '+',
-         visfrom = min(TR.merged.data.gene[gene == 'ORF14' & strand == '+', start]) - vis_win,
-         visto   = max(TR.merged.data.gene[gene == 'ORF14' & strand == '+', end  ]) + vis_win)
+         breakseq = 1500,
+         visfrom  = 14980,    # min(TR.merged.data.gene[gene == 'ORF13' & strand == '+', start]) - vis_win,
+         visto    = 21600 )  # max(TR.merged.data.gene[gene == 'ORF13' & strand == '+', end  ]) + vis_win),
   #mapfun('ORF19', orf.sum.perc, what2plot = 'annot_only'),
   #mapfun('ORF40', orf.sum.perc, what2plot = 'annot_only'),
   #mapfun('ORF54', orf.sum.perc, what2plot = 'annot_only')
-), ncol = 1, align = 'v', axis = 'tlbr')
+), ncol = 1, align = 'v', axis = 'tlbr', rel_heights = c(0.7, 0.8, 1))
 
 
 Fig.isoforms1 <- cowplot::plot_grid(Fig.abunds1, Fig.annots1, ncol=2, rel_widths = c(1, 0.65), align = 'vh', axis = 'l')
@@ -1511,7 +1526,7 @@ Fig.abunds2 <- cowplot::plot_grid(plotlist = list(
          strand_to_plot = '+',
          visfrom = min(TR.merged.data.gene[gene == 'ORF54' & strand == '+', start]) - vis_win,
          visto   = max(TR.merged.data.gene[gene == 'ORF54' & strand == '+', end  ]) + vis_win)
-), ncol = 1, align = 'vh', axis = 'tlbr')
+), ncol = 1, align = 'vh', axis = 'tlbr', rel_heights = c(0.7, 0.8, 1))
 
 
 Fig.annots2 <- cowplot::plot_grid(plotlist = list(
@@ -1533,7 +1548,7 @@ Fig.annots2 <- cowplot::plot_grid(plotlist = list(
          strand_to_plot = '+',
          visfrom = min(TR.merged.data.gene[gene == 'ORF54' & strand == '+', start]) - vis_win,
          visto   = max(TR.merged.data.gene[gene == 'ORF54' & strand == '+', end  ]) + vis_win)
-), ncol = 1, align = 'vh', axis = 'tlbr')
+), ncol = 1, align = 'vh', axis = 'tlbr', rel_heights = c(0.7, 0.8, 1))
 
 
 Fig.isoforms2 <- cowplot::plot_grid(Fig.abunds2, Fig.annots2, ncol=2, rel_widths = c(1, 0.85), align = 'vh', axis = 'l')
@@ -1543,15 +1558,210 @@ Fig.isoforms2 <- cowplot::plot_grid(Fig.abunds2, Fig.annots2, ncol=2, rel_widths
 Fig.isoforms <- cowplot::plot_grid(Fig.isoforms1, Fig.isoforms2, ncol=2, rel_widths = c(1, 0.85))
 
 #ggsave('./Figures/Figure 7_REVIEW_ori.tif', Fig.isoforms, height = 12, width = 24, dpi = 300)
-ggsave('./Figures/Figure 7_REVIEW.jpg', Fig.isoforms, height = 12, width = 24)
+ggsave('./Figures/Figure 7_REVIEW.jpg', Fig.isoforms, height = 14, width = 24)
 
 #Fig.isoforms
 ```
 
 
 
-### Figure 3 Review
+### Figure 3 - Spliced Transcripts -->> OK
+
+ORF8, ORF9, ORF53, ORF38, ORF58, NOIR 
+
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+
+
+Fig.abunds1 <- cowplot::plot_grid(plotlist = list(
+  mapfun('ORF38', orf.sum.perc, legend.position='right', title = 'A', what2plot = 'abund_only',
+         breakseq=1500,
+         recalc=T,
+         strand_to_plot = '+',
+         visfrom = 65085,
+         visto   = 71050),
+  mapfun('ORF9', orf.sum.perc, legend.position='right', title = 'C', what2plot = 'abund_only',
+         breakseq=2000,
+         recalc=T, #min_TIF_ratio = 0.01,
+         strand_to_plot = '-',
+         visfrom = 10400, #min(TR.merged.data.gene[gene == 'ORF9' & strand == '-', start]) - vis_win,
+         visto   = 16600 #max(TR.merged.data.gene[gene == 'ORF9' & strand == '-', end  ]) + vis_win
+         ),
+  mapfun('ORF58', orf.sum.perc, legend.position='right', title = 'B', what2plot = 'abund_only',
+         breakseq=1500,
+         recalc=T,
+         strand_to_plot = '+',
+         visfrom = 96600,
+         visto   = 106000
+         )
+), ncol = 1, align = 'vh', axis = 'tlbr', rel_heights = c(0.8, 0.8, 1))
+
+
+
+Fig.annots1 <- cowplot::plot_grid(plotlist = list(
+  mapfun('ORF38', orf.sum.perc, what2plot = 'annot_only',
+         breakseq=1500,
+         recalc=T,
+         strand_to_plot = '+',
+         visfrom = 65085,
+         visto   = 71050),
+  mapfun('ORF9', orf.sum.perc, what2plot = 'annot_only',
+         breakseq=2000,
+         recalc=T,  #min_TIF_ratio = 0.01,
+         strand_to_plot = '-',
+         visfrom = 10400, #min(TR.merged.data.gene[gene == 'ORF9' & strand == '-', start]) - vis_win,
+         visto   = 16600 #max(TR.merged.data.gene[gene == 'ORF9' & strand == '-', end  ]) + vis_win
+         ),
+  mapfun('ORF58', orf.sum.perc, what2plot = 'annot_only',
+         breakseq=1500,
+         recalc=T,
+         strand_to_plot = '+',
+         visfrom = 96600,
+         visto   = 106000
+         )
+), ncol = 1, align = 'vh', axis = 'tlbr', rel_heights = c(0.8, 0.8, 1))
+
+
+Fig.isoforms1 <- cowplot::plot_grid(Fig.abunds1, Fig.annots1, ncol=2, rel_widths = c(1.8, 1))
+
+
+
+Fig.abunds2 <- cowplot::plot_grid(plotlist = list(
+  mapfun('ORF8', orf.sum.perc, legend.position='right', title = 'D', what2plot = 'abund_only',
+         breakseq=1000,
+         recalc=T,
+         strand_to_plot = '+',
+         visfrom = 8900, #min(TR.merged.data.gene[gene == 'ORF9' & strand == '-', start]) - vis_win,
+         visto   = 11100 #max(TR.merged.data.gene[gene == 'ORF9' & strand == '-', end  ]) + vis_win
+         ),
+  mapfun('NOIR', orf.sum.perc, legend.position='right', title = 'E', what2plot = 'abund_only',
+         breakseq=1000,
+         recalc=T,
+         strand_to_plot = '+',
+         visfrom = 118400, # min(TR.merged.data.gene[gene == 'NOIR' & strand == '+', start]) - vis_win,
+         visto   = 120100  # max(TR.merged.data.gene[gene == 'NOIR' & strand == '+', end  ]) + vis_win
+         ),
+  mapfun(c('ORF53'), orf.sum.perc, legend.position='right', title = 'F', what2plot = 'abund_only',
+         breakseq=1500,
+         recalc=F,
+         #strand_to_plot = '+',
+         visfrom = 92600,
+         visto   = 99600)
+), ncol = 1, align = 'vh', axis = 'tlbr', rel_heights = c(0.8, 0.8, 1))
+
+
+
+Fig.annots2 <- cowplot::plot_grid(plotlist = list(
+  mapfun('ORF8', orf.sum.perc, what2plot = 'annot_only',
+         breakseq=1000,
+         recalc=T,
+         strand_to_plot = '+',
+         visfrom = 8900, #min(TR.merged.data.gene[gene == 'ORF9' & strand == '-', start]) - vis_win,
+         visto   = 11100 #max(TR.merged.data.gene[gene == 'ORF9' & strand == '-', end  ]) + vis_win
+         ),
+  mapfun('NOIR', orf.sum.perc, what2plot = 'annot_only',
+         breakseq=1000,
+         recalc=T,
+         strand_to_plot = '+',
+         visfrom = 118400, # min(TR.merged.data.gene[gene == 'NOIR' & strand == '+', start]) - vis_win,
+         visto   = 120100  # max(TR.merged.data.gene[gene == 'NOIR' & strand == '+', end  ]) + vis_win
+         ),
+  mapfun(c('ORF53'), orf.sum.perc, what2plot = 'annot_only',
+         breakseq=1500,
+         recalc=F,
+         #strand_to_plot = '+',
+         visfrom = 92600,
+         visto   = 99600)
+), ncol = 1, align = 'vh', axis = 'tlbr', rel_heights = c(0.8, 0.8, 1))
+
+
+Fig.isoforms2 <- cowplot::plot_grid(Fig.abunds2, Fig.annots2, ncol=2, rel_widths = c(1.4, 1))
+
+
+
+Fig.splice <- cowplot::plot_grid(Fig.isoforms1, Fig.isoforms2, ncol=2, rel_widths = c(1.15, 1))
+
+
+#ggsave('./Figures/Figure 3_REVIEW_ori.tif', Fig.splice, height = 10, width = 24, dpi = 300)
+ggsave('./Figures/Figure 3_REVIEW.jpg', Fig.splice, height = 14, width = 24)
+
+#Fig.splice
+```
+
+
+
+###  Supp Figure S3 - Spliced Transcripts 2 -->> OK
+
+ORF47-44, ORF65
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+
+
+Fig.abunds1 <- cowplot::plot_grid(plotlist = list(
+  mapfun('ORF65',  orf.sum.perc, legend.position='right', title = 'A', what2plot = 'abund_only',
+         breakseq=1000,
+         recalc=T,
+         strand_to_plot = '-'
+         #visfrom = min(TR.merged.data.gene[gene == 'ORF65' & strand == '-', start]) - vis_win,
+         #visto   = max(TR.merged.data.gene[gene == 'ORF65' & strand == '-', end  ]) + vis_win
+         ),
+  mapfun(c('ORF44'), orf.sum.perc, legend.position='right', title = 'B', what2plot = 'abund_only',
+         breakseq=1500,
+         recalc=T, #min_TIF_ratio = 0.01
+         #strand_to_plot = '-',
+         visfrom = 83000, # min(TR.merged.data.gene[gene == 'ORF9' & strand == '-', start]) - vis_win,
+         visto   = 93000  # max(TR.merged.data.gene[gene == 'ORF9' & strand == '-', end  ]) + vis_win
+         )
+), ncol = 1, align = 'vh', axis = 'tlbr', rel_heights = c(0.8, 1))
+
+
+Fig.annots1 <- cowplot::plot_grid(plotlist = list(
+  mapfun('ORF65', orf.sum.perc, what2plot = 'annot_only',
+         breakseq=1000,
+         recalc=T,
+         strand_to_plot = '-'
+         #visfrom = 65085,
+         #visto   = 71050
+         ),
+  mapfun(c('ORF44'), orf.sum.perc, what2plot = 'annot_only',
+         breakseq=1500,
+         recalc=T,  #min_TIF_ratio = 0.01
+         #strand_to_plot = '-',
+         visfrom = 83000, # min(TR.merged.data.gene[gene == 'ORF9' & strand == '-', start]) - vis_win,
+         visto   = 93000  # max(TR.merged.data.gene[gene == 'ORF9' & strand == '-', end  ]) + vis_win
+         )
+), ncol = 1, align = 'vh', axis = 'tlbr', rel_heights = c(0.8, 1))
+
+
+Fig.isoforms1 <- cowplot::plot_grid(Fig.abunds1, Fig.annots1, ncol=2, rel_widths = c(2, 1))
+
+
+
+
+
+Fig.splice <- cowplot::plot_grid(Fig.isoforms1#, Fig.isoforms2, ncol=2, rel_widths = c(1, 1.4)
+                                 )
+
+
+#ggsave('./Figures/Figure 3_REVIEW_ori.tif', Fig.splice, height = 10, width = 24, dpi = 300)
+ggsave('./Figures/Supp Fig S3 REVIEW.jpg', Fig.splice, height = 12, width = 16)
+
+#Fig.splice
+```
+
+
+
+
+
+
+
+
+
+## Archive
+
+### Figure 3 V1 - Spliced Transcripts
+
+ORF9, ORF38, ORF65, NOIR 
+
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=F}
 
 
 Fig.abunds1 <- cowplot::plot_grid(plotlist = list(
@@ -1647,8 +1857,6 @@ ggsave('./Figures/Figure 3_REVIEW.jpg', Fig.splice, height = 10, width = 24)
 
 #Fig.splice
 ```
-
-
 
 
 ```{r}
