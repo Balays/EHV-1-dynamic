@@ -779,6 +779,25 @@ orf.sum.perc[grep('novTX', cmp_ref), Ref_Class := cmp_ref]
 
 ```
 
+### Combine Transcript counts with annotation -->> Supp Table S2
+```{r}
+
+TR_counts_all <- dcast(
+  unique(orf.sum.perc[,.(seqnames, strand, gene, Ref_Class, sample, read_count)]), 
+  seqnames + strand + gene + Ref_Class ~ sample, value.var = 'read_count', fill = 0)
+
+
+supp_tab_S2 <- merge(TR.merged.data.gene[,
+      .(seqnames, gene, strand, Ref_Class, source,  start.TR, end.TR, final_TX_ID = gsub('.*novTX', 'novTX', Ref_Class),
+        exon_number, start.exon, end.exon,  
+        CAGE.cluster.start, CAGE.cluster.end, CAGE_ID, CAGE_significance, CAGE_score = score, CAGE_support=support)], 
+      TX_nov_gff[, .(final_TX_ID, TX_category)], by='final_TX_ID', all.x=T)
+
+supp_tab_S2 <- merge(supp_tab_S2, TR_counts_all, by=c('seqnames', 'strand', 'gene', 'Ref_Class'))
+
+                     
+
+```
 
 ```{r}
 ## Filter based on transcript ratio
@@ -809,6 +828,20 @@ across every sample, and thus were filtered out from the counting: \n',
 orf.sum.perc        <- orf.sum.perc[!Ref_Class %in% trs.tofilt,]
 TR.merged.data.gene <- TR.merged.data.gene[!Ref_Class %in% trs.tofilt,]
 
+
+```
+
+
+```{r}
+
+mean_abundance <- dcast(
+  unique(orf.sum.perc[,.(seqnames, strand, gene, Ref_Class, hpi, mean)]), 
+  seqnames + strand + gene + Ref_Class ~ hpi, value.var = 'mean', fill = 0)
+
+
+sd_abundance <- dcast(
+  unique(orf.sum.perc[,.(seqnames, strand, gene, Ref_Class, hpi, sd)]), 
+  seqnames + strand + gene + Ref_Class ~ hpi, value.var = 'sd', fill = 0)
 
 ```
 
@@ -1151,20 +1184,6 @@ mapfun <- function(gene_to_plot=NULL,  DT=orf.sum.perc, TRs_to_plot=NULL, recalc
 
 
 #purrr::map(unique(orf.sum.perc[,gene]), mapfun, orf.sum.perc)
-```
-
-
-```{r}
-
-mean_abundance <- dcast(
-  unique(orf.sum.perc[,.(seqnames, strand, gene, Ref_Class, hpi, mean)]), 
-  seqnames + strand + gene + Ref_Class ~ hpi, value.var = 'mean', fill = 0)
-
-
-sd_abundance <- dcast(
-  unique(orf.sum.perc[,.(seqnames, strand, gene, Ref_Class, hpi, sd)]), 
-  seqnames + strand + gene + Ref_Class ~ hpi, value.var = 'sd', fill = 0)
-
 ```
 
 
@@ -1917,6 +1936,9 @@ ggsave('./Figures/Figure 3_REVIEW.jpg', Fig.splice, height = 10, width = 24)
 ```{r}
 ## Export data
 if (writetables) {
+  
+  write.table(supp_tab_S2, 'Figures/Supp Table S2 - Transcript Annotaions and Read Counts REVIEW.tsv', 
+              quote = F, row.names = F, sep = '\t')
   
   write.table(mean_abundance, paste0(fig.dir, '/', EndType, '_mean_abundance.tsv'), quote = F, row.names = F, sep = '\t')
   
