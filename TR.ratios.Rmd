@@ -181,6 +181,24 @@ TR.gene.cluster.counts <- merge(TR.gene.cluster,
 ```
 
 
+### CAGE significance
+```{r}
+#TR.merged.data[,.N,CAGE_significance]
+
+
+CAGE.sig <- fread("CAGEFighteR.SIG.tsv")
+
+
+TR.merged.data[,CAGE_significance := NULL]
+
+
+TR.merged.data <- merge(TR.merged.data[,], CAGE.sig[,.(CAGE_ID = gene, CAGE_significance)], by=c('CAGE_ID'), all.x=T)
+
+
+TR.merged.data[,.N,CAGE_significance]
+```
+
+
 ```{r}
 #### summarise read-transcripts into ref transcripts
 TR.ref.sum      <- TR.gene.cluster.counts[,.(read_count = sum(count)),  
@@ -417,15 +435,27 @@ TR.merged.data.nov[,thick.start := NA][, thick.end := NA]
 
 
 TR.merged.data.nov[,transcript_id := Ref_Class]
+```
 
 
-cnames <- colnames(TR.merged.data)
+### Add TX category
+```{r}
+TR.merged.data[ , TX_category := NULL]
 
-TR.merged.data.nov <- unique(TR.merged.data.nov[,..cnames])
+TR.merged.data[ grepl('\\.[1-9]', transcript_id) &
+               !grepl('PC', transcript_id) &
+               !grepl('CX', transcript_id)   , TX_category := 'Putative mRNA']
+
+unique(TR.merged.data[TX_category == 'Putative mRNA', transcript_id])
+
 ```
 
 
 ```{r}
+cnames <- colnames(TR.merged.data)
+
+TR.merged.data.nov <- unique(TR.merged.data.nov[,..cnames])
+
 TR.merged.data <- rbind(TR.merged.data, 
                         TR.merged.data.nov[,..cnames], fill=F)
 
@@ -490,6 +520,233 @@ TR.ref.sum <- rbind(TR.ref.sum,
 
 ```
 
+
+### Include NAGATA results
+```{r}
+source('NAGATA.R')
+
+## window for maximum distance
+
+nagata.mrna.TSS <- nagata.mrna[, .(seqnames, strand, start, end, transcript_id = ID, score, 
+                                   prime5.TR = fifelse(strand == '+', start, end),
+                                   prime3.TR = fifelse(strand == '-', start, end)) ]
+nagata.mrna.TSS[, ":=" (start.TR  = start, end.TR = end,
+                        start     = prime5.TR - 50, 
+                        end       = prime5.TR + 50)]
+
+
+TR.TSS <- unique(TR.merged.data[, .(seqnames, strand, start, end, transcript_id, source, TX_category,
+                                    CAGE_significance, 
+                                   prime5.TR ,
+                                   prime3.TR ) ])
+
+
+TR.TSS[, ":=" (start.TR  = start, end.TR = end,
+               start     = prime5.TR - 50, 
+               end       = prime5.TR + 50)]
+
+
+
+nagata.ov <- foverlaps2(nagata.mrna.TSS, TR.TSS, by = c('seqnames', 'strand', 'start', 'end'), minoverlap=0, maxgap=0)
+
+colnames(nagata.ov) <- gsub('i\\.', 'NAGATA.', colnames(nagata.ov))
+
+nagata.ov[,distance := abs(prime5.TR - NAGATA.prime5.TR)]
+
+nagata.ov[,min_dist := min(distance), by=.(seqnames, strand, transcript_id)]
+
+nagata.ov <- nagata.ov[min_dist == distance,]
+
+## Remove duplicated, because of a NAGATA transcript with same TSS but different TES
+dup(nagata.ov$transcript_id)
+
+nagata.ov <- nagata.ov[!duplicated(transcript_id),]
+```
+
+
+```{r}
+nagata.stats <- nagata.ov[,.N, by=distance][order(N, decreasing = T)]
+
+distance.mod <- nagata.stats[N == max(N), distance]
+
+
+## number of NAGATA transcripts, not found in our annotation with distance <= 100
+sum(!nagata.mrna.TSS$transcript_id %in% nagata.ov$NAGATA.transcript_id)
+
+## Number of transcripts, supported by NAGATA from each source
+
+nagata.ov[,.N, by=.(source)][order(N, decreasing = T)]
+
+## Number of transcripts, supported by NAGATA from each source AND TX category
+nagata.ov[,.N, by=.(source, TX_category)][order(N, decreasing = T)]
+
+
+## Include all transcripts
+nagata.ov.all <- merge(nagata.ov[,.(seqnames, strand, transcript_id, prime5.TR, NAGATA.transcript_id, NAGATA.prime5.TR, distance)], 
+                         TR.TSS[,.(seqnames, strand, transcript_id, prime5.TR, TX_category, source, CAGE_significance)], 
+                         by=c('seqnames', 'strand', 'transcript_id', 'prime5.TR'), all=T)
+nagata.ov.all[is.na(source), source := 'NAGATA', ]
+
+nagata.ov.all[is.na(distance), NAGATA.support := "NA"]
+nagata.ov.all[distance <= 100, NAGATA.support := "distance <= 100"]
+nagata.ov.all[distance <= 50,  NAGATA.support := "distance <= 50"]
+nagata.ov.all[distance <= 25,  NAGATA.support := "distance <= 25"]
+
+nagata.TX.stats <- nagata.ov.all[,.N, by=.(source, TX_category, NAGATA.support, CAGE_significance)][order(N, decreasing = T)]
+
+```
+
+
+
+```{r}
+
+### Distribution of distances
+
+gg.nt <- ggplot(nagata.ov, #[type == 'Putative'], 
+                aes(distance)) +
+          #geom_histogram(bins=100)+
+          theme_ipsum() +
+          geom_density(color='black') + # geom_density(aes(color=type)) +
+          geom_vline(xintercept = distance.mod, color='blue') +
+          geom_label(aes(distance.mod, 0.05), label=distance.mod, color='blue') +
+          geom_vline(xintercept = 25, color='red') +
+          geom_label(aes(25, 0.05), label=25, color='red')
+
+
+ggsave('NAGATA-EHV transcripts TSS distance density.jpg', gg.nt, width = 10, height = 6)
+
+
+gg.nt <- ggplot(nagata.ov, #[type == 'Putative'], 
+                aes(distance)) +
+          #geom_histogram(bins=100)+
+          theme_ipsum() +
+          geom_density(aes(color=source)) + # geom_density(aes(color=type)) +
+          geom_vline(xintercept = distance.mod, color='blue') +
+          geom_label(aes(distance.mod, 0.05), label=distance.mod, color='blue') +
+          geom_vline(xintercept = 25, color='red') +
+          geom_label(aes(25, 0.05), label=25, color='red')
+
+
+ggsave('NAGATA-EHV transcripts TSS distance density BY SOURCE.jpg', gg.nt, width = 10, height = 6)
+
+
+gg.nt <- ggplot(nagata.ov, #[type == 'Putative'], 
+                aes(distance)) +
+          #geom_histogram(bins=100)+
+          theme_ipsum() +
+          geom_density(aes(color=TX_category)) + # geom_density(aes(color=type)) +
+          geom_vline(xintercept = distance.mod, color='blue') +
+          geom_label(aes(distance.mod, 0.05), label=distance.mod, color='blue') +
+          geom_vline(xintercept = 25, color='red') +
+          geom_label(aes(25, 0.05), label=25, color='red')
+
+
+ggsave('NAGATA-EHV transcripts TSS distance density BY TX-CATEGORY.jpg', gg.nt, width = 10, height = 6)
+
+
+### Correlation of distance and NAGATA score
+
+gg.ds <- ggplot(nagata.ov) +
+          theme_ipsum() +
+          geom_point(aes(distance, score, color=TX_category))
+
+ggsave('NAGATA-EHV transcripts TSS distance vs NAGATA score.jpg', gg.ds, width = 10, height = 6)
+
+
+### 
+gg.sc <- ggplot(nagata.ov, aes(score)) +
+          #geom_histogram(bins=100)+
+          theme_ipsum() +
+          geom_density(aes(color=TX_category))
+          #geom_vline(xintercept = distance.mod, color='blue') +
+          #geom_label(aes(distance.mod, 0.05), label=distance.mod, color='blue') +
+          #geom_vline(xintercept = 25, color='red') +
+          #geom_label(aes(25, 0.05), label=25, color='red')
+
+
+```
+
+
+```{r}
+### Filter for 25 nt
+nagata.ov    <- nagata.ov[distance <= 25,]
+
+nagata.stats <- nagata.ov[,.N, by=distance][order(N, decreasing = T)]
+
+distance.mod <- nagata.stats[N == max(N), distance]
+
+
+## number of NAGATA transcripts, not found in our annotation with distance <= 100
+sum(!nagata.mrna.TSS$transcript_id %in% nagata.ov$NAGATA.transcript_id)
+
+## Number of transcripts, supported by NAGATA from each source
+
+nagata.ov[,.N, by=.(source)][order(N, decreasing = T)]
+
+## Number of transcripts, supported by NAGATA from each source AND TX category
+nagata.ov[,.N, by=.(source, TX_category)][order(N, decreasing = T)]
+
+```
+
+
+```{r}
+gg.nt <- ggplot(nagata.ov, aes(distance)) +
+          #geom_histogram(bins=100)+
+          theme_ipsum() +
+          geom_density(color='black') +
+          geom_vline(xintercept = distance.mod, color='blue') +
+          geom_label(aes(distance.mod, 0.05), label=distance.mod, color='blue') +
+          geom_vline(xintercept = 25, color='red') +
+          geom_label(aes(25, 0.05), label=25, color='red')
+
+
+
+ggsave('NAGATA-EHV transcripts TSS distance density.jpg', gg.nt, width = 10, height = 6)
+```
+
+
+
+
+### 
+```{r}
+nagata.ov.nov    <- nagata.ov[,]
+
+nagata.ov.nov[, final_TX_ID := gsub('.*novTX_', 'novTX_', transcript_id)]
+
+
+TX_nov_nagata_gff <- merge(TX_nov_gff[, .(seqnames, source, type, start, end, strand, final_TX_ID )], 
+                        nagata.ov.nov[, .(seqnames, strand, score, final_TX_ID, distance, NAGATA.transcript_id, NAGATA.prime5.TR, NAGATA.prime3.TR )], by=c('seqnames', 'strand', 'final_TX_ID'), all.x=T )
+
+
+rtracklayer::export.gff3(as.data.frame(TX_nov_nagata_gff), 'EHV_novel_NAGATA_merged.gff3')
+
+```
+
+
+### Merge NAGATA results
+```{r}
+TR.merged.data <- merge(TR.merged.data,
+                        nagata.ov.all[,.(seqnames, strand, transcript_id, prime5.TR, NAGATA.transcript_id, NAGATA.prime5.TR, NAGATA.support)], 
+                        by=c('seqnames', 'strand', 'transcript_id', 'prime5.TR'), all.x=T)
+
+
+```
+### Export
+```{r}
+TR.merged.data.EX  <- unique(
+  TR.merged.data[,.(seqnames, strand, source, start=start.exon, end=end.exon, type = 'exon', ID=transcript_id, Name=transcript_id, TX_category)] )
+
+TR.merged.data.TR  <- unique(
+  TR.merged.data[,.(seqnames, strand, source, start=start.TR, end=end.TR, type = 'transcript', ID=transcript_id, Name=transcript_id, TX_category)] )
+
+TR.merged.data.gff <- rbind(
+  TR.merged.data.EX,
+  TR.merged.data.TR  )
+
+
+rtracklayer::export.gff3(TR.merged.data.gff, 'TR.merged.gff')
+
+```
 
 
 

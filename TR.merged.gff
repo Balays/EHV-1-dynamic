@@ -1,0 +1,1636 @@
+##gff-version 3
+##source-version rtracklayer 1.58.0
+##date 2024-12-17
+NC_001491.2	Torma_et_al	exon	73856	74182	.	+	.	ID=CTO-S-AS;Name=CTO-S-AS;
+NC_001491.2	Torma_et_al	exon	118878	119857	.	+	.	ID=NOIR-Canonic;Name=NOIR-Canonic;
+NC_001491.2	Torma_et_al	exon	118811	122451	.	+	.	ID=NOIR-ORF65-PC-Canonic;Name=NOIR-ORF65-PC-Canonic;
+NC_001491.2	Tombacz_et_al	exon	118856	119857	.	+	.	ID=NOIR_1-Non-coding-Long-novTX_195;Name=NOIR_1-Non-coding-Long-novTX_195;TX_category=Non-coding-Long
+NC_001491.2	Torma_et_al	exon	1252	1923	.	+	.	ID=ORF1;Name=ORF1;
+NC_001491.2	Torma_et_al	exon	1252	3632	.	+	.	ID=ORF1-ORF2-ORF3-CX-Canonic;Name=ORF1-ORF2-ORF3-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	989	3632	.	+	.	ID=ORF1-ORF2-ORF3-CX-Long;Name=ORF1-ORF2-ORF3-CX-Long;
+NC_001491.2	Tombacz_et_al	exon	1629	1923	.	+	.	ID=ORF1-Putative mRNA-novTX_272;Name=ORF1-Putative mRNA-novTX_272;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	1613	1923	.	+	.	ID=ORF1-Putative mRNA-novTX_320;Name=ORF1-Putative mRNA-novTX_320;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	11990	14971	.	+	.	ID=ORF10-ORF11-ORF12-PC-Canonic;Name=ORF10-ORF11-ORF12-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	11990	13520	.	+	.	ID=ORF10-ORF11-PC-Canonic;Name=ORF10-ORF11-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	12468	13520	.	+	.	ID=ORF11;Name=ORF11;
+NC_001491.2	Torma_et_al	exon	12156	14971	.	+	.	ID=ORF11-ORF12-PC-Canonic;Name=ORF11-ORF12-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	12468	14971	.	+	.	ID=ORF11-ORF12-PC-Short;Name=ORF11-ORF12-PC-Short;
+NC_001491.2	Torma_et_al	exon	12875	13520	.	+	.	ID=ORF11.5;Name=ORF11.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	13528	14971	.	+	.	ID=ORF12;Name=ORF12;
+NC_001491.2	Torma_et_al	exon	13528	16341	.	+	.	ID=ORF12-AT;Name=ORF12-AT;
+NC_001491.2	Torma_et_al	exon	12661	14971	.	+	.	ID=ORF12-L1;Name=ORF12-L1;
+NC_001491.2	Torma_et_al	exon	12875	14971	.	+	.	ID=ORF12-L2;Name=ORF12-L2;
+NC_001491.2	Tombacz_et_al	exon	13509	14971	.	+	.	ID=ORF12-Monocistronic-Long-novTX_193;Name=ORF12-Monocistronic-Long-novTX_193;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	13560	14971	.	+	.	ID=ORF12-Monocistronic-Short-novTX_199;Name=ORF12-Monocistronic-Short-novTX_199;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	13528	20385	.	+	.	ID=ORF12-ORF13-ORF14-PC-Canonic;Name=ORF12-ORF13-ORF14-PC-Canonic;
+NC_001491.2	Tombacz_et_al	exon	15195	20385	.	+	.	ID=ORF13-Multicistronic-Long-novTX_4;Name=ORF13-Multicistronic-Long-novTX_4;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	exon	15260	20385	.	+	.	ID=ORF13-Multicistronic-Short-novTX_306;Name=ORF13-Multicistronic-Short-novTX_306;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	exon	15234	20385	.	+	.	ID=ORF13-ORF14-PC-Canonic;Name=ORF13-ORF14-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	15083	20385	.	+	.	ID=ORF13-ORF14-PC-Long;Name=ORF13-ORF14-PC-Long;
+NC_001491.2	Torma_et_al	exon	17985	20385	.	+	.	ID=ORF14;Name=ORF14;
+NC_001491.2	Torma_et_al	exon	15647	20385	.	+	.	ID=ORF14-L1;Name=ORF14-L1;
+NC_001491.2	Torma_et_al	exon	15982	20385	.	+	.	ID=ORF14-L2;Name=ORF14-L2;
+NC_001491.2	Torma_et_al	exon	16505	20385	.	+	.	ID=ORF14-L3;Name=ORF14-L3;
+NC_001491.2	Torma_et_al	exon	16796	20385	.	+	.	ID=ORF14-L4;Name=ORF14-L4;
+NC_001491.2	Torma_et_al	exon	17231	20385	.	+	.	ID=ORF14-L5;Name=ORF14-L5;
+NC_001491.2	Torma_et_al	exon	17484	20385	.	+	.	ID=ORF14-L6;Name=ORF14-L6;
+NC_001491.2	Torma_et_al	exon	17716	20385	.	+	.	ID=ORF14-L7;Name=ORF14-L7;
+NC_001491.2	Tombacz_et_al	exon	15746	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_11;Name=ORF14-Monocistronic-Long-novTX_11;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	15828	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_14;Name=ORF14-Monocistronic-Long-novTX_14;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	17503	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_19;Name=ORF14-Monocistronic-Long-novTX_19;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	17967	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_20;Name=ORF14-Monocistronic-Long-novTX_20;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	17518	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_244;Name=ORF14-Monocistronic-Long-novTX_244;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	17455	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_296;Name=ORF14-Monocistronic-Long-novTX_296;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	15673	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_9;Name=ORF14-Monocistronic-Long-novTX_9;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	17998	20385	.	+	.	ID=ORF14-Monocistronic-Short-novTX_22;Name=ORF14-Monocistronic-Short-novTX_22;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	18016	20385	.	+	.	ID=ORF14-Monocistronic-Short-novTX_23;Name=ORF14-Monocistronic-Short-novTX_23;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	18151	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_24;Name=ORF14-Putative mRNA-novTX_24;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	18487	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_25;Name=ORF14-Putative mRNA-novTX_25;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19287	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_28;Name=ORF14-Putative mRNA-novTX_28;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	18370	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_281;Name=ORF14-Putative mRNA-novTX_281;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19152	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_282;Name=ORF14-Putative mRNA-novTX_282;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19224	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_283;Name=ORF14-Putative mRNA-novTX_283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19331	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_29;Name=ORF14-Putative mRNA-novTX_29;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	18093	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_297;Name=ORF14-Putative mRNA-novTX_297;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19091	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_298;Name=ORF14-Putative mRNA-novTX_298;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19579	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_31;Name=ORF14-Putative mRNA-novTX_31;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19640	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_32;Name=ORF14-Putative mRNA-novTX_32;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19907	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_339;Name=ORF14-Putative mRNA-novTX_339;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19675	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_34;Name=ORF14-Putative mRNA-novTX_34;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19745	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_349;Name=ORF14-Putative mRNA-novTX_349;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19795	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_35;Name=ORF14-Putative mRNA-novTX_35;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	19886	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_36;Name=ORF14-Putative mRNA-novTX_36;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	19661	20385	.	+	.	ID=ORF14.5;Name=ORF14.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	21328	27784	.	+	.	ID=ORF16-ORF17-ORF18-ORF19-CX-Canonic;Name=ORF16-ORF17-ORF18-ORF19-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	21474	27784	.	+	.	ID=ORF17-ORF18-ORF19-CX-Canonic;Name=ORF17-ORF18-ORF19-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	21493	27784	.	+	.	ID=ORF17-ORF18-ORF19-CX-Short;Name=ORF17-ORF18-ORF19-CX-Short;
+NC_001491.2	Torma_et_al	exon	22580	27784	.	+	.	ID=ORF17-ORF18-ORF19-CX-Short-2;Name=ORF17-ORF18-ORF19-CX-Short-2;
+NC_001491.2	Torma_et_al	exon	23099	27784	.	+	.	ID=ORF18-ORF19-CX-Canonic;Name=ORF18-ORF19-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	23079	27784	.	+	.	ID=ORF18-ORF19-CX-Long;Name=ORF18-ORF19-CX-Long;
+NC_001491.2	Torma_et_al	exon	23686	27784	.	+	.	ID=ORF18-ORF19-CX-Short;Name=ORF18-ORF19-CX-Short;
+NC_001491.2	Torma_et_al	exon	23857	27784	.	+	.	ID=ORF18-ORF19-CX-Short-2;Name=ORF18-ORF19-CX-Short-2;
+NC_001491.2	Torma_et_al	exon	26161	27784	.	+	.	ID=ORF19;Name=ORF19;
+NC_001491.2	Torma_et_al	exon	24861	27784	.	+	.	ID=ORF19-L1;Name=ORF19-L1;
+NC_001491.2	Torma_et_al	exon	25481	27784	.	+	.	ID=ORF19-L2;Name=ORF19-L2;
+NC_001491.2	Tombacz_et_al	exon	26566	27784	.	+	.	ID=ORF19-Putative mRNA-novTX_40;Name=ORF19-Putative mRNA-novTX_40;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	27258	27784	.	+	.	ID=ORF19-Putative mRNA-novTX_42;Name=ORF19-Putative mRNA-novTX_42;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	28668	36380	.	+	.	ID=ORF21-ORF22-ORF23-CX-Canonic;Name=ORF21-ORF22-ORF23-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	28131	36380	.	+	.	ID=ORF21-ORF22-ORF23-CX-Long;Name=ORF21-ORF22-ORF23-CX-Long;
+NC_001491.2	Torma_et_al	exon	33237	36380	.	+	.	ID=ORF23;Name=ORF23;
+NC_001491.2	Torma_et_al	exon	32802	36380	.	+	.	ID=ORF23-L1;Name=ORF23-L1;
+NC_001491.2	Tombacz_et_al	exon	33224	36380	.	+	.	ID=ORF23-Monocistronic-Long-novTX_299;Name=ORF23-Monocistronic-Long-novTX_299;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	35467	36380	.	+	.	ID=ORF23-Putative mRNA-novTX_324;Name=ORF23-Putative mRNA-novTX_324;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	35191	36380	.	+	.	ID=ORF23-Putative mRNA-novTX_329;Name=ORF23-Putative mRNA-novTX_329;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	35897	36380	.	+	.	ID=ORF23-Putative mRNA-novTX_344;Name=ORF23-Putative mRNA-novTX_344;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	35755	36380	.	+	.	ID=ORF23-Putative mRNA-novTX_52;Name=ORF23-Putative mRNA-novTX_52;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	36080	36380	.	+	.	ID=ORF23-Putative mRNA-novTX_53;Name=ORF23-Putative mRNA-novTX_53;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	35814	36380	.	+	.	ID=ORF23.5;Name=ORF23.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	36497	46890	.	+	.	ID=ORF24;Name=ORF24;
+NC_001491.2	Tombacz_et_al	exon	45786	46890	.	+	.	ID=ORF24-Putative mRNA-novTX_285;Name=ORF24-Putative mRNA-novTX_285;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	45839	46890	.	+	.	ID=ORF24-Putative mRNA-novTX_56;Name=ORF24-Putative mRNA-novTX_56;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	45197	46890	.	+	.	ID=ORF24.5;Name=ORF24.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	45483	46890	.	+	.	ID=ORF24.6;Name=ORF24.6;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	45800	46890	.	+	.	ID=ORF24.7;Name=ORF24.7;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	46066	46890	.	+	.	ID=ORF24.8;Name=ORF24.8;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	47036	51686	.	+	.	ID=ORF25-ORF26-ORF27-ORF28-ORF29-CX;Name=ORF25-ORF26-ORF27-ORF28-ORF29-CX;
+NC_001491.2	Torma_et_al	exon	48073	59182	.	+	.	ID=ORF27-ORF28-ORF29-ORF30-ORF3-CX-Canonic1;Name=ORF27-ORF28-ORF29-ORF30-ORF3-CX-Canonic1;
+NC_001491.2	Tombacz_et_al	exon	48532	51693	.	+	.	ID=ORF28-Multicistronic-Short-novTX_57;Name=ORF28-Multicistronic-Short-novTX_57;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	exon	48421	51693	.	+	.	ID=ORF28-ORF29-PC-Canonic;Name=ORF28-ORF29-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	48558	51693	.	+	.	ID=ORF28-ORF29-PC-Short;Name=ORF28-ORF29-PC-Short;
+NC_001491.2	Torma_et_al	exon	50573	51693	.	+	.	ID=ORF29;Name=ORF29;
+NC_001491.2	Torma_et_al	exon	50573	59182	.	+	.	ID=ORF29-ORF30-ORF31-CX-Canonic;Name=ORF29-ORF30-ORF31-CX-Canonic;
+NC_001491.2	Tombacz_et_al	exon	50748	51693	.	+	.	ID=ORF29-Putative mRNA-novTX_61;Name=ORF29-Putative mRNA-novTX_61;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	51148	51693	.	+	.	ID=ORF29-Putative mRNA-novTX_63;Name=ORF29-Putative mRNA-novTX_63;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	2669	3632	.	+	.	ID=ORF3;Name=ORF3;
+NC_001491.2	Tombacz_et_al	exon	2650	3632	.	+	.	ID=ORF3-Monocistronic-Long-novTX_37;Name=ORF3-Monocistronic-Long-novTX_37;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	2702	3632	.	+	.	ID=ORF3-Monocistronic-Short-novTX_39;Name=ORF3-Monocistronic-Short-novTX_39;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	2669	13520	.	+	.	ID=ORF3-ORF4-ORF5-ORF6-ORF7-ORF8-ORF9-ORF10-ORF11-CX-Canonic;Name=ORF3-ORF4-ORF5-ORF6-ORF7-ORF8-ORF9-ORF10-ORF11-CX-Canonic;
+NC_001491.2	Tombacz_et_al	exon	3043	3632	.	+	.	ID=ORF3-Putative mRNA-novTX_45;Name=ORF3-Putative mRNA-novTX_45;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	55322	59182	.	+	.	ID=ORF31;Name=ORF31;
+NC_001491.2	Torma_et_al	exon	55046	59182	.	+	.	ID=ORF31-L1;Name=ORF31-L1;
+NC_001491.2	Tombacz_et_al	exon	55255	59182	.	+	.	ID=ORF31-Monocistronic-Long-novTX_66;Name=ORF31-Monocistronic-Long-novTX_66;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	55342	59182	.	+	.	ID=ORF31-Monocistronic-Short-novTX_68;Name=ORF31-Monocistronic-Short-novTX_68;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	52456	65086	.	+	.	ID=ORF31-ORF32-ORF33-ORF34-PC-Canonic;Name=ORF31-ORF32-ORF33-ORF34-PC-Canonic;
+NC_001491.2	Tombacz_et_al	exon	56316	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_247;Name=ORF31-Putative mRNA-novTX_247;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	56326	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_73;Name=ORF31-Putative mRNA-novTX_73;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	56757	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_76;Name=ORF31-Putative mRNA-novTX_76;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	58023	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_78;Name=ORF31-Putative mRNA-novTX_78;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	58487	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_79;Name=ORF31-Putative mRNA-novTX_79;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	58635	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_81;Name=ORF31-Putative mRNA-novTX_81;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	59209	65093	.	+	.	ID=ORF32-ORF33-ORF34-PC-Canonic;Name=ORF32-ORF33-ORF34-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	59209	64402	.	+	.	ID=ORF32-ORF33-PC-Canonic;Name=ORF32-ORF33-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	61312	64402	.	+	.	ID=ORF33;Name=ORF33;
+NC_001491.2	Torma_et_al	exon	59993	64402	.	+	.	ID=ORF33-L1;Name=ORF33-L1;
+NC_001491.2	Torma_et_al	exon	60473	64402	.	+	.	ID=ORF33-L2;Name=ORF33-L2;
+NC_001491.2	Torma_et_al	exon	61312	67178	.	+	.	ID=ORF33-ORF34-ORF35-CX-Canonic;Name=ORF33-ORF34-ORF35-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	61312	65093	.	+	.	ID=ORF33-ORF34-PC-Canonic;Name=ORF33-ORF34-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	61255	65093	.	+	.	ID=ORF33-ORF34-PC-Long;Name=ORF33-ORF34-PC-Long;
+NC_001491.2	Torma_et_al	exon	59993	65093	.	+	.	ID=ORF33-ORF34-PC-Long-1;Name=ORF33-ORF34-PC-Long-1;
+NC_001491.2	Torma_et_al	exon	60473	65093	.	+	.	ID=ORF33-ORF34-PC-Long-2;Name=ORF33-ORF34-PC-Long-2;
+NC_001491.2	Torma_et_al	exon	64488	65093	.	+	.	ID=ORF34;Name=ORF34;
+NC_001491.2	Torma_et_al	exon	61608	65093	.	+	.	ID=ORF34-L1;Name=ORF34-L1;
+NC_001491.2	Tombacz_et_al	exon	63531	65093	.	+	.	ID=ORF34-Monocistronic-Long-novTX_250;Name=ORF34-Monocistronic-Long-novTX_250;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	62857	65093	.	+	.	ID=ORF34-Monocistronic-Long-novTX_85;Name=ORF34-Monocistronic-Long-novTX_85;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	64500	65093	.	+	.	ID=ORF34-Monocistronic-Short-novTX_352;Name=ORF34-Monocistronic-Short-novTX_352;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	64488	67175	.	+	.	ID=ORF34-ORF35.5-ORF35-CX-Canonic;Name=ORF34-ORF35.5-ORF35-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	64488	71034	.	+	.	ID=ORF34-ORF35.5-ORF35-ORF36-ORF37-ORF38-CX-Canonic;Name=ORF34-ORF35.5-ORF35-ORF36-ORF37-ORF38-CX-Canonic;
+NC_001491.2	Tombacz_et_al	exon	64629	65093	.	+	.	ID=ORF34-Putative mRNA-novTX_309;Name=ORF34-Putative mRNA-novTX_309;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	64580	65093	.	+	.	ID=ORF34-Putative mRNA-novTX_341;Name=ORF34-Putative mRNA-novTX_341;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	64740	65093	.	+	.	ID=ORF34-Putative mRNA-novTX_345;Name=ORF34-Putative mRNA-novTX_345;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	64686	71034	.	+	.	ID=ORF35.5-ORF35-ORF36-ORF37-ORF38-CX-Canonic;Name=ORF35.5-ORF35-ORF36-ORF37-ORF38-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	66315	71034	.	+	.	ID=ORF36-ORF37-ORF38-CX-Canonic;Name=ORF36-ORF37-ORF38-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	66600	71034	.	+	.	ID=ORF36-ORF37-ORF38-CX-Short;Name=ORF36-ORF37-ORF38-CX-Short;
+NC_001491.2	Torma_et_al	exon	66701	71034	.	+	.	ID=ORF36-ORF37-ORF38-CX-Short-2;Name=ORF36-ORF37-ORF38-CX-Short-2;
+NC_001491.2	Torma_et_al	exon	69019	71034	.	+	.	ID=ORF37-ORF38-CX-Canonic;Name=ORF37-ORF38-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	68916	71034	.	+	.	ID=ORF37-ORF38-CX-Long;Name=ORF37-ORF38-CX-Long;
+NC_001491.2	Torma_et_al	exon	67656	71034	.	+	.	ID=ORF37-ORF38-CX-Long-1;Name=ORF37-ORF38-CX-Long-1;
+NC_001491.2	Torma_et_al	exon	68373	71034	.	+	.	ID=ORF37-ORF38-CX-Long-2;Name=ORF37-ORF38-CX-Long-2;
+NC_001491.2	Torma_et_al	exon	69782	71034	.	+	.	ID=ORF38;Name=ORF38;
+NC_001491.2	Tombacz_et_al	exon	69807	71034	.	+	.	ID=ORF38-Monocistronic-Short-novTX_94;Name=ORF38-Monocistronic-Short-novTX_94;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	70249	71034	.	+	.	ID=ORF38-Putative mRNA-novTX_96;Name=ORF38-Putative mRNA-novTX_96;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	71119	73833	.	+	.	ID=ORF39;Name=ORF39;
+NC_001491.2	Torma_et_al	exon	70672	73833	.	+	.	ID=ORF39-L1;Name=ORF39-L1;
+NC_001491.2	Torma_et_al	exon	70903	73833	.	+	.	ID=ORF39-L2;Name=ORF39-L2;
+NC_001491.2	Torma_et_al	exon	73393	73833	.	+	.	ID=ORF39.5;Name=ORF39.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	3296	11072	.	+	.	ID=ORF4-ORF5-ORF6-ORF7-ORF8-CX;Name=ORF4-ORF5-ORF6-ORF7-ORF8-CX;
+NC_001491.2	Torma_et_al	exon	74435	81892	.	+	.	ID=ORF40-ORF41-ORF42-CX;Name=ORF40-ORF41-ORF42-CX;
+NC_001491.2	Torma_et_al	exon	76722	83096	.	+	.	ID=ORF41-ORF42-ORF43-PC-Canonic;Name=ORF41-ORF42-ORF43-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	76515	83096	.	+	.	ID=ORF41-ORF42-ORF43-PC-Long;Name=ORF41-ORF42-ORF43-PC-Long;
+NC_001491.2	Torma_et_al	exon	76649	83096	.	+	.	ID=ORF41-ORF42-ORF43-PC-Long-2;Name=ORF41-ORF42-ORF43-PC-Long-2;
+NC_001491.2	Torma_et_al	exon	76515	81894	.	+	.	ID=ORF41-ORF42-PC-Canonic;Name=ORF41-ORF42-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	76649	81894	.	+	.	ID=ORF41-ORF42-PC-Short;Name=ORF41-ORF42-PC-Short;
+NC_001491.2	Torma_et_al	exon	76722	81894	.	+	.	ID=ORF41-ORF42-PC-Short-2;Name=ORF41-ORF42-PC-Short-2;
+NC_001491.2	Torma_et_al	exon	77591	81894	.	+	.	ID=ORF42;Name=ORF42;
+NC_001491.2	Torma_et_al	exon	77081	81894	.	+	.	ID=ORF42-L1;Name=ORF42-L1;
+NC_001491.2	Torma_et_al	exon	77362	81894	.	+	.	ID=ORF42-L2;Name=ORF42-L2;
+NC_001491.2	Tombacz_et_al	exon	77645	81894	.	+	.	ID=ORF42-Monocistronic-Long-novTX_104;Name=ORF42-Monocistronic-Long-novTX_104;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	77665	81894	.	+	.	ID=ORF42-Monocistronic-Long-novTX_252;Name=ORF42-Monocistronic-Long-novTX_252;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	77615	81894	.	+	.	ID=ORF42-Monocistronic-Long-novTX_325;Name=ORF42-Monocistronic-Long-novTX_325;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	77615	83096	.	+	.	ID=ORF42-Multicistronic-Long-novTX_102;Name=ORF42-Multicistronic-Long-novTX_102;TX_category=Multicistronic-Long
+NC_001491.2	Torma_et_al	exon	77591	87824	.	+	.	ID=ORF42-ORF43-ORF45-ORF46-PC-Canonic;Name=ORF42-ORF43-ORF45-ORF46-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	77591	83096	.	+	.	ID=ORF42-ORF43-PC-Canonic;Name=ORF42-ORF43-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	77505	83096	.	+	.	ID=ORF42-ORF43-PC-Long;Name=ORF42-ORF43-PC-Long;
+NC_001491.2	Torma_et_al	exon	77081	83096	.	+	.	ID=ORF42-ORF43-PC-Long-1;Name=ORF42-ORF43-PC-Long-1;
+NC_001491.2	Torma_et_al	exon	77362	83096	.	+	.	ID=ORF42-ORF43-PC-Long-2;Name=ORF42-ORF43-PC-Long-2;
+NC_001491.2	Tombacz_et_al	exon	78089	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_107;Name=ORF42-Putative mRNA-novTX_107;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	79076	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_131;Name=ORF42-Putative mRNA-novTX_131;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	79636	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_139;Name=ORF42-Putative mRNA-novTX_139;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	79748	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_144;Name=ORF42-Putative mRNA-novTX_144;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	79957	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_146;Name=ORF42-Putative mRNA-novTX_146;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	79972	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_147;Name=ORF42-Putative mRNA-novTX_147;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	80198	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_150;Name=ORF42-Putative mRNA-novTX_150;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	80354	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_153;Name=ORF42-Putative mRNA-novTX_153;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	80615	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_155;Name=ORF42-Putative mRNA-novTX_155;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	78779	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_255;Name=ORF42-Putative mRNA-novTX_255;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	78932	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_257;Name=ORF42-Putative mRNA-novTX_257;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	79609	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_259;Name=ORF42-Putative mRNA-novTX_259;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	79808	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_260;Name=ORF42-Putative mRNA-novTX_260;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	81304	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_303;Name=ORF42-Putative mRNA-novTX_303;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	81304	81892	.	+	.	ID=ORF42-Putative mRNA-novTX_311;Name=ORF42-Putative mRNA-novTX_311;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	80709	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_314;Name=ORF42-Putative mRNA-novTX_314;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	81328	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_315;Name=ORF42-Putative mRNA-novTX_315;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	81077	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_326;Name=ORF42-Putative mRNA-novTX_326;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	81499	81892	.	+	.	ID=ORF42-Putative mRNA-novTX_327;Name=ORF42-Putative mRNA-novTX_327;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	80964	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_336;Name=ORF42-Putative mRNA-novTX_336;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	81499	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_338;Name=ORF42-Putative mRNA-novTX_338;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	81905	83096	.	+	.	ID=ORF43;Name=ORF43;
+NC_001491.2	Torma_et_al	exon	78636	83096	.	+	.	ID=ORF43-L1;Name=ORF43-L1;
+NC_001491.2	Torma_et_al	exon	79161	83096	.	+	.	ID=ORF43-L2;Name=ORF43-L2;
+NC_001491.2	Torma_et_al	exon	79666	83096	.	+	.	ID=ORF43-L3;Name=ORF43-L3;
+NC_001491.2	Torma_et_al	exon	79946	83096	.	+	.	ID=ORF43-L4;Name=ORF43-L4;
+NC_001491.2	Torma_et_al	exon	80246	83096	.	+	.	ID=ORF43-L5;Name=ORF43-L5;
+NC_001491.2	Torma_et_al	exon	80796	83096	.	+	.	ID=ORF43-L6;Name=ORF43-L6;
+NC_001491.2	Torma_et_al	exon	81008	83096	.	+	.	ID=ORF43-L7;Name=ORF43-L7;
+NC_001491.2	Tombacz_et_al	exon	81892	83096	.	+	.	ID=ORF43-Monocistronic-Long-novTX_160;Name=ORF43-Monocistronic-Long-novTX_160;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	79972	83096	.	+	.	ID=ORF43-Monocistronic-Long-novTX_348;Name=ORF43-Monocistronic-Long-novTX_348;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	81919	83096	.	+	.	ID=ORF43-Monocistronic-Short-novTX_161;Name=ORF43-Monocistronic-Short-novTX_161;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	81905	87824	.	+	.	ID=ORF43-ORF45-ORF46-PC-Canonic;Name=ORF43-ORF45-ORF46-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	84369	93028	.	+	.	ID=ORF45-ORF46-ORF48-ORF49-ORF50-ORF51-PC-Canonic;Name=ORF45-ORF46-ORF48-ORF49-ORF50-ORF51-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	84369	87824	.	+	.	ID=ORF45-ORF46-PC-Canonic;Name=ORF45-ORF46-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	82842	87824	.	+	.	ID=ORF45-ORF46-PC-Long-1;Name=ORF45-ORF46-PC-Long-1;
+NC_001491.2	Torma_et_al	exon	84189	87824	.	+	.	ID=ORF45-ORF46-PC-Long-2;Name=ORF45-ORF46-PC-Long-2;
+NC_001491.2	Torma_et_al	exon	84295	87824	.	+	.	ID=ORF45-ORF46-PC-Long-3;Name=ORF45-ORF46-PC-Long-3;
+NC_001491.2	Torma_et_al	exon	86362	87824	.	+	.	ID=ORF46;Name=ORF46;
+NC_001491.2	Torma_et_al	exon	84815	87824	.	+	.	ID=ORF46-L1;Name=ORF46-L1;
+NC_001491.2	Tombacz_et_al	exon	86383	87824	.	+	.	ID=ORF46-Monocistronic-Short-novTX_318;Name=ORF46-Monocistronic-Short-novTX_318;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	87562	87824	.	+	.	ID=ORF46-Non-coding-novTX_165;Name=ORF46-Non-coding-novTX_165;TX_category=Non-coding
+NC_001491.2	Torma_et_al	exon	84907	93028	.	+	.	ID=ORF46-ORF48-ORF49-ORF50;Name=ORF46-ORF48-ORF49-ORF50;
+NC_001491.2	Torma_et_al	exon	86362	98004	.	+	.	ID=ORF46-ORF48-ORF49-ORF50-ORF51-ORF52-ORF53-CX-Canonic;Name=ORF46-ORF48-ORF49-ORF50-ORF51-ORF52-ORF53-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	86362	93028	.	+	.	ID=ORF46-ORF48-ORF49-ORF50-ORF51-PC-Canonic;Name=ORF46-ORF48-ORF49-ORF50-ORF51-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	87844	99343	.	+	.	ID=ORF48-ORF49-ORF50-ORF51-ORF52-ORF53-ORF54;Name=ORF48-ORF49-ORF50-ORF51-ORF52-ORF53-ORF54;
+NC_001491.2	Torma_et_al	exon	88589	93028	.	+	.	ID=ORF48-ORF49-ORF50-ORF51-PC-Canonic;Name=ORF48-ORF49-ORF50-ORF51-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	88429	93028	.	+	.	ID=ORF48-ORF49-ORF50-ORF51-PC-Long;Name=ORF48-ORF49-ORF50-ORF51-PC-Long;
+NC_001491.2	Torma_et_al	exon	87846	93028	.	+	.	ID=ORF48-ORF49-ORF50-ORF51-PC-Long-1;Name=ORF48-ORF49-ORF50-ORF51-PC-Long-1;
+NC_001491.2	Torma_et_al	exon	88297	93028	.	+	.	ID=ORF48-ORF49-ORF50-ORF51-PC-Long-2;Name=ORF48-ORF49-ORF50-ORF51-PC-Long-2;
+NC_001491.2	Torma_et_al	exon	89351	93028	.	+	.	ID=ORF49-ORF50-ORF51-PC-Canonic;Name=ORF49-ORF50-ORF51-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	89189	93028	.	+	.	ID=ORF49-ORF50-ORF51-PC-Long;Name=ORF49-ORF50-ORF51-PC-Long;
+NC_001491.2	Torma_et_al	exon	3872	11067	.	+	.	ID=ORF5-ORF6-ORF7-ORF8-CX-Canonic;Name=ORF5-ORF6-ORF7-ORF8-CX-Canonic;
+NC_001491.2	Tombacz_et_al	exon	90650	93028	.	+	.	ID=ORF50-Multicistronic-Long-novTX_168;Name=ORF50-Multicistronic-Long-novTX_168;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	exon	90663	93028	.	+	.	ID=ORF50-Multicistronic-Long-novTX_169;Name=ORF50-Multicistronic-Long-novTX_169;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	exon	90707	93028	.	+	.	ID=ORF50-Multicistronic-Long-novTX_172;Name=ORF50-Multicistronic-Long-novTX_172;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	exon	90784	93028	.	+	.	ID=ORF50-Multicistronic-Short-novTX_175;Name=ORF50-Multicistronic-Short-novTX_175;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	exon	90734	93028	.	+	.	ID=ORF50-Multicistronic-Short-novTX_265;Name=ORF50-Multicistronic-Short-novTX_265;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	exon	90722	93028	.	+	.	ID=ORF50-ORF51-Canonic;Name=ORF50-ORF51-Canonic;
+NC_001491.2	Torma_et_al	exon	90586	93028	.	+	.	ID=ORF50-ORF51-PC-Long;Name=ORF50-ORF51-PC-Long;
+NC_001491.2	Torma_et_al	exon	90226	93028	.	+	.	ID=ORF50-ORF51-PC-Long-1;Name=ORF50-ORF51-PC-Long-1;
+NC_001491.2	Torma_et_al	exon	90686	93028	.	+	.	ID=ORF50-ORF51-PC-Long-2;Name=ORF50-ORF51-PC-Long-2;
+NC_001491.2	Torma_et_al	exon	92730	93028	.	+	.	ID=ORF51;Name=ORF51;
+NC_001491.2	Tombacz_et_al	exon	91202	93028	.	+	.	ID=ORF51-Monocistronic-Long-novTX_180;Name=ORF51-Monocistronic-Long-novTX_180;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	92378	93028	.	+	.	ID=ORF51-Monocistronic-Long-novTX_182;Name=ORF51-Monocistronic-Long-novTX_182;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	92455	93028	.	+	.	ID=ORF51-Monocistronic-Long-novTX_291;Name=ORF51-Monocistronic-Long-novTX_291;TX_category=Monocistronic-Long
+NC_001491.2	Torma_et_al	exon	92409	99345	.	+	.	ID=ORF51-ORF52-ORF53-ORF54-CX-Canonic;Name=ORF51-ORF52-ORF53-ORF54-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	92786	99345	.	+	.	ID=ORF52-ORF53-ORF54-CX-Canonic;Name=ORF52-ORF53-ORF54-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	94358	98004	.	+	.	ID=ORF53-Canonic;Name=ORF53-Canonic;
+NC_001491.2	Torma_et_al	exon	94358	105827	.	+	.	ID=ORF53-ORF54-ORF55-ORF56-ORF57-ORF58;Name=ORF53-ORF54-ORF55-ORF56-ORF57-ORF58;
+NC_001491.2	Torma_et_al	exon	94358	99345	.	+	.	ID=ORF53-ORF54-PC-Canonic;Name=ORF53-ORF54-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	95968	98004	.	+	.	ID=ORF53.5;Name=ORF53.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	96454	99345	.	+	.	ID=ORF54;Name=ORF54;
+NC_001491.2	Torma_et_al	exon	94861	99345	.	+	.	ID=ORF54-L1;Name=ORF54-L1;
+NC_001491.2	Torma_et_al	exon	95199	99345	.	+	.	ID=ORF54-L2;Name=ORF54-L2;
+NC_001491.2	Torma_et_al	exon	95968	99345	.	+	.	ID=ORF54-L3;Name=ORF54-L3;
+NC_001491.2	Torma_et_al	exon	96454	105147	.	+	.	ID=ORF54-ORF55-ORF56-ORF57-CX-Canonic;Name=ORF54-ORF55-ORF56-ORF57-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	96454	105836	.	+	.	ID=ORF54-ORF55-ORF56-ORF57-ORF58-CX-Canonic;Name=ORF54-ORF55-ORF56-ORF57-ORF58-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	96925	99345	.	+	.	ID=ORF54-S;Name=ORF54-S;
+NC_001491.2	Torma_et_al	exon	98261	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Canonic;Name=ORF55-ORF56-ORF57-ORF58-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	98162	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Long;Name=ORF55-ORF56-ORF57-ORF58-CX-Long;
+NC_001491.2	Torma_et_al	exon	97150	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Long-1;Name=ORF55-ORF56-ORF57-ORF58-CX-Long-1;
+NC_001491.2	Torma_et_al	exon	97642	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Long-2;Name=ORF55-ORF56-ORF57-ORF58-CX-Long-2;
+NC_001491.2	Torma_et_al	exon	98789	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-1;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-1;
+NC_001491.2	Torma_et_al	exon	99014	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-2;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-2;
+NC_001491.2	Torma_et_al	exon	99095	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-3;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-3;
+NC_001491.2	Torma_et_al	exon	99177	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-4;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-4;
+NC_001491.2	Torma_et_al	exon	98304	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-5;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-5;
+NC_001491.2	Torma_et_al	exon	98413	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-6;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-6;
+NC_001491.2	Torma_et_al	exon	99648	105836	.	+	.	ID=ORF56-ORF57-ORF58-CX-Canonic;Name=ORF56-ORF57-ORF58-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	99583	105836	.	+	.	ID=ORF56-ORF57-ORF58-CX-Long;Name=ORF56-ORF57-ORF58-CX-Long;
+NC_001491.2	Torma_et_al	exon	100129	105836	.	+	.	ID=ORF56-ORF57-ORF58-CX-Short;Name=ORF56-ORF57-ORF58-CX-Short;
+NC_001491.2	Torma_et_al	exon	99859	105836	.	+	.	ID=ORF56-ORF57-ORF58-CX-Short-1;Name=ORF56-ORF57-ORF58-CX-Short-1;
+NC_001491.2	Torma_et_al	exon	100060	105836	.	+	.	ID=ORF56-ORF57-ORF58-CX-Short-2;Name=ORF56-ORF57-ORF58-CX-Short-2;
+NC_001491.2	Torma_et_al	exon	102277	105147	.	+	.	ID=ORF57;Name=ORF57;
+NC_001491.2	Torma_et_al	exon	101606	105836	.	+	.	ID=ORF57-ORF58-PC-Canonic;Name=ORF57-ORF58-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	100852	105836	.	+	.	ID=ORF57-ORF58-PC-Long-1;Name=ORF57-ORF58-PC-Long-1;
+NC_001491.2	Torma_et_al	exon	101126	105836	.	+	.	ID=ORF57-ORF58-PC-Long-2;Name=ORF57-ORF58-PC-Long-2;
+NC_001491.2	Torma_et_al	exon	101331	105836	.	+	.	ID=ORF57-ORF58-PC-Long-3;Name=ORF57-ORF58-PC-Long-3;
+NC_001491.2	Torma_et_al	exon	101690	105836	.	+	.	ID=ORF57-ORF58-PC-Short;Name=ORF57-ORF58-PC-Short;
+NC_001491.2	Torma_et_al	exon	102277	105836	.	+	.	ID=ORF57-ORF58-PC-Short-2;Name=ORF57-ORF58-PC-Short-2;
+NC_001491.2	Torma_et_al	exon	102368	105836	.	+	.	ID=ORF57-ORF58-PC-Short-3;Name=ORF57-ORF58-PC-Short-3;
+NC_001491.2	Torma_et_al	exon	103733	105147	.	+	.	ID=ORF57.5;Name=ORF57.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	104496	105147	.	+	.	ID=ORF57.6;Name=ORF57.6;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	104814	105147	.	+	.	ID=ORF57.7;Name=ORF57.7;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	105006	105836	.	+	.	ID=ORF58;Name=ORF58;
+NC_001491.2	Torma_et_al	exon	102672	105836	.	+	.	ID=ORF58-L1;Name=ORF58-L1;
+NC_001491.2	Torma_et_al	exon	103143	105836	.	+	.	ID=ORF58-L2;Name=ORF58-L2;
+NC_001491.2	Torma_et_al	exon	103399	105836	.	+	.	ID=ORF58-L3;Name=ORF58-L3;
+NC_001491.2	Torma_et_al	exon	103733	105836	.	+	.	ID=ORF58-L4;Name=ORF58-L4;
+NC_001491.2	Torma_et_al	exon	105456	105836	.	+	.	ID=ORF58.5;Name=ORF58.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	5397	13517	.	+	.	ID=ORF6-ORF7-ORF8-ORF9-ORF10-ORF11;Name=ORF6-ORF7-ORF8-ORF9-ORF10-ORF11;
+NC_001491.2	Torma_et_al	exon	143946	149339	.	+	.	ID=ORF64.1-L1;Name=ORF64.1-L1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	144404	149339	.	+	.	ID=ORF64_2;Name=ORF64_2;
+NC_001491.2	Torma_et_al	exon	121002	122451	.	+	.	ID=ORF65;Name=ORF65;
+NC_001491.2	Torma_et_al	exon	120072	122451	.	+	.	ID=ORF65-L1;Name=ORF65-L1;
+NC_001491.2	Tombacz_et_al	exon	122289	122451	.	+	.	ID=ORF65-Non-coding-intergenic-novTX_211;Name=ORF65-Non-coding-intergenic-novTX_211;TX_category=Non-coding-intergenic
+NC_001491.2	Tombacz_et_al	exon	122298	122451	.	+	.	ID=ORF65-Non-coding-intergenic-novTX_347;Name=ORF65-Non-coding-intergenic-novTX_347;TX_category=Non-coding-intergenic
+NC_001491.2	Tombacz_et_al	exon	121887	122451	.	+	.	ID=ORF65-Non-coding-novTX_203;Name=ORF65-Non-coding-novTX_203;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	121953	122451	.	+	.	ID=ORF65-Non-coding-novTX_204;Name=ORF65-Non-coding-novTX_204;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	121973	122451	.	+	.	ID=ORF65-Non-coding-novTX_205;Name=ORF65-Non-coding-novTX_205;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	122047	122451	.	+	.	ID=ORF65-Non-coding-novTX_206;Name=ORF65-Non-coding-novTX_206;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	122078	122451	.	+	.	ID=ORF65-Non-coding-novTX_207;Name=ORF65-Non-coding-novTX_207;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	122127	122451	.	+	.	ID=ORF65-Non-coding-novTX_208;Name=ORF65-Non-coding-novTX_208;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	122214	122451	.	+	.	ID=ORF65-Non-coding-novTX_209;Name=ORF65-Non-coding-novTX_209;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	121769	122451	.	+	.	ID=ORF65-Non-coding-novTX_269;Name=ORF65-Non-coding-novTX_269;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	122010	122451	.	+	.	ID=ORF65-Non-coding-novTX_270;Name=ORF65-Non-coding-novTX_270;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	121801	122451	.	+	.	ID=ORF65-Non-coding-novTX_304;Name=ORF65-Non-coding-novTX_304;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	122245	122451	.	+	.	ID=ORF65-Non-coding-novTX_337;Name=ORF65-Non-coding-novTX_337;TX_category=Non-coding
+NC_001491.2	Torma_et_al	exon	120997	123600	.	+	.	ID=ORF65-ORF66-PC;Name=ORF65-ORF66-PC;
+NC_001491.2	Tombacz_et_al	exon	121687	122451	.	+	.	ID=ORF65-Putative mRNA-novTX_201;Name=ORF65-Putative mRNA-novTX_201;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	121617	122451	.	+	.	ID=ORF65-Putative mRNA-novTX_340;Name=ORF65-Putative mRNA-novTX_340;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	121300	122451	.	+	.	ID=ORF65-S;Name=ORF65-S;
+NC_001491.2	Torma_et_al	exon	122825	123602	.	+	.	ID=ORF66;Name=ORF66;
+NC_001491.2	Tombacz_et_al	exon	137847	138877	.	+	.	ID=ORF67-Monocistronic-Short-novTX_2;Name=ORF67-Monocistronic-Short-novTX_2;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	137965	138877	.	+	.	ID=ORF67-Monocistronic-Short-novTX_295;Name=ORF67-Monocistronic-Short-novTX_295;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	137911	138877	.	+	.	ID=ORF67-Monocistronic-Short-novTX_3;Name=ORF67-Monocistronic-Short-novTX_3;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	137864	138877	.	+	.	ID=ORF67-Monocistronic-Short-novTX_321;Name=ORF67-Monocistronic-Short-novTX_321;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	137925	138877	.	+	.	ID=ORF67-Monocistronic-Short-novTX_323;Name=ORF67-Monocistronic-Short-novTX_323;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	124305	131598	.	+	.	ID=ORF67-ORF68-ORF69-ORF70-ORF71;Name=ORF67-ORF68-ORF69-ORF70-ORF71;
+NC_001491.2	Tombacz_et_al	exon	138482	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_243;Name=ORF67-Putative mRNA-novTX_243;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	138098	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_277;Name=ORF67-Putative mRNA-novTX_277;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	138418	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_278;Name=ORF67-Putative mRNA-novTX_278;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	138566	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_279;Name=ORF67-Putative mRNA-novTX_279;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	138290	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_307;Name=ORF67-Putative mRNA-novTX_307;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	138254	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_317;Name=ORF67-Putative mRNA-novTX_317;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	138529	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_335;Name=ORF67-Putative mRNA-novTX_335;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	138308	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_351;Name=ORF67-Putative mRNA-novTX_351;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	138175	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_6;Name=ORF67-Putative mRNA-novTX_6;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	138216	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_7;Name=ORF67-Putative mRNA-novTX_7;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	138374	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_8;Name=ORF67-Putative mRNA-novTX_8;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	137825	138877	.	+	.	ID=ORF67.1;Name=ORF67.1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	126338	127862	.	+	.	ID=ORF69;Name=ORF69;
+NC_001491.2	Torma_et_al	exon	126338	131601	.	+	.	ID=ORF69-ORF70-ORF71-PC-Canonic;Name=ORF69-ORF70-ORF71-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	126338	128944	.	+	.	ID=ORF69-ORF70-PC-Canonic;Name=ORF69-ORF70-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	6466	11067	.	+	.	ID=ORF7-ORF8-CX-Canonic;Name=ORF7-ORF8-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	6149	11067	.	+	.	ID=ORF7-ORF8-CX-Long;Name=ORF7-ORF8-CX-Long;
+NC_001491.2	Torma_et_al	exon	127634	128944	.	+	.	ID=ORF70;Name=ORF70;
+NC_001491.2	Torma_et_al	exon	126413	128944	.	+	.	ID=ORF70-L1;Name=ORF70-L1;
+NC_001491.2	Torma_et_al	exon	126875	128944	.	+	.	ID=ORF70-L2;Name=ORF70-L2;
+NC_001491.2	Tombacz_et_al	exon	127655	128944	.	+	.	ID=ORF70-Monocistronic-Short-novTX_214;Name=ORF70-Monocistronic-Short-novTX_214;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	127634	134249	.	+	.	ID=ORF70-ORF71-ORF72-ORF73-PC-Canonic;Name=ORF70-ORF71-ORF72-ORF73-PC-Canonic;
+NC_001491.2	Tombacz_et_al	exon	127926	128944	.	+	.	ID=ORF70-Putative mRNA-novTX_216;Name=ORF70-Putative mRNA-novTX_216;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	129051	131601	.	+	.	ID=ORF71;Name=ORF71;
+NC_001491.2	Tombacz_et_al	exon	130283	131598	.	+	.	ID=ORF71-Non-coding-novTX_219;Name=ORF71-Non-coding-novTX_219;TX_category=Non-coding
+NC_001491.2	Torma_et_al	exon	129051	134249	.	+	.	ID=ORF71-ORF72-ORF73-PC-Canonic;Name=ORF71-ORF72-ORF73-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	131126	131601	.	+	.	ID=ORF71.5;Name=ORF71.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	130634	136464	.	+	.	ID=ORF72-ORF73-ORF74-ORF75-PC-Canonic;Name=ORF72-ORF73-ORF74-ORF75-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	131515	134249	.	+	.	ID=ORF72-ORF73-PC-Canonic;Name=ORF72-ORF73-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	130201	134249	.	+	.	ID=ORF72-ORF73-PC-Long;Name=ORF72-ORF73-PC-Long;
+NC_001491.2	Torma_et_al	exon	129474	134249	.	+	.	ID=ORF72-ORF73-PC-Long-1;Name=ORF72-ORF73-PC-Long-1;
+NC_001491.2	Torma_et_al	exon	130020	134249	.	+	.	ID=ORF72-ORF73-PC-Long-2;Name=ORF72-ORF73-PC-Long-2;
+NC_001491.2	Torma_et_al	exon	130853	134249	.	+	.	ID=ORF72-ORF73-PC-Long-3;Name=ORF72-ORF73-PC-Long-3;
+NC_001491.2	Torma_et_al	exon	131126	134249	.	+	.	ID=ORF72-ORF73-PC-Long-4;Name=ORF72-ORF73-PC-Long-4;
+NC_001491.2	Torma_et_al	exon	131035	134249	.	+	.	ID=ORF72-ORF73-PC-Long-5;Name=ORF72-ORF73-PC-Long-5;
+NC_001491.2	Torma_et_al	exon	132857	134249	.	+	.	ID=ORF73;Name=ORF73;
+NC_001491.2	Torma_et_al	exon	132176	134249	.	+	.	ID=ORF73-L1;Name=ORF73-L1;
+NC_001491.2	Tombacz_et_al	exon	132880	134249	.	+	.	ID=ORF73-Monocistronic-Short-novTX_223;Name=ORF73-Monocistronic-Short-novTX_223;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	132988	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_224;Name=ORF73-Putative mRNA-novTX_224;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	133013	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_225;Name=ORF73-Putative mRNA-novTX_225;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	133322	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_226;Name=ORF73-Putative mRNA-novTX_226;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	133335	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_227;Name=ORF73-Putative mRNA-novTX_227;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	133698	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_229;Name=ORF73-Putative mRNA-novTX_229;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	133839	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_316;Name=ORF73-Putative mRNA-novTX_316;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	134347	138877	.	+	.	ID=ORF74-ORF75-ORF76-ORF67-PC-Canonic;Name=ORF74-ORF75-ORF76-ORF67-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	134347	136464	.	+	.	ID=ORF74-ORF75-PC-Canonic;Name=ORF74-ORF75-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	135564	136464	.	+	.	ID=ORF75;Name=ORF75;
+NC_001491.2	Tombacz_et_al	exon	134995	136464	.	+	.	ID=ORF75-Monocistronic-Long-novTX_230;Name=ORF75-Monocistronic-Long-novTX_230;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	135013	136464	.	+	.	ID=ORF75-Monocistronic-Long-novTX_231;Name=ORF75-Monocistronic-Long-novTX_231;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	135581	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_232;Name=ORF75-Monocistronic-Short-novTX_232;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	135613	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_233;Name=ORF75-Monocistronic-Short-novTX_233;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	135684	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_235;Name=ORF75-Monocistronic-Short-novTX_235;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	135785	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_236;Name=ORF75-Monocistronic-Short-novTX_236;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	135916	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_237;Name=ORF75-Monocistronic-Short-novTX_237;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	135791	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_275;Name=ORF75-Monocistronic-Short-novTX_275;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	135935	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_305;Name=ORF75-Monocistronic-Short-novTX_305;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	135768	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_328;Name=ORF75-Monocistronic-Short-novTX_328;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	135564	138877	.	+	.	ID=ORF75-ORF76-ORF67-PC-Canonic;Name=ORF75-ORF76-ORF67-PC-Canonic;
+NC_001491.2	Tombacz_et_al	exon	136088	136464	.	+	.	ID=ORF75-Putative mRNA-novTX_276;Name=ORF75-Putative mRNA-novTX_276;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	136555	138877	.	+	.	ID=ORF76-ORF67-PC-Long;Name=ORF76-ORF67-PC-Long;
+NC_001491.2	Torma_et_al	exon	136601	138877	.	+	.	ID=ORF76-ORF67-PC-Short;Name=ORF76-ORF67-PC-Short;
+NC_001491.2	Torma_et_al	exon	136583	138877	.	+	.	ID=ORF76-ORF67.1-PC-Canonic;Name=ORF76-ORF67.1-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	10080	11067	.	+	.	ID=ORF8;Name=ORF8;
+NC_001491.2	Torma_et_al	exon	7110	11067	.	+	.	ID=ORF8-L1;Name=ORF8-L1;
+NC_001491.2	Torma_et_al	exon	7689	11067	.	+	.	ID=ORF8-L2;Name=ORF8-L2;
+NC_001491.2	Tombacz_et_al	exon	10068	11072	.	+	.	ID=ORF8-Monocistronic-Long-novTX_322;Name=ORF8-Monocistronic-Long-novTX_322;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	10054	11072	.	+	.	ID=ORF8-Monocistronic-Long-novTX_331;Name=ORF8-Monocistronic-Long-novTX_331;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	10095	11072	.	+	.	ID=ORF8-Monocistronic-Short-novTX_332;Name=ORF8-Monocistronic-Short-novTX_332;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	7110	13520	.	+	.	ID=ORF8-ORF9-ORF10-ORF11-CX-Long;Name=ORF8-ORF9-ORF10-ORF11-CX-Long;
+NC_001491.2	Torma_et_al	exon	10080	13520	.	+	.	ID=ORF8-ORF9-ORF10-ORF11-CX-Short;Name=ORF8-ORF9-ORF10-ORF11-CX-Short;
+NC_001491.2	Tombacz_et_al	exon	10458	11072	.	+	.	ID=ORF8-Putative mRNA-novTX_251;Name=ORF8-Putative mRNA-novTX_251;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	10444	11072	.	+	.	ID=ORF8-Putative mRNA-novTX_310;Name=ORF8-Putative mRNA-novTX_310;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	10875	13520	.	+	.	ID=ORF9-ORF10-ORF11-CX-Canonic;Name=ORF9-ORF10-ORF11-CX-Canonic;
+NC_001491.2	Tombacz_et_al	exon	82060	83096	.	+	.	ID=ORFF43-Monocistronic-Short-novTX_263;Name=ORFF43-Monocistronic-Short-novTX_263;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	96454	96571	.	+	.	ID=TR1063;Name=TR1063;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1063;Name=TR1063;
+NC_001491.2	Torma_et_al	exon	96454	96571	.	+	.	ID=TR1064;Name=TR1064;
+NC_001491.2	Torma_et_al	exon	96944	98004	.	+	.	ID=TR1064;Name=TR1064;
+NC_001491.2	Torma_et_al	exon	96454	96571	.	+	.	ID=TR1065;Name=TR1065;
+NC_001491.2	Torma_et_al	exon	96944	99345	.	+	.	ID=TR1065;Name=TR1065;
+NC_001491.2	Torma_et_al	exon	96454	96571	.	+	.	ID=TR1066;Name=TR1066;
+NC_001491.2	Torma_et_al	exon	96944	98131	.	+	.	ID=TR1066;Name=TR1066;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1066;Name=TR1066;
+NC_001491.2	Torma_et_al	exon	96454	96696	.	+	.	ID=TR1067;Name=TR1067;
+NC_001491.2	Torma_et_al	exon	96944	99345	.	+	.	ID=TR1067;Name=TR1067;
+NC_001491.2	Torma_et_al	exon	96454	96696	.	+	.	ID=TR1068;Name=TR1068;
+NC_001491.2	Torma_et_al	exon	96944	98131	.	+	.	ID=TR1068;Name=TR1068;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1068;Name=TR1068;
+NC_001491.2	Torma_et_al	exon	96454	97269	.	+	.	ID=TR1069;Name=TR1069;
+NC_001491.2	Torma_et_al	exon	97976	98131	.	+	.	ID=TR1069;Name=TR1069;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1069;Name=TR1069;
+NC_001491.2	Torma_et_al	exon	96454	98131	.	+	.	ID=TR1070;Name=TR1070;
+NC_001491.2	Torma_et_al	exon	102840	105836	.	+	.	ID=TR1070;Name=TR1070;
+NC_001491.2	Torma_et_al	exon	96454	98131	.	+	.	ID=TR1071;Name=TR1071;
+NC_001491.2	Torma_et_al	exon	102840	103769	.	+	.	ID=TR1071;Name=TR1071;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1071;Name=TR1071;
+NC_001491.2	Torma_et_al	exon	96454	98131	.	+	.	ID=TR1072;Name=TR1072;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1072;Name=TR1072;
+NC_001491.2	Torma_et_al	exon	96454	98131	.	+	.	ID=TR1073;Name=TR1073;
+NC_001491.2	Torma_et_al	exon	105527	105836	.	+	.	ID=TR1073;Name=TR1073;
+NC_001491.2	Torma_et_al	exon	97088	98131	.	+	.	ID=TR1087;Name=TR1087;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1087;Name=TR1087;
+NC_001491.2	Torma_et_al	exon	98035	98131	.	+	.	ID=TR1119;Name=TR1119;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1119;Name=TR1119;
+NC_001491.2	Torma_et_al	exon	103143	104390	.	+	.	ID=TR1156;Name=TR1156;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1156;Name=TR1156;
+NC_001491.2	Torma_et_al	exon	96454	103769	.	+	.	ID=TR1165;Name=TR1165;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1165;Name=TR1165;
+NC_001491.2	Torma_et_al	exon	96454	104390	.	+	.	ID=TR1166;Name=TR1166;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1166;Name=TR1166;
+NC_001491.2	Torma_et_al	exon	96454	96696	.	+	.	ID=TR1167;Name=TR1167;
+NC_001491.2	Torma_et_al	exon	96944	98004	.	+	.	ID=TR1167;Name=TR1167;
+NC_001491.2	Torma_et_al	exon	97150	98131	.	+	.	ID=TR1168;Name=TR1168;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR1168;Name=TR1168;
+NC_001491.2	Torma_et_al	exon	103143	103375	.	+	.	ID=TR20;Name=TR20;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR20;Name=TR20;
+NC_001491.2	Torma_et_al	exon	118878	119224	.	+	.	ID=TR27;Name=TR27;
+NC_001491.2	Torma_et_al	exon	119461	119749	.	+	.	ID=TR27;Name=TR27;
+NC_001491.2	Torma_et_al	exon	119050	119224	.	+	.	ID=TR29;Name=TR29;
+NC_001491.2	Torma_et_al	exon	119461	119857	.	+	.	ID=TR29;Name=TR29;
+NC_001491.2	Torma_et_al	exon	120382	121108	.	+	.	ID=TR30;Name=TR30;
+NC_001491.2	Torma_et_al	exon	121287	122451	.	+	.	ID=TR30;Name=TR30;
+NC_001491.2	Torma_et_al	exon	6149	6688	.	+	.	ID=TR34;Name=TR34;
+NC_001491.2	Torma_et_al	exon	9510	11067	.	+	.	ID=TR34;Name=TR34;
+NC_001491.2	Torma_et_al	exon	96454	96571	.	+	.	ID=TR40;Name=TR40;
+NC_001491.2	Torma_et_al	exon	96944	98131	.	+	.	ID=TR40;Name=TR40;
+NC_001491.2	Torma_et_al	exon	102840	103769	.	+	.	ID=TR40;Name=TR40;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR40;Name=TR40;
+NC_001491.2	Torma_et_al	exon	96454	98131	.	+	.	ID=TR41;Name=TR41;
+NC_001491.2	Torma_et_al	exon	102840	104390	.	+	.	ID=TR41;Name=TR41;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR41;Name=TR41;
+NC_001491.2	Torma_et_al	exon	102672	103769	.	+	.	ID=TR468;Name=TR468;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR468;Name=TR468;
+NC_001491.2	Torma_et_al	exon	105006	105162	.	+	.	ID=TR524;Name=TR524;
+NC_001491.2	Torma_et_al	exon	105514	105836	.	+	.	ID=TR524;Name=TR524;
+NC_001491.2	Torma_et_al	exon	118878	119136	.	+	.	ID=TR544;Name=TR544;
+NC_001491.2	Torma_et_al	exon	119461	119749	.	+	.	ID=TR544;Name=TR544;
+NC_001491.2	Torma_et_al	exon	118878	119136	.	+	.	ID=TR545;Name=TR545;
+NC_001491.2	Torma_et_al	exon	119461	119857	.	+	.	ID=TR545;Name=TR545;
+NC_001491.2	Torma_et_al	exon	118878	119224	.	+	.	ID=TR546;Name=TR546;
+NC_001491.2	Torma_et_al	exon	119461	119857	.	+	.	ID=TR546;Name=TR546;
+NC_001491.2	Torma_et_al	exon	119050	119136	.	+	.	ID=TR551;Name=TR551;
+NC_001491.2	Torma_et_al	exon	119461	119857	.	+	.	ID=TR551;Name=TR551;
+NC_001491.2	Torma_et_al	exon	120072	121068	.	+	.	ID=TR561;Name=TR561;
+NC_001491.2	Torma_et_al	exon	121287	122451	.	+	.	ID=TR561;Name=TR561;
+NC_001491.2	Torma_et_al	exon	120072	121108	.	+	.	ID=TR562;Name=TR562;
+NC_001491.2	Torma_et_al	exon	121287	122451	.	+	.	ID=TR562;Name=TR562;
+NC_001491.2	Torma_et_al	exon	120382	121068	.	+	.	ID=TR564;Name=TR564;
+NC_001491.2	Torma_et_al	exon	121287	122451	.	+	.	ID=TR564;Name=TR564;
+NC_001491.2	Torma_et_al	exon	121002	121068	.	+	.	ID=TR565;Name=TR565;
+NC_001491.2	Torma_et_al	exon	121287	122451	.	+	.	ID=TR565;Name=TR565;
+NC_001491.2	Torma_et_al	exon	121002	121108	.	+	.	ID=TR566;Name=TR566;
+NC_001491.2	Torma_et_al	exon	121287	122451	.	+	.	ID=TR566;Name=TR566;
+NC_001491.2	Torma_et_al	exon	6149	6688	.	+	.	ID=TR848;Name=TR848;
+NC_001491.2	Torma_et_al	exon	9510	9554	.	+	.	ID=TR848;Name=TR848;
+NC_001491.2	Torma_et_al	exon	10682	11067	.	+	.	ID=TR848;Name=TR848;
+NC_001491.2	Torma_et_al	exon	6466	6688	.	+	.	ID=TR877;Name=TR877;
+NC_001491.2	Torma_et_al	exon	9510	11067	.	+	.	ID=TR877;Name=TR877;
+NC_001491.2	Torma_et_al	exon	6466	6688	.	+	.	ID=TR878;Name=TR878;
+NC_001491.2	Torma_et_al	exon	9510	9554	.	+	.	ID=TR878;Name=TR878;
+NC_001491.2	Torma_et_al	exon	10682	11067	.	+	.	ID=TR878;Name=TR878;
+NC_001491.2	Torma_et_al	exon	66315	66376	.	+	.	ID=TR886;Name=TR886;
+NC_001491.2	Torma_et_al	exon	69904	71034	.	+	.	ID=TR886;Name=TR886;
+NC_001491.2	Torma_et_al	exon	66576	66754	.	+	.	ID=TR888;Name=TR888;
+NC_001491.2	Torma_et_al	exon	69904	71034	.	+	.	ID=TR888;Name=TR888;
+NC_001491.2	Torma_et_al	exon	66600	66754	.	+	.	ID=TR889;Name=TR889;
+NC_001491.2	Torma_et_al	exon	69904	71034	.	+	.	ID=TR889;Name=TR889;
+NC_001491.2	Torma_et_al	exon	66701	66754	.	+	.	ID=TR891;Name=TR891;
+NC_001491.2	Torma_et_al	exon	69904	71034	.	+	.	ID=TR891;Name=TR891;
+NC_001491.2	Torma_et_al	exon	68373	68513	.	+	.	ID=TR894;Name=TR894;
+NC_001491.2	Torma_et_al	exon	69904	71034	.	+	.	ID=TR894;Name=TR894;
+NC_001491.2	Torma_et_al	exon	7110	7874	.	+	.	ID=TR912;Name=TR912;
+NC_001491.2	Torma_et_al	exon	9510	11067	.	+	.	ID=TR912;Name=TR912;
+NC_001491.2	Torma_et_al	exon	7689	7874	.	+	.	ID=TR929;Name=TR929;
+NC_001491.2	Torma_et_al	exon	9510	11067	.	+	.	ID=TR929;Name=TR929;
+NC_001491.2	Torma_et_al	exon	7689	7874	.	+	.	ID=TR930;Name=TR930;
+NC_001491.2	Torma_et_al	exon	9510	9554	.	+	.	ID=TR930;Name=TR930;
+NC_001491.2	Torma_et_al	exon	10682	11067	.	+	.	ID=TR930;Name=TR930;
+NC_001491.2	Torma_et_al	exon	121002	121105	.	+	.	ID=TR_5229-ORF65-ORF66-PC-Canonic;Name=TR_5229-ORF65-ORF66-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	121287	123602	.	+	.	ID=TR_5229-ORF65-ORF66-PC-Canonic;Name=TR_5229-ORF65-ORF66-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	20396	20968	.	+	.	ID=as15;Name=as15;
+NC_001491.2	Torma_et_al	exon	23857	24419	.	+	.	ID=as17-Canonic;Name=as17-Canonic;
+NC_001491.2	Torma_et_al	exon	23079	24419	.	+	.	ID=as17-Long-3;Name=as17-Long-3;
+NC_001491.2	Torma_et_al	exon	23686	24419	.	+	.	ID=as17-Long1;Name=as17-Long1;
+NC_001491.2	Torma_et_al	exon	23099	24419	.	+	.	ID=as17-Long2;Name=as17-Long2;
+NC_001491.2	Torma_et_al	exon	66315	67175	.	+	.	ID=as35;Name=as35;
+NC_001491.2	Torma_et_al	exon	20457	23721	.	+	.	ID=asORF15-ORF16;Name=asORF15-ORF16;
+NC_001491.2	Torma_et_al	exon	122066	122451	.	+	.	ID=nct65-Canonic;Name=nct65-Canonic;
+NC_001491.2	Torma_et_al	exon	121788	122451	.	+	.	ID=nct65-Long;Name=nct65-Long;
+NC_001491.2	Torma_et_al	exon	122258	122451	.	+	.	ID=nct65-Short;Name=nct65-Short;
+NC_001491.2	Tombacz_et_al	exon	73834	75173	.	-	.	ID=CTO-CTO-L-2-novTX_503;Name=CTO-CTO-L-2-novTX_503;TX_category=CTO-L-2
+NC_001491.2	Tombacz_et_al	exon	73834	74215	.	-	.	ID=CTO-CTO-L-novTX_758;Name=CTO-CTO-L-novTX_758;TX_category=CTO-L
+NC_001491.2	Torma_et_al	exon	73834	74257	.	-	.	ID=CTO-L;Name=CTO-L;
+NC_001491.2	Tombacz_et_al	exon	73834	74017	.	-	.	ID=CTO-Non-coding-short-novTX_464;Name=CTO-Non-coding-short-novTX_464;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	exon	73834	74049	.	-	.	ID=CTO-Non-coding-short-novTX_465;Name=CTO-Non-coding-short-novTX_465;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	exon	73834	74145	.	-	.	ID=CTO-Non-coding-short-novTX_467;Name=CTO-Non-coding-short-novTX_467;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	exon	73834	74113	.	-	.	ID=CTO-Non-coding-short-novTX_701;Name=CTO-Non-coding-short-novTX_701;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	exon	73834	74171	.	-	.	ID=CTO-Non-coding-short-novTX_779;Name=CTO-Non-coding-short-novTX_779;TX_category=Non-coding-short
+NC_001491.2	Torma_et_al	exon	73834	74183	.	-	.	ID=CTO-S;Name=CTO-S;
+NC_001491.2	Torma_et_al	exon	143303	144282	.	-	.	ID=NOIR-2-canonic;Name=NOIR-2-canonic;
+NC_001491.2	Torma_et_al	exon	113821	120390	.	-	.	ID=NOIR-ORF64-CX-Canonic;Name=NOIR-ORF64-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	140709	144215	.	-	.	ID=NOIR-ORF65.1;Name=NOIR-ORF65.1;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	143303	144302	.	-	.	ID=NOIR_2-Non-coding-long-novTX_685;Name=NOIR_2-Non-coding-long-novTX_685;TX_category=Non-coding-long
+NC_001491.2	Tombacz_et_al	exon	143303	144260	.	-	.	ID=NOIR_2-Non-coding-short-novTX_731;Name=NOIR_2-Non-coding-short-novTX_731;TX_category=Non-coding-short
+NC_001491.2	Torma_et_al	exon	11064	12728	.	-	.	ID=ORF10-ORF9-CX-Canonic;Name=ORF10-ORF9-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	11064	12785	.	-	.	ID=ORF10-ORF9-CX-Long;Name=ORF10-ORF9-CX-Long;
+NC_001491.2	Torma_et_al	exon	11064	12908	.	-	.	ID=ORF10-ORF9-CX-Long-2;Name=ORF10-ORF9-CX-Long-2;
+NC_001491.2	Torma_et_al	exon	11064	13390	.	-	.	ID=ORF10-ORF9-CX-Long-3;Name=ORF10-ORF9-CX-Long-3;
+NC_001491.2	Torma_et_al	exon	11064	14907	.	-	.	ID=ORF11-ORF10-ORF9-CX-Long;Name=ORF11-ORF10-ORF9-CX-Long;
+NC_001491.2	Torma_et_al	exon	11064	15699	.	-	.	ID=ORF12-ORF11-ORF10-ORF9-CX-Canonic;Name=ORF12-ORF11-ORF10-ORF9-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	11064	15032	.	-	.	ID=ORF12-ORF11-ORF10-ORF9-CX-Short;Name=ORF12-ORF11-ORF10-ORF9-CX-Short;
+NC_001491.2	Torma_et_al	exon	6010	14927	.	-	.	ID=ORF12-ORF11-ORF10-ORF9-ORF8-ORF7-ORF6;Name=ORF12-ORF11-ORF10-ORF9-ORF8-ORF7-ORF6;
+NC_001491.2	Torma_et_al	exon	11121	18207	.	-	.	ID=ORF13-ORF12-ORF11-ORF10-ORF9;Name=ORF13-ORF12-ORF11-ORF10-ORF9;
+NC_001491.2	Torma_et_al	exon	4391	19687	.	-	.	ID=ORF13-ORF12-ORF11-ORF10-ORF9-ORF8-ORF7-ORF6-ORF5-PC-Canonic;Name=ORF13-ORF12-ORF11-ORF10-ORF9-ORF8-ORF7-ORF6-ORF5-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	11062	20338	.	-	.	ID=ORF14-ORF13-ORF12-ORF11-ORF10-ORF9-CX-Canonic;Name=ORF14-ORF13-ORF12-ORF11-ORF10-ORF9-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	20383	21209	.	-	.	ID=ORF15;Name=ORF15;
+NC_001491.2	Torma_et_al	exon	20383	22415	.	-	.	ID=ORF15-L1;Name=ORF15-L1;
+NC_001491.2	Tombacz_et_al	exon	20383	22761	.	-	.	ID=ORF15-Monocistronic-Long-novTX_379;Name=ORF15-Monocistronic-Long-novTX_379;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	20383	22773	.	-	.	ID=ORF15-Monocistronic-Long-novTX_689;Name=ORF15-Monocistronic-Long-novTX_689;TX_category=Monocistronic-Long
+NC_001491.2	Torma_et_al	exon	20383	22919	.	-	.	ID=ORF16-ORF15-PC-Canonic;Name=ORF16-ORF15-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	20383	23631	.	-	.	ID=ORF16-ORF15-PC-Long;Name=ORF16-ORF15-PC-Long;
+NC_001491.2	Torma_et_al	exon	20383	22893	.	-	.	ID=ORF16-ORF15-PC-Short;Name=ORF16-ORF15-PC-Short;
+NC_001491.2	Torma_et_al	exon	23010	24276	.	-	.	ID=ORF17;Name=ORF17;
+NC_001491.2	Torma_et_al	exon	22942	24276	.	-	.	ID=ORF17-AT;Name=ORF17-AT;
+NC_001491.2	Torma_et_al	exon	20383	24276	.	-	.	ID=ORF17-ORF16-ORF15-PC-Canonic;Name=ORF17-ORF16-ORF15-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	23010	29475	.	-	.	ID=ORF17-ORF18-ORF19-ORF20;Name=ORF17-ORF18-ORF19-ORF20;
+NC_001491.2	Torma_et_al	exon	24413	25769	.	-	.	ID=ORF18;Name=ORF18;
+NC_001491.2	Torma_et_al	exon	24413	26807	.	-	.	ID=ORF18-L1;Name=ORF18-L1;
+NC_001491.2	Torma_et_al	exon	24413	27011	.	-	.	ID=ORF18-L2;Name=ORF18-L2;
+NC_001491.2	Torma_et_al	exon	24413	27731	.	-	.	ID=ORF18-L3;Name=ORF18-L3;
+NC_001491.2	Torma_et_al	exon	20383	25769	.	-	.	ID=ORF18-ORF17-ORF16-ORF15-PC-Canonic;Name=ORF18-ORF17-ORF16-ORF15-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	23010	25769	.	-	.	ID=ORF18-ORF17-PC-Canonic;Name=ORF18-ORF17-PC-Canonic;
+NC_001491.2	Tombacz_et_al	exon	24413	25666	.	-	.	ID=ORF18-Putative mRNA-novTX_384;Name=ORF18-Putative mRNA-novTX_384;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	24413	25077	.	-	.	ID=ORF18-Putative mRNA-novTX_732;Name=ORF18-Putative mRNA-novTX_732;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	24413	25679	.	-	.	ID=ORF18-Putative mRNA-novTX_746;Name=ORF18-Putative mRNA-novTX_746;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	24413	24630	.	-	.	ID=ORF18.5;Name=ORF18.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	1918	2672	.	-	.	ID=ORF2;Name=ORF2;
+NC_001491.2	Tombacz_et_al	exon	1918	2417	.	-	.	ID=ORF2-Putative mRNA-novTX_355;Name=ORF2-Putative mRNA-novTX_355;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	1918	2498	.	-	.	ID=ORF2-Putative mRNA-novTX_356;Name=ORF2-Putative mRNA-novTX_356;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	1918	2354	.	-	.	ID=ORF2-Putative mRNA-novTX_717;Name=ORF2-Putative mRNA-novTX_717;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	1918	2343	.	-	.	ID=ORF2-Putative mRNA-novTX_750;Name=ORF2-Putative mRNA-novTX_750;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	27868	28983	.	-	.	ID=ORF20;Name=ORF20;
+NC_001491.2	Torma_et_al	exon	27868	30118	.	-	.	ID=ORF20-L1;Name=ORF20-L1;
+NC_001491.2	Tombacz_et_al	exon	27868	29000	.	-	.	ID=ORF20-Monocistronic-Long-novTX_396;Name=ORF20-Monocistronic-Long-novTX_396;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	27868	29209	.	-	.	ID=ORF20-Monocistronic-Long-novTX_692;Name=ORF20-Monocistronic-Long-novTX_692;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	27868	28962	.	-	.	ID=ORF20-Monocistronic-Short-novTX_394;Name=ORF20-Monocistronic-Short-novTX_394;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	20383	28983	.	-	.	ID=ORF20-ORF19-ORF18-ORF17-ORF16-ORF15-CX-Canonic;Name=ORF20-ORF19-ORF18-ORF17-ORF16-ORF15-CX-Canonic;
+NC_001491.2	Tombacz_et_al	exon	27868	28242	.	-	.	ID=ORF20-Putative mRNA-novTX_385;Name=ORF20-Putative mRNA-novTX_385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	27868	28808	.	-	.	ID=ORF20-Putative mRNA-novTX_389;Name=ORF20-Putative mRNA-novTX_389;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	27868	28513	.	-	.	ID=ORF20-Putative mRNA-novTX_781;Name=ORF20-Putative mRNA-novTX_781;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	27868	31361	.	-	.	ID=ORF21-Monocistronic-Long-novTX_404;Name=ORF21-Monocistronic-Long-novTX_404;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	27868	31322	.	-	.	ID=ORF21-Monocistronic-Long-novTX_693;Name=ORF21-Monocistronic-Long-novTX_693;TX_category=Monocistronic-Long
+NC_001491.2	Torma_et_al	exon	27868	31344	.	-	.	ID=ORF21-ORF20-PC-Canonic;Name=ORF21-ORF20-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	27868	32808	.	-	.	ID=ORF21-ORF20-PC-Long;Name=ORF21-ORF20-PC-Long;
+NC_001491.2	Torma_et_al	exon	27868	32829	.	-	.	ID=ORF21-ORF20-PC-Long-2;Name=ORF21-ORF20-PC-Long-2;
+NC_001491.2	Torma_et_al	exon	31489	33053	.	-	.	ID=ORF22;Name=ORF22;
+NC_001491.2	Torma_et_al	exon	31489	33642	.	-	.	ID=ORF22-L1;Name=ORF22-L1;
+NC_001491.2	Torma_et_al	exon	31489	35022	.	-	.	ID=ORF22-L2;Name=ORF22-L2;
+NC_001491.2	Torma_et_al	exon	31489	35409	.	-	.	ID=ORF22-L3;Name=ORF22-L3;
+NC_001491.2	Torma_et_al	exon	31489	35525	.	-	.	ID=ORF22-L4;Name=ORF22-L4;
+NC_001491.2	Tombacz_et_al	exon	31489	33072	.	-	.	ID=ORF22-Monocistronic-Long-novTX_411;Name=ORF22-Monocistronic-Long-novTX_411;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	31489	33114	.	-	.	ID=ORF22-Monocistronic-Long-novTX_412;Name=ORF22-Monocistronic-Long-novTX_412;TX_category=Monocistronic-Long
+NC_001491.2	Torma_et_al	exon	27868	33053	.	-	.	ID=ORF22-ORF21-ORF20-PC-Canonic;Name=ORF22-ORF21-ORF20-PC-Canonic;
+NC_001491.2	Tombacz_et_al	exon	31489	32227	.	-	.	ID=ORF22-Putative mRNA-novTX_408;Name=ORF22-Putative mRNA-novTX_408;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	31489	32681	.	-	.	ID=ORF22-Putative mRNA-novTX_410;Name=ORF22-Putative mRNA-novTX_410;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	31489	36847	.	-	.	ID=ORF23-ORF22-CX-Canonic;Name=ORF23-ORF22-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	46895	47374	.	-	.	ID=ORF25;Name=ORF25;
+NC_001491.2	Tombacz_et_al	exon	46895	48182	.	-	.	ID=ORF25-Monocistronic-Long-novTX_421;Name=ORF25-Monocistronic-Long-novTX_421;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	46895	47555	.	-	.	ID=ORF25-Monocistronic-Long-novTX_695;Name=ORF25-Monocistronic-Long-novTX_695;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	46895	47822	.	-	.	ID=ORF25-Monocistronic-Long-novTX_696;Name=ORF25-Monocistronic-Long-novTX_696;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	46895	47635	.	-	.	ID=ORF25-Monocistronic-Long-novTX_754;Name=ORF25-Monocistronic-Long-novTX_754;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	46895	47360	.	-	.	ID=ORF25-Monocistronic-Short-novTX_416;Name=ORF25-Monocistronic-Short-novTX_416;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	46895	47279	.	-	.	ID=ORF25-Putative mRNA-novTX_739;Name=ORF25-Putative mRNA-novTX_739;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	46895	47136	.	-	.	ID=ORF25-Putative mRNA-novTX_765;Name=ORF25-Putative mRNA-novTX_765;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	46895	48319	.	-	.	ID=ORF26-Multicistronic-Long-novTX_747;Name=ORF26-Multicistronic-Long-novTX_747;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	exon	46895	48267	.	-	.	ID=ORF26-Multicistronic-Long-novTX_785;Name=ORF26-Multicistronic-Long-novTX_785;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	exon	46895	48247	.	-	.	ID=ORF26-Multicistronic-Short-novTX_720;Name=ORF26-Multicistronic-Short-novTX_720;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	exon	46895	48286	.	-	.	ID=ORF26-ORF25-PC-Canonic;Name=ORF26-ORF25-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	46895	48504	.	-	.	ID=ORF26-ORF25-PC-Long;Name=ORF26-ORF25-PC-Long;
+NC_001491.2	Torma_et_al	exon	46895	48298	.	-	.	ID=ORF26-ORF25-PC-Long-2;Name=ORF26-ORF25-PC-Long-2;
+NC_001491.2	Tombacz_et_al	exon	46895	49214	.	-	.	ID=ORF27-Multicistronic-Short-novTX_740;Name=ORF27-Multicistronic-Short-novTX_740;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	exon	46895	49982	.	-	.	ID=ORF27-ORF26-ORF25-PC-Canonic;Name=ORF27-ORF26-ORF25-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	46895	50520	.	-	.	ID=ORF27-ORF26-ORF25-PC-Long;Name=ORF27-ORF26-ORF25-PC-Long;
+NC_001491.2	Torma_et_al	exon	46895	50613	.	-	.	ID=ORF27-ORF26-ORF25-PC-Long-2;Name=ORF27-ORF26-ORF25-PC-Long-2;
+NC_001491.2	Torma_et_al	exon	46895	50913	.	-	.	ID=ORF28-ORF27-ORF26-ORF25-CX-Canonic;Name=ORF28-ORF27-ORF26-ORF25-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	46895	52259	.	-	.	ID=ORF29-ORF28-ORF27-ORF26-ORF25-CX-Canonic;Name=ORF29-ORF28-ORF27-ORF26-ORF25-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	1918	4226	.	-	.	ID=ORF3-ORF2-CX-Canonic;Name=ORF3-ORF2-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	1918	4171	.	-	.	ID=ORF3-ORF2-CX-Short;Name=ORF3-ORF2-CX-Short;
+NC_001491.2	Torma_et_al	exon	51486	55192	.	-	.	ID=ORF30;Name=ORF30;
+NC_001491.2	Torma_et_al	exon	51486	55708	.	-	.	ID=ORF30-L1;Name=ORF30-L1;
+NC_001491.2	Tombacz_et_al	exon	51486	55203	.	-	.	ID=ORF30-Monocistronic-Long-novTX_437;Name=ORF30-Monocistronic-Long-novTX_437;TX_category=Monocistronic-Long
+NC_001491.2	Torma_et_al	exon	51567	62822	.	-	.	ID=ORF30-ORF31-ORF32-ORF33;Name=ORF30-ORF31-ORF32-ORF33;
+NC_001491.2	Tombacz_et_al	exon	51486	52403	.	-	.	ID=ORF30-Putative mRNA-novTX_433;Name=ORF30-Putative mRNA-novTX_433;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	51486	55172	.	-	.	ID=ORF30-Putative mRNA-novTX_434;Name=ORF30-Putative mRNA-novTX_434;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	51486	51950	.	-	.	ID=ORF30.5;Name=ORF30.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	51486	52259	.	-	.	ID=ORF30.6;Name=ORF30.6;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	51486	59824	.	-	.	ID=ORF31-ORF30-CX-Canonic;Name=ORF31-ORF30-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	65089	68273	.	-	.	ID=ORF35;Name=ORF35;
+NC_001491.2	Torma_et_al	exon	65089	68860	.	-	.	ID=ORF35-L1;Name=ORF35-L1;
+NC_001491.2	Tombacz_et_al	exon	65089	66521	.	-	.	ID=ORF35-Monocistronic-Long-novTX_699;Name=ORF35-Monocistronic-Long-novTX_699;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	65089	66250	.	-	.	ID=ORF35-Monocistronic-Short-novTX_762;Name=ORF35-Monocistronic-Short-novTX_762;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	65089	67484	.	-	.	ID=ORF35-S;Name=ORF35-S;
+NC_001491.2	Torma_et_al	exon	65089	66263	.	-	.	ID=ORF35.5;Name=ORF35.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	64367	66263	.	-	.	ID=ORF35.5-ORF34-CX-Canonic;Name=ORF35.5-ORF34-CX-Canonic;
+NC_001491.2	Tombacz_et_al	exon	65089	66123	.	-	.	ID=ORF35.5-Putative mRNA-novTX_447;Name=ORF35.5-Putative mRNA-novTX_447;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	65089	66027	.	-	.	ID=ORF35.5-Putative mRNA-novTX_697;Name=ORF35.5-Putative mRNA-novTX_697;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	65089	66140	.	-	.	ID=ORF35.5-Putative mRNA-novTX_698;Name=ORF35.5-Putative mRNA-novTX_698;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	65089	65942	.	-	.	ID=ORF35.5-Putative mRNA-novTX_755;Name=ORF35.5-Putative mRNA-novTX_755;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	65089	65535	.	-	.	ID=ORF35.5-Putative mRNA-novTX_773;Name=ORF35.5-Putative mRNA-novTX_773;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	67167	69054	.	-	.	ID=ORF36;Name=ORF36;
+NC_001491.2	Torma_et_al	exon	67167	69363	.	-	.	ID=ORF36-L1;Name=ORF36-L1;
+NC_001491.2	Torma_et_al	exon	67167	69574	.	-	.	ID=ORF36-L2;Name=ORF36-L2;
+NC_001491.2	Torma_et_al	exon	65089	69363	.	-	.	ID=ORF36-ORF35-35.5-PC-Long;Name=ORF36-ORF35-35.5-PC-Long;
+NC_001491.2	Torma_et_al	exon	65089	69054	.	-	.	ID=ORF36-ORF35-ORF35.5-PC-Canonic;Name=ORF36-ORF35-ORF35.5-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	65089	69244	.	-	.	ID=ORF36-ORF35-ORF35.5-PC-Long;Name=ORF36-ORF35-ORF35.5-PC-Long;
+NC_001491.2	Torma_et_al	exon	65089	68991	.	-	.	ID=ORF36-ORF35-ORF35.5-PC-Short;Name=ORF36-ORF35-ORF35.5-PC-Short;
+NC_001491.2	Tombacz_et_al	exon	67167	68471	.	-	.	ID=ORF36-Putative mRNA-novTX_453;Name=ORF36-Putative mRNA-novTX_453;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	67167	67893	.	-	.	ID=ORF36-Putative mRNA-novTX_721;Name=ORF36-Putative mRNA-novTX_721;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	69068	70113	.	-	.	ID=ORF37;Name=ORF37;
+NC_001491.2	Tombacz_et_al	exon	69068	70102	.	-	.	ID=ORF37-Monocistronic-Short-novTX_460;Name=ORF37-Monocistronic-Short-novTX_460;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	67167	70102	.	-	.	ID=ORF37-Multicistronic-Short-novTX_459;Name=ORF37-Multicistronic-Short-novTX_459;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	exon	65089	70113	.	-	.	ID=ORF37-ORF36-ORF35-ORF35.5-PC-Canonic;Name=ORF37-ORF36-ORF35-ORF35.5-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	67167	70113	.	-	.	ID=ORF37-ORF36-PC-canonic;Name=ORF37-ORF36-PC-canonic;
+NC_001491.2	Torma_et_al	exon	69068	73174	.	-	.	ID=ORF38-ORF37-CX-Canonic;Name=ORF38-ORF37-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	69068	71118	.	-	.	ID=ORF38-ORF37-CX-Short;Name=ORF38-ORF37-CX-Short;
+NC_001491.2	Torma_et_al	exon	67167	71118	.	-	.	ID=ORF38-ORF37-ORF36-CX-Canonic;Name=ORF38-ORF37-ORF36-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	67167	73174	.	-	.	ID=ORF38-ORF37-ORF36-CX-Long;Name=ORF38-ORF37-ORF36-CX-Long;
+NC_001491.2	Torma_et_al	exon	69068	74183	.	-	.	ID=ORF39-ORF38-ORF37-CX-Canonic;Name=ORF39-ORF38-ORF37-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	67167	74183	.	-	.	ID=ORF39-ORF38-ORF37-ORF36-CX-Canonic;Name=ORF39-ORF38-ORF37-ORF36-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	65089	74183	.	-	.	ID=ORF39-ORF38-ORF37-ORF36-ORF35-ORF35.5-PC-Canonic;Name=ORF39-ORF38-ORF37-ORF36-ORF35-ORF35.5-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	3635	4312	.	-	.	ID=ORF4;Name=ORF4;
+NC_001491.2	Torma_et_al	exon	1918	4338	.	-	.	ID=ORF4-ORF3-ORF2-CX-Long-2;Name=ORF4-ORF3-ORF2-CX-Long-2;
+NC_001491.2	Torma_et_al	exon	1918	4379	.	-	.	ID=ORF4-ORF3-ORF2-CX-Long-3;Name=ORF4-ORF3-ORF2-CX-Long-3;
+NC_001491.2	Torma_et_al	exon	1918	5952	.	-	.	ID=ORF4-ORF3-ORF2-CX-Long-4;Name=ORF4-ORF3-ORF2-CX-Long-4;
+NC_001491.2	Torma_et_al	exon	1918	4312	.	-	.	ID=ORF4-ORF3-ORF2-Canonic;Name=ORF4-ORF3-ORF2-Canonic;
+NC_001491.2	Torma_et_al	exon	74614	76361	.	-	.	ID=ORF40;Name=ORF40;
+NC_001491.2	Torma_et_al	exon	73834	76272	.	-	.	ID=ORF40-AT;Name=ORF40-AT;
+NC_001491.2	Torma_et_al	exon	73834	76361	.	-	.	ID=ORF40-AT2;Name=ORF40-AT2;
+NC_001491.2	Torma_et_al	exon	73834	76458	.	-	.	ID=ORF40-AT3;Name=ORF40-AT3;
+NC_001491.2	Torma_et_al	exon	73834	76917	.	-	.	ID=ORF40-AT4;Name=ORF40-AT4;
+NC_001491.2	Torma_et_al	exon	73834	77028	.	-	.	ID=ORF40-AT5;Name=ORF40-AT5;
+NC_001491.2	Torma_et_al	exon	73834	77251	.	-	.	ID=ORF40-AT6;Name=ORF40-AT6;
+NC_001491.2	Torma_et_al	exon	73834	77340	.	-	.	ID=ORF40-AT7;Name=ORF40-AT7;
+NC_001491.2	Torma_et_al	exon	74614	77028	.	-	.	ID=ORF40-L1;Name=ORF40-L1;
+NC_001491.2	Torma_et_al	exon	74614	77251	.	-	.	ID=ORF40-L2;Name=ORF40-L2;
+NC_001491.2	Torma_et_al	exon	73890	85925	.	-	.	ID=ORF40-ORF41-ORF42-CX-ORF43-ORF44;Name=ORF40-ORF41-ORF42-CX-ORF43-ORF44;
+NC_001491.2	Tombacz_et_al	exon	74614	75173	.	-	.	ID=ORF40-Putative mRNA-novTX_504;Name=ORF40-Putative mRNA-novTX_504;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	83090	89226	.	-	.	ID=ORF44;Name=ORF44;
+NC_001491.2	Torma_et_al	exon	83094	94551	.	-	.	ID=ORF44-ORF46-ORF47-ORF48-ORF49-ORF50-PC-Canonic-ORF51;Name=ORF44-ORF46-ORF47-ORF48-ORF49-ORF50-PC-Canonic-ORF51;
+NC_001491.2	Torma_et_al	exon	83090	88988	.	-	.	ID=ORF44-S;Name=ORF44-S;
+NC_001491.2	Torma_et_al	exon	83090	83510	.	-	.	ID=ORF44.5;Name=ORF44.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	83090	83961	.	-	.	ID=ORF44.6;Name=ORF44.6;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	83090	84687	.	-	.	ID=ORF44.7;Name=ORF44.7;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	89245	90532	.	-	.	ID=ORF49-Antisense-Long-novTX_512;Name=ORF49-Antisense-Long-novTX_512;TX_category=Antisense-Long
+NC_001491.2	Tombacz_et_al	exon	89245	90504	.	-	.	ID=ORF49-Antisense-Long-novTX_706;Name=ORF49-Antisense-Long-novTX_706;TX_category=Antisense-Long
+NC_001491.2	Torma_et_al	exon	4391	5952	.	-	.	ID=ORF5;Name=ORF5;
+NC_001491.2	Torma_et_al	exon	4391	6509	.	-	.	ID=ORF5-L1;Name=ORF5-L1;
+NC_001491.2	Torma_et_al	exon	4391	6901	.	-	.	ID=ORF5-L2;Name=ORF5-L2;
+NC_001491.2	Tombacz_et_al	exon	4391	5941	.	-	.	ID=ORF5-Monocistronic-Short-novTX_778;Name=ORF5-Monocistronic-Short-novTX_778;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	3635	5952	.	-	.	ID=ORF5-ORF4-PC-Canonic;Name=ORF5-ORF4-PC-Canonic;
+NC_001491.2	Tombacz_et_al	exon	4391	5063	.	-	.	ID=ORF5-Putative mRNA-novTX_363;Name=ORF5-Putative mRNA-novTX_363;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	4391	5770	.	-	.	ID=ORF5-Putative mRNA-novTX_366;Name=ORF5-Putative mRNA-novTX_366;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	4391	5786	.	-	.	ID=ORF5-Putative mRNA-novTX_783;Name=ORF5-Putative mRNA-novTX_783;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	93031	94747	.	-	.	ID=ORF52;Name=ORF52;
+NC_001491.2	Torma_et_al	exon	93031	95145	.	-	.	ID=ORF52-L1;Name=ORF52-L1;
+NC_001491.2	Torma_et_al	exon	93031	95921	.	-	.	ID=ORF52-L2;Name=ORF52-L2;
+NC_001491.2	Torma_et_al	exon	93031	96281	.	-	.	ID=ORF52-L3;Name=ORF52-L3;
+NC_001491.2	Tombacz_et_al	exon	93031	94806	.	-	.	ID=ORF52-Monocistronic-Long-novTX_526;Name=ORF52-Monocistronic-Long-novTX_526;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	93031	93242	.	-	.	ID=ORF52-Non-coding-novTX_770;Name=ORF52-Non-coding-novTX_770;TX_category=Non-coding
+NC_001491.2	Torma_et_al	exon	83090	94551	.	-	.	ID=ORF52-ORF51-ORF50-ORF49-ORF48-ORF44_47-ORF46-ORF45-CX-Canonic;Name=ORF52-ORF51-ORF50-ORF49-ORF48-ORF44_47-ORF46-ORF45-CX-Canonic;
+NC_001491.2	Tombacz_et_al	exon	93031	94227	.	-	.	ID=ORF52-Putative mRNA-novTX_520;Name=ORF52-Putative mRNA-novTX_520;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	93031	94097	.	-	.	ID=ORF52-Putative mRNA-novTX_722;Name=ORF52-Putative mRNA-novTX_722;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	93031	93295	.	-	.	ID=ORF52-Putative mRNA-novTX_784;Name=ORF52-Putative mRNA-novTX_784;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	93031	98109	.	-	.	ID=ORF53-ORF52-CX-Canonic;Name=ORF53-ORF52-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	99349	100462	.	-	.	ID=ORF55;Name=ORF55;
+NC_001491.2	Torma_et_al	exon	99349	101555	.	-	.	ID=ORF55-L1;Name=ORF55-L1;
+NC_001491.2	Torma_et_al	exon	99349	102618	.	-	.	ID=ORF55-ORF56-PC-Canonic;Name=ORF55-ORF56-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	99349	103717	.	-	.	ID=ORF55-ORF56-PC-Long;Name=ORF55-ORF56-PC-Long;
+NC_001491.2	Torma_et_al	exon	99349	102450	.	-	.	ID=ORF56-ORF55-PC-Short;Name=ORF56-ORF55-PC-Short;
+NC_001491.2	Torma_et_al	exon	105829	106504	.	-	.	ID=ORF59;Name=ORF59;
+NC_001491.2	Torma_et_al	exon	105829	106801	.	-	.	ID=ORF59-L1;Name=ORF59-L1;
+NC_001491.2	Torma_et_al	exon	105829	107059	.	-	.	ID=ORF59-L2;Name=ORF59-L2;
+NC_001491.2	Tombacz_et_al	exon	105829	106781	.	-	.	ID=ORF59-Monocistronic-Long-novTX_743;Name=ORF59-Monocistronic-Long-novTX_743;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	105829	106674	.	-	.	ID=ORF59-Monocistronic-Long-novTX_769;Name=ORF59-Monocistronic-Long-novTX_769;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	exon	105829	106443	.	-	.	ID=ORF59-Monocistronic-Short-novTX_772;Name=ORF59-Monocistronic-Short-novTX_772;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	105829	106475	.	-	.	ID=ORF59-Monocistronic-Short-novTX_780;Name=ORF59-Monocistronic-Short-novTX_780;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	105829	105968	.	-	.	ID=ORF59-Non-coding-novTX_527;Name=ORF59-Non-coding-novTX_527;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	105829	106204	.	-	.	ID=ORF59-Putative mRNA-novTX_707;Name=ORF59-Putative mRNA-novTX_707;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	105829	106278	.	-	.	ID=ORF59-Putative mRNA-novTX_708;Name=ORF59-Putative mRNA-novTX_708;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	105829	106346	.	-	.	ID=ORF59-Putative mRNA-novTX_763;Name=ORF59-Putative mRNA-novTX_763;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	105829	106303	.	-	.	ID=ORF59-Putative mRNA-novTX_771;Name=ORF59-Putative mRNA-novTX_771;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	105829	106232	.	-	.	ID=ORF59-Putative mRNA-novTX_774;Name=ORF59-Putative mRNA-novTX_774;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	105829	106142	.	-	.	ID=ORF59-Putative mRNA-novTX_782;Name=ORF59-Putative mRNA-novTX_782;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	1918	7400	.	-	.	ID=ORF6-ORF4-ORF3-ORF2-CX-Canonic;Name=ORF6-ORF4-ORF3-ORF2-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	3635	7400	.	-	.	ID=ORF6-ORF5-ORF4-PC-Canonic;Name=ORF6-ORF5-ORF4-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	4391	7535	.	-	.	ID=ORF6-ORF5-PC-Long;Name=ORF6-ORF5-PC-Long;
+NC_001491.2	Torma_et_al	exon	4391	7400	.	-	.	ID=ORF6-ORF5-PC-canonic;Name=ORF6-ORF5-PC-canonic;
+NC_001491.2	Torma_et_al	exon	105829	107137	.	-	.	ID=ORF60-ORF59-PC-Canonic;Name=ORF60-ORF59-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	105829	107726	.	-	.	ID=ORF60-ORF59-PC-Long;Name=ORF60-ORF59-PC-Long;
+NC_001491.2	Torma_et_al	exon	105829	107626	.	-	.	ID=ORF60-ORF59-PC-Long-1;Name=ORF60-ORF59-PC-Long-1;
+NC_001491.2	Torma_et_al	exon	105829	108039	.	-	.	ID=ORF60-ORF59-PC-Long-2;Name=ORF60-ORF59-PC-Long-2;
+NC_001491.2	Torma_et_al	exon	105829	107656	.	-	.	ID=ORF60-ORF59-PC-Long-3;Name=ORF60-ORF59-PC-Long-3;
+NC_001491.2	Tombacz_et_al	exon	105829	108333	.	-	.	ID=ORF61-Multicistronic-Long-novTX_578;Name=ORF61-Multicistronic-Long-novTX_578;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	exon	105829	108180	.	-	.	ID=ORF61-Multicistronic-Short-novTX_574;Name=ORF61-Multicistronic-Short-novTX_574;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	exon	105829	108304	.	-	.	ID=ORF61-Multicistronic-Short-novTX_575;Name=ORF61-Multicistronic-Short-novTX_575;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	exon	105829	108171	.	-	.	ID=ORF61-Multicistronic-Short-novTX_709;Name=ORF61-Multicistronic-Short-novTX_709;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	exon	105829	108317	.	-	.	ID=ORF61-ORF60-ORF59-PC-Canonic;Name=ORF61-ORF60-ORF59-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	105829	108732	.	-	.	ID=ORF62-ORF61-ORF60-ORF59-PC-Canonic;Name=ORF62-ORF61-ORF60-ORF59-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	105829	110093	.	-	.	ID=ORF62-ORF61-ORF60-ORF59-PC-Long;Name=ORF62-ORF61-ORF60-ORF59-PC-Long;
+NC_001491.2	Torma_et_al	exon	110319	112033	.	-	.	ID=ORF63;Name=ORF63;
+NC_001491.2	Torma_et_al	exon	110319	112623	.	-	.	ID=ORF63-L1;Name=ORF63-L1;
+NC_001491.2	Tombacz_et_al	exon	110319	112011	.	-	.	ID=ORF63-Monocistronic-Short-novTX_710;Name=ORF63-Monocistronic-Short-novTX_710;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	110319	111620	.	-	.	ID=ORF63-Putative mRNA-novTX_584;Name=ORF63-Putative mRNA-novTX_584;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	110319	111634	.	-	.	ID=ORF63-Putative mRNA-novTX_585;Name=ORF63-Putative mRNA-novTX_585;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	110319	111661	.	-	.	ID=ORF63-Putative mRNA-novTX_586;Name=ORF63-Putative mRNA-novTX_586;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	113821	118756	.	-	.	ID=ORF64;Name=ORF64;
+NC_001491.2	Torma_et_al	exon	113821	119214	.	-	.	ID=ORF64-L1;Name=ORF64-L1;
+NC_001491.2	Tombacz_et_al	exon	140709	140946	.	-	.	ID=ORF65-Non-coding-novTX_639;Name=ORF65-Non-coding-novTX_639;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	140709	141063	.	-	.	ID=ORF65-Non-coding-novTX_644;Name=ORF65-Non-coding-novTX_644;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	140709	141082	.	-	.	ID=ORF65-Non-coding-novTX_645;Name=ORF65-Non-coding-novTX_645;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	140709	141113	.	-	.	ID=ORF65-Non-coding-novTX_646;Name=ORF65-Non-coding-novTX_646;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	140709	141150	.	-	.	ID=ORF65-Non-coding-novTX_647;Name=ORF65-Non-coding-novTX_647;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	140709	141207	.	-	.	ID=ORF65-Non-coding-novTX_648;Name=ORF65-Non-coding-novTX_648;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	140709	141245	.	-	.	ID=ORF65-Non-coding-novTX_649;Name=ORF65-Non-coding-novTX_649;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	140709	141273	.	-	.	ID=ORF65-Non-coding-novTX_671;Name=ORF65-Non-coding-novTX_671;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	140709	141391	.	-	.	ID=ORF65-Non-coding-novTX_716;Name=ORF65-Non-coding-novTX_716;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	140709	141359	.	-	.	ID=ORF65-Non-coding-novTX_738;Name=ORF65-Non-coding-novTX_738;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	140709	141543	.	-	.	ID=ORF65-Non-coding-novTX_767;Name=ORF65-Non-coding-novTX_767;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	exon	140709	140871	.	-	.	ID=ORF65-Non-coding-short-novTX_634;Name=ORF65-Non-coding-short-novTX_634;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	exon	140709	140862	.	-	.	ID=ORF65-Non-coding-short-novTX_775;Name=ORF65-Non-coding-short-novTX_775;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	exon	140709	141473	.	-	.	ID=ORF65-Putative mRNA-novTX_677;Name=ORF65-Putative mRNA-novTX_677;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	140709	140915	.	-	.	ID=ORF65-Putative mRNA-novTX_764;Name=ORF65-Putative mRNA-novTX_764;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	140709	142158	.	-	.	ID=ORF65.1;Name=ORF65.1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	140709	143088	.	-	.	ID=ORF65.1-L1;Name=ORF65.1-L1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	140709	141860	.	-	.	ID=ORF65.1-S;Name=ORF65.1-S;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	139558	140335	.	-	.	ID=ORF66.1;Name=ORF66.1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	124283	125335	.	-	.	ID=ORF67;Name=ORF67;
+NC_001491.2	Tombacz_et_al	exon	124283	125219	.	-	.	ID=ORF67-Monocistronic-Short-novTX_736;Name=ORF67-Monocistronic-Short-novTX_736;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	124283	125249	.	-	.	ID=ORF67-Monocistronic-Short-novTX_737;Name=ORF67-Monocistronic-Short-novTX_737;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	124283	125296	.	-	.	ID=ORF67-Monocistronic-Short-novTX_752;Name=ORF67-Monocistronic-Short-novTX_752;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	exon	124283	125313	.	-	.	ID=ORF67-Monocistronic-Short-novTX_756;Name=ORF67-Monocistronic-Short-novTX_756;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	exon	124289	137215	.	-	.	ID=ORF67-ORF68-ORF69-ORF70-ORF71-ORF72-ORF73-ORF74;Name=ORF67-ORF68-ORF69-ORF70-ORF71-ORF72-ORF73-ORF74;
+NC_001491.2	Tombacz_et_al	exon	124283	124594	.	-	.	ID=ORF67-Putative mRNA-novTX_723;Name=ORF67-Putative mRNA-novTX_723;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	124283	124742	.	-	.	ID=ORF67-Putative mRNA-novTX_724;Name=ORF67-Putative mRNA-novTX_724;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	124283	124786	.	-	.	ID=ORF67-Putative mRNA-novTX_725;Name=ORF67-Putative mRNA-novTX_725;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	124283	124944	.	-	.	ID=ORF67-Putative mRNA-novTX_726;Name=ORF67-Putative mRNA-novTX_726;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	124283	125062	.	-	.	ID=ORF67-Putative mRNA-novTX_727;Name=ORF67-Putative mRNA-novTX_727;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	124283	124852	.	-	.	ID=ORF67-Putative mRNA-novTX_744;Name=ORF67-Putative mRNA-novTX_744;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	124283	124985	.	-	.	ID=ORF67-Putative mRNA-novTX_745;Name=ORF67-Putative mRNA-novTX_745;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	124283	124906	.	-	.	ID=ORF67-Putative mRNA-novTX_749;Name=ORF67-Putative mRNA-novTX_749;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	124283	124631	.	-	.	ID=ORF67-Putative mRNA-novTX_760;Name=ORF67-Putative mRNA-novTX_760;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	124283	124678	.	-	.	ID=ORF67-Putative mRNA-novTX_777;Name=ORF67-Putative mRNA-novTX_777;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	124283	126358	.	-	.	ID=ORF68-ORF67-PC-Canonic;Name=ORF68-ORF67-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	124283	126611	.	-	.	ID=ORF68-ORF67-PC-Long;Name=ORF68-ORF67-PC-Long;
+NC_001491.2	Torma_et_al	exon	124283	127577	.	-	.	ID=ORF69-ORF68-ORF67-CX-Canonic;Name=ORF69-ORF68-ORF67-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	124283	128030	.	-	.	ID=ORF69-ORF68-ORF67-CX-Long;Name=ORF69-ORF68-ORF67-CX-Long;
+NC_001491.2	Torma_et_al	exon	124283	128110	.	-	.	ID=ORF69-ORF68-ORF67-CX-Long-2;Name=ORF69-ORF68-ORF67-CX-Long-2;
+NC_001491.2	Torma_et_al	exon	3635	10331	.	-	.	ID=ORF7-ORF6-ORF5-ORF4-PC-Canonic;Name=ORF7-ORF6-ORF5-ORF4-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	4391	10331	.	-	.	ID=ORF7-ORF6-ORF5-PC-Canonic;Name=ORF7-ORF6-ORF5-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	124283	129214	.	-	.	ID=ORF70-ORF69-ORF68-ORF67-CX;Name=ORF70-ORF69-ORF68-ORF67-CX;
+NC_001491.2	Torma_et_al	exon	11064	12260	.	-	.	ID=ORF9;Name=ORF9;
+NC_001491.2	Torma_et_al	exon	4391	12260	.	-	.	ID=ORF9-ORF8-ORF7-ORF6-ORF5-CX-Canonic;Name=ORF9-ORF8-ORF7-ORF6-ORF5-CX-Canonic;
+NC_001491.2	Tombacz_et_al	exon	11062	11621	.	-	.	ID=ORF9-Putative mRNA-novTX_687;Name=ORF9-Putative mRNA-novTX_687;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	exon	11062	11522	.	-	.	ID=ORF9-Putative mRNA-novTX_718;Name=ORF9-Putative mRNA-novTX_718;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	140709	141873	.	-	.	ID=TR1146;Name=TR1146;
+NC_001491.2	Torma_et_al	exon	142052	143601	.	-	.	ID=TR1146;Name=TR1146;
+NC_001491.2	Torma_et_al	exon	11064	11596	.	-	.	ID=TR134;Name=TR134;
+NC_001491.2	Torma_et_al	exon	13134	13390	.	-	.	ID=TR134;Name=TR134;
+NC_001491.2	Torma_et_al	exon	140709	141873	.	-	.	ID=TR148;Name=TR148;
+NC_001491.2	Torma_et_al	exon	142052	142158	.	-	.	ID=TR148;Name=TR148;
+NC_001491.2	Torma_et_al	exon	140709	141873	.	-	.	ID=TR150;Name=TR150;
+NC_001491.2	Torma_et_al	exon	142092	142158	.	-	.	ID=TR150;Name=TR150;
+NC_001491.2	Torma_et_al	exon	140709	141873	.	-	.	ID=TR152;Name=TR152;
+NC_001491.2	Torma_et_al	exon	142092	142778	.	-	.	ID=TR152;Name=TR152;
+NC_001491.2	Torma_et_al	exon	140709	141873	.	-	.	ID=TR154;Name=TR154;
+NC_001491.2	Torma_et_al	exon	142092	143088	.	-	.	ID=TR154;Name=TR154;
+NC_001491.2	Torma_et_al	exon	143303	143699	.	-	.	ID=TR162;Name=TR162;
+NC_001491.2	Torma_et_al	exon	144024	144110	.	-	.	ID=TR162;Name=TR162;
+NC_001491.2	Torma_et_al	exon	143303	143699	.	-	.	ID=TR166;Name=TR166;
+NC_001491.2	Torma_et_al	exon	143936	144282	.	-	.	ID=TR166;Name=TR166;
+NC_001491.2	Torma_et_al	exon	143303	143699	.	-	.	ID=TR167;Name=TR167;
+NC_001491.2	Torma_et_al	exon	144024	144282	.	-	.	ID=TR167;Name=TR167;
+NC_001491.2	Torma_et_al	exon	143411	143699	.	-	.	ID=TR168;Name=TR168;
+NC_001491.2	Torma_et_al	exon	144024	144282	.	-	.	ID=TR168;Name=TR168;
+NC_001491.2	Torma_et_al	exon	11064	11596	.	-	.	ID=TR172;Name=TR172;
+NC_001491.2	Torma_et_al	exon	13134	13409	.	-	.	ID=TR172;Name=TR172;
+NC_001491.2	Torma_et_al	exon	14815	14907	.	-	.	ID=TR172;Name=TR172;
+NC_001491.2	Torma_et_al	exon	11064	13409	.	-	.	ID=TR173;Name=TR173;
+NC_001491.2	Torma_et_al	exon	14815	14907	.	-	.	ID=TR173;Name=TR173;
+NC_001491.2	Torma_et_al	exon	11064	11596	.	-	.	ID=TR175;Name=TR175;
+NC_001491.2	Torma_et_al	exon	13134	13409	.	-	.	ID=TR175;Name=TR175;
+NC_001491.2	Torma_et_al	exon	14815	15032	.	-	.	ID=TR175;Name=TR175;
+NC_001491.2	Torma_et_al	exon	140709	141873	.	-	.	ID=TR3;Name=TR3;
+NC_001491.2	Torma_et_al	exon	142052	142778	.	-	.	ID=TR3;Name=TR3;
+NC_001491.2	Torma_et_al	exon	140709	141873	.	-	.	ID=TR4;Name=TR4;
+NC_001491.2	Torma_et_al	exon	142092	143622	.	-	.	ID=TR4;Name=TR4;
+NC_001491.2	Torma_et_al	exon	83090	84320	.	-	.	ID=TR407;Name=TR407;
+NC_001491.2	Torma_et_al	exon	84435	84687	.	-	.	ID=TR407;Name=TR407;
+NC_001491.2	Torma_et_al	exon	83090	84320	.	-	.	ID=TR409;Name=TR409;
+NC_001491.2	Torma_et_al	exon	84929	85121	.	-	.	ID=TR409;Name=TR409;
+NC_001491.2	Torma_et_al	exon	83090	84320	.	-	.	ID=TR412;Name=TR412;
+NC_001491.2	Torma_et_al	exon	84929	87726	.	-	.	ID=TR412;Name=TR412;
+NC_001491.2	Torma_et_al	exon	83090	84320	.	-	.	ID=TR414;Name=TR414;
+NC_001491.2	Torma_et_al	exon	84929	87781	.	-	.	ID=TR414;Name=TR414;
+NC_001491.2	Torma_et_al	exon	83090	84320	.	-	.	ID=TR416;Name=TR416;
+NC_001491.2	Torma_et_al	exon	87886	88377	.	-	.	ID=TR416;Name=TR416;
+NC_001491.2	Torma_et_al	exon	83090	84320	.	-	.	ID=TR418;Name=TR418;
+NC_001491.2	Torma_et_al	exon	87886	88988	.	-	.	ID=TR418;Name=TR418;
+NC_001491.2	Torma_et_al	exon	83090	84320	.	-	.	ID=TR419;Name=TR419;
+NC_001491.2	Torma_et_al	exon	87886	89226	.	-	.	ID=TR419;Name=TR419;
+NC_001491.2	Torma_et_al	exon	83090	84320	.	-	.	ID=TR421;Name=TR421;
+NC_001491.2	Torma_et_al	exon	89992	90427	.	-	.	ID=TR421;Name=TR421;
+NC_001491.2	Torma_et_al	exon	83090	84320	.	-	.	ID=TR423;Name=TR423;
+NC_001491.2	Torma_et_al	exon	91889	92062	.	-	.	ID=TR423;Name=TR423;
+NC_001491.2	Torma_et_al	exon	83090	84320	.	-	.	ID=TR424;Name=TR424;
+NC_001491.2	Torma_et_al	exon	91889	92179	.	-	.	ID=TR424;Name=TR424;
+NC_001491.2	Torma_et_al	exon	143303	143699	.	-	.	ID=TR5;Name=TR5;
+NC_001491.2	Torma_et_al	exon	143936	144110	.	-	.	ID=TR5;Name=TR5;
+NC_001491.2	Torma_et_al	exon	143411	143699	.	-	.	ID=TR7;Name=TR7;
+NC_001491.2	Torma_et_al	exon	143936	144282	.	-	.	ID=TR7;Name=TR7;
+NC_001491.2	Torma_et_al	exon	11064	13409	.	-	.	ID=TR8;Name=TR8;
+NC_001491.2	Torma_et_al	exon	14815	15032	.	-	.	ID=TR8;Name=TR8;
+NC_001491.2	Torma_et_al	exon	139558	141873	.	-	.	ID=TR_5240-ORF65.1-ORF64.1-PC-Canonic;Name=TR_5240-ORF65.1-ORF64.1-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	142092	142158	.	-	.	ID=TR_5240-ORF65.1-ORF64.1-PC-Canonic;Name=TR_5240-ORF65.1-ORF64.1-PC-Canonic;
+NC_001491.2	Torma_et_al	exon	69068	76361	.	-	.	ID=TR_5972-ORF40-CTO-ORF39-ORF38-ORF37-CX-Canonic;Name=TR_5972-ORF40-CTO-ORF39-ORF38-ORF37-CX-Canonic;
+NC_001491.2	Torma_et_al	exon	34959	35409	.	-	.	ID=as18-Long;Name=as18-Long;
+NC_001491.2	Torma_et_al	exon	34959	35525	.	-	.	ID=as18-canonic;Name=as18-canonic;
+NC_001491.2	Torma_et_al	exon	52040	55141	.	-	.	ID=as23;Name=as23;
+NC_001491.2	Torma_et_al	exon	42724	43519	.	-	.	ID=as24-AT;Name=as24-AT;
+NC_001491.2	Torma_et_al	exon	41728	43519	.	-	.	ID=as24-Canonic;Name=as24-Canonic;
+NC_001491.2	Torma_et_al	exon	61214	61815	.	-	.	ID=as27;Name=as27;
+NC_001491.2	Torma_et_al	exon	58078	59824	.	-	.	ID=as32-Canonic;Name=as32-Canonic;
+NC_001491.2	Torma_et_al	exon	58078	61090	.	-	.	ID=as32-Long1;Name=as32-Long1;
+NC_001491.2	Torma_et_al	exon	58078	61257	.	-	.	ID=as32-Long2;Name=as32-Long2;
+NC_001491.2	Torma_et_al	exon	58078	61815	.	-	.	ID=as32-Long3;Name=as32-Long3;
+NC_001491.2	Torma_et_al	exon	58078	63941	.	-	.	ID=as32-Long4;Name=as32-Long4;
+NC_001491.2	Torma_et_al	exon	64367	65066	.	-	.	ID=as34;Name=as34;
+NC_001491.2	Torma_et_al	exon	81889	82583	.	-	.	ID=as43;Name=as43;
+NC_001491.2	Torma_et_al	exon	89245	90427	.	-	.	ID=as49-48;Name=as49-48;
+NC_001491.2	Torma_et_al	exon	99190	99332	.	-	.	ID=as54;Name=as54;
+NC_001491.2	Torma_et_al	exon	127858	128110	.	-	.	ID=as70-Canonic;Name=as70-Canonic;
+NC_001491.2	Torma_et_al	exon	127858	128030	.	-	.	ID=as70-Short;Name=as70-Short;
+NC_001491.2	Torma_et_al	exon	132040	132362	.	-	.	ID=as72-AT;Name=as72-AT;
+NC_001491.2	Torma_et_al	exon	131771	132362	.	-	.	ID=as72-Canonic;Name=as72-Canonic;
+NC_001491.2	Torma_et_al	exon	134210	135508	.	-	.	ID=as74;Name=as74;
+NC_001491.2	Torma_et_al	exon	14922	15699	.	-	.	ID=as9;Name=as9;
+NC_001491.2	Torma_et_al	exon	140709	140902	.	-	.	ID=ncss65.1;Name=ncss65.1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	99349	99510	.	-	.	ID=nct55;Name=nct55;
+NC_001491.2	Torma_et_al	exon	140709	141094	.	-	.	ID=nct65.1-Canonic;Name=nct65.1-Canonic;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	exon	140709	141372	.	-	.	ID=nct65.1-Long;Name=nct65.1-Long;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	73856	74182	.	+	.	ID=CTO-S-AS;Name=CTO-S-AS;
+NC_001491.2	Torma_et_al	transcript	118878	119857	.	+	.	ID=NOIR-Canonic;Name=NOIR-Canonic;
+NC_001491.2	Torma_et_al	transcript	118811	122451	.	+	.	ID=NOIR-ORF65-PC-Canonic;Name=NOIR-ORF65-PC-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	118856	119857	.	+	.	ID=NOIR_1-Non-coding-Long-novTX_195;Name=NOIR_1-Non-coding-Long-novTX_195;TX_category=Non-coding-Long
+NC_001491.2	Torma_et_al	transcript	1252	1923	.	+	.	ID=ORF1;Name=ORF1;
+NC_001491.2	Torma_et_al	transcript	1252	3632	.	+	.	ID=ORF1-ORF2-ORF3-CX-Canonic;Name=ORF1-ORF2-ORF3-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	989	3632	.	+	.	ID=ORF1-ORF2-ORF3-CX-Long;Name=ORF1-ORF2-ORF3-CX-Long;
+NC_001491.2	Tombacz_et_al	transcript	1629	1923	.	+	.	ID=ORF1-Putative mRNA-novTX_272;Name=ORF1-Putative mRNA-novTX_272;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	1613	1923	.	+	.	ID=ORF1-Putative mRNA-novTX_320;Name=ORF1-Putative mRNA-novTX_320;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	11990	14971	.	+	.	ID=ORF10-ORF11-ORF12-PC-Canonic;Name=ORF10-ORF11-ORF12-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	11990	13520	.	+	.	ID=ORF10-ORF11-PC-Canonic;Name=ORF10-ORF11-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	12468	13520	.	+	.	ID=ORF11;Name=ORF11;
+NC_001491.2	Torma_et_al	transcript	12156	14971	.	+	.	ID=ORF11-ORF12-PC-Canonic;Name=ORF11-ORF12-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	12468	14971	.	+	.	ID=ORF11-ORF12-PC-Short;Name=ORF11-ORF12-PC-Short;
+NC_001491.2	Torma_et_al	transcript	12875	13520	.	+	.	ID=ORF11.5;Name=ORF11.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	13528	14971	.	+	.	ID=ORF12;Name=ORF12;
+NC_001491.2	Torma_et_al	transcript	13528	16341	.	+	.	ID=ORF12-AT;Name=ORF12-AT;
+NC_001491.2	Torma_et_al	transcript	12661	14971	.	+	.	ID=ORF12-L1;Name=ORF12-L1;
+NC_001491.2	Torma_et_al	transcript	12875	14971	.	+	.	ID=ORF12-L2;Name=ORF12-L2;
+NC_001491.2	Tombacz_et_al	transcript	13509	14971	.	+	.	ID=ORF12-Monocistronic-Long-novTX_193;Name=ORF12-Monocistronic-Long-novTX_193;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	13560	14971	.	+	.	ID=ORF12-Monocistronic-Short-novTX_199;Name=ORF12-Monocistronic-Short-novTX_199;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	13528	20385	.	+	.	ID=ORF12-ORF13-ORF14-PC-Canonic;Name=ORF12-ORF13-ORF14-PC-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	15195	20385	.	+	.	ID=ORF13-Multicistronic-Long-novTX_4;Name=ORF13-Multicistronic-Long-novTX_4;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	15260	20385	.	+	.	ID=ORF13-Multicistronic-Short-novTX_306;Name=ORF13-Multicistronic-Short-novTX_306;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	transcript	15234	20385	.	+	.	ID=ORF13-ORF14-PC-Canonic;Name=ORF13-ORF14-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	15083	20385	.	+	.	ID=ORF13-ORF14-PC-Long;Name=ORF13-ORF14-PC-Long;
+NC_001491.2	Torma_et_al	transcript	17985	20385	.	+	.	ID=ORF14;Name=ORF14;
+NC_001491.2	Torma_et_al	transcript	15647	20385	.	+	.	ID=ORF14-L1;Name=ORF14-L1;
+NC_001491.2	Torma_et_al	transcript	15982	20385	.	+	.	ID=ORF14-L2;Name=ORF14-L2;
+NC_001491.2	Torma_et_al	transcript	16505	20385	.	+	.	ID=ORF14-L3;Name=ORF14-L3;
+NC_001491.2	Torma_et_al	transcript	16796	20385	.	+	.	ID=ORF14-L4;Name=ORF14-L4;
+NC_001491.2	Torma_et_al	transcript	17231	20385	.	+	.	ID=ORF14-L5;Name=ORF14-L5;
+NC_001491.2	Torma_et_al	transcript	17484	20385	.	+	.	ID=ORF14-L6;Name=ORF14-L6;
+NC_001491.2	Torma_et_al	transcript	17716	20385	.	+	.	ID=ORF14-L7;Name=ORF14-L7;
+NC_001491.2	Tombacz_et_al	transcript	15746	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_11;Name=ORF14-Monocistronic-Long-novTX_11;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	15828	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_14;Name=ORF14-Monocistronic-Long-novTX_14;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	17503	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_19;Name=ORF14-Monocistronic-Long-novTX_19;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	17967	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_20;Name=ORF14-Monocistronic-Long-novTX_20;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	17518	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_244;Name=ORF14-Monocistronic-Long-novTX_244;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	17455	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_296;Name=ORF14-Monocistronic-Long-novTX_296;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	15673	20385	.	+	.	ID=ORF14-Monocistronic-Long-novTX_9;Name=ORF14-Monocistronic-Long-novTX_9;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	17998	20385	.	+	.	ID=ORF14-Monocistronic-Short-novTX_22;Name=ORF14-Monocistronic-Short-novTX_22;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	18016	20385	.	+	.	ID=ORF14-Monocistronic-Short-novTX_23;Name=ORF14-Monocistronic-Short-novTX_23;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	18151	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_24;Name=ORF14-Putative mRNA-novTX_24;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	18487	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_25;Name=ORF14-Putative mRNA-novTX_25;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19287	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_28;Name=ORF14-Putative mRNA-novTX_28;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	18370	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_281;Name=ORF14-Putative mRNA-novTX_281;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19152	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_282;Name=ORF14-Putative mRNA-novTX_282;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19224	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_283;Name=ORF14-Putative mRNA-novTX_283;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19331	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_29;Name=ORF14-Putative mRNA-novTX_29;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	18093	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_297;Name=ORF14-Putative mRNA-novTX_297;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19091	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_298;Name=ORF14-Putative mRNA-novTX_298;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19579	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_31;Name=ORF14-Putative mRNA-novTX_31;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19640	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_32;Name=ORF14-Putative mRNA-novTX_32;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19907	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_339;Name=ORF14-Putative mRNA-novTX_339;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19675	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_34;Name=ORF14-Putative mRNA-novTX_34;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19745	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_349;Name=ORF14-Putative mRNA-novTX_349;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19795	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_35;Name=ORF14-Putative mRNA-novTX_35;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	19886	20385	.	+	.	ID=ORF14-Putative mRNA-novTX_36;Name=ORF14-Putative mRNA-novTX_36;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	19661	20385	.	+	.	ID=ORF14.5;Name=ORF14.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	21328	27784	.	+	.	ID=ORF16-ORF17-ORF18-ORF19-CX-Canonic;Name=ORF16-ORF17-ORF18-ORF19-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	21474	27784	.	+	.	ID=ORF17-ORF18-ORF19-CX-Canonic;Name=ORF17-ORF18-ORF19-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	21493	27784	.	+	.	ID=ORF17-ORF18-ORF19-CX-Short;Name=ORF17-ORF18-ORF19-CX-Short;
+NC_001491.2	Torma_et_al	transcript	22580	27784	.	+	.	ID=ORF17-ORF18-ORF19-CX-Short-2;Name=ORF17-ORF18-ORF19-CX-Short-2;
+NC_001491.2	Torma_et_al	transcript	23099	27784	.	+	.	ID=ORF18-ORF19-CX-Canonic;Name=ORF18-ORF19-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	23079	27784	.	+	.	ID=ORF18-ORF19-CX-Long;Name=ORF18-ORF19-CX-Long;
+NC_001491.2	Torma_et_al	transcript	23686	27784	.	+	.	ID=ORF18-ORF19-CX-Short;Name=ORF18-ORF19-CX-Short;
+NC_001491.2	Torma_et_al	transcript	23857	27784	.	+	.	ID=ORF18-ORF19-CX-Short-2;Name=ORF18-ORF19-CX-Short-2;
+NC_001491.2	Torma_et_al	transcript	26161	27784	.	+	.	ID=ORF19;Name=ORF19;
+NC_001491.2	Torma_et_al	transcript	24861	27784	.	+	.	ID=ORF19-L1;Name=ORF19-L1;
+NC_001491.2	Torma_et_al	transcript	25481	27784	.	+	.	ID=ORF19-L2;Name=ORF19-L2;
+NC_001491.2	Tombacz_et_al	transcript	26566	27784	.	+	.	ID=ORF19-Putative mRNA-novTX_40;Name=ORF19-Putative mRNA-novTX_40;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	27258	27784	.	+	.	ID=ORF19-Putative mRNA-novTX_42;Name=ORF19-Putative mRNA-novTX_42;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	28668	36380	.	+	.	ID=ORF21-ORF22-ORF23-CX-Canonic;Name=ORF21-ORF22-ORF23-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	28131	36380	.	+	.	ID=ORF21-ORF22-ORF23-CX-Long;Name=ORF21-ORF22-ORF23-CX-Long;
+NC_001491.2	Torma_et_al	transcript	33237	36380	.	+	.	ID=ORF23;Name=ORF23;
+NC_001491.2	Torma_et_al	transcript	32802	36380	.	+	.	ID=ORF23-L1;Name=ORF23-L1;
+NC_001491.2	Tombacz_et_al	transcript	33224	36380	.	+	.	ID=ORF23-Monocistronic-Long-novTX_299;Name=ORF23-Monocistronic-Long-novTX_299;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	35467	36380	.	+	.	ID=ORF23-Putative mRNA-novTX_324;Name=ORF23-Putative mRNA-novTX_324;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	35191	36380	.	+	.	ID=ORF23-Putative mRNA-novTX_329;Name=ORF23-Putative mRNA-novTX_329;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	35897	36380	.	+	.	ID=ORF23-Putative mRNA-novTX_344;Name=ORF23-Putative mRNA-novTX_344;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	35755	36380	.	+	.	ID=ORF23-Putative mRNA-novTX_52;Name=ORF23-Putative mRNA-novTX_52;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	36080	36380	.	+	.	ID=ORF23-Putative mRNA-novTX_53;Name=ORF23-Putative mRNA-novTX_53;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	35814	36380	.	+	.	ID=ORF23.5;Name=ORF23.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	36497	46890	.	+	.	ID=ORF24;Name=ORF24;
+NC_001491.2	Tombacz_et_al	transcript	45786	46890	.	+	.	ID=ORF24-Putative mRNA-novTX_285;Name=ORF24-Putative mRNA-novTX_285;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	45839	46890	.	+	.	ID=ORF24-Putative mRNA-novTX_56;Name=ORF24-Putative mRNA-novTX_56;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	45197	46890	.	+	.	ID=ORF24.5;Name=ORF24.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	45483	46890	.	+	.	ID=ORF24.6;Name=ORF24.6;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	45800	46890	.	+	.	ID=ORF24.7;Name=ORF24.7;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	46066	46890	.	+	.	ID=ORF24.8;Name=ORF24.8;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	47036	51686	.	+	.	ID=ORF25-ORF26-ORF27-ORF28-ORF29-CX;Name=ORF25-ORF26-ORF27-ORF28-ORF29-CX;
+NC_001491.2	Torma_et_al	transcript	48073	59182	.	+	.	ID=ORF27-ORF28-ORF29-ORF30-ORF3-CX-Canonic1;Name=ORF27-ORF28-ORF29-ORF30-ORF3-CX-Canonic1;
+NC_001491.2	Tombacz_et_al	transcript	48532	51693	.	+	.	ID=ORF28-Multicistronic-Short-novTX_57;Name=ORF28-Multicistronic-Short-novTX_57;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	transcript	48421	51693	.	+	.	ID=ORF28-ORF29-PC-Canonic;Name=ORF28-ORF29-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	48558	51693	.	+	.	ID=ORF28-ORF29-PC-Short;Name=ORF28-ORF29-PC-Short;
+NC_001491.2	Torma_et_al	transcript	50573	51693	.	+	.	ID=ORF29;Name=ORF29;
+NC_001491.2	Torma_et_al	transcript	50573	59182	.	+	.	ID=ORF29-ORF30-ORF31-CX-Canonic;Name=ORF29-ORF30-ORF31-CX-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	50748	51693	.	+	.	ID=ORF29-Putative mRNA-novTX_61;Name=ORF29-Putative mRNA-novTX_61;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	51148	51693	.	+	.	ID=ORF29-Putative mRNA-novTX_63;Name=ORF29-Putative mRNA-novTX_63;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	2669	3632	.	+	.	ID=ORF3;Name=ORF3;
+NC_001491.2	Tombacz_et_al	transcript	2650	3632	.	+	.	ID=ORF3-Monocistronic-Long-novTX_37;Name=ORF3-Monocistronic-Long-novTX_37;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	2702	3632	.	+	.	ID=ORF3-Monocistronic-Short-novTX_39;Name=ORF3-Monocistronic-Short-novTX_39;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	2669	13520	.	+	.	ID=ORF3-ORF4-ORF5-ORF6-ORF7-ORF8-ORF9-ORF10-ORF11-CX-Canonic;Name=ORF3-ORF4-ORF5-ORF6-ORF7-ORF8-ORF9-ORF10-ORF11-CX-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	3043	3632	.	+	.	ID=ORF3-Putative mRNA-novTX_45;Name=ORF3-Putative mRNA-novTX_45;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	55322	59182	.	+	.	ID=ORF31;Name=ORF31;
+NC_001491.2	Torma_et_al	transcript	55046	59182	.	+	.	ID=ORF31-L1;Name=ORF31-L1;
+NC_001491.2	Tombacz_et_al	transcript	55255	59182	.	+	.	ID=ORF31-Monocistronic-Long-novTX_66;Name=ORF31-Monocistronic-Long-novTX_66;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	55342	59182	.	+	.	ID=ORF31-Monocistronic-Short-novTX_68;Name=ORF31-Monocistronic-Short-novTX_68;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	52456	65086	.	+	.	ID=ORF31-ORF32-ORF33-ORF34-PC-Canonic;Name=ORF31-ORF32-ORF33-ORF34-PC-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	56316	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_247;Name=ORF31-Putative mRNA-novTX_247;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	56326	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_73;Name=ORF31-Putative mRNA-novTX_73;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	56757	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_76;Name=ORF31-Putative mRNA-novTX_76;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	58023	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_78;Name=ORF31-Putative mRNA-novTX_78;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	58487	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_79;Name=ORF31-Putative mRNA-novTX_79;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	58635	59182	.	+	.	ID=ORF31-Putative mRNA-novTX_81;Name=ORF31-Putative mRNA-novTX_81;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	59209	65093	.	+	.	ID=ORF32-ORF33-ORF34-PC-Canonic;Name=ORF32-ORF33-ORF34-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	59209	64402	.	+	.	ID=ORF32-ORF33-PC-Canonic;Name=ORF32-ORF33-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	61312	64402	.	+	.	ID=ORF33;Name=ORF33;
+NC_001491.2	Torma_et_al	transcript	59993	64402	.	+	.	ID=ORF33-L1;Name=ORF33-L1;
+NC_001491.2	Torma_et_al	transcript	60473	64402	.	+	.	ID=ORF33-L2;Name=ORF33-L2;
+NC_001491.2	Torma_et_al	transcript	61312	67178	.	+	.	ID=ORF33-ORF34-ORF35-CX-Canonic;Name=ORF33-ORF34-ORF35-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	61312	65093	.	+	.	ID=ORF33-ORF34-PC-Canonic;Name=ORF33-ORF34-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	61255	65093	.	+	.	ID=ORF33-ORF34-PC-Long;Name=ORF33-ORF34-PC-Long;
+NC_001491.2	Torma_et_al	transcript	59993	65093	.	+	.	ID=ORF33-ORF34-PC-Long-1;Name=ORF33-ORF34-PC-Long-1;
+NC_001491.2	Torma_et_al	transcript	60473	65093	.	+	.	ID=ORF33-ORF34-PC-Long-2;Name=ORF33-ORF34-PC-Long-2;
+NC_001491.2	Torma_et_al	transcript	64488	65093	.	+	.	ID=ORF34;Name=ORF34;
+NC_001491.2	Torma_et_al	transcript	61608	65093	.	+	.	ID=ORF34-L1;Name=ORF34-L1;
+NC_001491.2	Tombacz_et_al	transcript	63531	65093	.	+	.	ID=ORF34-Monocistronic-Long-novTX_250;Name=ORF34-Monocistronic-Long-novTX_250;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	62857	65093	.	+	.	ID=ORF34-Monocistronic-Long-novTX_85;Name=ORF34-Monocistronic-Long-novTX_85;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	64500	65093	.	+	.	ID=ORF34-Monocistronic-Short-novTX_352;Name=ORF34-Monocistronic-Short-novTX_352;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	64488	67175	.	+	.	ID=ORF34-ORF35.5-ORF35-CX-Canonic;Name=ORF34-ORF35.5-ORF35-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	64488	71034	.	+	.	ID=ORF34-ORF35.5-ORF35-ORF36-ORF37-ORF38-CX-Canonic;Name=ORF34-ORF35.5-ORF35-ORF36-ORF37-ORF38-CX-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	64629	65093	.	+	.	ID=ORF34-Putative mRNA-novTX_309;Name=ORF34-Putative mRNA-novTX_309;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	64580	65093	.	+	.	ID=ORF34-Putative mRNA-novTX_341;Name=ORF34-Putative mRNA-novTX_341;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	64740	65093	.	+	.	ID=ORF34-Putative mRNA-novTX_345;Name=ORF34-Putative mRNA-novTX_345;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	64686	71034	.	+	.	ID=ORF35.5-ORF35-ORF36-ORF37-ORF38-CX-Canonic;Name=ORF35.5-ORF35-ORF36-ORF37-ORF38-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	66315	71034	.	+	.	ID=ORF36-ORF37-ORF38-CX-Canonic;Name=ORF36-ORF37-ORF38-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	66600	71034	.	+	.	ID=ORF36-ORF37-ORF38-CX-Short;Name=ORF36-ORF37-ORF38-CX-Short;
+NC_001491.2	Torma_et_al	transcript	66701	71034	.	+	.	ID=ORF36-ORF37-ORF38-CX-Short-2;Name=ORF36-ORF37-ORF38-CX-Short-2;
+NC_001491.2	Torma_et_al	transcript	69019	71034	.	+	.	ID=ORF37-ORF38-CX-Canonic;Name=ORF37-ORF38-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	68916	71034	.	+	.	ID=ORF37-ORF38-CX-Long;Name=ORF37-ORF38-CX-Long;
+NC_001491.2	Torma_et_al	transcript	67656	71034	.	+	.	ID=ORF37-ORF38-CX-Long-1;Name=ORF37-ORF38-CX-Long-1;
+NC_001491.2	Torma_et_al	transcript	68373	71034	.	+	.	ID=ORF37-ORF38-CX-Long-2;Name=ORF37-ORF38-CX-Long-2;
+NC_001491.2	Torma_et_al	transcript	69782	71034	.	+	.	ID=ORF38;Name=ORF38;
+NC_001491.2	Tombacz_et_al	transcript	69807	71034	.	+	.	ID=ORF38-Monocistronic-Short-novTX_94;Name=ORF38-Monocistronic-Short-novTX_94;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	70249	71034	.	+	.	ID=ORF38-Putative mRNA-novTX_96;Name=ORF38-Putative mRNA-novTX_96;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	71119	73833	.	+	.	ID=ORF39;Name=ORF39;
+NC_001491.2	Torma_et_al	transcript	70672	73833	.	+	.	ID=ORF39-L1;Name=ORF39-L1;
+NC_001491.2	Torma_et_al	transcript	70903	73833	.	+	.	ID=ORF39-L2;Name=ORF39-L2;
+NC_001491.2	Torma_et_al	transcript	73393	73833	.	+	.	ID=ORF39.5;Name=ORF39.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	3296	11072	.	+	.	ID=ORF4-ORF5-ORF6-ORF7-ORF8-CX;Name=ORF4-ORF5-ORF6-ORF7-ORF8-CX;
+NC_001491.2	Torma_et_al	transcript	74435	81892	.	+	.	ID=ORF40-ORF41-ORF42-CX;Name=ORF40-ORF41-ORF42-CX;
+NC_001491.2	Torma_et_al	transcript	76722	83096	.	+	.	ID=ORF41-ORF42-ORF43-PC-Canonic;Name=ORF41-ORF42-ORF43-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	76515	83096	.	+	.	ID=ORF41-ORF42-ORF43-PC-Long;Name=ORF41-ORF42-ORF43-PC-Long;
+NC_001491.2	Torma_et_al	transcript	76649	83096	.	+	.	ID=ORF41-ORF42-ORF43-PC-Long-2;Name=ORF41-ORF42-ORF43-PC-Long-2;
+NC_001491.2	Torma_et_al	transcript	76515	81894	.	+	.	ID=ORF41-ORF42-PC-Canonic;Name=ORF41-ORF42-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	76649	81894	.	+	.	ID=ORF41-ORF42-PC-Short;Name=ORF41-ORF42-PC-Short;
+NC_001491.2	Torma_et_al	transcript	76722	81894	.	+	.	ID=ORF41-ORF42-PC-Short-2;Name=ORF41-ORF42-PC-Short-2;
+NC_001491.2	Torma_et_al	transcript	77591	81894	.	+	.	ID=ORF42;Name=ORF42;
+NC_001491.2	Torma_et_al	transcript	77081	81894	.	+	.	ID=ORF42-L1;Name=ORF42-L1;
+NC_001491.2	Torma_et_al	transcript	77362	81894	.	+	.	ID=ORF42-L2;Name=ORF42-L2;
+NC_001491.2	Tombacz_et_al	transcript	77645	81894	.	+	.	ID=ORF42-Monocistronic-Long-novTX_104;Name=ORF42-Monocistronic-Long-novTX_104;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	77665	81894	.	+	.	ID=ORF42-Monocistronic-Long-novTX_252;Name=ORF42-Monocistronic-Long-novTX_252;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	77615	81894	.	+	.	ID=ORF42-Monocistronic-Long-novTX_325;Name=ORF42-Monocistronic-Long-novTX_325;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	77615	83096	.	+	.	ID=ORF42-Multicistronic-Long-novTX_102;Name=ORF42-Multicistronic-Long-novTX_102;TX_category=Multicistronic-Long
+NC_001491.2	Torma_et_al	transcript	77591	87824	.	+	.	ID=ORF42-ORF43-ORF45-ORF46-PC-Canonic;Name=ORF42-ORF43-ORF45-ORF46-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	77591	83096	.	+	.	ID=ORF42-ORF43-PC-Canonic;Name=ORF42-ORF43-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	77505	83096	.	+	.	ID=ORF42-ORF43-PC-Long;Name=ORF42-ORF43-PC-Long;
+NC_001491.2	Torma_et_al	transcript	77081	83096	.	+	.	ID=ORF42-ORF43-PC-Long-1;Name=ORF42-ORF43-PC-Long-1;
+NC_001491.2	Torma_et_al	transcript	77362	83096	.	+	.	ID=ORF42-ORF43-PC-Long-2;Name=ORF42-ORF43-PC-Long-2;
+NC_001491.2	Tombacz_et_al	transcript	78089	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_107;Name=ORF42-Putative mRNA-novTX_107;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79076	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_131;Name=ORF42-Putative mRNA-novTX_131;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79636	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_139;Name=ORF42-Putative mRNA-novTX_139;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79748	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_144;Name=ORF42-Putative mRNA-novTX_144;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79957	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_146;Name=ORF42-Putative mRNA-novTX_146;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79972	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_147;Name=ORF42-Putative mRNA-novTX_147;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	80198	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_150;Name=ORF42-Putative mRNA-novTX_150;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	80354	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_153;Name=ORF42-Putative mRNA-novTX_153;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	80615	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_155;Name=ORF42-Putative mRNA-novTX_155;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	78779	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_255;Name=ORF42-Putative mRNA-novTX_255;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	78932	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_257;Name=ORF42-Putative mRNA-novTX_257;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79609	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_259;Name=ORF42-Putative mRNA-novTX_259;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	79808	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_260;Name=ORF42-Putative mRNA-novTX_260;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81304	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_303;Name=ORF42-Putative mRNA-novTX_303;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81304	81892	.	+	.	ID=ORF42-Putative mRNA-novTX_311;Name=ORF42-Putative mRNA-novTX_311;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	80709	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_314;Name=ORF42-Putative mRNA-novTX_314;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81328	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_315;Name=ORF42-Putative mRNA-novTX_315;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81077	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_326;Name=ORF42-Putative mRNA-novTX_326;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81499	81892	.	+	.	ID=ORF42-Putative mRNA-novTX_327;Name=ORF42-Putative mRNA-novTX_327;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	80964	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_336;Name=ORF42-Putative mRNA-novTX_336;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	81499	81894	.	+	.	ID=ORF42-Putative mRNA-novTX_338;Name=ORF42-Putative mRNA-novTX_338;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	81905	83096	.	+	.	ID=ORF43;Name=ORF43;
+NC_001491.2	Torma_et_al	transcript	78636	83096	.	+	.	ID=ORF43-L1;Name=ORF43-L1;
+NC_001491.2	Torma_et_al	transcript	79161	83096	.	+	.	ID=ORF43-L2;Name=ORF43-L2;
+NC_001491.2	Torma_et_al	transcript	79666	83096	.	+	.	ID=ORF43-L3;Name=ORF43-L3;
+NC_001491.2	Torma_et_al	transcript	79946	83096	.	+	.	ID=ORF43-L4;Name=ORF43-L4;
+NC_001491.2	Torma_et_al	transcript	80246	83096	.	+	.	ID=ORF43-L5;Name=ORF43-L5;
+NC_001491.2	Torma_et_al	transcript	80796	83096	.	+	.	ID=ORF43-L6;Name=ORF43-L6;
+NC_001491.2	Torma_et_al	transcript	81008	83096	.	+	.	ID=ORF43-L7;Name=ORF43-L7;
+NC_001491.2	Tombacz_et_al	transcript	81892	83096	.	+	.	ID=ORF43-Monocistronic-Long-novTX_160;Name=ORF43-Monocistronic-Long-novTX_160;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	79972	83096	.	+	.	ID=ORF43-Monocistronic-Long-novTX_348;Name=ORF43-Monocistronic-Long-novTX_348;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	81919	83096	.	+	.	ID=ORF43-Monocistronic-Short-novTX_161;Name=ORF43-Monocistronic-Short-novTX_161;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	81905	87824	.	+	.	ID=ORF43-ORF45-ORF46-PC-Canonic;Name=ORF43-ORF45-ORF46-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	84369	93028	.	+	.	ID=ORF45-ORF46-ORF48-ORF49-ORF50-ORF51-PC-Canonic;Name=ORF45-ORF46-ORF48-ORF49-ORF50-ORF51-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	84369	87824	.	+	.	ID=ORF45-ORF46-PC-Canonic;Name=ORF45-ORF46-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	82842	87824	.	+	.	ID=ORF45-ORF46-PC-Long-1;Name=ORF45-ORF46-PC-Long-1;
+NC_001491.2	Torma_et_al	transcript	84189	87824	.	+	.	ID=ORF45-ORF46-PC-Long-2;Name=ORF45-ORF46-PC-Long-2;
+NC_001491.2	Torma_et_al	transcript	84295	87824	.	+	.	ID=ORF45-ORF46-PC-Long-3;Name=ORF45-ORF46-PC-Long-3;
+NC_001491.2	Torma_et_al	transcript	86362	87824	.	+	.	ID=ORF46;Name=ORF46;
+NC_001491.2	Torma_et_al	transcript	84815	87824	.	+	.	ID=ORF46-L1;Name=ORF46-L1;
+NC_001491.2	Tombacz_et_al	transcript	86383	87824	.	+	.	ID=ORF46-Monocistronic-Short-novTX_318;Name=ORF46-Monocistronic-Short-novTX_318;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	87562	87824	.	+	.	ID=ORF46-Non-coding-novTX_165;Name=ORF46-Non-coding-novTX_165;TX_category=Non-coding
+NC_001491.2	Torma_et_al	transcript	84907	93028	.	+	.	ID=ORF46-ORF48-ORF49-ORF50;Name=ORF46-ORF48-ORF49-ORF50;
+NC_001491.2	Torma_et_al	transcript	86362	98004	.	+	.	ID=ORF46-ORF48-ORF49-ORF50-ORF51-ORF52-ORF53-CX-Canonic;Name=ORF46-ORF48-ORF49-ORF50-ORF51-ORF52-ORF53-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	86362	93028	.	+	.	ID=ORF46-ORF48-ORF49-ORF50-ORF51-PC-Canonic;Name=ORF46-ORF48-ORF49-ORF50-ORF51-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	87844	99343	.	+	.	ID=ORF48-ORF49-ORF50-ORF51-ORF52-ORF53-ORF54;Name=ORF48-ORF49-ORF50-ORF51-ORF52-ORF53-ORF54;
+NC_001491.2	Torma_et_al	transcript	88589	93028	.	+	.	ID=ORF48-ORF49-ORF50-ORF51-PC-Canonic;Name=ORF48-ORF49-ORF50-ORF51-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	88429	93028	.	+	.	ID=ORF48-ORF49-ORF50-ORF51-PC-Long;Name=ORF48-ORF49-ORF50-ORF51-PC-Long;
+NC_001491.2	Torma_et_al	transcript	87846	93028	.	+	.	ID=ORF48-ORF49-ORF50-ORF51-PC-Long-1;Name=ORF48-ORF49-ORF50-ORF51-PC-Long-1;
+NC_001491.2	Torma_et_al	transcript	88297	93028	.	+	.	ID=ORF48-ORF49-ORF50-ORF51-PC-Long-2;Name=ORF48-ORF49-ORF50-ORF51-PC-Long-2;
+NC_001491.2	Torma_et_al	transcript	89351	93028	.	+	.	ID=ORF49-ORF50-ORF51-PC-Canonic;Name=ORF49-ORF50-ORF51-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	89189	93028	.	+	.	ID=ORF49-ORF50-ORF51-PC-Long;Name=ORF49-ORF50-ORF51-PC-Long;
+NC_001491.2	Torma_et_al	transcript	3872	11067	.	+	.	ID=ORF5-ORF6-ORF7-ORF8-CX-Canonic;Name=ORF5-ORF6-ORF7-ORF8-CX-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	90650	93028	.	+	.	ID=ORF50-Multicistronic-Long-novTX_168;Name=ORF50-Multicistronic-Long-novTX_168;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	90663	93028	.	+	.	ID=ORF50-Multicistronic-Long-novTX_169;Name=ORF50-Multicistronic-Long-novTX_169;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	90707	93028	.	+	.	ID=ORF50-Multicistronic-Long-novTX_172;Name=ORF50-Multicistronic-Long-novTX_172;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	90784	93028	.	+	.	ID=ORF50-Multicistronic-Short-novTX_175;Name=ORF50-Multicistronic-Short-novTX_175;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	90734	93028	.	+	.	ID=ORF50-Multicistronic-Short-novTX_265;Name=ORF50-Multicistronic-Short-novTX_265;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	transcript	90722	93028	.	+	.	ID=ORF50-ORF51-Canonic;Name=ORF50-ORF51-Canonic;
+NC_001491.2	Torma_et_al	transcript	90586	93028	.	+	.	ID=ORF50-ORF51-PC-Long;Name=ORF50-ORF51-PC-Long;
+NC_001491.2	Torma_et_al	transcript	90226	93028	.	+	.	ID=ORF50-ORF51-PC-Long-1;Name=ORF50-ORF51-PC-Long-1;
+NC_001491.2	Torma_et_al	transcript	90686	93028	.	+	.	ID=ORF50-ORF51-PC-Long-2;Name=ORF50-ORF51-PC-Long-2;
+NC_001491.2	Torma_et_al	transcript	92730	93028	.	+	.	ID=ORF51;Name=ORF51;
+NC_001491.2	Tombacz_et_al	transcript	91202	93028	.	+	.	ID=ORF51-Monocistronic-Long-novTX_180;Name=ORF51-Monocistronic-Long-novTX_180;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	92378	93028	.	+	.	ID=ORF51-Monocistronic-Long-novTX_182;Name=ORF51-Monocistronic-Long-novTX_182;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	92455	93028	.	+	.	ID=ORF51-Monocistronic-Long-novTX_291;Name=ORF51-Monocistronic-Long-novTX_291;TX_category=Monocistronic-Long
+NC_001491.2	Torma_et_al	transcript	92409	99345	.	+	.	ID=ORF51-ORF52-ORF53-ORF54-CX-Canonic;Name=ORF51-ORF52-ORF53-ORF54-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	92786	99345	.	+	.	ID=ORF52-ORF53-ORF54-CX-Canonic;Name=ORF52-ORF53-ORF54-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	94358	98004	.	+	.	ID=ORF53-Canonic;Name=ORF53-Canonic;
+NC_001491.2	Torma_et_al	transcript	94358	105827	.	+	.	ID=ORF53-ORF54-ORF55-ORF56-ORF57-ORF58;Name=ORF53-ORF54-ORF55-ORF56-ORF57-ORF58;
+NC_001491.2	Torma_et_al	transcript	94358	99345	.	+	.	ID=ORF53-ORF54-PC-Canonic;Name=ORF53-ORF54-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	95968	98004	.	+	.	ID=ORF53.5;Name=ORF53.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	96454	99345	.	+	.	ID=ORF54;Name=ORF54;
+NC_001491.2	Torma_et_al	transcript	94861	99345	.	+	.	ID=ORF54-L1;Name=ORF54-L1;
+NC_001491.2	Torma_et_al	transcript	95199	99345	.	+	.	ID=ORF54-L2;Name=ORF54-L2;
+NC_001491.2	Torma_et_al	transcript	95968	99345	.	+	.	ID=ORF54-L3;Name=ORF54-L3;
+NC_001491.2	Torma_et_al	transcript	96454	105147	.	+	.	ID=ORF54-ORF55-ORF56-ORF57-CX-Canonic;Name=ORF54-ORF55-ORF56-ORF57-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=ORF54-ORF55-ORF56-ORF57-ORF58-CX-Canonic;Name=ORF54-ORF55-ORF56-ORF57-ORF58-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	96925	99345	.	+	.	ID=ORF54-S;Name=ORF54-S;
+NC_001491.2	Torma_et_al	transcript	98261	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Canonic;Name=ORF55-ORF56-ORF57-ORF58-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	98162	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Long;Name=ORF55-ORF56-ORF57-ORF58-CX-Long;
+NC_001491.2	Torma_et_al	transcript	97150	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Long-1;Name=ORF55-ORF56-ORF57-ORF58-CX-Long-1;
+NC_001491.2	Torma_et_al	transcript	97642	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Long-2;Name=ORF55-ORF56-ORF57-ORF58-CX-Long-2;
+NC_001491.2	Torma_et_al	transcript	98789	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-1;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-1;
+NC_001491.2	Torma_et_al	transcript	99014	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-2;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-2;
+NC_001491.2	Torma_et_al	transcript	99095	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-3;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-3;
+NC_001491.2	Torma_et_al	transcript	99177	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-4;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-4;
+NC_001491.2	Torma_et_al	transcript	98304	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-5;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-5;
+NC_001491.2	Torma_et_al	transcript	98413	105836	.	+	.	ID=ORF55-ORF56-ORF57-ORF58-CX-Short-6;Name=ORF55-ORF56-ORF57-ORF58-CX-Short-6;
+NC_001491.2	Torma_et_al	transcript	99648	105836	.	+	.	ID=ORF56-ORF57-ORF58-CX-Canonic;Name=ORF56-ORF57-ORF58-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	99583	105836	.	+	.	ID=ORF56-ORF57-ORF58-CX-Long;Name=ORF56-ORF57-ORF58-CX-Long;
+NC_001491.2	Torma_et_al	transcript	100129	105836	.	+	.	ID=ORF56-ORF57-ORF58-CX-Short;Name=ORF56-ORF57-ORF58-CX-Short;
+NC_001491.2	Torma_et_al	transcript	99859	105836	.	+	.	ID=ORF56-ORF57-ORF58-CX-Short-1;Name=ORF56-ORF57-ORF58-CX-Short-1;
+NC_001491.2	Torma_et_al	transcript	100060	105836	.	+	.	ID=ORF56-ORF57-ORF58-CX-Short-2;Name=ORF56-ORF57-ORF58-CX-Short-2;
+NC_001491.2	Torma_et_al	transcript	102277	105147	.	+	.	ID=ORF57;Name=ORF57;
+NC_001491.2	Torma_et_al	transcript	101606	105836	.	+	.	ID=ORF57-ORF58-PC-Canonic;Name=ORF57-ORF58-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	100852	105836	.	+	.	ID=ORF57-ORF58-PC-Long-1;Name=ORF57-ORF58-PC-Long-1;
+NC_001491.2	Torma_et_al	transcript	101126	105836	.	+	.	ID=ORF57-ORF58-PC-Long-2;Name=ORF57-ORF58-PC-Long-2;
+NC_001491.2	Torma_et_al	transcript	101331	105836	.	+	.	ID=ORF57-ORF58-PC-Long-3;Name=ORF57-ORF58-PC-Long-3;
+NC_001491.2	Torma_et_al	transcript	101690	105836	.	+	.	ID=ORF57-ORF58-PC-Short;Name=ORF57-ORF58-PC-Short;
+NC_001491.2	Torma_et_al	transcript	102277	105836	.	+	.	ID=ORF57-ORF58-PC-Short-2;Name=ORF57-ORF58-PC-Short-2;
+NC_001491.2	Torma_et_al	transcript	102368	105836	.	+	.	ID=ORF57-ORF58-PC-Short-3;Name=ORF57-ORF58-PC-Short-3;
+NC_001491.2	Torma_et_al	transcript	103733	105147	.	+	.	ID=ORF57.5;Name=ORF57.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	104496	105147	.	+	.	ID=ORF57.6;Name=ORF57.6;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	104814	105147	.	+	.	ID=ORF57.7;Name=ORF57.7;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	105006	105836	.	+	.	ID=ORF58;Name=ORF58;
+NC_001491.2	Torma_et_al	transcript	102672	105836	.	+	.	ID=ORF58-L1;Name=ORF58-L1;
+NC_001491.2	Torma_et_al	transcript	103143	105836	.	+	.	ID=ORF58-L2;Name=ORF58-L2;
+NC_001491.2	Torma_et_al	transcript	103399	105836	.	+	.	ID=ORF58-L3;Name=ORF58-L3;
+NC_001491.2	Torma_et_al	transcript	103733	105836	.	+	.	ID=ORF58-L4;Name=ORF58-L4;
+NC_001491.2	Torma_et_al	transcript	105456	105836	.	+	.	ID=ORF58.5;Name=ORF58.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	5397	13517	.	+	.	ID=ORF6-ORF7-ORF8-ORF9-ORF10-ORF11;Name=ORF6-ORF7-ORF8-ORF9-ORF10-ORF11;
+NC_001491.2	Torma_et_al	transcript	143946	149339	.	+	.	ID=ORF64.1-L1;Name=ORF64.1-L1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	144404	149339	.	+	.	ID=ORF64_2;Name=ORF64_2;
+NC_001491.2	Torma_et_al	transcript	121002	122451	.	+	.	ID=ORF65;Name=ORF65;
+NC_001491.2	Torma_et_al	transcript	120072	122451	.	+	.	ID=ORF65-L1;Name=ORF65-L1;
+NC_001491.2	Tombacz_et_al	transcript	122289	122451	.	+	.	ID=ORF65-Non-coding-intergenic-novTX_211;Name=ORF65-Non-coding-intergenic-novTX_211;TX_category=Non-coding-intergenic
+NC_001491.2	Tombacz_et_al	transcript	122298	122451	.	+	.	ID=ORF65-Non-coding-intergenic-novTX_347;Name=ORF65-Non-coding-intergenic-novTX_347;TX_category=Non-coding-intergenic
+NC_001491.2	Tombacz_et_al	transcript	121887	122451	.	+	.	ID=ORF65-Non-coding-novTX_203;Name=ORF65-Non-coding-novTX_203;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	121953	122451	.	+	.	ID=ORF65-Non-coding-novTX_204;Name=ORF65-Non-coding-novTX_204;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	121973	122451	.	+	.	ID=ORF65-Non-coding-novTX_205;Name=ORF65-Non-coding-novTX_205;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122047	122451	.	+	.	ID=ORF65-Non-coding-novTX_206;Name=ORF65-Non-coding-novTX_206;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122078	122451	.	+	.	ID=ORF65-Non-coding-novTX_207;Name=ORF65-Non-coding-novTX_207;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122127	122451	.	+	.	ID=ORF65-Non-coding-novTX_208;Name=ORF65-Non-coding-novTX_208;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122214	122451	.	+	.	ID=ORF65-Non-coding-novTX_209;Name=ORF65-Non-coding-novTX_209;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	121769	122451	.	+	.	ID=ORF65-Non-coding-novTX_269;Name=ORF65-Non-coding-novTX_269;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122010	122451	.	+	.	ID=ORF65-Non-coding-novTX_270;Name=ORF65-Non-coding-novTX_270;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	121801	122451	.	+	.	ID=ORF65-Non-coding-novTX_304;Name=ORF65-Non-coding-novTX_304;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	122245	122451	.	+	.	ID=ORF65-Non-coding-novTX_337;Name=ORF65-Non-coding-novTX_337;TX_category=Non-coding
+NC_001491.2	Torma_et_al	transcript	120997	123600	.	+	.	ID=ORF65-ORF66-PC;Name=ORF65-ORF66-PC;
+NC_001491.2	Tombacz_et_al	transcript	121687	122451	.	+	.	ID=ORF65-Putative mRNA-novTX_201;Name=ORF65-Putative mRNA-novTX_201;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	121617	122451	.	+	.	ID=ORF65-Putative mRNA-novTX_340;Name=ORF65-Putative mRNA-novTX_340;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	121300	122451	.	+	.	ID=ORF65-S;Name=ORF65-S;
+NC_001491.2	Torma_et_al	transcript	122825	123602	.	+	.	ID=ORF66;Name=ORF66;
+NC_001491.2	Tombacz_et_al	transcript	137847	138877	.	+	.	ID=ORF67-Monocistronic-Short-novTX_2;Name=ORF67-Monocistronic-Short-novTX_2;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	137965	138877	.	+	.	ID=ORF67-Monocistronic-Short-novTX_295;Name=ORF67-Monocistronic-Short-novTX_295;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	137911	138877	.	+	.	ID=ORF67-Monocistronic-Short-novTX_3;Name=ORF67-Monocistronic-Short-novTX_3;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	137864	138877	.	+	.	ID=ORF67-Monocistronic-Short-novTX_321;Name=ORF67-Monocistronic-Short-novTX_321;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	137925	138877	.	+	.	ID=ORF67-Monocistronic-Short-novTX_323;Name=ORF67-Monocistronic-Short-novTX_323;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	124305	131598	.	+	.	ID=ORF67-ORF68-ORF69-ORF70-ORF71;Name=ORF67-ORF68-ORF69-ORF70-ORF71;
+NC_001491.2	Tombacz_et_al	transcript	138482	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_243;Name=ORF67-Putative mRNA-novTX_243;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138098	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_277;Name=ORF67-Putative mRNA-novTX_277;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138418	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_278;Name=ORF67-Putative mRNA-novTX_278;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138566	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_279;Name=ORF67-Putative mRNA-novTX_279;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138290	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_307;Name=ORF67-Putative mRNA-novTX_307;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138254	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_317;Name=ORF67-Putative mRNA-novTX_317;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138529	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_335;Name=ORF67-Putative mRNA-novTX_335;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138308	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_351;Name=ORF67-Putative mRNA-novTX_351;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138175	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_6;Name=ORF67-Putative mRNA-novTX_6;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138216	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_7;Name=ORF67-Putative mRNA-novTX_7;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	138374	138877	.	+	.	ID=ORF67-Putative mRNA-novTX_8;Name=ORF67-Putative mRNA-novTX_8;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	137825	138877	.	+	.	ID=ORF67.1;Name=ORF67.1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	126338	127862	.	+	.	ID=ORF69;Name=ORF69;
+NC_001491.2	Torma_et_al	transcript	126338	131601	.	+	.	ID=ORF69-ORF70-ORF71-PC-Canonic;Name=ORF69-ORF70-ORF71-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	126338	128944	.	+	.	ID=ORF69-ORF70-PC-Canonic;Name=ORF69-ORF70-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	6466	11067	.	+	.	ID=ORF7-ORF8-CX-Canonic;Name=ORF7-ORF8-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	6149	11067	.	+	.	ID=ORF7-ORF8-CX-Long;Name=ORF7-ORF8-CX-Long;
+NC_001491.2	Torma_et_al	transcript	127634	128944	.	+	.	ID=ORF70;Name=ORF70;
+NC_001491.2	Torma_et_al	transcript	126413	128944	.	+	.	ID=ORF70-L1;Name=ORF70-L1;
+NC_001491.2	Torma_et_al	transcript	126875	128944	.	+	.	ID=ORF70-L2;Name=ORF70-L2;
+NC_001491.2	Tombacz_et_al	transcript	127655	128944	.	+	.	ID=ORF70-Monocistronic-Short-novTX_214;Name=ORF70-Monocistronic-Short-novTX_214;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	127634	134249	.	+	.	ID=ORF70-ORF71-ORF72-ORF73-PC-Canonic;Name=ORF70-ORF71-ORF72-ORF73-PC-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	127926	128944	.	+	.	ID=ORF70-Putative mRNA-novTX_216;Name=ORF70-Putative mRNA-novTX_216;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	129051	131601	.	+	.	ID=ORF71;Name=ORF71;
+NC_001491.2	Tombacz_et_al	transcript	130283	131598	.	+	.	ID=ORF71-Non-coding-novTX_219;Name=ORF71-Non-coding-novTX_219;TX_category=Non-coding
+NC_001491.2	Torma_et_al	transcript	129051	134249	.	+	.	ID=ORF71-ORF72-ORF73-PC-Canonic;Name=ORF71-ORF72-ORF73-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	131126	131601	.	+	.	ID=ORF71.5;Name=ORF71.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	130634	136464	.	+	.	ID=ORF72-ORF73-ORF74-ORF75-PC-Canonic;Name=ORF72-ORF73-ORF74-ORF75-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	131515	134249	.	+	.	ID=ORF72-ORF73-PC-Canonic;Name=ORF72-ORF73-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	130201	134249	.	+	.	ID=ORF72-ORF73-PC-Long;Name=ORF72-ORF73-PC-Long;
+NC_001491.2	Torma_et_al	transcript	129474	134249	.	+	.	ID=ORF72-ORF73-PC-Long-1;Name=ORF72-ORF73-PC-Long-1;
+NC_001491.2	Torma_et_al	transcript	130020	134249	.	+	.	ID=ORF72-ORF73-PC-Long-2;Name=ORF72-ORF73-PC-Long-2;
+NC_001491.2	Torma_et_al	transcript	130853	134249	.	+	.	ID=ORF72-ORF73-PC-Long-3;Name=ORF72-ORF73-PC-Long-3;
+NC_001491.2	Torma_et_al	transcript	131126	134249	.	+	.	ID=ORF72-ORF73-PC-Long-4;Name=ORF72-ORF73-PC-Long-4;
+NC_001491.2	Torma_et_al	transcript	131035	134249	.	+	.	ID=ORF72-ORF73-PC-Long-5;Name=ORF72-ORF73-PC-Long-5;
+NC_001491.2	Torma_et_al	transcript	132857	134249	.	+	.	ID=ORF73;Name=ORF73;
+NC_001491.2	Torma_et_al	transcript	132176	134249	.	+	.	ID=ORF73-L1;Name=ORF73-L1;
+NC_001491.2	Tombacz_et_al	transcript	132880	134249	.	+	.	ID=ORF73-Monocistronic-Short-novTX_223;Name=ORF73-Monocistronic-Short-novTX_223;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	132988	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_224;Name=ORF73-Putative mRNA-novTX_224;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	133013	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_225;Name=ORF73-Putative mRNA-novTX_225;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	133322	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_226;Name=ORF73-Putative mRNA-novTX_226;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	133335	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_227;Name=ORF73-Putative mRNA-novTX_227;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	133698	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_229;Name=ORF73-Putative mRNA-novTX_229;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	133839	134249	.	+	.	ID=ORF73-Putative mRNA-novTX_316;Name=ORF73-Putative mRNA-novTX_316;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	134347	138877	.	+	.	ID=ORF74-ORF75-ORF76-ORF67-PC-Canonic;Name=ORF74-ORF75-ORF76-ORF67-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	134347	136464	.	+	.	ID=ORF74-ORF75-PC-Canonic;Name=ORF74-ORF75-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	135564	136464	.	+	.	ID=ORF75;Name=ORF75;
+NC_001491.2	Tombacz_et_al	transcript	134995	136464	.	+	.	ID=ORF75-Monocistronic-Long-novTX_230;Name=ORF75-Monocistronic-Long-novTX_230;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	135013	136464	.	+	.	ID=ORF75-Monocistronic-Long-novTX_231;Name=ORF75-Monocistronic-Long-novTX_231;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	135581	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_232;Name=ORF75-Monocistronic-Short-novTX_232;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135613	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_233;Name=ORF75-Monocistronic-Short-novTX_233;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135684	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_235;Name=ORF75-Monocistronic-Short-novTX_235;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135785	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_236;Name=ORF75-Monocistronic-Short-novTX_236;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135916	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_237;Name=ORF75-Monocistronic-Short-novTX_237;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135791	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_275;Name=ORF75-Monocistronic-Short-novTX_275;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135935	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_305;Name=ORF75-Monocistronic-Short-novTX_305;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	135768	136464	.	+	.	ID=ORF75-Monocistronic-Short-novTX_328;Name=ORF75-Monocistronic-Short-novTX_328;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	135564	138877	.	+	.	ID=ORF75-ORF76-ORF67-PC-Canonic;Name=ORF75-ORF76-ORF67-PC-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	136088	136464	.	+	.	ID=ORF75-Putative mRNA-novTX_276;Name=ORF75-Putative mRNA-novTX_276;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	136555	138877	.	+	.	ID=ORF76-ORF67-PC-Long;Name=ORF76-ORF67-PC-Long;
+NC_001491.2	Torma_et_al	transcript	136601	138877	.	+	.	ID=ORF76-ORF67-PC-Short;Name=ORF76-ORF67-PC-Short;
+NC_001491.2	Torma_et_al	transcript	136583	138877	.	+	.	ID=ORF76-ORF67.1-PC-Canonic;Name=ORF76-ORF67.1-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	10080	11067	.	+	.	ID=ORF8;Name=ORF8;
+NC_001491.2	Torma_et_al	transcript	7110	11067	.	+	.	ID=ORF8-L1;Name=ORF8-L1;
+NC_001491.2	Torma_et_al	transcript	7689	11067	.	+	.	ID=ORF8-L2;Name=ORF8-L2;
+NC_001491.2	Tombacz_et_al	transcript	10068	11072	.	+	.	ID=ORF8-Monocistronic-Long-novTX_322;Name=ORF8-Monocistronic-Long-novTX_322;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	10054	11072	.	+	.	ID=ORF8-Monocistronic-Long-novTX_331;Name=ORF8-Monocistronic-Long-novTX_331;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	10095	11072	.	+	.	ID=ORF8-Monocistronic-Short-novTX_332;Name=ORF8-Monocistronic-Short-novTX_332;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	7110	13520	.	+	.	ID=ORF8-ORF9-ORF10-ORF11-CX-Long;Name=ORF8-ORF9-ORF10-ORF11-CX-Long;
+NC_001491.2	Torma_et_al	transcript	10080	13520	.	+	.	ID=ORF8-ORF9-ORF10-ORF11-CX-Short;Name=ORF8-ORF9-ORF10-ORF11-CX-Short;
+NC_001491.2	Tombacz_et_al	transcript	10458	11072	.	+	.	ID=ORF8-Putative mRNA-novTX_251;Name=ORF8-Putative mRNA-novTX_251;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	10444	11072	.	+	.	ID=ORF8-Putative mRNA-novTX_310;Name=ORF8-Putative mRNA-novTX_310;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	10875	13520	.	+	.	ID=ORF9-ORF10-ORF11-CX-Canonic;Name=ORF9-ORF10-ORF11-CX-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	82060	83096	.	+	.	ID=ORFF43-Monocistronic-Short-novTX_263;Name=ORFF43-Monocistronic-Short-novTX_263;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR1063;Name=TR1063;
+NC_001491.2	Torma_et_al	transcript	96454	98004	.	+	.	ID=TR1064;Name=TR1064;
+NC_001491.2	Torma_et_al	transcript	96454	99345	.	+	.	ID=TR1065;Name=TR1065;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR1066;Name=TR1066;
+NC_001491.2	Torma_et_al	transcript	96454	99345	.	+	.	ID=TR1067;Name=TR1067;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR1068;Name=TR1068;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR1069;Name=TR1069;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR1070;Name=TR1070;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR1071;Name=TR1071;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR1072;Name=TR1072;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR1073;Name=TR1073;
+NC_001491.2	Torma_et_al	transcript	97088	105836	.	+	.	ID=TR1087;Name=TR1087;
+NC_001491.2	Torma_et_al	transcript	98035	105836	.	+	.	ID=TR1119;Name=TR1119;
+NC_001491.2	Torma_et_al	transcript	103143	105836	.	+	.	ID=TR1156;Name=TR1156;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR1165;Name=TR1165;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR1166;Name=TR1166;
+NC_001491.2	Torma_et_al	transcript	96454	98004	.	+	.	ID=TR1167;Name=TR1167;
+NC_001491.2	Torma_et_al	transcript	97150	105836	.	+	.	ID=TR1168;Name=TR1168;
+NC_001491.2	Torma_et_al	transcript	103143	105836	.	+	.	ID=TR20;Name=TR20;
+NC_001491.2	Torma_et_al	transcript	118878	119749	.	+	.	ID=TR27;Name=TR27;
+NC_001491.2	Torma_et_al	transcript	119050	119857	.	+	.	ID=TR29;Name=TR29;
+NC_001491.2	Torma_et_al	transcript	120382	122451	.	+	.	ID=TR30;Name=TR30;
+NC_001491.2	Torma_et_al	transcript	6149	11067	.	+	.	ID=TR34;Name=TR34;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR40;Name=TR40;
+NC_001491.2	Torma_et_al	transcript	96454	105836	.	+	.	ID=TR41;Name=TR41;
+NC_001491.2	Torma_et_al	transcript	102672	105836	.	+	.	ID=TR468;Name=TR468;
+NC_001491.2	Torma_et_al	transcript	105006	105836	.	+	.	ID=TR524;Name=TR524;
+NC_001491.2	Torma_et_al	transcript	118878	119749	.	+	.	ID=TR544;Name=TR544;
+NC_001491.2	Torma_et_al	transcript	118878	119857	.	+	.	ID=TR545;Name=TR545;
+NC_001491.2	Torma_et_al	transcript	118878	119857	.	+	.	ID=TR546;Name=TR546;
+NC_001491.2	Torma_et_al	transcript	119050	119857	.	+	.	ID=TR551;Name=TR551;
+NC_001491.2	Torma_et_al	transcript	120072	122451	.	+	.	ID=TR561;Name=TR561;
+NC_001491.2	Torma_et_al	transcript	120072	122451	.	+	.	ID=TR562;Name=TR562;
+NC_001491.2	Torma_et_al	transcript	120382	122451	.	+	.	ID=TR564;Name=TR564;
+NC_001491.2	Torma_et_al	transcript	121002	122451	.	+	.	ID=TR565;Name=TR565;
+NC_001491.2	Torma_et_al	transcript	121002	122451	.	+	.	ID=TR566;Name=TR566;
+NC_001491.2	Torma_et_al	transcript	6149	11067	.	+	.	ID=TR848;Name=TR848;
+NC_001491.2	Torma_et_al	transcript	6466	11067	.	+	.	ID=TR877;Name=TR877;
+NC_001491.2	Torma_et_al	transcript	6466	11067	.	+	.	ID=TR878;Name=TR878;
+NC_001491.2	Torma_et_al	transcript	66315	71034	.	+	.	ID=TR886;Name=TR886;
+NC_001491.2	Torma_et_al	transcript	66576	71034	.	+	.	ID=TR888;Name=TR888;
+NC_001491.2	Torma_et_al	transcript	66600	71034	.	+	.	ID=TR889;Name=TR889;
+NC_001491.2	Torma_et_al	transcript	66701	71034	.	+	.	ID=TR891;Name=TR891;
+NC_001491.2	Torma_et_al	transcript	68373	71034	.	+	.	ID=TR894;Name=TR894;
+NC_001491.2	Torma_et_al	transcript	7110	11067	.	+	.	ID=TR912;Name=TR912;
+NC_001491.2	Torma_et_al	transcript	7689	11067	.	+	.	ID=TR929;Name=TR929;
+NC_001491.2	Torma_et_al	transcript	7689	11067	.	+	.	ID=TR930;Name=TR930;
+NC_001491.2	Torma_et_al	transcript	121002	123602	.	+	.	ID=TR_5229-ORF65-ORF66-PC-Canonic;Name=TR_5229-ORF65-ORF66-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	20396	20968	.	+	.	ID=as15;Name=as15;
+NC_001491.2	Torma_et_al	transcript	23857	24419	.	+	.	ID=as17-Canonic;Name=as17-Canonic;
+NC_001491.2	Torma_et_al	transcript	23079	24419	.	+	.	ID=as17-Long-3;Name=as17-Long-3;
+NC_001491.2	Torma_et_al	transcript	23686	24419	.	+	.	ID=as17-Long1;Name=as17-Long1;
+NC_001491.2	Torma_et_al	transcript	23099	24419	.	+	.	ID=as17-Long2;Name=as17-Long2;
+NC_001491.2	Torma_et_al	transcript	66315	67175	.	+	.	ID=as35;Name=as35;
+NC_001491.2	Torma_et_al	transcript	20457	23721	.	+	.	ID=asORF15-ORF16;Name=asORF15-ORF16;
+NC_001491.2	Torma_et_al	transcript	122066	122451	.	+	.	ID=nct65-Canonic;Name=nct65-Canonic;
+NC_001491.2	Torma_et_al	transcript	121788	122451	.	+	.	ID=nct65-Long;Name=nct65-Long;
+NC_001491.2	Torma_et_al	transcript	122258	122451	.	+	.	ID=nct65-Short;Name=nct65-Short;
+NC_001491.2	Tombacz_et_al	transcript	73834	75173	.	-	.	ID=CTO-CTO-L-2-novTX_503;Name=CTO-CTO-L-2-novTX_503;TX_category=CTO-L-2
+NC_001491.2	Tombacz_et_al	transcript	73834	74215	.	-	.	ID=CTO-CTO-L-novTX_758;Name=CTO-CTO-L-novTX_758;TX_category=CTO-L
+NC_001491.2	Torma_et_al	transcript	73834	74257	.	-	.	ID=CTO-L;Name=CTO-L;
+NC_001491.2	Tombacz_et_al	transcript	73834	74017	.	-	.	ID=CTO-Non-coding-short-novTX_464;Name=CTO-Non-coding-short-novTX_464;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	73834	74049	.	-	.	ID=CTO-Non-coding-short-novTX_465;Name=CTO-Non-coding-short-novTX_465;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	73834	74145	.	-	.	ID=CTO-Non-coding-short-novTX_467;Name=CTO-Non-coding-short-novTX_467;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	73834	74113	.	-	.	ID=CTO-Non-coding-short-novTX_701;Name=CTO-Non-coding-short-novTX_701;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	73834	74171	.	-	.	ID=CTO-Non-coding-short-novTX_779;Name=CTO-Non-coding-short-novTX_779;TX_category=Non-coding-short
+NC_001491.2	Torma_et_al	transcript	73834	74183	.	-	.	ID=CTO-S;Name=CTO-S;
+NC_001491.2	Torma_et_al	transcript	143303	144282	.	-	.	ID=NOIR-2-canonic;Name=NOIR-2-canonic;
+NC_001491.2	Torma_et_al	transcript	113821	120390	.	-	.	ID=NOIR-ORF64-CX-Canonic;Name=NOIR-ORF64-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	140709	144215	.	-	.	ID=NOIR-ORF65.1;Name=NOIR-ORF65.1;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	143303	144302	.	-	.	ID=NOIR_2-Non-coding-long-novTX_685;Name=NOIR_2-Non-coding-long-novTX_685;TX_category=Non-coding-long
+NC_001491.2	Tombacz_et_al	transcript	143303	144260	.	-	.	ID=NOIR_2-Non-coding-short-novTX_731;Name=NOIR_2-Non-coding-short-novTX_731;TX_category=Non-coding-short
+NC_001491.2	Torma_et_al	transcript	11064	12728	.	-	.	ID=ORF10-ORF9-CX-Canonic;Name=ORF10-ORF9-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	11064	12785	.	-	.	ID=ORF10-ORF9-CX-Long;Name=ORF10-ORF9-CX-Long;
+NC_001491.2	Torma_et_al	transcript	11064	12908	.	-	.	ID=ORF10-ORF9-CX-Long-2;Name=ORF10-ORF9-CX-Long-2;
+NC_001491.2	Torma_et_al	transcript	11064	13390	.	-	.	ID=ORF10-ORF9-CX-Long-3;Name=ORF10-ORF9-CX-Long-3;
+NC_001491.2	Torma_et_al	transcript	11064	14907	.	-	.	ID=ORF11-ORF10-ORF9-CX-Long;Name=ORF11-ORF10-ORF9-CX-Long;
+NC_001491.2	Torma_et_al	transcript	11064	15699	.	-	.	ID=ORF12-ORF11-ORF10-ORF9-CX-Canonic;Name=ORF12-ORF11-ORF10-ORF9-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	11064	15032	.	-	.	ID=ORF12-ORF11-ORF10-ORF9-CX-Short;Name=ORF12-ORF11-ORF10-ORF9-CX-Short;
+NC_001491.2	Torma_et_al	transcript	6010	14927	.	-	.	ID=ORF12-ORF11-ORF10-ORF9-ORF8-ORF7-ORF6;Name=ORF12-ORF11-ORF10-ORF9-ORF8-ORF7-ORF6;
+NC_001491.2	Torma_et_al	transcript	11121	18207	.	-	.	ID=ORF13-ORF12-ORF11-ORF10-ORF9;Name=ORF13-ORF12-ORF11-ORF10-ORF9;
+NC_001491.2	Torma_et_al	transcript	4391	19687	.	-	.	ID=ORF13-ORF12-ORF11-ORF10-ORF9-ORF8-ORF7-ORF6-ORF5-PC-Canonic;Name=ORF13-ORF12-ORF11-ORF10-ORF9-ORF8-ORF7-ORF6-ORF5-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	11062	20338	.	-	.	ID=ORF14-ORF13-ORF12-ORF11-ORF10-ORF9-CX-Canonic;Name=ORF14-ORF13-ORF12-ORF11-ORF10-ORF9-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	20383	21209	.	-	.	ID=ORF15;Name=ORF15;
+NC_001491.2	Torma_et_al	transcript	20383	22415	.	-	.	ID=ORF15-L1;Name=ORF15-L1;
+NC_001491.2	Tombacz_et_al	transcript	20383	22761	.	-	.	ID=ORF15-Monocistronic-Long-novTX_379;Name=ORF15-Monocistronic-Long-novTX_379;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	20383	22773	.	-	.	ID=ORF15-Monocistronic-Long-novTX_689;Name=ORF15-Monocistronic-Long-novTX_689;TX_category=Monocistronic-Long
+NC_001491.2	Torma_et_al	transcript	20383	22919	.	-	.	ID=ORF16-ORF15-PC-Canonic;Name=ORF16-ORF15-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	20383	23631	.	-	.	ID=ORF16-ORF15-PC-Long;Name=ORF16-ORF15-PC-Long;
+NC_001491.2	Torma_et_al	transcript	20383	22893	.	-	.	ID=ORF16-ORF15-PC-Short;Name=ORF16-ORF15-PC-Short;
+NC_001491.2	Torma_et_al	transcript	23010	24276	.	-	.	ID=ORF17;Name=ORF17;
+NC_001491.2	Torma_et_al	transcript	22942	24276	.	-	.	ID=ORF17-AT;Name=ORF17-AT;
+NC_001491.2	Torma_et_al	transcript	20383	24276	.	-	.	ID=ORF17-ORF16-ORF15-PC-Canonic;Name=ORF17-ORF16-ORF15-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	23010	29475	.	-	.	ID=ORF17-ORF18-ORF19-ORF20;Name=ORF17-ORF18-ORF19-ORF20;
+NC_001491.2	Torma_et_al	transcript	24413	25769	.	-	.	ID=ORF18;Name=ORF18;
+NC_001491.2	Torma_et_al	transcript	24413	26807	.	-	.	ID=ORF18-L1;Name=ORF18-L1;
+NC_001491.2	Torma_et_al	transcript	24413	27011	.	-	.	ID=ORF18-L2;Name=ORF18-L2;
+NC_001491.2	Torma_et_al	transcript	24413	27731	.	-	.	ID=ORF18-L3;Name=ORF18-L3;
+NC_001491.2	Torma_et_al	transcript	20383	25769	.	-	.	ID=ORF18-ORF17-ORF16-ORF15-PC-Canonic;Name=ORF18-ORF17-ORF16-ORF15-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	23010	25769	.	-	.	ID=ORF18-ORF17-PC-Canonic;Name=ORF18-ORF17-PC-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	24413	25666	.	-	.	ID=ORF18-Putative mRNA-novTX_384;Name=ORF18-Putative mRNA-novTX_384;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	24413	25077	.	-	.	ID=ORF18-Putative mRNA-novTX_732;Name=ORF18-Putative mRNA-novTX_732;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	24413	25679	.	-	.	ID=ORF18-Putative mRNA-novTX_746;Name=ORF18-Putative mRNA-novTX_746;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	24413	24630	.	-	.	ID=ORF18.5;Name=ORF18.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	1918	2672	.	-	.	ID=ORF2;Name=ORF2;
+NC_001491.2	Tombacz_et_al	transcript	1918	2417	.	-	.	ID=ORF2-Putative mRNA-novTX_355;Name=ORF2-Putative mRNA-novTX_355;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	1918	2498	.	-	.	ID=ORF2-Putative mRNA-novTX_356;Name=ORF2-Putative mRNA-novTX_356;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	1918	2354	.	-	.	ID=ORF2-Putative mRNA-novTX_717;Name=ORF2-Putative mRNA-novTX_717;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	1918	2343	.	-	.	ID=ORF2-Putative mRNA-novTX_750;Name=ORF2-Putative mRNA-novTX_750;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	27868	28983	.	-	.	ID=ORF20;Name=ORF20;
+NC_001491.2	Torma_et_al	transcript	27868	30118	.	-	.	ID=ORF20-L1;Name=ORF20-L1;
+NC_001491.2	Tombacz_et_al	transcript	27868	29000	.	-	.	ID=ORF20-Monocistronic-Long-novTX_396;Name=ORF20-Monocistronic-Long-novTX_396;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	27868	29209	.	-	.	ID=ORF20-Monocistronic-Long-novTX_692;Name=ORF20-Monocistronic-Long-novTX_692;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	27868	28962	.	-	.	ID=ORF20-Monocistronic-Short-novTX_394;Name=ORF20-Monocistronic-Short-novTX_394;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	20383	28983	.	-	.	ID=ORF20-ORF19-ORF18-ORF17-ORF16-ORF15-CX-Canonic;Name=ORF20-ORF19-ORF18-ORF17-ORF16-ORF15-CX-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	27868	28242	.	-	.	ID=ORF20-Putative mRNA-novTX_385;Name=ORF20-Putative mRNA-novTX_385;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	27868	28808	.	-	.	ID=ORF20-Putative mRNA-novTX_389;Name=ORF20-Putative mRNA-novTX_389;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	27868	28513	.	-	.	ID=ORF20-Putative mRNA-novTX_781;Name=ORF20-Putative mRNA-novTX_781;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	27868	31361	.	-	.	ID=ORF21-Monocistronic-Long-novTX_404;Name=ORF21-Monocistronic-Long-novTX_404;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	27868	31322	.	-	.	ID=ORF21-Monocistronic-Long-novTX_693;Name=ORF21-Monocistronic-Long-novTX_693;TX_category=Monocistronic-Long
+NC_001491.2	Torma_et_al	transcript	27868	31344	.	-	.	ID=ORF21-ORF20-PC-Canonic;Name=ORF21-ORF20-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	27868	32808	.	-	.	ID=ORF21-ORF20-PC-Long;Name=ORF21-ORF20-PC-Long;
+NC_001491.2	Torma_et_al	transcript	27868	32829	.	-	.	ID=ORF21-ORF20-PC-Long-2;Name=ORF21-ORF20-PC-Long-2;
+NC_001491.2	Torma_et_al	transcript	31489	33053	.	-	.	ID=ORF22;Name=ORF22;
+NC_001491.2	Torma_et_al	transcript	31489	33642	.	-	.	ID=ORF22-L1;Name=ORF22-L1;
+NC_001491.2	Torma_et_al	transcript	31489	35022	.	-	.	ID=ORF22-L2;Name=ORF22-L2;
+NC_001491.2	Torma_et_al	transcript	31489	35409	.	-	.	ID=ORF22-L3;Name=ORF22-L3;
+NC_001491.2	Torma_et_al	transcript	31489	35525	.	-	.	ID=ORF22-L4;Name=ORF22-L4;
+NC_001491.2	Tombacz_et_al	transcript	31489	33072	.	-	.	ID=ORF22-Monocistronic-Long-novTX_411;Name=ORF22-Monocistronic-Long-novTX_411;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	31489	33114	.	-	.	ID=ORF22-Monocistronic-Long-novTX_412;Name=ORF22-Monocistronic-Long-novTX_412;TX_category=Monocistronic-Long
+NC_001491.2	Torma_et_al	transcript	27868	33053	.	-	.	ID=ORF22-ORF21-ORF20-PC-Canonic;Name=ORF22-ORF21-ORF20-PC-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	31489	32227	.	-	.	ID=ORF22-Putative mRNA-novTX_408;Name=ORF22-Putative mRNA-novTX_408;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	31489	32681	.	-	.	ID=ORF22-Putative mRNA-novTX_410;Name=ORF22-Putative mRNA-novTX_410;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	31489	36847	.	-	.	ID=ORF23-ORF22-CX-Canonic;Name=ORF23-ORF22-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	46895	47374	.	-	.	ID=ORF25;Name=ORF25;
+NC_001491.2	Tombacz_et_al	transcript	46895	48182	.	-	.	ID=ORF25-Monocistronic-Long-novTX_421;Name=ORF25-Monocistronic-Long-novTX_421;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	47555	.	-	.	ID=ORF25-Monocistronic-Long-novTX_695;Name=ORF25-Monocistronic-Long-novTX_695;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	47822	.	-	.	ID=ORF25-Monocistronic-Long-novTX_696;Name=ORF25-Monocistronic-Long-novTX_696;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	47635	.	-	.	ID=ORF25-Monocistronic-Long-novTX_754;Name=ORF25-Monocistronic-Long-novTX_754;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	47360	.	-	.	ID=ORF25-Monocistronic-Short-novTX_416;Name=ORF25-Monocistronic-Short-novTX_416;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	46895	47279	.	-	.	ID=ORF25-Putative mRNA-novTX_739;Name=ORF25-Putative mRNA-novTX_739;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	46895	47136	.	-	.	ID=ORF25-Putative mRNA-novTX_765;Name=ORF25-Putative mRNA-novTX_765;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	46895	48319	.	-	.	ID=ORF26-Multicistronic-Long-novTX_747;Name=ORF26-Multicistronic-Long-novTX_747;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	48267	.	-	.	ID=ORF26-Multicistronic-Long-novTX_785;Name=ORF26-Multicistronic-Long-novTX_785;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	46895	48247	.	-	.	ID=ORF26-Multicistronic-Short-novTX_720;Name=ORF26-Multicistronic-Short-novTX_720;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	transcript	46895	48286	.	-	.	ID=ORF26-ORF25-PC-Canonic;Name=ORF26-ORF25-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	46895	48504	.	-	.	ID=ORF26-ORF25-PC-Long;Name=ORF26-ORF25-PC-Long;
+NC_001491.2	Torma_et_al	transcript	46895	48298	.	-	.	ID=ORF26-ORF25-PC-Long-2;Name=ORF26-ORF25-PC-Long-2;
+NC_001491.2	Tombacz_et_al	transcript	46895	49214	.	-	.	ID=ORF27-Multicistronic-Short-novTX_740;Name=ORF27-Multicistronic-Short-novTX_740;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	transcript	46895	49982	.	-	.	ID=ORF27-ORF26-ORF25-PC-Canonic;Name=ORF27-ORF26-ORF25-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	46895	50520	.	-	.	ID=ORF27-ORF26-ORF25-PC-Long;Name=ORF27-ORF26-ORF25-PC-Long;
+NC_001491.2	Torma_et_al	transcript	46895	50613	.	-	.	ID=ORF27-ORF26-ORF25-PC-Long-2;Name=ORF27-ORF26-ORF25-PC-Long-2;
+NC_001491.2	Torma_et_al	transcript	46895	50913	.	-	.	ID=ORF28-ORF27-ORF26-ORF25-CX-Canonic;Name=ORF28-ORF27-ORF26-ORF25-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	46895	52259	.	-	.	ID=ORF29-ORF28-ORF27-ORF26-ORF25-CX-Canonic;Name=ORF29-ORF28-ORF27-ORF26-ORF25-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	1918	4226	.	-	.	ID=ORF3-ORF2-CX-Canonic;Name=ORF3-ORF2-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	1918	4171	.	-	.	ID=ORF3-ORF2-CX-Short;Name=ORF3-ORF2-CX-Short;
+NC_001491.2	Torma_et_al	transcript	51486	55192	.	-	.	ID=ORF30;Name=ORF30;
+NC_001491.2	Torma_et_al	transcript	51486	55708	.	-	.	ID=ORF30-L1;Name=ORF30-L1;
+NC_001491.2	Tombacz_et_al	transcript	51486	55203	.	-	.	ID=ORF30-Monocistronic-Long-novTX_437;Name=ORF30-Monocistronic-Long-novTX_437;TX_category=Monocistronic-Long
+NC_001491.2	Torma_et_al	transcript	51567	62822	.	-	.	ID=ORF30-ORF31-ORF32-ORF33;Name=ORF30-ORF31-ORF32-ORF33;
+NC_001491.2	Tombacz_et_al	transcript	51486	52403	.	-	.	ID=ORF30-Putative mRNA-novTX_433;Name=ORF30-Putative mRNA-novTX_433;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	51486	55172	.	-	.	ID=ORF30-Putative mRNA-novTX_434;Name=ORF30-Putative mRNA-novTX_434;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	51486	51950	.	-	.	ID=ORF30.5;Name=ORF30.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	51486	52259	.	-	.	ID=ORF30.6;Name=ORF30.6;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	51486	59824	.	-	.	ID=ORF31-ORF30-CX-Canonic;Name=ORF31-ORF30-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	65089	68273	.	-	.	ID=ORF35;Name=ORF35;
+NC_001491.2	Torma_et_al	transcript	65089	68860	.	-	.	ID=ORF35-L1;Name=ORF35-L1;
+NC_001491.2	Tombacz_et_al	transcript	65089	66521	.	-	.	ID=ORF35-Monocistronic-Long-novTX_699;Name=ORF35-Monocistronic-Long-novTX_699;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	65089	66250	.	-	.	ID=ORF35-Monocistronic-Short-novTX_762;Name=ORF35-Monocistronic-Short-novTX_762;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	65089	67484	.	-	.	ID=ORF35-S;Name=ORF35-S;
+NC_001491.2	Torma_et_al	transcript	65089	66263	.	-	.	ID=ORF35.5;Name=ORF35.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	64367	66263	.	-	.	ID=ORF35.5-ORF34-CX-Canonic;Name=ORF35.5-ORF34-CX-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	65089	66123	.	-	.	ID=ORF35.5-Putative mRNA-novTX_447;Name=ORF35.5-Putative mRNA-novTX_447;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	65089	66027	.	-	.	ID=ORF35.5-Putative mRNA-novTX_697;Name=ORF35.5-Putative mRNA-novTX_697;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	65089	66140	.	-	.	ID=ORF35.5-Putative mRNA-novTX_698;Name=ORF35.5-Putative mRNA-novTX_698;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	65089	65942	.	-	.	ID=ORF35.5-Putative mRNA-novTX_755;Name=ORF35.5-Putative mRNA-novTX_755;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	65089	65535	.	-	.	ID=ORF35.5-Putative mRNA-novTX_773;Name=ORF35.5-Putative mRNA-novTX_773;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	67167	69054	.	-	.	ID=ORF36;Name=ORF36;
+NC_001491.2	Torma_et_al	transcript	67167	69363	.	-	.	ID=ORF36-L1;Name=ORF36-L1;
+NC_001491.2	Torma_et_al	transcript	67167	69574	.	-	.	ID=ORF36-L2;Name=ORF36-L2;
+NC_001491.2	Torma_et_al	transcript	65089	69363	.	-	.	ID=ORF36-ORF35-35.5-PC-Long;Name=ORF36-ORF35-35.5-PC-Long;
+NC_001491.2	Torma_et_al	transcript	65089	69054	.	-	.	ID=ORF36-ORF35-ORF35.5-PC-Canonic;Name=ORF36-ORF35-ORF35.5-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	65089	69244	.	-	.	ID=ORF36-ORF35-ORF35.5-PC-Long;Name=ORF36-ORF35-ORF35.5-PC-Long;
+NC_001491.2	Torma_et_al	transcript	65089	68991	.	-	.	ID=ORF36-ORF35-ORF35.5-PC-Short;Name=ORF36-ORF35-ORF35.5-PC-Short;
+NC_001491.2	Tombacz_et_al	transcript	67167	68471	.	-	.	ID=ORF36-Putative mRNA-novTX_453;Name=ORF36-Putative mRNA-novTX_453;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	67167	67893	.	-	.	ID=ORF36-Putative mRNA-novTX_721;Name=ORF36-Putative mRNA-novTX_721;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	69068	70113	.	-	.	ID=ORF37;Name=ORF37;
+NC_001491.2	Tombacz_et_al	transcript	69068	70102	.	-	.	ID=ORF37-Monocistronic-Short-novTX_460;Name=ORF37-Monocistronic-Short-novTX_460;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	67167	70102	.	-	.	ID=ORF37-Multicistronic-Short-novTX_459;Name=ORF37-Multicistronic-Short-novTX_459;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	transcript	65089	70113	.	-	.	ID=ORF37-ORF36-ORF35-ORF35.5-PC-Canonic;Name=ORF37-ORF36-ORF35-ORF35.5-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	67167	70113	.	-	.	ID=ORF37-ORF36-PC-canonic;Name=ORF37-ORF36-PC-canonic;
+NC_001491.2	Torma_et_al	transcript	69068	73174	.	-	.	ID=ORF38-ORF37-CX-Canonic;Name=ORF38-ORF37-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	69068	71118	.	-	.	ID=ORF38-ORF37-CX-Short;Name=ORF38-ORF37-CX-Short;
+NC_001491.2	Torma_et_al	transcript	67167	71118	.	-	.	ID=ORF38-ORF37-ORF36-CX-Canonic;Name=ORF38-ORF37-ORF36-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	67167	73174	.	-	.	ID=ORF38-ORF37-ORF36-CX-Long;Name=ORF38-ORF37-ORF36-CX-Long;
+NC_001491.2	Torma_et_al	transcript	69068	74183	.	-	.	ID=ORF39-ORF38-ORF37-CX-Canonic;Name=ORF39-ORF38-ORF37-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	67167	74183	.	-	.	ID=ORF39-ORF38-ORF37-ORF36-CX-Canonic;Name=ORF39-ORF38-ORF37-ORF36-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	65089	74183	.	-	.	ID=ORF39-ORF38-ORF37-ORF36-ORF35-ORF35.5-PC-Canonic;Name=ORF39-ORF38-ORF37-ORF36-ORF35-ORF35.5-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	3635	4312	.	-	.	ID=ORF4;Name=ORF4;
+NC_001491.2	Torma_et_al	transcript	1918	4338	.	-	.	ID=ORF4-ORF3-ORF2-CX-Long-2;Name=ORF4-ORF3-ORF2-CX-Long-2;
+NC_001491.2	Torma_et_al	transcript	1918	4379	.	-	.	ID=ORF4-ORF3-ORF2-CX-Long-3;Name=ORF4-ORF3-ORF2-CX-Long-3;
+NC_001491.2	Torma_et_al	transcript	1918	5952	.	-	.	ID=ORF4-ORF3-ORF2-CX-Long-4;Name=ORF4-ORF3-ORF2-CX-Long-4;
+NC_001491.2	Torma_et_al	transcript	1918	4312	.	-	.	ID=ORF4-ORF3-ORF2-Canonic;Name=ORF4-ORF3-ORF2-Canonic;
+NC_001491.2	Torma_et_al	transcript	74614	76361	.	-	.	ID=ORF40;Name=ORF40;
+NC_001491.2	Torma_et_al	transcript	73834	76272	.	-	.	ID=ORF40-AT;Name=ORF40-AT;
+NC_001491.2	Torma_et_al	transcript	73834	76361	.	-	.	ID=ORF40-AT2;Name=ORF40-AT2;
+NC_001491.2	Torma_et_al	transcript	73834	76458	.	-	.	ID=ORF40-AT3;Name=ORF40-AT3;
+NC_001491.2	Torma_et_al	transcript	73834	76917	.	-	.	ID=ORF40-AT4;Name=ORF40-AT4;
+NC_001491.2	Torma_et_al	transcript	73834	77028	.	-	.	ID=ORF40-AT5;Name=ORF40-AT5;
+NC_001491.2	Torma_et_al	transcript	73834	77251	.	-	.	ID=ORF40-AT6;Name=ORF40-AT6;
+NC_001491.2	Torma_et_al	transcript	73834	77340	.	-	.	ID=ORF40-AT7;Name=ORF40-AT7;
+NC_001491.2	Torma_et_al	transcript	74614	77028	.	-	.	ID=ORF40-L1;Name=ORF40-L1;
+NC_001491.2	Torma_et_al	transcript	74614	77251	.	-	.	ID=ORF40-L2;Name=ORF40-L2;
+NC_001491.2	Torma_et_al	transcript	73890	85925	.	-	.	ID=ORF40-ORF41-ORF42-CX-ORF43-ORF44;Name=ORF40-ORF41-ORF42-CX-ORF43-ORF44;
+NC_001491.2	Tombacz_et_al	transcript	74614	75173	.	-	.	ID=ORF40-Putative mRNA-novTX_504;Name=ORF40-Putative mRNA-novTX_504;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	83090	89226	.	-	.	ID=ORF44;Name=ORF44;
+NC_001491.2	Torma_et_al	transcript	83094	94551	.	-	.	ID=ORF44-ORF46-ORF47-ORF48-ORF49-ORF50-PC-Canonic-ORF51;Name=ORF44-ORF46-ORF47-ORF48-ORF49-ORF50-PC-Canonic-ORF51;
+NC_001491.2	Torma_et_al	transcript	83090	88988	.	-	.	ID=ORF44-S;Name=ORF44-S;
+NC_001491.2	Torma_et_al	transcript	83090	83510	.	-	.	ID=ORF44.5;Name=ORF44.5;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	83090	83961	.	-	.	ID=ORF44.6;Name=ORF44.6;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	83090	84687	.	-	.	ID=ORF44.7;Name=ORF44.7;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	89245	90532	.	-	.	ID=ORF49-Antisense-Long-novTX_512;Name=ORF49-Antisense-Long-novTX_512;TX_category=Antisense-Long
+NC_001491.2	Tombacz_et_al	transcript	89245	90504	.	-	.	ID=ORF49-Antisense-Long-novTX_706;Name=ORF49-Antisense-Long-novTX_706;TX_category=Antisense-Long
+NC_001491.2	Torma_et_al	transcript	4391	5952	.	-	.	ID=ORF5;Name=ORF5;
+NC_001491.2	Torma_et_al	transcript	4391	6509	.	-	.	ID=ORF5-L1;Name=ORF5-L1;
+NC_001491.2	Torma_et_al	transcript	4391	6901	.	-	.	ID=ORF5-L2;Name=ORF5-L2;
+NC_001491.2	Tombacz_et_al	transcript	4391	5941	.	-	.	ID=ORF5-Monocistronic-Short-novTX_778;Name=ORF5-Monocistronic-Short-novTX_778;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	3635	5952	.	-	.	ID=ORF5-ORF4-PC-Canonic;Name=ORF5-ORF4-PC-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	4391	5063	.	-	.	ID=ORF5-Putative mRNA-novTX_363;Name=ORF5-Putative mRNA-novTX_363;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	4391	5770	.	-	.	ID=ORF5-Putative mRNA-novTX_366;Name=ORF5-Putative mRNA-novTX_366;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	4391	5786	.	-	.	ID=ORF5-Putative mRNA-novTX_783;Name=ORF5-Putative mRNA-novTX_783;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	93031	94747	.	-	.	ID=ORF52;Name=ORF52;
+NC_001491.2	Torma_et_al	transcript	93031	95145	.	-	.	ID=ORF52-L1;Name=ORF52-L1;
+NC_001491.2	Torma_et_al	transcript	93031	95921	.	-	.	ID=ORF52-L2;Name=ORF52-L2;
+NC_001491.2	Torma_et_al	transcript	93031	96281	.	-	.	ID=ORF52-L3;Name=ORF52-L3;
+NC_001491.2	Tombacz_et_al	transcript	93031	94806	.	-	.	ID=ORF52-Monocistronic-Long-novTX_526;Name=ORF52-Monocistronic-Long-novTX_526;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	93031	93242	.	-	.	ID=ORF52-Non-coding-novTX_770;Name=ORF52-Non-coding-novTX_770;TX_category=Non-coding
+NC_001491.2	Torma_et_al	transcript	83090	94551	.	-	.	ID=ORF52-ORF51-ORF50-ORF49-ORF48-ORF44_47-ORF46-ORF45-CX-Canonic;Name=ORF52-ORF51-ORF50-ORF49-ORF48-ORF44_47-ORF46-ORF45-CX-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	93031	94227	.	-	.	ID=ORF52-Putative mRNA-novTX_520;Name=ORF52-Putative mRNA-novTX_520;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	93031	94097	.	-	.	ID=ORF52-Putative mRNA-novTX_722;Name=ORF52-Putative mRNA-novTX_722;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	93031	93295	.	-	.	ID=ORF52-Putative mRNA-novTX_784;Name=ORF52-Putative mRNA-novTX_784;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	93031	98109	.	-	.	ID=ORF53-ORF52-CX-Canonic;Name=ORF53-ORF52-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	99349	100462	.	-	.	ID=ORF55;Name=ORF55;
+NC_001491.2	Torma_et_al	transcript	99349	101555	.	-	.	ID=ORF55-L1;Name=ORF55-L1;
+NC_001491.2	Torma_et_al	transcript	99349	102618	.	-	.	ID=ORF55-ORF56-PC-Canonic;Name=ORF55-ORF56-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	99349	103717	.	-	.	ID=ORF55-ORF56-PC-Long;Name=ORF55-ORF56-PC-Long;
+NC_001491.2	Torma_et_al	transcript	99349	102450	.	-	.	ID=ORF56-ORF55-PC-Short;Name=ORF56-ORF55-PC-Short;
+NC_001491.2	Torma_et_al	transcript	105829	106504	.	-	.	ID=ORF59;Name=ORF59;
+NC_001491.2	Torma_et_al	transcript	105829	106801	.	-	.	ID=ORF59-L1;Name=ORF59-L1;
+NC_001491.2	Torma_et_al	transcript	105829	107059	.	-	.	ID=ORF59-L2;Name=ORF59-L2;
+NC_001491.2	Tombacz_et_al	transcript	105829	106781	.	-	.	ID=ORF59-Monocistronic-Long-novTX_743;Name=ORF59-Monocistronic-Long-novTX_743;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	105829	106674	.	-	.	ID=ORF59-Monocistronic-Long-novTX_769;Name=ORF59-Monocistronic-Long-novTX_769;TX_category=Monocistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	105829	106443	.	-	.	ID=ORF59-Monocistronic-Short-novTX_772;Name=ORF59-Monocistronic-Short-novTX_772;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	105829	106475	.	-	.	ID=ORF59-Monocistronic-Short-novTX_780;Name=ORF59-Monocistronic-Short-novTX_780;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	105829	105968	.	-	.	ID=ORF59-Non-coding-novTX_527;Name=ORF59-Non-coding-novTX_527;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	105829	106204	.	-	.	ID=ORF59-Putative mRNA-novTX_707;Name=ORF59-Putative mRNA-novTX_707;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	105829	106278	.	-	.	ID=ORF59-Putative mRNA-novTX_708;Name=ORF59-Putative mRNA-novTX_708;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	105829	106346	.	-	.	ID=ORF59-Putative mRNA-novTX_763;Name=ORF59-Putative mRNA-novTX_763;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	105829	106303	.	-	.	ID=ORF59-Putative mRNA-novTX_771;Name=ORF59-Putative mRNA-novTX_771;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	105829	106232	.	-	.	ID=ORF59-Putative mRNA-novTX_774;Name=ORF59-Putative mRNA-novTX_774;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	105829	106142	.	-	.	ID=ORF59-Putative mRNA-novTX_782;Name=ORF59-Putative mRNA-novTX_782;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	1918	7400	.	-	.	ID=ORF6-ORF4-ORF3-ORF2-CX-Canonic;Name=ORF6-ORF4-ORF3-ORF2-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	3635	7400	.	-	.	ID=ORF6-ORF5-ORF4-PC-Canonic;Name=ORF6-ORF5-ORF4-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	4391	7535	.	-	.	ID=ORF6-ORF5-PC-Long;Name=ORF6-ORF5-PC-Long;
+NC_001491.2	Torma_et_al	transcript	4391	7400	.	-	.	ID=ORF6-ORF5-PC-canonic;Name=ORF6-ORF5-PC-canonic;
+NC_001491.2	Torma_et_al	transcript	105829	107137	.	-	.	ID=ORF60-ORF59-PC-Canonic;Name=ORF60-ORF59-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	105829	107726	.	-	.	ID=ORF60-ORF59-PC-Long;Name=ORF60-ORF59-PC-Long;
+NC_001491.2	Torma_et_al	transcript	105829	107626	.	-	.	ID=ORF60-ORF59-PC-Long-1;Name=ORF60-ORF59-PC-Long-1;
+NC_001491.2	Torma_et_al	transcript	105829	108039	.	-	.	ID=ORF60-ORF59-PC-Long-2;Name=ORF60-ORF59-PC-Long-2;
+NC_001491.2	Torma_et_al	transcript	105829	107656	.	-	.	ID=ORF60-ORF59-PC-Long-3;Name=ORF60-ORF59-PC-Long-3;
+NC_001491.2	Tombacz_et_al	transcript	105829	108333	.	-	.	ID=ORF61-Multicistronic-Long-novTX_578;Name=ORF61-Multicistronic-Long-novTX_578;TX_category=Multicistronic-Long
+NC_001491.2	Tombacz_et_al	transcript	105829	108180	.	-	.	ID=ORF61-Multicistronic-Short-novTX_574;Name=ORF61-Multicistronic-Short-novTX_574;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	105829	108304	.	-	.	ID=ORF61-Multicistronic-Short-novTX_575;Name=ORF61-Multicistronic-Short-novTX_575;TX_category=Multicistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	105829	108171	.	-	.	ID=ORF61-Multicistronic-Short-novTX_709;Name=ORF61-Multicistronic-Short-novTX_709;TX_category=Multicistronic-Short
+NC_001491.2	Torma_et_al	transcript	105829	108317	.	-	.	ID=ORF61-ORF60-ORF59-PC-Canonic;Name=ORF61-ORF60-ORF59-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	105829	108732	.	-	.	ID=ORF62-ORF61-ORF60-ORF59-PC-Canonic;Name=ORF62-ORF61-ORF60-ORF59-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	105829	110093	.	-	.	ID=ORF62-ORF61-ORF60-ORF59-PC-Long;Name=ORF62-ORF61-ORF60-ORF59-PC-Long;
+NC_001491.2	Torma_et_al	transcript	110319	112033	.	-	.	ID=ORF63;Name=ORF63;
+NC_001491.2	Torma_et_al	transcript	110319	112623	.	-	.	ID=ORF63-L1;Name=ORF63-L1;
+NC_001491.2	Tombacz_et_al	transcript	110319	112011	.	-	.	ID=ORF63-Monocistronic-Short-novTX_710;Name=ORF63-Monocistronic-Short-novTX_710;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	110319	111620	.	-	.	ID=ORF63-Putative mRNA-novTX_584;Name=ORF63-Putative mRNA-novTX_584;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	110319	111634	.	-	.	ID=ORF63-Putative mRNA-novTX_585;Name=ORF63-Putative mRNA-novTX_585;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	110319	111661	.	-	.	ID=ORF63-Putative mRNA-novTX_586;Name=ORF63-Putative mRNA-novTX_586;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	113821	118756	.	-	.	ID=ORF64;Name=ORF64;
+NC_001491.2	Torma_et_al	transcript	113821	119214	.	-	.	ID=ORF64-L1;Name=ORF64-L1;
+NC_001491.2	Tombacz_et_al	transcript	140709	140946	.	-	.	ID=ORF65-Non-coding-novTX_639;Name=ORF65-Non-coding-novTX_639;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141063	.	-	.	ID=ORF65-Non-coding-novTX_644;Name=ORF65-Non-coding-novTX_644;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141082	.	-	.	ID=ORF65-Non-coding-novTX_645;Name=ORF65-Non-coding-novTX_645;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141113	.	-	.	ID=ORF65-Non-coding-novTX_646;Name=ORF65-Non-coding-novTX_646;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141150	.	-	.	ID=ORF65-Non-coding-novTX_647;Name=ORF65-Non-coding-novTX_647;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141207	.	-	.	ID=ORF65-Non-coding-novTX_648;Name=ORF65-Non-coding-novTX_648;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141245	.	-	.	ID=ORF65-Non-coding-novTX_649;Name=ORF65-Non-coding-novTX_649;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141273	.	-	.	ID=ORF65-Non-coding-novTX_671;Name=ORF65-Non-coding-novTX_671;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141391	.	-	.	ID=ORF65-Non-coding-novTX_716;Name=ORF65-Non-coding-novTX_716;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141359	.	-	.	ID=ORF65-Non-coding-novTX_738;Name=ORF65-Non-coding-novTX_738;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	141543	.	-	.	ID=ORF65-Non-coding-novTX_767;Name=ORF65-Non-coding-novTX_767;TX_category=Non-coding
+NC_001491.2	Tombacz_et_al	transcript	140709	140871	.	-	.	ID=ORF65-Non-coding-short-novTX_634;Name=ORF65-Non-coding-short-novTX_634;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	140709	140862	.	-	.	ID=ORF65-Non-coding-short-novTX_775;Name=ORF65-Non-coding-short-novTX_775;TX_category=Non-coding-short
+NC_001491.2	Tombacz_et_al	transcript	140709	141473	.	-	.	ID=ORF65-Putative mRNA-novTX_677;Name=ORF65-Putative mRNA-novTX_677;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	140709	140915	.	-	.	ID=ORF65-Putative mRNA-novTX_764;Name=ORF65-Putative mRNA-novTX_764;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	140709	142158	.	-	.	ID=ORF65.1;Name=ORF65.1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	140709	143088	.	-	.	ID=ORF65.1-L1;Name=ORF65.1-L1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	140709	141860	.	-	.	ID=ORF65.1-S;Name=ORF65.1-S;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	139558	140335	.	-	.	ID=ORF66.1;Name=ORF66.1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	124283	125335	.	-	.	ID=ORF67;Name=ORF67;
+NC_001491.2	Tombacz_et_al	transcript	124283	125219	.	-	.	ID=ORF67-Monocistronic-Short-novTX_736;Name=ORF67-Monocistronic-Short-novTX_736;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	124283	125249	.	-	.	ID=ORF67-Monocistronic-Short-novTX_737;Name=ORF67-Monocistronic-Short-novTX_737;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	124283	125296	.	-	.	ID=ORF67-Monocistronic-Short-novTX_752;Name=ORF67-Monocistronic-Short-novTX_752;TX_category=Monocistronic-Short
+NC_001491.2	Tombacz_et_al	transcript	124283	125313	.	-	.	ID=ORF67-Monocistronic-Short-novTX_756;Name=ORF67-Monocistronic-Short-novTX_756;TX_category=Monocistronic-Short
+NC_001491.2	Torma_et_al	transcript	124289	137215	.	-	.	ID=ORF67-ORF68-ORF69-ORF70-ORF71-ORF72-ORF73-ORF74;Name=ORF67-ORF68-ORF69-ORF70-ORF71-ORF72-ORF73-ORF74;
+NC_001491.2	Tombacz_et_al	transcript	124283	124594	.	-	.	ID=ORF67-Putative mRNA-novTX_723;Name=ORF67-Putative mRNA-novTX_723;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124742	.	-	.	ID=ORF67-Putative mRNA-novTX_724;Name=ORF67-Putative mRNA-novTX_724;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124786	.	-	.	ID=ORF67-Putative mRNA-novTX_725;Name=ORF67-Putative mRNA-novTX_725;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124944	.	-	.	ID=ORF67-Putative mRNA-novTX_726;Name=ORF67-Putative mRNA-novTX_726;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	125062	.	-	.	ID=ORF67-Putative mRNA-novTX_727;Name=ORF67-Putative mRNA-novTX_727;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124852	.	-	.	ID=ORF67-Putative mRNA-novTX_744;Name=ORF67-Putative mRNA-novTX_744;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124985	.	-	.	ID=ORF67-Putative mRNA-novTX_745;Name=ORF67-Putative mRNA-novTX_745;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124906	.	-	.	ID=ORF67-Putative mRNA-novTX_749;Name=ORF67-Putative mRNA-novTX_749;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124631	.	-	.	ID=ORF67-Putative mRNA-novTX_760;Name=ORF67-Putative mRNA-novTX_760;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	124283	124678	.	-	.	ID=ORF67-Putative mRNA-novTX_777;Name=ORF67-Putative mRNA-novTX_777;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	124283	126358	.	-	.	ID=ORF68-ORF67-PC-Canonic;Name=ORF68-ORF67-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	124283	126611	.	-	.	ID=ORF68-ORF67-PC-Long;Name=ORF68-ORF67-PC-Long;
+NC_001491.2	Torma_et_al	transcript	124283	127577	.	-	.	ID=ORF69-ORF68-ORF67-CX-Canonic;Name=ORF69-ORF68-ORF67-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	124283	128030	.	-	.	ID=ORF69-ORF68-ORF67-CX-Long;Name=ORF69-ORF68-ORF67-CX-Long;
+NC_001491.2	Torma_et_al	transcript	124283	128110	.	-	.	ID=ORF69-ORF68-ORF67-CX-Long-2;Name=ORF69-ORF68-ORF67-CX-Long-2;
+NC_001491.2	Torma_et_al	transcript	3635	10331	.	-	.	ID=ORF7-ORF6-ORF5-ORF4-PC-Canonic;Name=ORF7-ORF6-ORF5-ORF4-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	4391	10331	.	-	.	ID=ORF7-ORF6-ORF5-PC-Canonic;Name=ORF7-ORF6-ORF5-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	124283	129214	.	-	.	ID=ORF70-ORF69-ORF68-ORF67-CX;Name=ORF70-ORF69-ORF68-ORF67-CX;
+NC_001491.2	Torma_et_al	transcript	11064	12260	.	-	.	ID=ORF9;Name=ORF9;
+NC_001491.2	Torma_et_al	transcript	4391	12260	.	-	.	ID=ORF9-ORF8-ORF7-ORF6-ORF5-CX-Canonic;Name=ORF9-ORF8-ORF7-ORF6-ORF5-CX-Canonic;
+NC_001491.2	Tombacz_et_al	transcript	11062	11621	.	-	.	ID=ORF9-Putative mRNA-novTX_687;Name=ORF9-Putative mRNA-novTX_687;TX_category=Putative mRNA
+NC_001491.2	Tombacz_et_al	transcript	11062	11522	.	-	.	ID=ORF9-Putative mRNA-novTX_718;Name=ORF9-Putative mRNA-novTX_718;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	140709	143601	.	-	.	ID=TR1146;Name=TR1146;
+NC_001491.2	Torma_et_al	transcript	11064	13390	.	-	.	ID=TR134;Name=TR134;
+NC_001491.2	Torma_et_al	transcript	140709	142158	.	-	.	ID=TR148;Name=TR148;
+NC_001491.2	Torma_et_al	transcript	140709	142158	.	-	.	ID=TR150;Name=TR150;
+NC_001491.2	Torma_et_al	transcript	140709	142778	.	-	.	ID=TR152;Name=TR152;
+NC_001491.2	Torma_et_al	transcript	140709	143088	.	-	.	ID=TR154;Name=TR154;
+NC_001491.2	Torma_et_al	transcript	143303	144110	.	-	.	ID=TR162;Name=TR162;
+NC_001491.2	Torma_et_al	transcript	143303	144282	.	-	.	ID=TR166;Name=TR166;
+NC_001491.2	Torma_et_al	transcript	143303	144282	.	-	.	ID=TR167;Name=TR167;
+NC_001491.2	Torma_et_al	transcript	143411	144282	.	-	.	ID=TR168;Name=TR168;
+NC_001491.2	Torma_et_al	transcript	11064	14907	.	-	.	ID=TR172;Name=TR172;
+NC_001491.2	Torma_et_al	transcript	11064	14907	.	-	.	ID=TR173;Name=TR173;
+NC_001491.2	Torma_et_al	transcript	11064	15032	.	-	.	ID=TR175;Name=TR175;
+NC_001491.2	Torma_et_al	transcript	140709	142778	.	-	.	ID=TR3;Name=TR3;
+NC_001491.2	Torma_et_al	transcript	140709	143622	.	-	.	ID=TR4;Name=TR4;
+NC_001491.2	Torma_et_al	transcript	83090	84687	.	-	.	ID=TR407;Name=TR407;
+NC_001491.2	Torma_et_al	transcript	83090	85121	.	-	.	ID=TR409;Name=TR409;
+NC_001491.2	Torma_et_al	transcript	83090	87726	.	-	.	ID=TR412;Name=TR412;
+NC_001491.2	Torma_et_al	transcript	83090	87781	.	-	.	ID=TR414;Name=TR414;
+NC_001491.2	Torma_et_al	transcript	83090	88377	.	-	.	ID=TR416;Name=TR416;
+NC_001491.2	Torma_et_al	transcript	83090	88988	.	-	.	ID=TR418;Name=TR418;
+NC_001491.2	Torma_et_al	transcript	83090	89226	.	-	.	ID=TR419;Name=TR419;
+NC_001491.2	Torma_et_al	transcript	83090	90427	.	-	.	ID=TR421;Name=TR421;
+NC_001491.2	Torma_et_al	transcript	83090	92062	.	-	.	ID=TR423;Name=TR423;
+NC_001491.2	Torma_et_al	transcript	83090	92179	.	-	.	ID=TR424;Name=TR424;
+NC_001491.2	Torma_et_al	transcript	143303	144110	.	-	.	ID=TR5;Name=TR5;
+NC_001491.2	Torma_et_al	transcript	143411	144282	.	-	.	ID=TR7;Name=TR7;
+NC_001491.2	Torma_et_al	transcript	11064	15032	.	-	.	ID=TR8;Name=TR8;
+NC_001491.2	Torma_et_al	transcript	139558	142158	.	-	.	ID=TR_5240-ORF65.1-ORF64.1-PC-Canonic;Name=TR_5240-ORF65.1-ORF64.1-PC-Canonic;
+NC_001491.2	Torma_et_al	transcript	69068	76361	.	-	.	ID=TR_5972-ORF40-CTO-ORF39-ORF38-ORF37-CX-Canonic;Name=TR_5972-ORF40-CTO-ORF39-ORF38-ORF37-CX-Canonic;
+NC_001491.2	Torma_et_al	transcript	34959	35409	.	-	.	ID=as18-Long;Name=as18-Long;
+NC_001491.2	Torma_et_al	transcript	34959	35525	.	-	.	ID=as18-canonic;Name=as18-canonic;
+NC_001491.2	Torma_et_al	transcript	52040	55141	.	-	.	ID=as23;Name=as23;
+NC_001491.2	Torma_et_al	transcript	42724	43519	.	-	.	ID=as24-AT;Name=as24-AT;
+NC_001491.2	Torma_et_al	transcript	41728	43519	.	-	.	ID=as24-Canonic;Name=as24-Canonic;
+NC_001491.2	Torma_et_al	transcript	61214	61815	.	-	.	ID=as27;Name=as27;
+NC_001491.2	Torma_et_al	transcript	58078	59824	.	-	.	ID=as32-Canonic;Name=as32-Canonic;
+NC_001491.2	Torma_et_al	transcript	58078	61090	.	-	.	ID=as32-Long1;Name=as32-Long1;
+NC_001491.2	Torma_et_al	transcript	58078	61257	.	-	.	ID=as32-Long2;Name=as32-Long2;
+NC_001491.2	Torma_et_al	transcript	58078	61815	.	-	.	ID=as32-Long3;Name=as32-Long3;
+NC_001491.2	Torma_et_al	transcript	58078	63941	.	-	.	ID=as32-Long4;Name=as32-Long4;
+NC_001491.2	Torma_et_al	transcript	64367	65066	.	-	.	ID=as34;Name=as34;
+NC_001491.2	Torma_et_al	transcript	81889	82583	.	-	.	ID=as43;Name=as43;
+NC_001491.2	Torma_et_al	transcript	89245	90427	.	-	.	ID=as49-48;Name=as49-48;
+NC_001491.2	Torma_et_al	transcript	99190	99332	.	-	.	ID=as54;Name=as54;
+NC_001491.2	Torma_et_al	transcript	127858	128110	.	-	.	ID=as70-Canonic;Name=as70-Canonic;
+NC_001491.2	Torma_et_al	transcript	127858	128030	.	-	.	ID=as70-Short;Name=as70-Short;
+NC_001491.2	Torma_et_al	transcript	132040	132362	.	-	.	ID=as72-AT;Name=as72-AT;
+NC_001491.2	Torma_et_al	transcript	131771	132362	.	-	.	ID=as72-Canonic;Name=as72-Canonic;
+NC_001491.2	Torma_et_al	transcript	134210	135508	.	-	.	ID=as74;Name=as74;
+NC_001491.2	Torma_et_al	transcript	14922	15699	.	-	.	ID=as9;Name=as9;
+NC_001491.2	Torma_et_al	transcript	140709	140902	.	-	.	ID=ncss65.1;Name=ncss65.1;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	99349	99510	.	-	.	ID=nct55;Name=nct55;
+NC_001491.2	Torma_et_al	transcript	140709	141094	.	-	.	ID=nct65.1-Canonic;Name=nct65.1-Canonic;TX_category=Putative mRNA
+NC_001491.2	Torma_et_al	transcript	140709	141372	.	-	.	ID=nct65.1-Long;Name=nct65.1-Long;TX_category=Putative mRNA

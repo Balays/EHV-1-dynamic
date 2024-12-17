@@ -1,0 +1,18 @@
+flag	parameter_name	value
+	i	/mnt/c/data/EHV-1/rebasecall/mapped/dRNA_pass.bam
+	o	/mnt/c/data/EHV-1/rebasecall/NAGATA
+	p	
+	nt	P
+	s	3
+	c	20
+	t	4
+	cg	50.0
+	tg	20.0
+	iso	50.0
+	m	3
+	a	0.1
+	b	3
+	r1	
+	r2	
+	d	['+', '-']
+	tmp	False

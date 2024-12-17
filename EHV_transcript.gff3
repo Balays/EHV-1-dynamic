@@ -1,6 +1,6 @@
 ##gff-version 3
 ##source-version rtracklayer 1.58.0
-##date 2024-12-02
+##date 2024-12-16
 NC_001491.2	Tombacz_et_al	transcript	1613	1923	.	+	.	ID=1;Name=1;ORF_id=ORF1;gene_id=ORF1;final_TX_ID=320;prime5.TR=1613;Ref.prime3.TR=1923;TX_category=Putative mRNA
 NC_001491.2	Tombacz_et_al	transcript	1629	1923	.	+	.	ID=2;Name=2;ORF_id=ORF1;gene_id=ORF1;final_TX_ID=272;prime5.TR=1629;Ref.prime3.TR=1923;TX_category=Putative mRNA
 NC_001491.2	Tombacz_et_al	transcript	1918	2343	.	-	.	ID=3;Name=3;ORF_id=ORF2;gene_id=ORF2;final_TX_ID=750;prime5.TR=2343;Ref.prime3.TR=1918;TX_category=Putative mRNA

@@ -1531,6 +1531,15 @@ margin-right: auto;
 <div id="only-those-reads-were-counted-where-lortia-found-both-5--and-3-prime-adapters" class="section level2">
 <h2>Only those reads were counted, where LoRTIA found <em>both</em> 5-
 and 3-prime adapters!</h2>
+<div id="cage-significance" class="section level3">
+<h3>CAGE significance</h3>
+<pre><code>##    CAGE_significance     N
+##               &lt;char&gt; &lt;int&gt;
+## 1:              &lt;NA&gt;   235
+## 2:               ***   262
+## 3:                **    36
+## 4:                 *    51</code></pre>
+</div>
 </div>
 <div id="correct-some-genes-in-the-annotation" class="section level2">
 <h2>Correct some genes in the annotation</h2>
@@ -1570,9 +1579,62 @@ transcripts from only one of the copies</p>
 </div>
 <div id="section-1" class="section level2">
 <h2></h2>
+<div id="add-tx-category" class="section level3">
+<h3>Add TX category</h3>
+<pre><code>##  [1] &quot;ORF11.5&quot;         &quot;ORF24.5&quot;         &quot;ORF39.5&quot;         &quot;ORF57.7&quot;        
+##  [5] &quot;ORF58.5&quot;         &quot;ORF64.1-L1&quot;      &quot;ORF71.5&quot;         &quot;NOIR-ORF65.1&quot;   
+##  [9] &quot;ORF18.5&quot;         &quot;ORF44.5&quot;         &quot;ORF44.6&quot;         &quot;ORF67.1&quot;        
+## [13] &quot;ORF30.5&quot;         &quot;ORF30.6&quot;         &quot;ORF35.5&quot;         &quot;ORF44.7&quot;        
+## [17] &quot;ORF14.5&quot;         &quot;ORF66.1&quot;         &quot;ncss65.1&quot;        &quot;nct65.1-Canonic&quot;
+## [21] &quot;nct65.1-Long&quot;    &quot;ORF65.1-S&quot;       &quot;ORF65.1&quot;         &quot;ORF65.1-L1&quot;     
+## [25] &quot;ORF23.5&quot;         &quot;ORF24.6&quot;         &quot;ORF24.7&quot;         &quot;ORF24.8&quot;        
+## [29] &quot;ORF53.5&quot;         &quot;ORF57.5&quot;         &quot;ORF57.6&quot;</code></pre>
+</div>
 </div>
 <div id="section-2" class="section level2">
 <h2></h2>
+<div id="include-nagata-results" class="section level3">
+<h3>Include NAGATA results</h3>
+<pre><code>##  [1] &quot;ORF55-ORF56-ORF57-ORF58-CX-Short-5&quot;  &quot;ORF55-ORF56-ORF57-ORF58-CX-Short-6&quot; 
+##  [3] &quot;ORF55-ORF56-ORF57-ORF58-CX-Short-1&quot;  &quot;ORF67-Monocistronic-Short-novTX_321&quot;
+##  [5] &quot;ORF17&quot;                               &quot;ORF17-AT&quot;                           
+##  [7] &quot;ORF17-ORF16-ORF15-PC-Canonic&quot;        &quot;ORF22-Putative mRNA-novTX_408&quot;      
+##  [9] &quot;ORF22&quot;                               &quot;ORF22-ORF21-ORF20-PC-Canonic&quot;       
+## [11] &quot;ORF22-Monocistronic-Long-novTX_411&quot;  &quot;ORF22-Monocistronic-Long-novTX_412&quot;</code></pre>
+<pre><code>## [1] 233</code></pre>
+<pre><code>##           source     N
+##           &lt;fctr&gt; &lt;int&gt;
+## 1: Tombacz_et_al   151
+## 2:   Torma_et_al   138</code></pre>
+<pre><code>##            source          TX_category     N
+##            &lt;fctr&gt;               &lt;char&gt; &lt;int&gt;
+##  1:   Torma_et_al                 &lt;NA&gt;   122
+##  2: Tombacz_et_al        Putative mRNA    87
+##  3: Tombacz_et_al  Monocistronic-Short    32
+##  4: Tombacz_et_al   Monocistronic-Long    16
+##  5:   Torma_et_al        Putative mRNA    16
+##  6: Tombacz_et_al           Non-coding     7
+##  7: Tombacz_et_al     Non-coding-short     5
+##  8: Tombacz_et_al  Multicistronic-Long     2
+##  9: Tombacz_et_al Multicistronic-Short     1
+## 10: Tombacz_et_al                CTO-L     1</code></pre>
+<pre><code>## [1] 267</code></pre>
+<pre><code>##           source     N
+##           &lt;fctr&gt; &lt;int&gt;
+## 1:   Torma_et_al   109
+## 2: Tombacz_et_al    91</code></pre>
+<pre><code>##           source          TX_category     N
+##           &lt;fctr&gt;               &lt;char&gt; &lt;int&gt;
+## 1:   Torma_et_al                 &lt;NA&gt;   101
+## 2: Tombacz_et_al        Putative mRNA    55
+## 3: Tombacz_et_al  Monocistronic-Short    25
+## 4:   Torma_et_al        Putative mRNA     8
+## 5: Tombacz_et_al   Monocistronic-Long     5
+## 6: Tombacz_et_al     Non-coding-short     2
+## 7: Tombacz_et_al           Non-coding     2
+## 8: Tombacz_et_al Multicistronic-Short     1
+## 9: Tombacz_et_al  Multicistronic-Long     1</code></pre>
+</div>
 <div id="section-3" class="section level3">
 <h3></h3>
 </div>
@@ -1631,6 +1693,10 @@ according to their host gene</h2>
 <p>Merge annotation with RefClass</p>
 <p>Exclude those ref transcripts that were not observed (or observed
 under the threshold) from the annotation as well</p>
+<div id="combine-transcript-counts-with-annotation-supp-table-s2" class="section level3">
+<h3>Combine Transcript counts with annotation –&gt;&gt; Supp Table
+S2</h3>
+</div>
 </div>
 </div>
 <div id="plotting" class="section level1">
@@ -1647,15 +1713,6 @@ under the threshold) from the annotation as well</p>
 </div>
 <div id="start-plotting" class="section level1">
 <h1>START PLOTTING</h1>
-<div id="tests" class="section level2">
-<h2>Tests</h2>
-<div id="v1" class="section level3">
-<h3>V1</h3>
-</div>
-<div id="v2" class="section level3">
-<h3>V2</h3>
-</div>
-</div>
 <div id="review" class="section level2">
 <h2>REVIEW</h2>
 <div id="figure-x---anomalous-transcripts" class="section level3">
@@ -1673,6 +1730,15 @@ under the threshold) from the annotation as well</p>
 <div id="supp-figure-s3---spliced-transcripts-2-ok" class="section level3">
 <h3>Supp Figure S3 - Spliced Transcripts 2 –&gt;&gt; OK</h3>
 <p>ORF47-44, ORF65</p>
+</div>
+</div>
+<div id="tests" class="section level2">
+<h2>Tests</h2>
+<div id="v1" class="section level3">
+<h3>V1</h3>
+</div>
+<div id="v2" class="section level3">
+<h3>V2</h3>
 </div>
 </div>
 <div id="archive" class="section level2">

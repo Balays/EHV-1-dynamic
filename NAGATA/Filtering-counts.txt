@@ -1,0 +1,26 @@
+fwd strand...
+Total input reads:	 30435
+Reads with readable polyA tail:	 30435
+Reads with acceptable 5' alignment:	 30435
+
+Reads remaining after CPAS noise filter:	 30435 
+Number of transcription units (CPAS) identified:	 30
+
+Number of isoforms identified:	 218
+Number of isoforms identified which pass TSS abundance per TU filter:	 218
+Number of isoforms identified which pass minimum transcript count:	 218
+
+
+rev strand...
+Total input reads:	 30325
+Reads with readable polyA tail:	 30325
+Reads with acceptable 5' alignment:	 30325
+
+Reads remaining after CPAS noise filter:	 30325 
+Number of transcription units (CPAS) identified:	 25
+
+Number of isoforms identified:	 166
+Number of isoforms identified which pass TSS abundance per TU filter:	 166
+Number of isoforms identified which pass minimum transcript count:	 166
+
+
