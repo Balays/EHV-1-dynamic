@@ -1794,8 +1794,6 @@ ggsave('./Figures/Figure Spliced Transcripts REVIEW.jpg', Fig.splice, height = 1
 
 ORF47-44, ORF65
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
-
-
 Fig.abunds1 <- cowplot::plot_grid(plotlist = list(
   mapfun('ORF65',  orf.sum.perc, legend.position='right', title = 'A', what2plot = 'abund_only',
          breakseq=1000,
@@ -1848,6 +1846,49 @@ ggsave('./Figures/Supp Fig Spliced 2 REVIEW.jpg', Fig.splice, height = 12, width
 #Fig.splice
 ```
 
+
+
+
+
+## For each gene
+
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+
+dir.create('Figures/GeneIsoforms')
+
+genes_to_plot <- unique(orf.sum.perc$gene)
+
+for(gene_to_plot in genes_to_plot) {
+
+  message('plotting isoforms of gene: ', gene_to_plot)
+  try({
+    Fig.isoform <- cowplot::plot_grid(
+      
+        mapfun(gene_to_plot,  orf.sum.perc, what2plot = 'abund_only',
+               breakseq=1000,
+               #recalc=T,
+               #strand_to_plot = '-'
+               #visfrom = min(TR.merged.data.gene[gene == 'ORF65' & strand == '-', start]) - vis_win,
+               #visto   = max(TR.merged.data.gene[gene == 'ORF65' & strand == '-', end  ]) + vis_win
+               ),
+        mapfun(gene_to_plot, orf.sum.perc, what2plot = 'annot_only',
+               breakseq=1500,
+               #recalc=T,  #min_TIF_ratio = 0.01
+               #strand_to_plot = '-',
+               #visfrom = 83000, # min(TR.merged.data.gene[gene == 'ORF9' & strand == '-', start]) - vis_win,
+               #visto   = 93000  # max(TR.merged.data.gene[gene == 'ORF9' & strand == '-', end  ]) + vis_win
+               ), 
+        nrow = 1, align = 'vh', axis = 'tlbr', rel_heights = c(0.8, 1))
+    
+  
+    ggsave(paste0('Figures/GeneIsoforms/', gene_to_plot, '_isoforms.jpg'), Fig.isoform, 
+           height = 6, width = 12)
+  })
+}
+
+
+
+```
 
 
 
