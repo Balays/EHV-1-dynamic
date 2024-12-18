@@ -201,7 +201,7 @@ source('plot_prime5_area_settings.R')
 fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
 source('plot_prime5.R')
 
-ggsave(paste0(fig.dir, '/', 'Figure 1B_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+ggsave(paste0(fig.dir, '/', 'Supp Fig S1.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
 #ggsave(paste0(fig.dir, '/', 'Figure 1B_REVIEW_ori.tif'), plot = FigY, height = 20, width = 36, limitsize = F, dpi=300)
 Fig1B <- Fig1
 
@@ -213,7 +213,7 @@ source('plot_prime3.R')
 
 Fig2B <- Fig2
 
-ggsave(paste0(fig.dir, '/', 'Figure 2B_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+ggsave(paste0(fig.dir, '/', 'Supp Fig S4.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
 
 
 
@@ -227,7 +227,7 @@ source('plot_prime5_area_settings.R')
 fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
 source('plot_prime5.R')
 
-ggsave(paste0(fig.dir, '/', 'Figure 1A_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+ggsave(paste0(fig.dir, '/', 'Figure 1.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
 
 Fig1A <- Fig1
 
@@ -237,7 +237,7 @@ source('plot_prime3_area_settings.R')
 fig.dir <- 'Figures' # '../EHV-1 dynamic article/Review 2024 nov'
 source('plot_prime3.R')
 
-ggsave(paste0(fig.dir, '/', 'Figure 2A_REVIEW.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
+ggsave(paste0(fig.dir, '/', 'Figure 2.jpg'), plot = FigY, height = 20, width = 30, limitsize = F, dpi=300)
 
 Fig2A <- Fig2
 
