@@ -1,6 +1,6 @@
 ##gff-version 3
 ##source-version rtracklayer 1.58.0
-##date 2024-12-17
+##date 2024-12-18
 NC_001491.2	NAGATA	mRNA	1264	1926	49	+	.	ID=mRNA.TU.1-TSS.1.1-0--80.33
 NC_001491.2	NAGATA	exon	1264	1926	.	+	.	ID=mRNA.TU.1-TSS.1.1-0--80.33
 NC_001491.2	NAGATA	mRNA	1469	1926	12	+	.	ID=mRNA.TU.1-TSS.2.1-0--19.67

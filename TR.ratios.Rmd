@@ -125,7 +125,7 @@ alpha <- data.frame(cov_geom        = 0.6,
 
 ## Only those reads were counted, where LoRTIA found *both* 5- and 3-prime adapters!
 
-```{r}
+```{r, eval=F}
 
 TR.gff.compare.uni.CAGE     <- fread(paste0(outdir, '/TR.gff.compare.uni.CAGE.tsv'), na.strings = '')
 TR.data <- fread(paste0(outdir, '/TR.data.tsv'), na.strings = '')
@@ -139,8 +139,41 @@ TR.gff <- data.table(as.data.frame(rtracklayer::import.gff2(TR.reads.gfffile)))
 ```{r}
 #### Import transcript and gene (cluster) counts
 TR.gene.cluster <- fread(paste0(outdir, '/', 'TR.gene.cluster.tsv'), na.strings = '')
+```
+
+```{r, fig.width=16, fig.height=9}
+
+TR.gene.cluster[,.N,class_code]
+
+#TR.gene.cluster[,.N,distance_prime5]
+
+ggplot(TR.gene.cluster, aes(distance_prime5)) + 
+  geom_histogram(bins=100) + 
+  geom_vline(xintercept = c(-10,10), color='red')  +
+  geom_vline(xintercept = c(-2,2), color='blue') +
+  facet_wrap(~class_code, scales = 'free')
 
 
+```
+
+### Count only reads with distance <= 2 as equal ('=')
+```{r, fig.width=16, fig.height=9, eval=F}
+
+TR.gene.cluster <- TR.gene.cluster[, 
+    class_code := fifelse((distance_prime5 > 2 | distance_prime5 < -2 ) & class_code == '=', '~', class_code) ]
+
+TR.gene.cluster[,.N,class_code]
+
+ggplot(TR.gene.cluster, aes(distance_prime5)) + 
+  geom_histogram(bins=100) + 
+  geom_vline(xintercept = c(-10,10), color='red')  +
+  geom_vline(xintercept = c(-2,2), color='blue') +
+  facet_wrap(~class_code, scales = 'free')
+
+```
+
+
+```{r}
 #### Import Toram et al annotation transferred from Kaplan
 source('import.ref.TRs.R')
 
@@ -179,6 +212,9 @@ TR.gene.cluster.counts <- merge(TR.gene.cluster,
                                 #allow.cartesian=TRUE
                                 )
 ```
+
+
+
 
 
 ### CAGE significance
@@ -284,7 +320,6 @@ if(use_gene_from_annot) {
 
 ## Correct some genes in the annotation
 ```{r, eval=T}
-
 correct_genes_with <- "NC_001491.2.mRNA_correct_genes_with.gff3"
 correct_genes_with <- data.table(as.data.frame(rtracklayer::import.gff(correct_genes_with, version='3')))
 #if(nrow(viral.ref[ID != transcript_id]) != 0 ) { stop('The IDs do not match for these transcripts: ', viral.ref[ID != transcript_id])}
@@ -309,8 +344,33 @@ TR.ref.sum <- rbind(
   TR.ref.sum.corr,
   TR.ref.sum[!cmp_ref %in% TR.corr, ]
 )
+```
+
+
+```{r, eval=F}
+
+TR.merged.data.corr <- merge(TR.merged.data, 
+                           correct_genes_with[,.(transcript_id, gene_id)],
+                           by.x = c('transcript_id'),
+                           by.y = c('transcript_id'), 
+                           all.x=T)
+
+TR.corr <- unique(TR.merged.data.corr[gene != gene_id, transcript_id])
+
+TR.ref.sum.corr <- TR.ref.sum.corr[gene != gene_id, ]
+TR.ref.sum.corr[,gene := gene_id]
+TR.ref.sum.corr[,gene_id := NULL]
+
+
+TR.ref.sum <- rbind(
+  TR.ref.sum.corr,
+  TR.ref.sum[!cmp_ref %in% TR.corr, ]
+)
+
 
 ```
+
+
 
 DO NOT Filter second copies of genes, as in some cases there are transcripts from only one of the copies
 ```{r, eval=T}
@@ -463,6 +523,7 @@ TR.merged.data <- rbind(TR.merged.data,
 ```
 
 
+
 ##
 ```{r}
 TX_nov_gff <- as.data.table(as.data.frame(rtracklayer::import.gff3('EHV_transcript.gff3')))
@@ -471,7 +532,33 @@ TX_nov_gff[, final_TX_ID := paste0('novTX_', final_TX_ID)]
 ### merge the new transcripts into the original and omit those in the ori that were used to generate them
 
 TR_IDs_nov    <- unique(final_tx_nov_clust[,.(transcript_id, TX_ID, TX_nov_ID, final_TX_ID)])
+```
 
+
+
+### DISTANCE <= 2
+```{r, eval=F}
+### merge the new transcripts into the original and omit those in the ori that were used to generate them
+
+TR_IDs_nov    <- unique(final_tx_nov_clust[,
+                      .(prime5.dist.ref = abs(prime5.TR - cluster_peak)), 
+                      by=.(transcript_id, TX_ID, TX_nov_ID, final_TX_ID, prime5.TR, cluster_peak, TES)])
+
+
+TR_IDs_nov    <- TR_IDs_nov[prime5.dist.ref <= 2]
+
+
+TR_IDs_nov    <- unique(TR_IDs_nov[,.(transcript_id, TX_ID, TX_nov_ID, final_TX_ID)])
+
+#length(unique(final_tx_nov_clust$cluster_peak))
+#length(unique(final_tx_nov_clust$final_TX_ID))
+#length(unique(final_tx_nov_clust$TES))
+
+#unique(final_tx_nov_clust[,.(cluster_peak, final_TX_ID, TES)])
+```
+
+
+```{r}
 TR_counts_nov <- merge(TR.adapt.filt, TR_IDs_nov, by='transcript_id')
 
 
@@ -493,8 +580,12 @@ TR.ref.sum.nov <- TR.ref.sum.nov[,.(final_TX_ID, cmp_ref, seqnames, strand, gene
 
 TR.ref.sum.nov <- merge(TR.ref.sum.nov, TR_counts_final, by=c('seqnames', 'strand', 'final_TX_ID'))
 TR.ref.sum.nov[,final_TX_ID := NULL]
+```
 
 
+
+
+```{r}
 ## melt to get 0 counts
 orf.counts.nov <- dcast(TR.ref.sum.nov, 
                         seqnames + strand + gene_region + gene_cluster + gene + Kinetic_class + Ref_Class + 
@@ -511,6 +602,9 @@ TR.ref.sum.nov  <- merge(TR.ref.sum.nov, metafilt[,metacols], by=c('sample'), al
 
 
 ```
+
+
+
 
 
 ```{r}
@@ -731,6 +825,9 @@ TR.merged.data <- merge(TR.merged.data,
 
 
 ```
+
+
+
 ### Export
 ```{r}
 TR.merged.data.EX  <- unique(
@@ -748,8 +845,6 @@ rtracklayer::export.gff3(TR.merged.data.gff, 'TR.merged.gff')
 
 ```
 
-
-
 ###
 
 ```{r}
@@ -762,6 +857,185 @@ orf.perc <- orf.sum
 ```
 
 
+```{r}
+
+TR.merged.data.sp  <- 
+    unique( TR.merged.data[,.(seqnames, strand, source, transcript_id, TX_category, 
+                              NAGATA.transcript_id, NAGATA.prime5.TR, NAGATA.support, NAGATE.distance = abs(NAGATA.prime5.TR - prime5.TR),
+                              CAGE_significance, CAGE_support=support, CAGE_score=score,
+                              exon_number, exon_pos=paste0(start.exon, '-', end.exon)), by=transcript_id] )
+
+TR.merged.data.sp  <- dcast(TR.merged.data.sp, ... ~ exon_number, 
+                            #seqnames + strand + source + transcript_id + TX_category ~ exon_number, 
+                            value.var = 'exon_pos')
+
+setnames(TR.merged.data.sp, c('1', "2", "3", '4'), c('EX_1', "EX_2", "EX_3", 'EX_4'))
+
+
+stopifnot(TR.ref.sum$Ref_Class %in% TR.merged.data.sp$transcript_id)
+TR.merged.data.sp$transcript_id[!TR.merged.data.sp$transcript_id %in% TR.ref.sum$Ref_Class]
+
+
+TR.ref.sum.sp  <- TR.ref.sum[,.(read_count = sum(read_count)), by=.(seqnames, strand, gene, hpi, Ref_Class) ]
+
+#TR.ref.sum.sp[,presence := fifelse(read_count > 0, T, F), by=.(seqnames, strand, gene, hpi, Ref_Class)]
+
+TR.ref.sum.sp  <- dcast(TR.ref.sum.sp, ... ~ hpi, value.var = 'read_count', fill=0)
+TR.ref.sum.sp[,sum_dcDNA_read_count := `1h` + `2h` + `4h` + `6h` + `8h` + `12h` + `18h` + `24h` + `48h`, by=Ref_Class]
+TR.ref.sum.sp$presence <- apply( TR.ref.sum.sp[,.(`1h`, `2h`, `4h`, `6h`, `8h`, `12h`, `18h`, `24h`, `48h`)], 1, function(x) length(x[x>0]) )
+  
+
+
+TR.all.data.sp  <- merge(TR.merged.data.sp, 
+                            TR.ref.sum.sp,
+                            by.x=c('seqnames', 'strand', 'transcript_id'), 
+                            by.y=c('seqnames', 'strand', 'Ref_Class'), all=T)
+
+
+fwrite(TR.all.data.sp, 'TR.all.data.sp.tsv', sep='\t')
+
+
+```
+
+
+```{r, fig.width=12, fig.height=7}
+### all transcripts
+
+gg1 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 5 , transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') , transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') , transcript_id]
+  )
+)
+
+gg2 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 1 & sum_dcDNA_read_count >= 3 , transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') , transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') , transcript_id]
+  )
+)
+
+gg3 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3 , transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') , transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') , transcript_id]
+  )
+)
+
+cowplot::plot_grid(gg1, gg2, gg3, nrow = 1) + ggtitle('all transcripts')
+
+ggsave('All transcripts.venn.jpg', width=12, height=7)
+
+```
+
+
+```{r, fig.width=12, fig.height=7}
+### Torma et al transcripts
+
+gg1 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 5 & source == 'Torma_et_al' , transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') & source == 'Torma_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') & source == 'Torma_et_al', transcript_id]
+  )
+)
+
+gg2 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 1 & sum_dcDNA_read_count >= 3  & source == 'Torma_et_al', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')  & source == 'Torma_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')  & source == 'Torma_et_al', transcript_id]
+  )
+)
+
+gg3 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3  & source == 'Torma_et_al', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')  & source == 'Torma_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')  & source == 'Torma_et_al', transcript_id]
+  )
+)
+
+cowplot::plot_grid(gg1, gg2, gg3, nrow = 1) + ggtitle('all transcripts')
+
+ggsave('Torma et al.venn.jpg', width=12, height=7)
+
+```
+
+
+```{r, fig.width=12, fig.height=7}
+
+### Tombácz et al transcripts
+gg1 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 5 & source == 'Tombacz_et_al', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') & source == 'Tombacz_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') & source == 'Tombacz_et_al', transcript_id]
+  )
+)
+
+gg2 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 1 & sum_dcDNA_read_count >= 3 & source == 'Tombacz_et_al', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') & source == 'Tombacz_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') & source == 'Tombacz_et_al', transcript_id]
+  )
+)
+
+gg3 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3 & source == 'Tombacz_et_al', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') & source == 'Tombacz_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') & source == 'Tombacz_et_al', transcript_id]
+  )
+)
+
+cowplot::plot_grid(gg1, gg2, gg3, nrow = 1) + ggtitle('Tombácz et al transcripts')
+
+
+ggsave('Tombácz et al transcripts.venn.jpg', width=12, height=7)
+```
+
+
+```{r, fig.width=12, fig.height=7}
+
+### Putative mRNAs
+gg1 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 5 & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id]
+  )
+)
+
+gg2 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 1 & sum_dcDNA_read_count >= 3 & source == 'Tombacz_et_al'  & TX_category == 'Putative mRNA', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Tombacz_et_al'  & TX_category == 'Putative mRNA', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   &  source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id]
+  )
+)
+
+gg3 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3 & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id]
+  )
+)
+
+cowplot::plot_grid(gg1, gg2, gg3, nrow = 1) + ggtitle('Putative mRNAs')
+
+ggsave('Putative mRNAs.venn.jpg', width=12, height=7)
+```
+
+
+
+
+### Count normalization
 ```{r, eval=F}
 ## THE COUNTS ARE NORMALIZED TO THEIR RESPECTIVE PARENT GENE OR GENE/CLUSTER COUNTS AND NOT FOR LIBRARY SIZE OR OTHER !
 
