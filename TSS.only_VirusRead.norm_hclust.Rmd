@@ -411,7 +411,7 @@ The sample 48h_3 stands out!
 ## Filtering of samples
 ```{r, eval=T}
 ### Filtering of very-low coverage samples
-samples_to_filt <- c('EHV-1_48h_3')  ## OR: NULL
+samples_to_filt <- NULL ##c('EHV-1_48h_3')  ## OR: 
 
 if (!is.null(samples_to_filt)) {
   

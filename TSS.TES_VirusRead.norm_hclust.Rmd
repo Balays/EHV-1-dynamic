@@ -87,7 +87,7 @@ palette <- colorvec  #pal_npg()(10)
 ##
 writetables <- T
 
-
+dir.create('Figures')
 
 ```
 
@@ -413,7 +413,7 @@ The sample 48h_3 stands out!
 ## Filtering of samples
 ```{r, eval=T}
 ### Filtering of very-low coverage samples
-samples_to_filt <- c('EHV-1_48h_3')  ## OR: NULL
+samples_to_filt <- NULL # c('EHV-1_48h_3')  ## OR: NULL
 
 if (!is.null(samples_to_filt)) {
   
@@ -1588,6 +1588,7 @@ gg <- ggplot(DTuni[cluster %in% clusters_to_plot_in_group],
   ) +
   facet_nested_wrap(~cluster, nrow = 3, scales = "free")
 
+gg
 
 ggsave(paste0('Figures/Figure 5 REVIEW 2.jpg'), gg, width = 6, height = 9, limitsize = F)
 
@@ -1707,6 +1708,7 @@ gg <- ggplot(DTuni[],
   ) +
   facet_nested_wrap(~Kinetic_class, nrow = 3, scales = "free")
 
+gg
 
 ggsave(paste0('Figures/Figure 3 REVIEW 2.jpg'), gg, width = 6, height = 6, limitsize = F)
 
