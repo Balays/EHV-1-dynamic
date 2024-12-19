@@ -17,7 +17,13 @@ nagata.gff[,ID := Parent]
 
 nagata.gff[,Parent := NULL][,Name := NULL]
 
+
+nagata.gff[ID %in% dup(nagata.gff$ID), ID := paste0(ID, '::', strand)]
+
+
 nagata.mrna <- nagata.gff[type == 'mRNA',]
+
+
 
 stopifnot(
   nrow(nagata.mrna) == length(unique(nagata.mrna[,ID]))

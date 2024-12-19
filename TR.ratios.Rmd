@@ -828,7 +828,7 @@ TR.merged.data <- merge(TR.merged.data,
 
 
 
-### Export
+### Export gff
 ```{r}
 TR.merged.data.EX  <- unique(
   TR.merged.data[,.(seqnames, strand, source, start=start.exon, end=end.exon, type = 'exon', ID=transcript_id, Name=transcript_id, TX_category)] )
@@ -845,45 +845,12 @@ rtracklayer::export.gff3(TR.merged.data.gff, 'TR.merged.gff')
 
 ```
 
-###
 
+
+
+
+### Merge annotation and counts
 ```{r}
-
-orf.sum  <- TR.ref.sum
-orf.perc <- orf.sum
-
-
-#orf.perc[grepl('1h', sample),.(sum_read_count=sum(read_count)), by=.(gene, sample)][sum_read_count != 0]
-```
-
-
-### Include canonic annotation
-
-```{r}
-
-Torma_et_al <- fread('Torma_et_al_transcript.tsv')
-
-Torma_canonic <- Torma_et_al[Canonic == '*' & `Transcript category` == 'Monocistronic', .(Gene, `Transcript ID`)]
-
-
-Torma_et_al[`Transcript category` == ',`Transcript ID`]
-
-```
-
-
-
-### Include CAGE canonic-to-truncated reatios
-
-```{r}
-
-
-
-```
-
-
-
-```{r}
-
 TR.merged.data.sp  <- 
     unique( TR.merged.data[,.(seqnames, strand, source, transcript_id, TX_category, 
                               NAGATA.transcript_id, NAGATA.prime5.TR, NAGATA.support, NAGATE.distance = abs(NAGATA.prime5.TR - prime5.TR),
@@ -915,15 +882,171 @@ TR.all.data.sp  <- merge(TR.merged.data.sp,
                             TR.ref.sum.sp,
                             by.x=c('seqnames', 'strand', 'transcript_id'), 
                             by.y=c('seqnames', 'strand', 'Ref_Class'), all=T)
+```
+### Include canonic annotation
 
+```{r}
 
-fwrite(TR.all.data.sp, 'TR.all.data.sp.tsv', sep='\t')
+Torma_et_al <- fread('Torma_et_al_transcript.tsv')
+
+Torma_canonic <- Torma_et_al[Canonic == '*' & `Transcript category` == 'Monocistronic', .(Gene, `Transcript ID`, Canonic)]
 
 
 ```
 
 
-```{r, fig.width=12, fig.height=7}
+### Include CAGE canonic-to-truncated reatios
+
+```{r}
+## read in CAAGE 5-prime counts
+CAGE.prime5.counts <- fread(paste0('CAGE/prime5.counts.tsv'), na.strings = '')
+#prime3.counts <- fread(paste0('CAGE/prime3.counts.tsv'), na.strings = '')
+
+## add window
+CAGE.prime5.counts.sum <- CAGE.prime5.counts[,.(count=sum(count)), by=.(seqnames, strand, prime5, sample)]
+CAGE.prime5.counts.sum[,':=' (start=prime5 - 10, end=prime5 + 10), by=.(seqnames, strand, prime5)]
+
+
+## Transcript annotation
+TR.CAGE.merge <- TR.merged.data[,.(start=prime5.TR - 10, end=prime5.TR + 10), by=.(seqnames, strand, prime5.TR, transcript_id, TX_category,  CAGE_ID)]
+
+## add genes and transcript category info for canonics
+TR.CAGE.merge <- unique(merge(Torma_canonic[,.(transcript_id=`Transcript ID`, Gene, Canonic)], TR.CAGE.merge, by='transcript_id', all.y=T))
+
+TR.CAGE.merge <- merge(unique(TR.ref.sum[,.(transcript_id=Ref_Class, gene)]), TR.CAGE.merge, by='transcript_id', all.y=T)
+TR.CAGE.merge <- TR.CAGE.merge[!is.na(gene)]
+
+
+## only putatives and canonics
+TR.CAGE.merge <- TR.CAGE.merge[ Canonic == '*' |
+                                TX_category == 'Putative mRNA'
+                               ,]
+
+TR.CAGE.merge[is.na(TX_category) & transcript_id %in% Torma_canonic$`Transcript ID`, TX_category := 'Canonic']
+TR.CAGE.merge[,.N,TX_category]
+
+#TR.CAGE.merge[is.na(transcript_cat), transcript_cat := TX_category]
+#TR.CAGE.merge[is.na(transcript_cat)]
+
+
+## overlap it with transcript annotation
+TR.CAGE.ov <- foverlaps2(CAGE.prime5.counts.sum,
+                         TR.CAGE.merge, by=c('seqnames', 'strand', 'start', 'end'), minoverlap = 0, maxgap = 0)
+
+
+colnames(TR.CAGE.ov) <- gsub('i\\.', 'CAGE.', colnames(TR.CAGE.ov))
+
+TR.CAGE.ov[,distance := abs(prime5.TR - prime5)]
+
+## find the transcript that was closer to the CAGE signal
+TR.CAGE.ov[,min_dist := min(distance), by=.(seqnames, strand, prime5, sample)]
+
+TR.CAGE.ov <- TR.CAGE.ov[min_dist == distance,]
+
+## in case where a CAGE signal is exactly in the middle of two TSSs, assign it to the longer one
+TR.CAGE.ov[,longer.prime5 := fifelse(strand == '-', max(prime5.TR), min(prime5.TR)), by=.(seqnames, strand, prime5, sample)]
+TR.CAGE.ov <- TR.CAGE.ov[prime5.TR == longer.prime5, ]
+
+## split the counts into equal number if there are still duplicates
+TR.CAGE.ov[,n_TR := n_distinct(transcript_id), by=.(seqnames, strand, prime5, sample)]
+TR.CAGE.ov[n_TR > 1, count := count / n_TR]
+
+TR.CAGE.ov[, n_strand := n_distinct(strand), by=.(seqnames, prime5, sample)]
+
+#TR.CAGE.ov.dup <- unique(TR.CAGE.ov[duplicated(prime5) & n_strand == 1, transcript_id])
+#TR.CAGE.ov[transcript_id %in% TR.CAGE.ov.dup]
+```
+
+
+```{r, fig.height=12, fig.width=7}
+## count the prime5 ends 
+TR.CAGE.ov.prime5.counts <- TR.CAGE.ov[,.(TX_count = sum(count)), by=.(seqnames, strand, sample, transcript_id, TX_category, gene, Canonic, CAGE_ID, prime5.TR)]
+
+## make ratio
+TR.CAGE.ov.prime5.counts[, gene_sum_count := sum(TX_count), by=.(seqnames, strand, sample, gene)]
+##
+TR.CAGE.ov.prime5.counts[, TX_ratio := TX_count / gene_sum_count]
+
+
+TR.CAGE.ov.prime5.ratio <- merge(
+  unique(TR.CAGE.ov.prime5.counts[TX_category == 'Canonic', .(seqnames, strand, gene, sample, Canonic_ID=transcript_id, Canonic_count=TX_count)]),
+  unique(TR.CAGE.ov.prime5.counts[TX_category != 'Canonic', .(seqnames, strand, gene, sample, Isoform_ID=transcript_id, Isoform_count=TX_count)]),
+  by=c('seqnames', 'strand', 'gene', 'sample'))
+
+TR.CAGE.ov.prime5.ratio[, Isoform_ratio := Isoform_count / Canonic_count, by=.(seqnames, strand, gene, sample)]
+
+TR.CAGE.ov.prime5.ratio[, Isoform_ratio_mean := mean(Isoform_ratio), by=.(seqnames, strand, gene)]
+
+#TR.CAGE.ov.prime5.ratio <- dcast(TR.CAGE.ov.prime5.counts, seqnames + strand + gene + sample ~ TX_category , value.var = 'TX_ratio')
+#TR.CAGE.ov.prime5.ratio <- dcast(TR.CAGE.ov.prime5.counts, seqnames + strand + transcript_id + TX_category ~ sample, value.var = 'TX_ratio')
+
+
+ggplot(TR.CAGE.ov.prime5.ratio, aes(Isoform_ratio)) + 
+  geom_histogram(bins=100) +
+  theme_ipsum() + 
+  facet_wrap(~sample, ncol=1)
+```
+
+
+```{r, fig.height=12, fig.width=7}
+
+TR.CAGE.ov.prime5.ratio.uni <- unique(TR.CAGE.ov.prime5.ratio[,
+              .(seqnames, strand, gene, Canonic_ID, Isoform_ID, Isoform_ratio_mean)])
+
+
+dup(TR.CAGE.ov.prime5.ratio.uni$Isoform_ID)
+
+
+ggplot(TR.CAGE.ov.prime5.ratio.uni, aes(Isoform_ratio_mean)) + 
+  geom_histogram(bins=100) +
+  theme_ipsum() 
+
+```
+
+
+### Add CAGE Isoform ratio to tr.all.data
+```{r}
+
+#### Minimum CAGE-TSS ratio
+CAGE_TSS_ratio_thresh  <- 0.05
+
+
+TR.all.data.sp <- merge(TR.all.data.sp, 
+                        TR.CAGE.ov.prime5.ratio.uni[,.(seqnames, strand, gene, transcript_id=Isoform_ID, CAGE_TSS_ratio=Isoform_ratio_mean)],
+                        by=c('seqnames', 'strand', 'gene', 'transcript_id'), all.x=T)
+
+```
+
+
+### Add categories from Torma
+
+```{r}
+
+Torma_categories <- fread('TR.all.data.sp.Torma.tsv')
+
+Torma_categories <- Torma_categories[,.(transcript_id, TX_category2=TX_category)]
+
+TR.all.data.spx  <- merge(Torma_categories, TR.all.data.sp, by=c('transcript_id'), all=T)
+
+if (nrow(TR.all.data.spx) == nrow(TR.all.data.sp)) {
+  
+  TR.all.data.spx[,TX_category  := TX_category2]
+  TR.all.data.spx[,TX_category2 := NULL]
+  
+  TR.all.data.sp <- TR.all.data.spx
+  
+  rm(TR.all.data.spx)
+  
+}
+
+TR.all.data.sp[,.N,TX_category]
+
+```
+
+
+
+
+```{r, fig.width=12, fig.height=10}
 ### all transcripts
 
 gg1 <- ggVennDiagram::ggVennDiagram(
@@ -944,94 +1067,120 @@ gg2 <- ggVennDiagram::ggVennDiagram(
 
 gg3 <- ggVennDiagram::ggVennDiagram(
   list(
-    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3 , transcript_id],
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3, transcript_id],
     CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') , transcript_id],
     dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') , transcript_id]
   )
 )
 
-cowplot::plot_grid(gg1, gg2, gg3, nrow = 1) + ggtitle('all transcripts')
+gg4 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3, transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') & TR.all.data.sp$CAGE_TSS_ratio >= CAGE_TSS_ratio_thresh, transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') , transcript_id]
+  )
+)
+
+
+cowplot::plot_grid(gg1, gg2, gg3, gg4, nrow = 2) + ggtitle('all transcripts')
 
 ggsave('All transcripts.venn.jpg', width=12, height=7)
 
 ```
 
 
-```{r, fig.width=12, fig.height=7}
+```{r, fig.width=12, fig.height=10}
 ### Torma et al transcripts
 
 gg1 <- ggVennDiagram::ggVennDiagram(
   list(
     dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 5 & source == 'Torma_et_al' , transcript_id],
-    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') & source == 'Torma_et_al', transcript_id],
-    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') & source == 'Torma_et_al', transcript_id]
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Torma_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   & source == 'Torma_et_al', transcript_id]
   )
 )
 
 gg2 <- ggVennDiagram::ggVennDiagram(
   list(
     dcDNA = TR.all.data.sp[presence >= 1 & sum_dcDNA_read_count >= 3  & source == 'Torma_et_al', transcript_id],
-    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')  & source == 'Torma_et_al', transcript_id],
-    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')  & source == 'Torma_et_al', transcript_id]
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')      & source == 'Torma_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')    & source == 'Torma_et_al', transcript_id]
   )
 )
 
 gg3 <- ggVennDiagram::ggVennDiagram(
   list(
     dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3  & source == 'Torma_et_al', transcript_id],
-    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')  & source == 'Torma_et_al', transcript_id],
-    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')  & source == 'Torma_et_al', transcript_id]
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')      & source == 'Torma_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')    & source == 'Torma_et_al', transcript_id]
   )
 )
 
-cowplot::plot_grid(gg1, gg2, gg3, nrow = 1) + ggtitle('all transcripts')
+gg4 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3 & source == 'Torma_et_al', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Torma_et_al' & TR.all.data.sp$CAGE_TSS_ratio >= CAGE_TSS_ratio_thresh, transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   & source == 'Torma_et_al', transcript_id]
+  )
+)
+
+
+cowplot::plot_grid(gg1, gg2, gg3, gg4, nrow = 2) + ggtitle('all transcripts')
 
 ggsave('Torma et al.venn.jpg', width=12, height=7)
 
 ```
 
 
-```{r, fig.width=12, fig.height=7}
+```{r, fig.width=12, fig.height=10}
 
 ### Tombácz et al transcripts
 gg1 <- ggVennDiagram::ggVennDiagram(
   list(
     dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 5 & source == 'Tombacz_et_al', transcript_id],
-    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') & source == 'Tombacz_et_al', transcript_id],
-    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') & source == 'Tombacz_et_al', transcript_id]
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Tombacz_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   & source == 'Tombacz_et_al', transcript_id]
   )
 )
 
 gg2 <- ggVennDiagram::ggVennDiagram(
   list(
     dcDNA = TR.all.data.sp[presence >= 1 & sum_dcDNA_read_count >= 3 & source == 'Tombacz_et_al', transcript_id],
-    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') & source == 'Tombacz_et_al', transcript_id],
-    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') & source == 'Tombacz_et_al', transcript_id]
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Tombacz_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   & source == 'Tombacz_et_al', transcript_id]
   )
 )
 
 gg3 <- ggVennDiagram::ggVennDiagram(
   list(
     dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3 & source == 'Tombacz_et_al', transcript_id],
-    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***') & source == 'Tombacz_et_al', transcript_id],
-    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25') & source == 'Tombacz_et_al', transcript_id]
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Tombacz_et_al', transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   & source == 'Tombacz_et_al', transcript_id]
   )
 )
 
-cowplot::plot_grid(gg1, gg2, gg3, nrow = 1) + ggtitle('Tombácz et al transcripts')
+gg4 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3 & source == 'Tombacz_et_al', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Tombacz_et_al' & TR.all.data.sp$CAGE_TSS_ratio >= CAGE_TSS_ratio_thresh, transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   & source == 'Tombacz_et_al', transcript_id]
+  )
+)
+
+cowplot::plot_grid(gg1, gg2, gg3, gg4, nrow = 2) + ggtitle('Tombácz et al transcripts')
 
 
 ggsave('Tombácz et al transcripts.venn.jpg', width=12, height=7)
 ```
 
 
-```{r, fig.width=12, fig.height=7}
+```{r, fig.width=12, fig.height=10}
 
 ### Putative mRNAs
 gg1 <- ggVennDiagram::ggVennDiagram(
   list(
     dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 5 & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id],
-    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('*', '**', '***')     & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id],
     dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id]
   )
 )
@@ -1039,7 +1188,7 @@ gg1 <- ggVennDiagram::ggVennDiagram(
 gg2 <- ggVennDiagram::ggVennDiagram(
   list(
     dcDNA = TR.all.data.sp[presence >= 1 & sum_dcDNA_read_count >= 3 & source == 'Tombacz_et_al'  & TX_category == 'Putative mRNA', transcript_id],
-    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Tombacz_et_al'  & TX_category == 'Putative mRNA', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('*', '**', '***')     & source == 'Tombacz_et_al'  & TX_category == 'Putative mRNA', transcript_id],
     dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   &  source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id]
   )
 )
@@ -1047,20 +1196,91 @@ gg2 <- ggVennDiagram::ggVennDiagram(
 gg3 <- ggVennDiagram::ggVennDiagram(
   list(
     dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3 & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id],
-    CAGE  = TR.all.data.sp[CAGE_significance %in% c('**', '***')     & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('*', '**', '***')     & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id],
     dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id]
   )
 )
 
-cowplot::plot_grid(gg1, gg2, gg3, nrow = 1) + ggtitle('Putative mRNAs')
+gg4 <- ggVennDiagram::ggVennDiagram(
+  list(
+    dcDNA = TR.all.data.sp[presence >= 3 & sum_dcDNA_read_count >= 3 & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id],
+    CAGE  = TR.all.data.sp[CAGE_significance %in% c('*', '**', '***')     & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA' & TR.all.data.sp$CAGE_TSS_ratio >= CAGE_TSS_ratio_thresh, transcript_id],
+    dRNA  = TR.all.data.sp[NAGATA.support %in% c('distance <= 25')   & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id]
+  )
+)
 
-ggsave('Putative mRNAs.venn.jpg', width=12, height=7)
+cowplot::plot_grid(gg1, gg2, gg3, gg4, nrow = 2) + ggtitle('Putative mRNAs')
+
+ggsave('Putative mRNAs.venn.jpg', width=12, height=10)
+```
+
+
+### Filter transcripts based on dRNA-NAGATA, CAGE-TSS-ratio and dcDNA-presence
+```{r}
+
+putatives_to_keep <- unique(
+    TR.all.data.sp[  presence >= 3 & sum_dcDNA_read_count >= 3
+                   & CAGE_significance %in% c('*', '**', '***') & TR.all.data.sp$CAGE_TSS_ratio >= CAGE_TSS_ratio_thresh 
+                   & NAGATA.support %in% c('distance <= 25')     
+                   & source == 'Tombacz_et_al' & TX_category == 'Putative mRNA', transcript_id]
+)
+
+all_non_putative <-  unique(
+    TR.all.data.sp[ TX_category != 'Putative mRNA' & !is.na(TX_category), transcript_id]
+)
+
+Torma_transcripts <- unique(
+    TR.all.data.sp[ source == 'Torma_et_al', transcript_id]
+)
+
+TRs.to.keep <- unique(c(all_non_putative, putatives_to_keep, Torma_transcripts))
+
+
+#TR.all.data.sp[,.N,TX_category]
+
+
+
+### Filter
+
+TR.ref.sum  <- TR.ref.sum[Ref_Class %in% TRs.to.keep]
+
+TR.merged.data <- TR.merged.data[transcript_id %in% TRs.to.keep]
+
+
+TR.all.data.sp[transcript_id %in% putatives_to_keep, putatives_to_keep := T]
+
+```
+
+
+### Export
+```{r}
+
+fwrite(TR.all.data.sp, 'TR.all.data.sp.tsv', sep='\t')
+
+```
+
+####
+
+
+
+
+
+## START MAIN WF
+
+```{r}
+
+orf.sum  <- TR.ref.sum
+orf.perc <- orf.sum
+
+
+#orf.perc[grepl('1h', sample),.(sum_read_count=sum(read_count)), by=.(gene, sample)][sum_read_count != 0]
 ```
 
 
 
 
-### Count normalization
+
+## Count normalization
 ```{r, eval=F}
 ## THE COUNTS ARE NORMALIZED TO THEIR RESPECTIVE PARENT GENE OR GENE/CLUSTER COUNTS AND NOT FOR LIBRARY SIZE OR OTHER !
 

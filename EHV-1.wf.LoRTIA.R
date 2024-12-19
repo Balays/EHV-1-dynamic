@@ -33,11 +33,9 @@ if (include.cage) {
   project_config <- data.table(outdir = outdir)
   #fwrite(project_config, 'project_config.txt')
 
-  bamdir  <- "./CAGE/bam"
-  pattern <- '.bam'
-  bamfiles <- grep('.bai',
-                   list.files(bamdir, pattern, recursive = T, full.names = T),
-                   invert = T, value = T)
+  bamdir   <- "./CAGE/bam"
+  pattern  <- '.bam$'
+  bamfiles <- list.files(bamdir, pattern, recursive = T, full.names = T)
 
   is.lortia <- F
   flag  <- scanBamFlag(isSupplementaryAlignment=FALSE)
@@ -48,6 +46,7 @@ if (include.cage) {
 
   meta.cage$cell_line <- 'RK-13'
   meta.cage$rep       <- c(1,1,1,2,2,2,3,3,3)
+  meta.cage$group     <- gsub('_2023.*', '', meta.cage$sample)
 
   metafilt <- plyr::rbind.fill(meta.cage, metafilt)
 
@@ -58,12 +57,21 @@ if (include.cage) {
   ## overwriting 'sample' to coerce the same sample from different runs
   bam.all <- merge(bam.all, meta.cage, by='sample')
   bam.all[,sample := group]
-  bam.all <- bam.all[,c(1:15)]
+  bam.all <- bam.all[,c(1:15)] ## omit the rest of metadata for now
 
   bam.all[,correct_tes := T] # fifelse(grepl('correct', tag.l3) | grepl('correct', tag.r3), T, F)]
   bam.all[,correct_tss := T] # fifelse(grepl('correct', tag.l5) | grepl('correct', tag.r5), T, F)]
-  bam.filt <- bam.all[!is.na(seqnames)]
+
+  bam.filt <- bam.all [!is.na(seqnames)]
+  bam.filt <- bam.filt[flag %in% c(0, 16), ]
+
+  ## corrrect the metadata accordingly
+  metafilt[grepl('cage', metafilt$group), 'sample'] <- metafilt[grepl('cage', metafilt$group), 'group']
+  metafilt <- unique.data.frame(metafilt)
+
   bam.filt.cage <- bam.filt
+
+  fwrite(bam.filt.cage, paste0(outdir, '/CAGE.bam.filt.tsv'), sep = '\t')
 
   ### -> continue
   #mapped.cov       <- fread(paste0(outdir, '/mapped.cov.tsv'), na.strings = '')
