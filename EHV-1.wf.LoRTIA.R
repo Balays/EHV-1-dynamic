@@ -33,7 +33,7 @@ if (include.cage) {
   project_config <- data.table(outdir = outdir)
   #fwrite(project_config, 'project_config.txt')
 
-  bamdir  <- "../CAGE/bam"
+  bamdir  <- "./CAGE/bam"
   pattern <- '.bam'
   bamfiles <- grep('.bai',
                    list.files(bamdir, pattern, recursive = T, full.names = T),
@@ -44,12 +44,7 @@ if (include.cage) {
   param <- ScanBamParam(what=scanBamWhat(), flag=scanBamFlag(isSupplementaryAlignment=FALSE))
   rm.gaps.in.aln <- T
 
-  ## PK15 4h and PK15 12h was switched as the barcodes were switched (most likely).
-  #meta.cage <- read.delim('CAGE/metadata.cage.tsv')
   meta.cage <- data.frame(sample = gsub('.*\\/', '', gsub(pattern, '', bamfiles)))
-
-  meta.cage$group <- gsub('_202.*', '', meta.cage$sample)
-  meta.cage$group <- gsub('_cage', '', meta.cage$group)
 
   meta.cage$cell_line <- 'RK-13'
   meta.cage$rep       <- c(1,1,1,2,2,2,3,3,3)

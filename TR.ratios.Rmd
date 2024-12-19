@@ -857,6 +857,31 @@ orf.perc <- orf.sum
 ```
 
 
+### Include canonic annotation
+
+```{r}
+
+Torma_et_al <- fread('Torma_et_al_transcript.tsv')
+
+Torma_canonic <- Torma_et_al[Canonic == '*' & `Transcript category` == 'Monocistronic', .(Gene, `Transcript ID`)]
+
+
+Torma_et_al[`Transcript category` == ',`Transcript ID`]
+
+```
+
+
+
+### Include CAGE canonic-to-truncated reatios
+
+```{r}
+
+
+
+```
+
+
+
 ```{r}
 
 TR.merged.data.sp  <- 
