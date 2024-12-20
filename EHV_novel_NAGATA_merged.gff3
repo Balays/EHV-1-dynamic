@@ -1,6 +1,6 @@
 ##gff-version 3
 ##source-version rtracklayer 1.58.0
-##date 2024-12-19
+##date 2024-12-20
 NC_001491.2	Tombacz_et_al	transcript	77615	83096	.	+	.	final_TX_ID=novTX_102;
 NC_001491.2	Tombacz_et_al	transcript	77645	81894	.	+	.	final_TX_ID=novTX_104;
 NC_001491.2	Tombacz_et_al	transcript	78089	81894	.	+	.	final_TX_ID=novTX_107;
