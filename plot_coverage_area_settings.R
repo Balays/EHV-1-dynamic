@@ -355,7 +355,7 @@ plotfun.all   <- function(samples=NA) {
                                 gene.label.col='black',
                                 legend.position='top', plot.title = NA, #letters[2], #paste0(virus, '_', Ori),
                                 breakseq=breakseq,
-                                margins=unit(c(0.5, 0.5, 0.5, 0.5), "cm"),
+                                margins=unit(c(1, 0.5, 1.5, 0.5), "cm"),
                                 gene.aes = aes(xmin = start, xmax = end, y = ymin, fill = strand, forward = orientation, label = gene),
                                 #legend.position.prime='top',
                                 #labels=labs(fill = "Strand"),

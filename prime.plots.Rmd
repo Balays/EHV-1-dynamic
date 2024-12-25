@@ -339,7 +339,45 @@ SFig3D <- Fig3
 
 
 
-##### Sup Fig 3
+##### Sup Fig S10
+
+fig.width  <- 55
+fig.height <- 20*4
+
+
+# Function to add a border around a plot
+add_border <- function(plot, color = "black", size = 1.5) {
+  ggdraw() +
+    draw_grob(
+      ggplotGrob(plot),
+      x = 0, y = 0, width = 1, height = 1
+    ) +
+    draw_grob(
+      rectGrob(
+        gp = gpar(col = color, fill = NA, lwd = size)
+      ),
+      x = 0, y = 0, width = 1, height = 1
+    )
+}
+
+# Create individual plots with labels and borders
+SFig3A <- add_border(SFig3A + draw_label("A", x = 0.025, y = 1, hjust = 0.1, vjust = 2, fontface = 'bold', size = 24))
+SFig3B <- add_border(SFig3B + draw_label("B", x = 0.025, y = 1, hjust = 0.1, vjust = 2, fontface = 'bold', size = 24))
+SFig3C <- add_border(SFig3C + draw_label("C", x = 0.025, y = 1, hjust = 0.1, vjust = 2, fontface = 'bold', size = 24))
+SFig3D <- add_border(SFig3D + draw_label("D", x = 0.025, y = 1, hjust = 0.1, vjust = 2, fontface = 'bold', size = 24))
+
+# Combine the plots into a single figure
+SFig3 <- cowplot::plot_grid(SFig3A, SFig3B, SFig3C, SFig3D, ncol = 1)
+
+
+ggsave('Figures/Supp Fig S10.jpg', SFig3, height = fig.height, width = fig.width, limitsize = F)
+
+
+```
+
+```{r}
+install.packages('future.apply')
+
 fig.width  <- 30
 fig.height <- 20*3
 
@@ -347,23 +385,9 @@ SFig3  <- cowplot::plot_grid(SFig3A + draw_label("a", x = 0.025, y = 1, hjust = 
                              SFig3B + draw_label("b", x = 0.025, y = 1, hjust = 0.1, vjust = 1, fontface = 'bold', size = 24),
                              SFig3C + draw_label("c", x = 0.025, y = 1, hjust = 0.1, vjust = 1, fontface = 'bold', size = 24),
                              ncol=1)
-ggsave('Figures/Supp Fig 3.small.jpg', SFig3, height = fig.height, width = fig.width, limitsize = F)
-
-fig.width  <- 55
-fig.height <- 20*3
-
-SFig3  <- cowplot::plot_grid(SFig3A + draw_label("a", x = 0.025, y = 1, hjust = 0.1, vjust = 1, fontface = 'bold', size = 24),
-                             SFig3B + draw_label("b", x = 0.025, y = 1, hjust = 0.1, vjust = 1, fontface = 'bold', size = 24),
-                             SFig3C + draw_label("c", x = 0.025, y = 1, hjust = 0.1, vjust = 1, fontface = 'bold', size = 24),
-                             ncol=1)
-ggsave('Figures/Supp Fig 3.jpg', SFig3, height = fig.height, width = fig.width, limitsize = F)
-
-
-
-
+#ggsave('Figures/Supp Fig 3.small.jpg', SFig3, height = fig.height, width = fig.width, limitsize = F)
 
 ```
-
 
 ## CAGE
 ```{r}
