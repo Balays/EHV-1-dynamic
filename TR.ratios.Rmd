@@ -1979,7 +1979,8 @@ mapfun <- function(gene_to_plot=NULL,  DT=orf.sum.perc, TRs_to_plot=NULL, recalc
 ## REVIEW
 
 
-### Figure X - Anomalous transcripts
+### Supp Fig S7 - Anomalous transcripts
+
 
 ORF23, ORF50, ORF67-ORF68, ORF64
 
@@ -2063,14 +2064,23 @@ Fig.annots2 <- cowplot::plot_grid(plotlist = list(
 ), ncol = 1, align = 'vh', axis = 'tlbr')
 
 
-Fig.isoforms2 <- cowplot::plot_grid(Fig.abunds2, Fig.annots2, ncol=2, rel_widths = c(1, 0.85), align = 'vh', axis = 'l')
+Fig.isoforms2 <- cowplot::plot_grid(Fig.abunds2, Fig.annots2, ncol=2, rel_widths = c(1, 0.75), align = 'vh', axis = 'l')
 
 
+Fig.isoforms <- cowplot::plot_grid(Fig.isoforms1, Fig.isoforms2, ncol=2, rel_widths = c(1, 1))
 
-Fig.isoforms <- cowplot::plot_grid(Fig.isoforms1, Fig.isoforms2, ncol=2, rel_widths = c(1, 0.85))
+##
+##
+
+Fig.abunds <- cowplot::plot_grid(Fig.abunds1, Fig.abunds2, ncol=1, rel_heights = c(1), align = 'vh', axis = 'b')
+
+Fig.annots <- cowplot::plot_grid(Fig.annots1, Fig.annots2, ncol=1, rel_heights = c(1), align = 'vh', axis = 'b')
+
+Fig.isoforms <- cowplot::plot_grid(Fig.abunds, Fig.annots, ncol=2, rel_widths = c(1, 0.8))
+
 
 #ggsave('./Figures/Figure 7_REVIEW_ori.tif', Fig.isoforms, height = 12, width = 24, dpi = 300)
-ggsave('./Figures/Figure X_Anomaluous transcripts.jpg', Fig.isoforms, height = 10, width = 20)
+ggsave('./Figures/Supp Fig S7.jpg', Fig.isoforms, height = 20, width = 12)
 
 #Fig.isoforms
 ```

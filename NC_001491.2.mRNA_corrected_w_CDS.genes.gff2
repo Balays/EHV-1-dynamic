@@ -1,6 +1,6 @@
 ##gff-version 2
 ##source-version rtracklayer 1.62.0
-##date 2024-12-22
+##date 2024-12-27
 NC_001491.2	Torma_et_al	exon	989	3632	.	+	.	transcript_id "ORF1-ORF2-ORF3-CX-Long"; Name "ORF1-ORF2-ORF3-CX-Long"; ID "ORF1-ORF2-ORF3-CX-Long"; gene_id "ORF1"; ORF_id "ORF1";
 NC_001491.2	Torma_et_al	mRNA	989	3632	.	+	.	transcript_id "ORF1-ORF2-ORF3-CX-Long"; Name "ORF1-ORF2-ORF3-CX-Long"; ID "ORF1-ORF2-ORF3-CX-Long"; gene_id "ORF1"; ORF_id "ORF1";
 NC_001491.2	Torma_et_al	exon	1252	1923	.	+	.	transcript_id "ORF1"; Name "ORF1"; ID "ORF1"; gene_id "ORF1"; ORF_id "ORF1";
