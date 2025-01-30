@@ -1,5 +1,5 @@
 
-melted_z_scores <- melt(z_scores_data, variable.name = 'hpi', id.vars = 'gene')
+melted_z_scores <- melt(z_scores_data, variable.name = 'hpi')
 melted_z_scores <- melted_z_scores[grepl('z_', hpi), ]
 melted_z_scores[,hpi := gsub('z_', '', hpi)]
 melted_z_scores[,hpi := factor(hpi, levels = time_points)]
@@ -117,25 +117,4 @@ p <- ggplot(rlog_melt, aes(x = sample, y = gene, fill = value)) +
   facet_nested(cols=vars(hpi), scales = 'free')
 
 
-print(p)
-
-
-
-#####
-# Plot the heatmap using ggplot2
-p <- ggplot(orf.perc.mean.melt, aes(x = variable, y = gene, fill = value)) +
-  geom_tile() +
-  scale_fill_gradient2(#low = "#d73027", mid = "white", high = "#4575b4",
-    low = "#d73027", mid = "white", high = "#4575b4",
-    midpoint = mean(range(orf.perc.mean.melt$value, na.rm = TRUE)),
-    limit    = range(orf.perc.mean.melt$value, na.rm = TRUE),
-    name="Viral read count normalized expression") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
-        axis.text.y = element_text(hjust = 1),
-        axis.title  = element_blank(),
-        panel.spacing = unit(0.5, 'mm')) +
-  facet_nested(cols=vars(variable), scales = 'free')
-
-#ggsave('TR.ORF.Heatmap.jpg', p, height = 12, width = 16)
 print(p)
