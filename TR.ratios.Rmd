@@ -21,7 +21,6 @@ output:
     }
 ```
 
-
 ```{r include=FALSE}
 ## hrbrthemes::ipsum:
 
@@ -116,12 +115,13 @@ alpha <- data.frame(cov_geom        = 0.6,
 ```
 
 # Project info
-*Samples: dcDNA Seq*  
-*pychopper: no*  
-*mapping version: v6*  
-*LoRTIA: yes (stranded only)*  
 
-*Filtering samples: C6_2h_3 & PC-12_8h_3*  
+*Samples: dcDNA Seq*\
+*pychopper: no*\
+*mapping version: v6*\
+*LoRTIA: yes (stranded only)*
+
+*Filtering samples: C6_2h_3 & PC-12_8h_3*
 
 ## Only those reads were counted, where LoRTIA found *both* 5- and 3-prime adapters!
 
@@ -134,7 +134,6 @@ TR.gff <- data.table(as.data.frame(rtracklayer::import.gff2(TR.reads.gfffile)))
 
 
 ```
-
 
 ```{r}
 #### Import transcript and gene (cluster) counts
@@ -156,7 +155,8 @@ ggplot(TR.gene.cluster, aes(distance_prime5)) +
 
 ```
 
-### Count only reads with distance <= 2 as equal ('=')
+### Count only reads with distance \<= 2 as equal ('=')
+
 ```{r, fig.width=16, fig.height=9, eval=F}
 
 TR.gene.cluster <- TR.gene.cluster[, 
@@ -171,7 +171,6 @@ ggplot(TR.gene.cluster, aes(distance_prime5)) +
   facet_wrap(~class_code, scales = 'free')
 
 ```
-
 
 ```{r}
 #### Import Toram et al annotation transferred from Kaplan
@@ -213,11 +212,8 @@ TR.gene.cluster.counts <- merge(TR.gene.cluster,
                                 )
 ```
 
-
-
-
-
 ### CAGE significance
+
 ```{r}
 #TR.merged.data[,.N,CAGE_significance]
 
@@ -233,7 +229,6 @@ TR.merged.data <- merge(TR.merged.data[,], CAGE.sig[,.(CAGE_ID = gene, CAGE_sign
 
 TR.merged.data[,.N,CAGE_significance]
 ```
-
 
 ```{r}
 #### summarise read-transcripts into ref transcripts
@@ -263,8 +258,6 @@ TR.ref.sum[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E',
 
 ```
 
-
-
 ```{r, eval=F}
 #### Keep spliced genes only
 spliced.genes <-  unique(TR.ref[exon_number > 1, gene_id])
@@ -279,8 +272,6 @@ TR.ref.sum  <- TR.ref.sum[ gene %in% spliced.genes, ]
 
 ```
 
-
-
 ```{r, eval=T}
 #### Completely omit all non-validated isoform!
 keep_equal_only <- T
@@ -291,8 +282,6 @@ if(keep_equal_only) {
           all reads that are notequal ("=") to these, were omitted!')
 }
 ```
-
-
 
 ```{r, eval=T}
 #### Use the "gene" from the annotation, not the counting algorithm 
@@ -319,6 +308,7 @@ if(use_gene_from_annot) {
 ```
 
 ## Correct some genes in the annotation
+
 ```{r, eval=T}
 correct_genes_with <- "NC_001491.2.mRNA_correct_genes_with.gff3"
 correct_genes_with <- data.table(as.data.frame(rtracklayer::import.gff(correct_genes_with, version='3')))
@@ -346,7 +336,6 @@ TR.ref.sum <- rbind(
 )
 ```
 
-
 ```{r, eval=F}
 
 TR.merged.data.corr <- merge(TR.merged.data, 
@@ -370,9 +359,8 @@ TR.ref.sum <- rbind(
 
 ```
 
-
-
 DO NOT Filter second copies of genes, as in some cases there are transcripts from only one of the copies
+
 ```{r, eval=T}
 filter_second_copy_genes <- F
 
@@ -425,7 +413,6 @@ if(filter_second_copy_genes) {
 #unique(TR.ref.sum[, gene_cluster])
 ```
 
-
 ```{r, eval=F}
 ### Filtering of very-low coverage samples
 samples_to_filt <- c('C6_2h_3', 'PC-12_8h_3')
@@ -439,8 +426,7 @@ message(paste(samples_to_filt, ' was filtered out!', collapse = '\n') )
 
 ```
 
-
-###
+### 
 
 ```{r, eval=F}
 ### Torma and Fulop annotation and check
@@ -454,7 +440,6 @@ colnames(TX_nov_gff)[1:8]  <- c('seqnames', 'source', 'type', 'start', 'end', 's
 rtracklayer::export.gff3(as.data.frame(TX_nov_gff), 'EHV_transcript.gff3')
 ```
 
-
 ```{r}
 TX_nov_gff <- as.data.table(as.data.frame(rtracklayer::import.gff3('EHV_transcript.gff3')))
 TX_nov_gff[, final_TX_ID := paste0('novTX_', final_TX_ID)]
@@ -467,8 +452,8 @@ final_tx_nov_clust <- fread('final_tx_nov_clust.tsv', na.strings = '')
 final_tx_nov_clust[, final_TX_ID := paste0('novTX_', final_TX_ID)]
 ```
 
+## 
 
-##
 ```{r}
 ### merge the new transcripts into the original and omit those in the ori that were used to generate them
 
@@ -497,8 +482,8 @@ TR.merged.data.nov[,thick.start := NA][, thick.end := NA]
 TR.merged.data.nov[,transcript_id := Ref_Class]
 ```
 
-
 ### Add TX category
+
 ```{r}
 TR.merged.data[ , TX_category := NULL]
 
@@ -509,7 +494,6 @@ TR.merged.data[ grepl('\\.[1-9]', transcript_id) &
 unique(TR.merged.data[TX_category == 'Putative mRNA', transcript_id])
 
 ```
-
 
 ```{r}
 cnames <- colnames(TR.merged.data)
@@ -522,9 +506,8 @@ TR.merged.data <- rbind(TR.merged.data,
 
 ```
 
+## 
 
-
-##
 ```{r}
 TX_nov_gff <- as.data.table(as.data.frame(rtracklayer::import.gff3('EHV_transcript.gff3')))
 TX_nov_gff[, final_TX_ID := paste0('novTX_', final_TX_ID)]
@@ -534,9 +517,8 @@ TX_nov_gff[, final_TX_ID := paste0('novTX_', final_TX_ID)]
 TR_IDs_nov    <- unique(final_tx_nov_clust[,.(transcript_id, TX_ID, TX_nov_ID, final_TX_ID)])
 ```
 
+### DISTANCE \<= 2
 
-
-### DISTANCE <= 2
 ```{r, eval=F}
 ### merge the new transcripts into the original and omit those in the ori that were used to generate them
 
@@ -556,7 +538,6 @@ TR_IDs_nov    <- unique(TR_IDs_nov[,.(transcript_id, TX_ID, TX_nov_ID, final_TX_
 
 #unique(final_tx_nov_clust[,.(cluster_peak, final_TX_ID, TES)])
 ```
-
 
 ```{r}
 TR_counts_nov <- merge(TR.adapt.filt, TR_IDs_nov, by='transcript_id')
@@ -582,9 +563,6 @@ TR.ref.sum.nov <- merge(TR.ref.sum.nov, TR_counts_final, by=c('seqnames', 'stran
 TR.ref.sum.nov[,final_TX_ID := NULL]
 ```
 
-
-
-
 ```{r}
 ## melt to get 0 counts
 orf.counts.nov <- dcast(TR.ref.sum.nov, 
@@ -603,10 +581,6 @@ TR.ref.sum.nov  <- merge(TR.ref.sum.nov, metafilt[,metacols], by=c('sample'), al
 
 ```
 
-
-
-
-
 ```{r}
 TR.ref.sum <- rbind(TR.ref.sum, 
                     TR.ref.sum.nov, fill=F)
@@ -614,8 +588,8 @@ TR.ref.sum <- rbind(TR.ref.sum,
 
 ```
 
-
 ### Include NAGATA results
+
 ```{r}
 source('NAGATA.R')
 
@@ -657,7 +631,6 @@ dup(nagata.ov$transcript_id)
 nagata.ov <- nagata.ov[!duplicated(transcript_id),]
 ```
 
-
 ```{r}
 nagata.stats <- nagata.ov[,.N, by=distance][order(N, decreasing = T)]
 
@@ -689,8 +662,6 @@ nagata.ov.all[distance <= 25,  NAGATA.support := "distance <= 25"]
 nagata.TX.stats <- nagata.ov.all[,.N, by=.(source, TX_category, NAGATA.support, CAGE_significance)][order(N, decreasing = T)]
 
 ```
-
-
 
 ```{r}
 
@@ -760,7 +731,6 @@ gg.sc <- ggplot(nagata.ov, aes(score)) +
 
 ```
 
-
 ```{r}
 ### Filter for 25 nt
 nagata.ov    <- nagata.ov[distance <= 25,]
@@ -782,7 +752,6 @@ nagata.ov[,.N, by=.(source, TX_category)][order(N, decreasing = T)]
 
 ```
 
-
 ```{r}
 gg.nt <- ggplot(nagata.ov, aes(distance)) +
           #geom_histogram(bins=100)+
@@ -798,10 +767,8 @@ gg.nt <- ggplot(nagata.ov, aes(distance)) +
 ggsave('NAGATA-EHV transcripts TSS distance density.jpg', gg.nt, width = 10, height = 6)
 ```
 
-
-
-
 ### 
+
 ```{r}
 nagata.ov.nov    <- nagata.ov[,]
 
@@ -816,8 +783,8 @@ rtracklayer::export.gff3(as.data.frame(TX_nov_nagata_gff), 'EHV_novel_NAGATA_mer
 
 ```
 
-
 ### Merge NAGATA results
+
 ```{r}
 TR.merged.data <- merge(TR.merged.data,
                         nagata.ov.all[,.(seqnames, strand, transcript_id, prime5.TR, NAGATA.transcript_id, NAGATA.prime5.TR, NAGATA.support)], 
@@ -826,9 +793,8 @@ TR.merged.data <- merge(TR.merged.data,
 
 ```
 
-
-
 ### Export gff
+
 ```{r}
 TR.merged.data.EX  <- unique(
   TR.merged.data[,.(seqnames, strand, source, start=start.exon, end=end.exon, type = 'exon', ID=transcript_id, Name=transcript_id, TX_category)] )
@@ -845,11 +811,8 @@ rtracklayer::export.gff3(TR.merged.data.gff, 'TR.merged.gff')
 
 ```
 
-
-
-
-
 ### Merge annotation and counts
+
 ```{r}
 TR.merged.data.sp  <- 
     unique( TR.merged.data[,.(seqnames, strand, source, transcript_id, TX_category, 
@@ -883,6 +846,7 @@ TR.all.data.sp  <- merge(TR.merged.data.sp,
                             by.x=c('seqnames', 'strand', 'transcript_id'), 
                             by.y=c('seqnames', 'strand', 'Ref_Class'), all=T)
 ```
+
 ### Include canonic annotation
 
 ```{r}
@@ -893,7 +857,6 @@ Torma_canonic <- Torma_et_al[Canonic == '*' & `Transcript category` == 'Monocist
 
 
 ```
-
 
 ### Include CAGE canonic-to-truncated reatios
 
@@ -957,7 +920,6 @@ TR.CAGE.ov[, n_strand := n_distinct(strand), by=.(seqnames, prime5, sample)]
 #TR.CAGE.ov[transcript_id %in% TR.CAGE.ov.dup]
 ```
 
-
 ```{r, fig.height=12, fig.width=7}
 ## count the prime5 ends 
 TR.CAGE.ov.prime5.counts <- TR.CAGE.ov[,.(TX_count = sum(count)), by=.(seqnames, strand, sample, transcript_id, TX_category, gene, Canonic, CAGE_ID, prime5.TR)]
@@ -987,7 +949,6 @@ ggplot(TR.CAGE.ov.prime5.ratio, aes(Isoform_ratio)) +
   facet_wrap(~sample, ncol=1)
 ```
 
-
 ```{r, fig.height=12, fig.width=7}
 
 TR.CAGE.ov.prime5.ratio.uni <- unique(TR.CAGE.ov.prime5.ratio[,
@@ -1003,8 +964,8 @@ ggplot(TR.CAGE.ov.prime5.ratio.uni, aes(Isoform_ratio_mean)) +
 
 ```
 
-
 ### Add CAGE Isoform ratio to tr.all.data
+
 ```{r}
 
 #### Minimum CAGE-TSS ratio
@@ -1016,7 +977,6 @@ TR.all.data.sp <- merge(TR.all.data.sp,
                         by=c('seqnames', 'strand', 'gene', 'transcript_id'), all.x=T)
 
 ```
-
 
 ### Add categories from Torma
 
@@ -1042,9 +1002,6 @@ if (nrow(TR.all.data.spx) == nrow(TR.all.data.sp)) {
 TR.all.data.sp[,.N,by=.(source,TX_category)]
 
 ```
-
-
-
 
 ```{r, fig.width=12, fig.height=10}
 ### all transcripts
@@ -1088,7 +1045,6 @@ ggsave('All transcripts.venn.jpg', width=12, height=7)
 
 ```
 
-
 ```{r, fig.width=12, fig.height=10}
 ### Torma et al transcripts
 
@@ -1131,7 +1087,6 @@ ggsave('Torma et al.venn.jpg', width=12, height=7)
 
 ```
 
-
 ```{r, fig.width=12, fig.height=10}
 
 ### Tombácz et al transcripts
@@ -1173,7 +1128,6 @@ cowplot::plot_grid(gg1, gg2, gg3, gg4, nrow = 2) + ggtitle('Tombácz et al trans
 ggsave('Tombácz et al transcripts.venn.jpg', width=12, height=7)
 ```
 
-
 ```{r, fig.width=12, fig.height=10}
 
 ### Putative mRNAs
@@ -1214,8 +1168,8 @@ cowplot::plot_grid(gg1, gg2, gg3, gg4, nrow = 2) + ggtitle('Putative mRNAs')
 ggsave('Putative mRNAs.venn.jpg', width=12, height=10)
 ```
 
-
 ### Filter transcripts based on dRNA-NAGATA, CAGE-TSS-ratio and dcDNA-presence
+
 ```{r}
 
 ## All putative
@@ -1254,19 +1208,15 @@ TR.all.data.sp[transcript_id %in% putatives_to_keep, putatives_to_keep := T]
 
 ```
 
-
 ### Export
+
 ```{r}
 
 fwrite(TR.all.data.sp, 'TR.all.data.sp.tsv', sep='\t')
 
 ```
 
-####
-
-
-
-
+#### 
 
 ## START MAIN WF
 
@@ -1279,11 +1229,8 @@ orf.perc <- orf.sum
 #orf.perc[grepl('1h', sample),.(sum_read_count=sum(read_count)), by=.(gene, sample)][sum_read_count != 0]
 ```
 
-
-
-
-
 ## Count normalization
+
 ```{r, eval=F}
 ## THE COUNTS ARE NORMALIZED TO THEIR RESPECTIVE PARENT GENE OR GENE/CLUSTER COUNTS AND NOT FOR LIBRARY SIZE OR OTHER !
 
@@ -1363,38 +1310,37 @@ orf.perc[,read_count := read_count / norm_base]
 
 ```
 
+# Counts based on iterative GFF-compare results
 
+This was done as follows:
 
+1.  The reference transcripts were compared individually/iteratively to the reads.\
 
-# Counts based on iterative GFF-compare results  
+2.  The distances between the reads and each reference transcript hit were calculated.
 
-This was done as follows:  
+3.  For each read, the most similar reference transcript was assigned (lowest distance).\
 
-1. The reference transcripts were compared individually/iteratively to the reads.  
-2. The distances between the reads and each reference transcript hit were calculated.
-3. For each read, the most similar reference transcript was assigned (lowest distance).  
-4. Additionally, these distances must had fulfill the following rules: 
-*max prime5 distance <= 10*  
-*max prime3 distance <= 10*  
-*exon/intron junction difference <= 2*  
+4.  Additionally, these distances must had fulfill the following rules: *max prime5 distance \<= 10*\
+    *max prime3 distance \<= 10*\
+    *exon/intron junction difference \<= 2*
 
-5. Thus based on these, the read counts for each reference transcript were assessed.
-6. The transcripts were then assigned to their parent genes (by Torma G) and their ratio (isoform ratio) was calculated as follows:  
-*isoform ratio = transcript isoform count / total gene count*  
+5.  Thus based on these, the read counts for each reference transcript were assessed.
 
-7. Those reads that could not be assigned to the reference transcripts were assigned to their parent genes, based on their 5-prime ends and independently to their parent gene cluster, based on their 3-prime ends.  
-So the reads are either:  
-- assigned to a reference transcript
-- could not not be assigned to a ref TR, in which case they were:  
-  1. assigned to their parent gene based on their *5-prime* end overlapping with the gene's *TSS*  
-  2. assigned to their parent gene-cluster based on their *3-prime* end overlapping with the cluster's *TES*  
-  3. assigned to both  
+6.  The transcripts were then assigned to their parent genes (by Torma G) and their ratio (isoform ratio) was calculated as follows:\
+    *isoform ratio = transcript isoform count / total gene count*
 
+7.  Those reads that could not be assigned to the reference transcripts were assigned to their parent genes, based on their 5-prime ends and independently to their parent gene cluster, based on their 3-prime ends.\
+    So the reads are either:\
 
+-   assigned to a reference transcript
+-   could not not be assigned to a ref TR, in which case they were:
+    1.  assigned to their parent gene based on their *5-prime* end overlapping with the gene's *TSS*\
+    2.  assigned to their parent gene-cluster based on their *3-prime* end overlapping with the cluster's *TES*\
+    3.  assigned to both
 
 ## 1. Kinetics of Reference Transcript Isoforms, according to their host gene {.tabset}
 
-The reads were assigned to their parent gene based on their *5-prime* end overlapping with the gene's *TSS*  
+The reads were assigned to their parent gene based on their *5-prime* end overlapping with the gene's *TSS*\
 (but not necessarily with the gene cluster's TES)
 
 ```{r}
@@ -1419,7 +1365,6 @@ orf.sum.gene.TX <- orf.sum[,
 
 ```
 
-
 ```{r}
 #### Exclude Reference Isoforms with counts below the threshold
 Ref.class.thresh <- 1
@@ -1443,7 +1388,6 @@ TX.gene.uni <- unique(orf.sum[, .(seqnames,  strand, Ref_Class,
                                   gene, gene_region, gene_cluster)])
 
 ```
-
 
 ```{r}
 #### DO NOT !! Summarize the counts on Ref_Class and Gene
@@ -1520,8 +1464,8 @@ orf.sum.perc[,gene_region  := factor(gene_region,  levels=gene_regions)]
 #orf.sum.perc[grepl('1h', sample),.(sum_read_count=sum(read_count)), by=.(gene, sample)][sum_read_count != 0]
 ```
 
-
 Merge annotation with RefClass
+
 ```{r}
 
 TR.merged.data <- merge(unique(TR.ref.sum[,.(cmp_ref, Ref_Class, gene, gene_cluster, gene_region)]),
@@ -1534,9 +1478,8 @@ colnames(TR.merged.data)[1] <- 'transcript_id'
 TR.merged.data.gene <- data.table(as.data.frame(TR.merged.data))
 ```
 
-
-
 Exclude those ref transcripts that were not observed (or observed under the threshold) from the annotation as well
+
 ```{r, eval=T}
 ## exclude those ref transcripts that were not observed (or observed under the threshold)
 ## from the annotation as well
@@ -1548,7 +1491,6 @@ TR.merged.data.gene <- TR.merged.data.gene[transcript_id %in% TRs.to.plot,]
 
 ```
 
-
 ```{r}
 
 #TR.merged.data.gene[grep('novTX', transcript_id), Ref_Class := paste0(gene, '-')]
@@ -1558,7 +1500,8 @@ orf.sum.perc[grep('novTX', cmp_ref), Ref_Class := cmp_ref]
 
 ```
 
-### Combine Transcript counts with annotation -->> Supp Table S2
+### Combine Transcript counts with annotation --\>\> Supp Table S2
+
 ```{r}
 
 TR_counts_all <- dcast(
@@ -1610,7 +1553,6 @@ TR.merged.data.gene <- TR.merged.data.gene[!Ref_Class %in% trs.tofilt,]
 
 ```
 
-
 ```{r}
 
 mean_abundance <- dcast(
@@ -1624,11 +1566,10 @@ sd_abundance <- dcast(
 
 ```
 
-
 # Plotting
 
-
 ### Annotation plotting function
+
 ```{r}
 figw  <- 20
 figh  <- 9
@@ -1680,9 +1621,12 @@ gene_to_plot <- 'NOIR'
 vis_win <- 500
 
 ann.plotfun <- function(gene_to_plot=NULL, plot.data=plot.data, 
+                        gene.plotdata=gene.plotdata,
                         visfrom = NULL, visto = NULL, vis_win=500, 
                         TR.merged.data.gene = NULL, 
                         breakseq=5000,
+                        genomplot.scale=5.5,
+                        tr.palette = colorvec,
                         ...) {
   
   if(!is.null(gene_to_plot) & is.null(visfrom) & is.null(visto)) {
@@ -1711,9 +1655,9 @@ ann.plotfun <- function(gene_to_plot=NULL, plot.data=plot.data,
              
              transcript.sizes=transcript.sizes, tr.size.multip = 0.75,
              sizes=10, gene.sizes=gene.sizes, gene.label.col='black', alpha=alpha, #plot.title=NA, 
-             palette=palette[1:3], tr.palette = colorvec, # palette[c(15,18)],
+             palette=palette[1:3], tr.palette = tr.palette, # palette[c(15,18)],
              tolower=F, vline=NULL, vline2=NULL, breakseq=breakseq, margins=NULL, #unit(c(1,1,1,1), "cm"),
-             scales=scales, genomplot.scale=5.5, ylim=c(0, NA), y.log10=F, y.log2=F, ylims.gene=ylims.gene, y.multip=1.5, 
+             scales=scales, genomplot.scale=genomplot.scale, ylim=c(0, NA), y.log10=F, y.log2=F, ylims.gene=ylims.gene, y.multip=1.5, 
              ybreaks=NULL, ybreak_n=10,
              strip.text =  element_text(angle = 45, size = sizes*1.5, hjust = 0.5), facet_space=1,
              gene.aes = aes(xmin = start, xmax = end, y = ymin, fill = strand, forward = orientation, label = gene, fontface='bold'),
@@ -1733,8 +1677,8 @@ ann.plotfun <- function(gene_to_plot=NULL, plot.data=plot.data,
 
 ```
 
-
 ### Isoform Ratio plotting function
+
 ```{r}
 ### 
 
@@ -1823,8 +1767,8 @@ plotfun <- function(DT,
 strip.background <- palette[10]
 ```
 
-
 ### Merge IF ratio and annotation plots function
+
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
 #DT <- orf.sum.perc
 
@@ -1972,15 +1916,195 @@ mapfun <- function(gene_to_plot=NULL,  DT=orf.sum.perc, TRs_to_plot=NULL, recalc
 #purrr::map(unique(orf.sum.perc[,gene]), mapfun, orf.sum.perc)
 ```
 
-
 # START PLOTTING
+
+## REVIEW 2
+
+### Supp Fig S12A - EHV raRNAs
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+
+dir.create('Figures')
+
+Ori.df        <- gff[gff$type == 'stem_loop', c("seqnames", "start", "end", "strand", "type", "Note")]
+Ori.df$Name   <- gsub(' palindrome', '', unlist(Ori.df$Note))
+colnames(Ori.df)[6] <- 'gene_name'
+Ori.df$gene   <- Ori.df$Name; Ori.df$ID   <- Ori.df$Name; Ori.df$gene_name <- Ori.df$Name
+Ori.df$part   <- 1
+Ori.df <- as.data.frame(Ori.df)
+Ori.df <- Ori.df[,colnames(feature.df)]
+
+Ori.df <- make.genome.plot.data(Ori.df, feature.col = 8, feature.name = 'ID')
+Ori.df$strand <- factor(Ori.df$strand, levels = c('+', '-', '*'))
+
+gene.ori.plotdata <- rbind(gene.plotdata, Ori.df)
+
+
+## Add colors for those TR-s that overlap with the Ori (without strandness)
+TR.merged.data.ori <- copy(TR.merged.data)
+
+TR.merged.data.ori <- foverlaps2(TR.merged.data.ori, data.table(Ori.df), minoverlap = 1,
+                                 by=c('seqnames',  'start', 'end'))
+Ori.TRs <- unique(TR.merged.data.ori$transcript_id)
+
+TR.merged.data.ori <- copy(TR.merged.data[,
+          .(seqnames, strand, transcript_id,
+            start.TR, end.TR, prime5.TR, prime3.TR,
+            start.exon, end.exon, exon_number, last_exon)])
+
+TR.merged.data.ori[,ori_overlap := strand]
+TR.merged.data.ori[transcript_id %in% Ori.TRs, ori_overlap := '*']
+TR.merged.data.ori[, CAGE_significance := '']
+
+
+
+Fig.all.Ori <- cowplot::plot_grid(plotlist = list(
+  ann.plotfun(NULL, vis_win=NULL, 
+              gene.plotdata = gene.ori.plotdata,
+              genomplot.scale = 12,
+              visfrom = 66000, visto = 85000,
+              tr.palette = colorvec[-c(3)],
+              TR.merged.data = TR.merged.data.ori,
+              annot_fill_column = 'ori_overlap',
+              add.TR.labels = T, breakseq=breakseq, plot.title='OriL'),
+
+  ann.plotfun(NULL, vis_win=NULL, 
+              gene.plotdata = gene.ori.plotdata,
+              genomplot.scale = 7,
+              visfrom = 118000, visto = 124000,
+              tr.palette = colorvec[-c(3)],
+              TR.merged.data = TR.merged.data.ori,
+              annot_fill_column = 'ori_overlap',
+              add.TR.labels = T, breakseq=breakseq, plot.title='OriS')
+
+), ncol = 1, align = 'v', axis = 'tlbr', rel_heights = c(3,1.4))
+
+
+
+ggsave('./Figures/Supp Fig S12A.pdf', Fig.all.Ori, height = 16, width = 10)
+
+#Fig.all.Ori
+```
+
+
+### Supp Fig S12B - PRV raRNAs
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+
+dir.create('Figures')
+
+### PRV Oris
+gff.file <- paste0('LT934125.1.gff3')
+gff      <- data.table(as.data.frame(rtracklayer::import.gff(gff.file)))
+
+Ori.df        <- gff[gff$type == 'stem_loop', c("seqnames", "start", "end", "strand", "type", "Note")]
+Ori.df$Name   <- gsub(' palindrome', '', unlist(Ori.df$Note))
+colnames(Ori.df)[6] <- 'gene_name'
+Ori.df$gene   <- Ori.df$Name; Ori.df$ID   <- Ori.df$Name; Ori.df$gene_name <- Ori.df$Name
+Ori.df$part   <- 1
+Ori.df <- as.data.frame(Ori.df)
+Ori.df <- Ori.df[,colnames(feature.df)]
+
+Ori.df <- make.genome.plot.data(Ori.df, feature.col = 8, feature.name = 'ID')
+Ori.df$strand <- factor(Ori.df$strand, levels = c('+', '-', '*'))
+
+### PRV Genes
+feature.df.PRV <- fread('LT934125.1_feature.df.tsv')
+genome.plotdata.PRV <- make.genome.plot.data(feature.df.PRV, feature.col = 8, feature.name = 'ID')
+genome.plotdata.PRV$strand <- factor(genome.plotdata.PRV$strand, levels = c('+', '-', '*'))
+
+### Combine
+genome.plotdata.PRV <- rbind(genome.plotdata.PRV, Ori.df)
+
+
+### Transcripts
+# 1. Subset to exons and extract the transcript id from Parent
+exons <- gff[type == "exon"]
+exons[, transcript_id := unlist(Parent)]  # Parent is a list; here we assume it holds the transcript id
+
+# 2. For each transcript, calculate transcript boundaries
+exons[, `:=`(
+  start.TR = min(start),
+  end.TR   = max(end)
+), by = transcript_id]
+
+# 3. Define prime ends: for '+' strand, 5' = transcript start; for '-' strand, 5' = transcript end.
+exons[, `:=`(
+  prime5.TR = ifelse(strand == "+", start.TR, end.TR),
+  prime3.TR = ifelse(strand == "+", end.TR, start.TR)
+)]
+
+# 4. Number the exons in transcript order.
+# Since all exons in a transcript share the same strand, we can do:
+exons[, exon_number := if (unique(strand) == "+") {
+    seq_len(.N)
+  } else {
+    rev(seq_len(.N))
+  }, by = transcript_id]
+
+# 5. Flag the last exon in each transcript
+exons[, last_exon := exon_number == max(exon_number), by = transcript_id]
+
+# 6. (Optionally) rename the exon start and end columns for clarity.
+exons[, `:=`(
+  start.exon = start,
+  end.exon   = end
+)]
+
+# 7. Finally, select the desired columns:
+TR.merged.data.PRV <- exons[, .(seqnames, strand, transcript_id,
+                            start.TR, end.TR, prime5.TR, prime3.TR,
+                            start.exon, end.exon, exon_number, last_exon)]
+
+
+TR.merged.data.PRV.ori <- foverlaps2(TR.merged.data.PRV, data.table(Ori.df), minoverlap = 1,
+                                 by=c('seqnames',  'start', 'end'))
+
+Ori.TRs <- unique(TR.merged.data.ori$transcript_id)
+
+TR.merged.data.ori <- copy(TR.merged.data[,
+          .(seqnames, strand, transcript_id,
+            start.TR, end.TR, prime5.TR, prime3.TR,
+            start.exon, end.exon, exon_number, last_exon)])
+
+TR.merged.data.ori[,ori_overlap := strand]
+TR.merged.data.ori[transcript_id %in% Ori.TRs, ori_overlap := '*']
+TR.merged.data.ori[, CAGE_significance := '']
+
+
+
+
+Fig.all.Ori <- cowplot::plot_grid(plotlist = list(
+  ann.plotfun(NULL, vis_win=NULL, 
+              gene.plotdata = gene.ori.plotdata,
+              genomplot.scale = 12,
+              visfrom = 66000, visto = 85000,
+              tr.palette = colorvec[-c(3)],
+              TR.merged.data = TR.merged.data.ori,
+              annot_fill_column = 'ori_overlap',
+              add.TR.labels = T, breakseq=breakseq, plot.title='OriL'),
+
+  ann.plotfun(NULL, vis_win=NULL, 
+              gene.plotdata = gene.ori.plotdata,
+              genomplot.scale = 7,
+              visfrom = 118000, visto = 124000,
+              tr.palette = colorvec[-c(3)],
+              TR.merged.data = TR.merged.data.ori,
+              annot_fill_column = 'ori_overlap',
+              add.TR.labels = T, breakseq=breakseq, plot.title='OriS')
+
+), ncol = 1, align = 'v', axis = 'tlbr', rel_heights = c(3,1.4))
+
+
+
+ggsave('./Figures/Supp Fig S12B.pdf', Fig.all.Ori, height = 16, width = 10)
+
+#Fig.all.Ori
+```
+
 
 
 ## REVIEW
 
-
 ### Supp Fig S7 - Anomalous transcripts
-
 
 ORF23, ORF50, ORF67-ORF68, ORF64
 
@@ -2085,9 +2209,7 @@ ggsave('./Figures/Supp Fig S7.jpg', Fig.isoforms, height = 20, width = 12)
 #Fig.isoforms
 ```
 
-
-
-### Figure 6 - DTU transcripts -->> OK
+### Figure 6 - DTU transcripts --\>\> OK
 
 ORF11, ORF13, ORF14, ORF19, ORF40, ORF54
 
@@ -2169,11 +2291,9 @@ ggsave('./Figures/Figure 6.jpg', Fig.isoforms, height = 12, width = 25)
 #Fig.isoforms
 ```
 
+### Figure 4 - Spliced Transcripts --\>\> OK
 
-
-### Figure 4 - Spliced Transcripts -->> OK
-
-ORF8, ORF9, ORF53, ORF38, ORF58, NOIR 
+ORF8, ORF9, ORF53, ORF38, ORF58, NOIR
 
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
 
@@ -2267,11 +2387,10 @@ ggsave('./Figures/Figure 4.jpg', Fig.splice, height = 14, width = 24)
 #Fig.splice
 ```
 
-
-
-###  Supp Figure S9 - Spliced Transcripts 2 AND DTU 2 -->> OK
+### Supp Figure S9 - Spliced Transcripts 2 AND DTU 2 --\>\> OK
 
 ORF47-44, ORF65
+
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
 Fig.abunds1 <- cowplot::plot_grid(plotlist = list(
   mapfun('ORF65',  orf.sum.perc, legend.position='right', what2plot = 'abund_only', title = 'A',#legend.nrow=10, legend.ncol=2,
@@ -2381,10 +2500,6 @@ ggsave('./Figures/Supp Fig S9.jpg', Fig.others, height = 30, width = 20)
 #Fig.splice
 ```
 
-
-
-
-
 ## For each gene
 
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
@@ -2425,15 +2540,10 @@ for(gene_to_plot in genes_to_plot) {
 
 ```
 
-
-
-
-
-
-
 ## Tests
 
 ### V1
+
 ```{r, fig.show='hold',  fig.width = 12, fig.height = 6, eval=F}
 
 gene_to_plot <- 'ORF38'
@@ -2535,7 +2645,9 @@ Fig.test
 
 
 ```
+
 ### V2
+
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=F}
 
 ORFs_toplot <- c("ORF38", "ORF45", "ORF50", "ORF54", "ORF67", "ORF70", "ORF75")
@@ -2619,13 +2731,11 @@ for (gene_to_plot in ORFs_toplot) {
 
 ```
 
-
-
 ## Archive
 
 ### Figure 3 V1 - Spliced Transcripts
 
-ORF9, ORF38, ORF65, NOIR 
+ORF9, ORF38, ORF65, NOIR
 
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=F}
 
@@ -2725,7 +2835,6 @@ ggsave('./Figures/Figure 3_REVIEW.jpg', Fig.splice, height = 10, width = 24)
 #Fig.splice
 ```
 
-
 ```{r}
 ## Export data
 if (writetables) {
@@ -2743,8 +2852,6 @@ if (writetables) {
 
 }
 ```
-
-
 
 ```{r bib, include=FALSE}
 # KEEP THIS AT THE END OF THE DOCUMENT TO GENERATE A LOCAL bib FILE FOR PKGS USED
