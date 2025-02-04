@@ -1622,11 +1622,13 @@ vis_win <- 500
 
 ann.plotfun <- function(gene_to_plot=NULL, plot.data=plot.data, 
                         gene.plotdata=gene.plotdata,
+                        genome=genome,
                         visfrom = NULL, visto = NULL, vis_win=500, 
                         TR.merged.data.gene = NULL, 
                         breakseq=5000,
                         genomplot.scale=5.5,
                         tr.palette = colorvec,
+                        theme_general = theme_bw(),
                         ...) {
   
   if(!is.null(gene_to_plot) & is.null(visfrom) & is.null(visto)) {
@@ -1662,7 +1664,7 @@ ann.plotfun <- function(gene_to_plot=NULL, plot.data=plot.data,
              strip.text =  element_text(angle = 45, size = sizes*1.5, hjust = 0.5), facet_space=1,
              gene.aes = aes(xmin = start, xmax = end, y = ymin, fill = strand, forward = orientation, label = gene, fontface='bold'),
              facet_cropF = NULL, # facet_nested(rows = vars(hpi), cols=NULL, scales ),
-             labels=NULL, legend.position.prime = 'top', theme_general = theme_bw(), 
+             labels=NULL, legend.position.prime = 'top', theme_general = theme_general, 
              return.plot.data=F
              , ...
              )
@@ -1995,8 +1997,8 @@ dir.create('Figures')
 gff.file <- paste0('LT934125.1.gff3')
 gff      <- data.table(as.data.frame(rtracklayer::import.gff(gff.file)))
 
-Ori.df        <- gff[gff$type == 'stem_loop', c("seqnames", "start", "end", "strand", "type", "Note")]
-Ori.df$Name   <- gsub(' palindrome', '', unlist(Ori.df$Note))
+Ori.df        <- gff[gff$type == 'stem_loop', c("seqnames", "start", "end", "strand", "type", "ID")]
+Ori.df$Name   <- Ori.df$ID
 colnames(Ori.df)[6] <- 'gene_name'
 Ori.df$gene   <- Ori.df$Name; Ori.df$ID   <- Ori.df$Name; Ori.df$gene_name <- Ori.df$Name
 Ori.df$part   <- 1
@@ -2014,17 +2016,24 @@ genome.plotdata.PRV$strand <- factor(genome.plotdata.PRV$strand, levels = c('+',
 ### Combine
 genome.plotdata.PRV <- rbind(genome.plotdata.PRV, Ori.df)
 
+genome.plotdata.PRV[is.na(genome.plotdata.PRV$part), 'part'] <- 1
 
 ### Transcripts
+### PRV Oris
+gff.file <- paste0('LT934125.1_Torma_et_al_corrected.gff3')
+gff      <- data.table(as.data.frame(rtracklayer::import.gff(gff.file)))
+
 # 1. Subset to exons and extract the transcript id from Parent
-exons <- gff[type == "exon"]
-exons[, transcript_id := unlist(Parent)]  # Parent is a list; here we assume it holds the transcript id
+exons <- gff[type == "exon", ]
+#exons[, transcript_id := unlist(Parent)]  # Parent is a list; here we assume it holds the transcript id
 
 # 2. For each transcript, calculate transcript boundaries
 exons[, `:=`(
   start.TR = min(start),
   end.TR   = max(end)
 ), by = transcript_id]
+# Order
+exons <- exons[order(transcript_id, start),]
 
 # 3. Define prime ends: for '+' strand, 5' = transcript start; for '-' strand, 5' = transcript end.
 exons[, `:=`(
@@ -2036,12 +2045,13 @@ exons[, `:=`(
 # Since all exons in a transcript share the same strand, we can do:
 exons[, exon_number := if (unique(strand) == "+") {
     seq_len(.N)
-  } else {
+  } else { 
     rev(seq_len(.N))
-  }, by = transcript_id]
+  }
+  , by = transcript_id]
 
 # 5. Flag the last exon in each transcript
-exons[, last_exon := exon_number == max(exon_number), by = transcript_id]
+exons[, last_exon := fifelse(exon_number == max(exon_number), T, F), by = transcript_id]
 
 # 6. (Optionally) rename the exon start and end columns for clarity.
 exons[, `:=`(
@@ -2049,53 +2059,61 @@ exons[, `:=`(
   end.exon   = end
 )]
 
+
 # 7. Finally, select the desired columns:
 TR.merged.data.PRV <- exons[, .(seqnames, strand, transcript_id,
                             start.TR, end.TR, prime5.TR, prime3.TR,
                             start.exon, end.exon, exon_number, last_exon)]
 
+TR.merged.data.PRV[, `:=`(
+  start = start.TR,
+  end   = end.TR
+)]
 
+# 8. Check which TR overlaps with the oriS and oriL (on both strands)
 TR.merged.data.PRV.ori <- foverlaps2(TR.merged.data.PRV, data.table(Ori.df), minoverlap = 1,
-                                 by=c('seqnames',  'start', 'end'))
+                                     by=c('seqnames',  'start', 'end'))
 
-Ori.TRs <- unique(TR.merged.data.ori$transcript_id)
+Ori.TRs <- unique(TR.merged.data.PRV.ori$transcript_id)
 
-TR.merged.data.ori <- copy(TR.merged.data[,
-          .(seqnames, strand, transcript_id,
-            start.TR, end.TR, prime5.TR, prime3.TR,
-            start.exon, end.exon, exon_number, last_exon)])
+TR.merged.data.PRV.ori <- copy(TR.merged.data.PRV)
 
-TR.merged.data.ori[,ori_overlap := strand]
-TR.merged.data.ori[transcript_id %in% Ori.TRs, ori_overlap := '*']
-TR.merged.data.ori[, CAGE_significance := '']
+# 9. Annotate the overlapping TRs
+TR.merged.data.PRV.ori[,ori_overlap := strand]
+TR.merged.data.PRV.ori[transcript_id %in% Ori.TRs, ori_overlap := '*']
 
-
+# 10. Omit CAGE sign. asterisks
+TR.merged.data.PRV.ori[, CAGE_significance := '']
 
 
-Fig.all.Ori <- cowplot::plot_grid(plotlist = list(
-  ann.plotfun(NULL, vis_win=NULL, 
-              gene.plotdata = gene.ori.plotdata,
-              genomplot.scale = 12,
-              visfrom = 66000, visto = 85000,
+### Plot
+
+Fig.PRV.Ori <- cowplot::plot_grid(plotlist = list(
+  ann.plotfun(NULL, vis_win=NULL, genome='LT934125.1',
+              gene.plotdata = genome.plotdata.PRV,
+              genomplot.scale = 8,
+              visfrom = 55000, visto = 75000,
               tr.palette = colorvec[-c(3)],
-              TR.merged.data = TR.merged.data.ori,
+              theme_general = theme_ipsum(),
+              TR.merged.data = TR.merged.data.PRV.ori,
               annot_fill_column = 'ori_overlap',
               add.TR.labels = T, breakseq=breakseq, plot.title='OriL'),
 
-  ann.plotfun(NULL, vis_win=NULL, 
-              gene.plotdata = gene.ori.plotdata,
-              genomplot.scale = 7,
-              visfrom = 118000, visto = 124000,
+  ann.plotfun(NULL, vis_win=NULL, genome='LT934125.1',
+              gene.plotdata = genome.plotdata.PRV,
+              genomplot.scale = 12,
+              visfrom = 115000, visto = 135000,
               tr.palette = colorvec[-c(3)],
-              TR.merged.data = TR.merged.data.ori,
+              theme_general = theme_ipsum(),
+              TR.merged.data = TR.merged.data.PRV.ori,
               annot_fill_column = 'ori_overlap',
               add.TR.labels = T, breakseq=breakseq, plot.title='OriS')
 
-), ncol = 1, align = 'v', axis = 'tlbr', rel_heights = c(3,1.4))
+), ncol = 1, align = 'v', axis = 'tlbr', rel_heights = c(1,1))
 
 
 
-ggsave('./Figures/Supp Fig S12B.pdf', Fig.all.Ori, height = 16, width = 10)
+ggsave('./Figures/Supp Fig S12B.tiff', Fig.PRV.Ori, height = 18, width = 10)
 
 #Fig.all.Ori
 ```
