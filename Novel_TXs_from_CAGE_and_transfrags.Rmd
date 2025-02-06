@@ -1,0 +1,1806 @@
+---
+title: "EHV-1 Genes' transcript ratios"
+author: Balázs Kakuk
+output: 
+  html_document:
+    theme: cosmo
+    toc: yes
+    toc_float:
+      collapsed: false
+---
+
+```{css, echo=FALSE}
+    body .main-container {
+      max-width: 90% !important;
+      width: 90% !important;
+    }
+    body {
+      max-width: 90% !important;
+      margin-left: auto;
+      margin-right: auto;
+    }
+```
+
+
+```{r include=FALSE}
+## hrbrthemes::ipsum:
+
+knitr::opts_chunk$set(fig.retina=2, echo = FALSE, fig.align = 'center', message = F, warning = F)
+```
+
+```{r ipsum_setup, message=FALSE, warning=FALSE, cache=FALSE, echo=FALSE}
+library(prettydoc)
+library(hrbrthemes, quietly = T)
+#library(GenomicFeatures, quietly = T)
+library(DESeq2, quietly = T)
+library(ggpubr, quietly = T)
+#library(misc, quietly = T)
+library(dplyr, quietly = T)
+#library(tidyverse, quietly = T)
+library(ggsci, quietly = T)
+#library(Gviz, quietly = T)
+library(dplyr, quietly = T)
+library(tidyr)
+library(scales)
+#library(plyr)
+library(grid, quietly = T)
+library(gridExtra, quietly = T) 
+library(ggpubr, quietly = T)
+library(data.table)
+library(ggh4x)
+library(knitr)
+library(formattable)
+library(ggrepel)
+library(utils)
+
+#library(moanin, quietly = T)
+#library(stageR); library(edgeR) ; library(Biobase)
+#library(limma) ; library(DEXSeq)
+
+dontrun <- T
+source('customclust.R')
+source('mclust.R')
+
+
+###
+viral.ref <- "NC_001491.2.mRNA_correct_genes_with.gff3"
+source('_WF.part0.R')
+
+#### Settings ####
+
+## Main
+#save.data <- 'PRV.rebase.RData'
+EndType <- 'CAGE'
+
+project_config  <- fread('project_config.txt')
+outdir  <- project_config$outdir
+res.dir <- outdir; try({ dir.create(res.dir) })
+fig.dir <- paste0(res.dir, '/', EndType); try({ dir.create(fig.dir) })## save plots to this directory
+
+## Miscallenaous
+colorvec <- na.omit(c(
+  colorvec[c(1:5,15,13,10,24,7,26,32,33)],
+  colorvec[-c(1:5,15,13,10,24,7,26,32,33)]))
+
+colorvec <- colorvec[-c(9,13)]
+
+palette  <- colorvec #pal_npg()(10)
+
+writetables <- T
+
+
+#### For Gene/Transcript plotting
+
+## Gene Feature annotation
+
+
+genome.plotdata <- make.genome.plot.data(feature.df, feature.col = 8, feature.name = 'ID')
+genome.plotdata$strand <- factor(genome.plotdata$strand, levels = c('+', '-', '*'))
+gene.plotdata <- genome.plotdata
+## GENE NAMES !
+gene.plotdata$gene_name <- gsub('_.*', '', gene.plotdata$gene)
+#gene.plotdata$start > gene.plotdata$end
+## Misc
+alpha <- data.frame(cov_geom        = 0.6,
+                    gene_geom       = 0.75,
+                    unstranded_geom = 0.75)
+
+
+
+```
+
+# Project info
+*Samples: dcDNA Seq*  
+*pychopper: no*  
+*mapping version: v6*  
+*LoRTIA: yes (stranded only)*  
+
+*Filtering samples: C6_2h_3 & PC-12_8h_3*  
+
+## Only those reads were counted, where LoRTIA found *both* 5- and 3-prime adapters!
+
+```{r}
+
+TR.gff.compare.uni.CAGE     <- fread(paste0(outdir, '/TR.gff.compare.uni.CAGE.tsv'), na.strings = '')
+TR.data <- fread(paste0(outdir, '/TR.data.tsv'), na.strings = '')
+TR.reads.gfffile <- paste0(outdir, '/TR.reads.gff2')
+TR.gff <- data.table(as.data.frame(rtracklayer::import.gff2(TR.reads.gfffile)))
+
+
+```
+
+
+
+
+```{r}
+#### Import transcript and gene (cluster) counts
+TR.gene.cluster <- fread(paste0(outdir, '/', 'TR.gene.cluster.tsv'), na.strings = '')
+
+
+#### Import Toram et al annotation transferred from Kaplan
+source('import.ref.TRs.R')
+
+#### Reference annotation with CAGE results
+TR.merged.data <- fread(paste0(outdir, '/TR.Ref.data.CAGE.tsv'))
+
+#### Read-transcripts counts with adapter info
+TR.adapt.count  <- fread(paste0(outdir, '/TR.adapt.count.tsv'), na.strings = '')
+
+#### consider adapters?
+# possible values : adapters <- 'both' | 'either' | 'any' | 'prime5' | 'prime3'
+adapters <- 'both'
+       if(adapters == 'both') {
+  TR.adapt.filt <- TR.adapt.count[correct_tss == T & correct_tes == T]
+  
+} else if(adapters == 'either') {
+  TR.adapt.filt <- TR.adapt.count[correct_tss == T | correct_tes == T, .(count = sum(count)), by=.(seqnames, strand, TR_ID, sample)]
+  
+} else if(adapters == 'any') {
+  TR.adapt.filt <- TR.adapt.count[, .(count = sum(count)), by=.(seqnames, strand, TR_ID, sample)]
+  
+} else if(adapters == 'prime5') {
+  TR.adapt.filt <- TR.adapt.count[correct_tss == T, .(count = sum(count)), by=.(seqnames, strand, TR_ID, sample)]
+  
+} else if(adapters == 'prime3') {
+  TR.adapt.filt <- TR.adapt.count[correct_tes == T, .(count = sum(count)), by=.(seqnames, strand, TR_ID, sample)]
+  
+}
+setnames(TR.adapt.filt, 'TR_ID', 'transcript_id')
+
+###### Merge with read-transcript counts (possible filtered) #####
+TR.gene.cluster.counts <- merge(TR.gene.cluster, 
+                                TR.adapt.filt[,.(sample, transcript_id, count)],
+                                by=c('transcript_id')
+                                #all.x=T, 
+                                #allow.cartesian=TRUE
+                                )
+
+
+
+
+#### summarise read-transcripts into ref transcripts
+TR.ref.sum      <- TR.gene.cluster.counts[,.(read_count = sum(count)),  
+  by=.(seqnames, gene_region, gene_cluster, gene, cmp_ref, Ref_Class, class_code, Kinetic_class, sample)]
+
+
+## melt to get 0 counts
+orf.counts <- dcast(TR.ref.sum, seqnames + gene_region + gene_cluster + gene + Kinetic_class + Ref_Class + class_code + cmp_ref ~ sample, value.var = 'read_count')
+orf.perc   <- melt(orf.counts, variable.name = 'sample', value.name = 'read_count', id.vars = colnames(orf.counts)[1:8])
+orf.perc[is.na(read_count), read_count := 0]
+
+TR.ref.sum   <- orf.perc
+## merge back for transcript strand
+TR.ref.sum  <- merge(unique(TR.genes[,.(seqnames, strand, transcript_id)]), 
+                     TR.ref.sum, by.y=c('seqnames', 'cmp_ref'), by.x=c('seqnames', 'transcript_id'))
+setnames(TR.ref.sum, 'transcript_id', 'cmp_ref')
+## and metadata
+TR.ref.sum  <- merge(TR.ref.sum, metafilt[,metacols], by=c('sample'), all.x=T)
+
+
+
+## Factorize Kinetic classes
+TR.ref.sum[is.na(Kinetic_class), Kinetic_class := 'unknown']
+TR.ref.sum[,Kinetic_class := factor(Kinetic_class, levels = c('IE', 'IE/E', 'E', 'IE/E/L', 'E/L', 'L', 'unknown'))]
+
+
+```
+
+
+
+```{r, eval=F}
+#### Keep spliced genes only
+spliced.genes <-  unique(TR.ref[exon_number > 1, gene_id])
+
+message('Keeping spliced genes only!')
+message('genes, other than: \n', paste(spliced.genes, collapse = '\n'), ' were filtered out!' )
+
+## All Transcripts of Spliced Genes
+spliced.TRs <- unique(viral.mrna[gene_id %in% spliced.genes, transcript_id]) 
+
+TR.ref.sum  <- TR.ref.sum[ gene %in% spliced.genes, ]
+
+```
+
+
+
+```{r, eval=T}
+#### Completely omit all non-validated isoform!
+keep_equal_only <- T
+class.code.tofilt <- '='
+if(keep_equal_only) {
+  TR.ref.sum <- TR.ref.sum[class_code %in% class.code.tofilt]
+  message('Only the Reference Isoforms were kept, 
+          all reads that are notequal ("=") to these, were omitted!')
+}
+```
+
+
+
+```{r, eval=T}
+#### Use the "gene" from the annotation, not the counting algorithm 
+use_gene_from_annot <- T
+
+if(use_gene_from_annot) {
+  TR.ref.sum[,gene         := NULL]
+  TR.ref.sum[,gene_cluster := NULL]
+  
+  TR.ref.sum.m <- merge(TR.ref.sum[],
+                      TR.genes[,.(gene = gene_id, seqnames, strand, transcript_id)],
+                      by.x=c('seqnames', 'strand', 'cmp_ref'),
+                      by.y=c('seqnames', 'strand', 'transcript_id'),
+                      all=F )
+  TR.ref.sum.m <- merge(TR.ref.sum.m[],
+                        unique(gene.clusters.all[, .(seqnames, strand, gene, gene_cluster)]),
+                        by=c('seqnames', 'strand', 'gene'), all.x=T)
+  if(nrow(TR.ref.sum.m) == nrow(TR.ref.sum)) { 
+    message('The genes were assigned to the transcripts based on the Reference annotation!')
+    TR.ref.sum <- TR.ref.sum.m
+    rm(TR.ref.sum.m)
+  } else {stop ()}
+}
+```
+
+## Correct some genes in the annotation
+```{r, eval=T}
+
+
+correct_genes_with <- "NC_001491.2.mRNA_correct_genes_with.gff3"
+correct_genes_with <- data.table(as.data.frame(rtracklayer::import.gff(correct_genes_with, version='3')))
+#if(nrow(viral.ref[ID != transcript_id]) != 0 ) { stop('The IDs do not match for these transcripts: ', viral.ref[ID != transcript_id])}
+correct_genes_with[type=='exon', exon_number := 1:.N, by = .(transcript_id)]
+correct_genes_with <- correct_genes_with[type == 'mRNA', .(seqnames, source, type, phase, strand, start, end, transcript_id, Name, ID, gene_id, ORF_id)]
+
+
+TR.ref.sum.corr <- merge(TR.ref.sum, 
+                           correct_genes_with[,.(transcript_id, gene_id)],
+                           by.x = c('cmp_ref'),
+                           by.y = c('transcript_id'), 
+                           all.x=T)
+
+TR.corr <- unique(TR.ref.sum.corr[gene != gene_id, cmp_ref])
+
+TR.ref.sum.corr <- TR.ref.sum.corr[gene != gene_id, ]
+TR.ref.sum.corr[,gene := gene_id]
+TR.ref.sum.corr[,gene_id := NULL]
+
+
+TR.ref.sum <- rbind(
+  TR.ref.sum.corr,
+  TR.ref.sum[!cmp_ref %in% TR.corr, ]
+)
+
+#
+
+
+```
+
+DO NOT Filter second copies of genes, as in some cases there are transcripts from only one of the copies
+```{r, eval=T}
+filter_second_copy_genes <- F
+
+if(filter_second_copy_genes) {
+  ## Filter second copies of genes and rename first copy
+  genes_to_filter <- grep('_2', unique(TR.ref.sum[, gene]), value = T)
+  if(exists('genes_to_filter')) {
+    message('The following genes were filtered out for counting: \n', paste(genes_to_filter, collapse = '\n'))
+    TR.ref.sum <- TR.ref.sum[ ! gene %in% c(genes_to_filter), ]
+  } else (message('No genes were filtered out for counting!'))
+  
+  if (all(
+    gsub('_.*', '', grep('_', unique(TR.ref.sum[ , gene]), value = T)) %in%
+    gsub('_.*', '', genes_to_filter)
+  )) {
+    
+    TR.ref.sum[, gene         := gsub('_.*', '', gene)]
+    TR.ref.sum[, gene_region  := gsub('_.*', '', gene_region)]
+    TR.ref.sum[, gene_cluster := gsub('_.*', '', gene_cluster)]
+    
+    gene_regions <- unique(gsub('_.*', '', gene_regions))
+    
+    gene.plotdata <- data.frame(data.table(gene.plotdata)[!gene %in% genes_to_filter, ])
+    #gene.plotdata[, gene         := gsub('_.*', '', gene)]
+    #gene.plotdata[, gene         := gsub('_.*', '', gene)]
+    #gene.plotdata <- unique(gsub('_.*', '', gene_regions))
+    
+  }  
+} else {
+  
+  ## check for genes with two copies
+  genes_to_filter <- grep('_2|_1', unique(TR.ref.sum[, gene]), value = T)
+  
+  ## assign Parent to them
+  TR.ref.sum[gene %in% genes_to_filter, parent := gsub('_.*', '', gene)]
+  ## we need to remove gene cluster as its not always the same
+  TR.ref.sum[gene %in% genes_to_filter, gene_cluster := gsub('_.*', '', gene)]
+  TR.ref.sum[gene %in% genes_to_filter, gene_region  := gsub('_.*', '', gene)]
+
+  ## and overwrite gene as well
+  TR.ref.sum[gene %in% genes_to_filter, gene := gsub('_.*', '', gene)]
+  
+  
+    
+}
+
+
+
+  
+#unique(TR.ref.sum[, gene_cluster])
+```
+
+
+```{r, eval=F}
+### Filtering of very-low coverage samples
+samples_to_filt <- c('C6_2h_3', 'PC-12_8h_3')
+
+
+metafilt <- metafilt[!metafilt$sample %in% samples_to_filt, ]
+
+TR.ref.sum <- TR.ref.sum[!sample %in% samples_to_filt, ]
+
+message(paste(samples_to_filt, ' was filtered out!', collapse = '\n') )
+
+```
+
+
+
+
+```{r}
+
+orf.sum  <- TR.ref.sum
+orf.perc <- orf.sum
+
+
+#orf.perc[grepl('1h', sample),.(sum_read_count=sum(read_count)), by=.(gene, sample)][sum_read_count != 0]
+```
+
+
+```{r, eval=F}
+## THE COUNTS ARE NORMALIZED TO THEIR RESPECTIVE PARENT GENE OR GENE/CLUSTER COUNTS AND NOT FOR LIBRARY SIZE OR OTHER !
+
+### Normalize counts
+
+#### Normalization method
+norm.method <- 'average_genome'
+multip      <- 10000
+
+ if (norm.method == 'average_genome') {
+  
+  ## Average genome norm method
+  norm_cov_summary <-  fread(paste0(outdir, '/norm.cov.summary.tsv'))
+  normBase <- norm_cov_summary[,.(sample, average_coverage)]
+  colnames(normBase)[2] <- 'norm_base'
+  
+  fig.dir <- paste0(fig.dir, '.norm_genome')
+
+} else if (norm.method == 'viral_read.count') {
+    
+  ## Viral read count method
+  # sum up all the ORF counts
+
+  normBase <- melt(gene.sample_count.sp, variable.name = 'sample', value.name = 'count')
+  normBase <- normBase[,.(norm_base = sum(count)), by=sample]
+  
+  fig.dir <- paste0(fig.dir, '.norm_LoRTIA')
+  
+} else if (norm.method == 'total_read.count') {
+  ## For total read count method
+
+  # This is not the LoRTIA-processed read counts, so each read is counted twice because they are from dcDNA that contains both orientations. 
+  # But since this is true for both the virus and the host, this will cause each ORF to be estimated down approx 2-fold but in an unbiased way.
+
+  normBase <- fread('../rebasecall/read_count.fastq.txt')
+  normBase[ , sample := gsub('.fastq', '', file)]
+  normBase[ , norm_base := read_count]
+  normBase <- normBase[,.(sample, norm_base)]
+  
+  fig.dir <- paste0(fig.dir, '.norm_total')
+  
+} else if (norm.method == 'host_read.count') {
+  ## For total HOST read count method
+
+  # This is not the LoRTIA-processed read counts, so each read is counted twice because they are from dcDNA that contains both orientations. 
+  # But since this is true for both the virus and the host, this will cause each ORF to be estimated down approx 2-fold but in an unbiased way.
+  # Currently this is the unmapped read count!
+
+  normBase <- fread('../rebasecall/read_count.txt')
+  #normBase[ , sample := gsub('.fastq', '', file)]
+  #normBase <- normBase[,.(sample, unmapped)]
+  normBase[ , norm_base := unmapped]
+  normBase <- normBase[,.(sample, norm_base)]
+  
+  fig.dir <- paste0(fig.dir, '.norm_host')
+  
+} else if (norm.method == 'WO') {
+  
+  ## NO normalization of counts
+
+  normBase <- fread('../rebasecall/read_count.txt')
+  normBase[ , norm_base := 1]
+  normBase <- normBase[,.(sample, norm_base)]
+  
+  fig.dir <- paste0(fig.dir, '.norm_Without')
+  
+}
+
+try({ dir.create(fig.dir) })
+
+##
+normBase <- normBase[order(normBase$sample, colnames(orf.counts)[-c(1:6)]), ]
+stopifnot(all(normBase$sample == colnames(orf.counts)[-c(1:6)] ))
+
+orf.perc <- merge(normBase, orf.sum, by='sample')
+orf.perc[,read_count := read_count / norm_base]
+
+```
+
+
+
+
+# Counts based on iterative GFF-compare results  
+
+This was done as follows:  
+
+1. The reference transcripts were compared individually/iteratively to the reads.  
+2. The distances between the reads and each reference transcript hit were calculated.
+3. For each read, the most similar reference transcript was assigned (lowest distance).  
+4. Additionally, these distances must had fulfill the following rules: 
+*max prime5 distance <= 10*  
+*max prime3 distance <= 10*  
+*exon/intron junction difference <= 2*  
+
+5. Thus based on these, the read counts for each reference transcript were assessed.
+6. The transcripts were then assigned to their parent genes (by Torma G) and their ratio (isoform ratio) was calculated as follows:  
+*isoform ratio = transcript isoform count / total gene count*  
+
+7. Those reads that could not be assigned to the reference transcripts were assigned to their parent genes, based on their 5-prime ends and independently to their parent gene cluster, based on their 3-prime ends.  
+So the reads are either:  
+- assigned to a reference transcript
+- could not not be assigned to a ref TR, in which case they were:  
+  1. assigned to their parent gene based on their *5-prime* end overlapping with the gene's *TSS*  
+  2. assigned to their parent gene-cluster based on their *3-prime* end overlapping with the cluster's *TES*  
+  3. assigned to both  
+
+
+
+## 1. Kinetics of Reference Transcript Isoforms, according to their host gene {.tabset}
+
+The reads were assigned to their parent gene based on their *5-prime* end overlapping with the gene's *TSS*  
+(but not necessarily with the gene cluster's TES)
+
+```{r}
+#### NO NORMALIZATION HERE
+orf.perc[,norm_base := 1]
+
+#### Keep only those reads, which could be assigned to a gene (based on '=' ref transcripts or 5-prime overlaps)
+orf.sum <- orf.perc[!is.na(gene),]
+
+
+#### Summarize the counts on Ref_Class and Gene
+ref.sum      <- orf.sum[, 
+                        .(read_count = sum(read_count)),
+                        by=.(seqnames, gene, Ref_Class)]
+
+#### Exclude Reference Isoforms with counts below the threshold
+Ref.class.thresh <- 1
+Ref.class.tofilt <- ref.sum[read_count < Ref.class.thresh, Ref_Class]
+
+if(length(Ref.class.tofilt) > 0) {
+  message('The following Reference Isoforms (n=', length(Ref.class.tofilt), ') had total counts below the threshold (', Ref.class.thresh, ')
+across every sample, and thus were filtered out from the counting: \n', 
+  paste(Ref.class.tofilt, collapse = '\n'))
+  
+  orf.sum <- orf.sum[!Ref_Class %in% Ref.class.tofilt]
+  
+} else (message('No Reference Isoforms were filtered out for counting!'))
+
+
+
+#### Overwite Ref_class for simplicity (either Reference Isoform name or class code)
+orf.sum[,Ref_Class := ifelse(class_code == '=', cmp_ref, class_code)]
+
+
+#### DO NOT !! Summarize the counts on Ref_Class and Gene
+#### WHY NOT ???? 
+#orf.sum      <- orf.sum[, .(read_count = sum(read_count)),
+#                        by=.(seqnames, gene, Ref_Class, Kinetic_class, sample, norm_base, group, hpi, Time, cell_line)]
+##
+orf.sum.perc <- orf.sum
+
+
+### Summarise counts to get mean count per gene
+## sum counts per gene
+orf.sum.perc[,sum_read_count  := sum(read_count),  
+             by=.(seqnames, gene, norm_base, sample, group, hpi, Time, cell_line)]
+## normalize counts per gene
+orf.sum.perc[,norm_read_count := read_count / sum_read_count] 
+orf.sum.perc[is.na(norm_read_count), norm_read_count := 0] 
+
+
+## statistics of normalized counts
+orf.perc.mean <- orf.sum.perc[,.(mean=mean(norm_read_count), sd=sd(norm_read_count), varcoeff=sd(norm_read_count) / mean(norm_read_count)), 
+                             by=.(seqnames, gene, gene_cluster, gene_region, Ref_Class, Kinetic_class, group, hpi, Time, cell_line)]
+
+## merge back summary with counts
+orf.sum.perc <- merge(orf.sum.perc, orf.perc.mean, 
+                      by=c('seqnames', 'Ref_Class', 'gene', 'gene_cluster', 'gene_region', 'Kinetic_class',  'hpi', 'Time', 'cell_line', 'group'))
+
+
+
+## add a group ID to the isoforms
+TR.genes.ID <- unique(orf.sum.perc[,.(gene, Ref_Class)])
+TR.genes.ID[,Isoform_nr :=  seq(1,n_distinct(Ref_Class)), by=.(gene)]
+TR.genes.ID[,Isoform_nr :=  as.factor(as.character(Isoform_nr))]
+
+orf.sum.perc <- merge(orf.sum.perc, TR.genes.ID, by=c('gene', 'Ref_Class'), allow_cartesian=T)
+
+## Merge with gff-compare class-code descriptions 
+
+orf.sum.perc <- merge(orf.sum.perc, gff_compare_classes[,.(`Class Code`, Description = `One-word Description`)], by.x=c('Ref_Class'), by.y=c('Class Code'), all.x=T)
+
+orf.sum.perc[ , Ref_Class := fifelse(is.na(Description), Ref_Class, paste0(Description, ' ("', Ref_Class, '")')) ]
+
+
+## Add replicate nr.
+orf.sum.perc[, rep := factor(gsub('.*h_', '', sample))]
+orf.sum.perc[, hpi := factor(hpi, levels=as.character(levels(metafilt$hpi)))]
+
+## Include novel combinations
+#genes_and_clusters <- na.omit(unique(orf.sum.perc[, .(gene, gene_cluster)]))[, .(CompleteList = append_cluster(gene, gene_cluster)), by = gene_cluster]
+
+# Combine all results into one vector and ensure uniqueness
+#gene_regions  <- unique(c(gene_regions, unique(unlist(genes_and_clusters$CompleteList)) ))
+
+
+
+## Factorize genes and clusters
+
+gm  <-  setdiff(unique(na.omit(orf.sum.perc[,gene])), gene_regions)
+gcm <-  setdiff(unique(na.omit(orf.sum.perc[,gene_cluster])), gene_regions)
+grm <-  setdiff(unique(na.omit(orf.sum.perc[,gene_region])), gene_regions)
+ga  <-  unique(c(gm, gcm, grm))
+
+if(length(ga) != 0 ) {
+  gene_regions <- c(ga, gene_regions)
+  message(paste0(ga, collapse=' ;'), ' was (were) not in the gene list, so it (they) was (were) added!')
+}
+
+orf.sum.perc[,gene         := factor(gene,         levels=gene_regions)]
+orf.sum.perc[,gene_cluster := factor(gene_cluster, levels=gene_regions)]
+orf.sum.perc[,gene_region  := factor(gene_region,  levels=gene_regions)]
+
+# sum read counts in 1h
+#orf.perc[grepl('1h', sample),.(sum_read_count=sum(read_count)), by=.(gene, sample)][sum_read_count != 0]
+#orf.sum.perc[grepl('1h', sample),.(sum_read_count=sum(read_count)), by=.(gene, sample)][sum_read_count != 0]
+```
+
+
+Merge annotation with RefClass
+```{r}
+
+TR.merged.data <- merge(unique(TR.ref.sum[,.(cmp_ref, Ref_Class, gene, gene_cluster, gene_region)]),
+                        #unique(orf.sum.perc[,.(cmp_ref, Ref_Class, gene, gene_cluster, gene_region)]), 
+                        TR.merged.data, 
+                        by.x='cmp_ref', by.y='transcript_id', all.y=T)
+colnames(TR.merged.data)[1] <- 'transcript_id'
+
+
+TR.merged.data.gene <- data.table(as.data.frame(TR.merged.data))
+```
+
+
+Exclude those ref transcripts that were not observed (or observed under the threshold) from the annotation as well
+```{r, eval=T}
+## exclude those ref transcripts that were not observed (or observed under the threshold)
+## from the annotation as well
+
+TRs.to.plot <- unique(orf.sum.perc$cmp_ref)
+
+
+TR.merged.data <- TR.merged.data[transcript_id %in% TRs.to.plot,]
+
+```
+
+
+## Evaluate CAGE against dcDNA read counts
+
+
+
+```{r}
+## Summarise on Ref_Class
+#TR.ref.sum.sp <- dcast(TR.ref.sum, seqnames + strand + cmp_ref + class_code + Ref_Class ~ sample, value.var = 'read_count')
+
+TR.ref.sum.sp <- dcast(orf.sum.perc, seqnames + strand + cmp_ref + class_code + Ref_Class ~ sample, 
+                       value.var = 'read_count')
+
+
+TR.ref.sum.CAGE <- merge(
+  unique(TR.merged.data[,.(transcript_id, CAGE_ID, score, support, CAGE_significance)]),
+  TR.ref.sum.sp,
+  by.x='transcript_id',
+  by.y='cmp_ref',
+  all.y=T)
+
+TR.ref.sum.CAGE[transcript_id %in% dup(TR.ref.sum.CAGE$transcript_id), ]
+## OK
+
+TR.ref.sum.CAGE <- melt(TR.ref.sum.CAGE, measure.vars = metafilt$sample, variable.name = 'sample', value.name = 'read_count')
+TR.ref.sum.CAGE <- merge(TR.ref.sum.CAGE, metafilt, by='sample')
+
+TR.ref.sum.CAGE[CAGE_significance == '', score := 0]
+
+##
+ggplot(TR.ref.sum.CAGE[,]) + 
+  #geom_point(aes(x=score, y=read_count, size=support, fill=rep), shape=21)
+  #geom_point(aes(x=log10(score+1), y=read_count, color=as.factor(rep)), size=1.5) +
+  #scale_x_continuous(name="log(CAGE score + 1)") +
+  geom_point(aes(x=score, y=read_count, color=as.factor(rep)), size=1.5) +
+  scale_x_continuous(name="CAGE score") +
+  scale_y_continuous(name="dcDNA read count") +
+  scale_color_aaas(name='Replicate') +
+  theme_bw() +
+  facet_grid(cols = vars(CAGE_significance), rows=vars(Time), scales = 'fixed') + 
+  ggtitle('dcDNA read count and CAGE score, according to CAGE significance and Hours past infection')
+
+
+ggsave(file.path(fig.dir, 'RefTR_CAGE.sig_vs_dcDNA.readcount.jpg'), height = 16, width = 12)
+```
+
+
+```{r}
+
+
+TR.gff.compare.uni.CAGE.ref <- merge(TR.gff.compare.uni.CAGE, 
+                                     unique(TR.merged.data.gene[,.(seqnames, strand, transcript_id, Ref_Class, gene, gene_cluster, gene_region)]),
+                                     by.x=c('seqnames', 'strand.ref', 'cmp_ref'), by.y=c('seqnames', 'strand', 'transcript_id'), all.x=T)
+
+TR.gff.compare.uni.CAGE.ref[,.N,gene]
+
+#TR.gff.compare.uni.CAGE.ref[,.N,.(class_code)]
+                                
+TR.gff.compare.uni.CAGE.ref.freq <- TR.gff.compare.uni.CAGE.ref[,.N,.(gene, class_code)]
+
+
+TR.gff.compare.uni.CAGE.ref.freq[class_code == '=' & is.na(gene)]
+## there are problems with these
+
+
+dcast(TR.gff.compare.uni.CAGE.ref[,.N,.(gene, class_code)], gene ~ class_code)
+
+
+ggplot(TR.gff.compare.uni.CAGE.ref.freq) + 
+  geom_col(aes(N, gene, fill=class_code)) +
+  scale_fill_manual(values=colorvec) +
+  theme_void() +
+  theme(axis.text.y = element_text(face='italic', hjust = 1),
+        strip.text  = element_blank()) +
+  facet_nested(rows=vars(gene), scales = 'free')
+
+
+ggsave(file.path(fig.dir, 'TR_Class_freq.jpg'), height = 20, width = 8)
+
+
+TR.gff.compare.uni.CAGE.ref.freq <- TR.gff.compare.uni.CAGE.ref[,.N,.(gene, class_code, CAGE_significance)]
+
+ggplot(TR.gff.compare.uni.CAGE.ref.freq) + 
+  geom_col(aes(N, gene, fill=class_code)) +
+  scale_fill_manual(values=colorvec) +
+  theme_void() +
+  theme(axis.text.y  = element_text(face='italic', hjust = 1),
+        strip.text.y = element_blank()) +
+  facet_nested(rows=vars(gene), cols=vars(CAGE_significance),
+               scales = 'free')
+
+
+ggsave(file.path(fig.dir, 'TR_Class_freq_CAGE.jpg'), height = 20, width = 14)
+
+
+## most of the non-significant 
+
+
+
+
+
+
+
+
+```
+
+```{r}
+
+TR.counts <- dcast(TR.data, TR_ID ~ sample, value.var = 'count', fill=0)
+
+TR.gff.compare.uni.CAGE.ref.counts <- merge(TR.gff.compare.uni.CAGE.ref, 
+                                            TR.counts, by.x="transcript_id", by.y='TR_ID')
+
+
+TR.gff.compare.uni.CAGE.ref.counts.melt <- melt(TR.gff.compare.uni.CAGE.ref.counts,
+                          id.vars = c('transcript_id', 'cmp_ref', 'class_code', 'gene', 'CAGE_ID', 'CAGE_significance', 'support', 'score'),
+                                               measure.vars = metafilt$sample, value.name = 'count', variable.name = 'sample')
+
+TR.gff.compare.uni.CAGE.ref.counts.melt.hpi <- merge(TR.gff.compare.uni.CAGE.ref.counts.melt, metafilt, by='sample')
+
+TR.gff.compare.uni.CAGE.ref.counts.sum  <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[,.(sum_count=sum(count)), 
+                                                                                       by=.(class_code, CAGE_significance, support, score, hpi)]
+
+
+##
+
+TR.gff.compare.uni.CAGE.ref.counts.melt <- 
+  merge(TR.gff.compare.uni.CAGE.ref[,
+                                    .(transcript_id, cmp_ref, class_code, gene, CAGE_ID, CAGE_significance, support, score, CAGE.cluster.start, CAGE.cluster.end)], 
+        TR.adapt.count[,.(seqnames, TR_ID, strand, TR_start, TR_end, correct_tss, correct_tes, sample, count)],
+        by.x=c('transcript_id'), by.y=c('TR_ID'))
+
+TR.gff.compare.uni.CAGE.ref.counts.melt.hpi <- merge(TR.gff.compare.uni.CAGE.ref.counts.melt, metafilt, by='sample')
+
+
+TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[, prime3.TR := fifelse(strand == '+', TR_end,   TR_start)]
+TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[, prime5.TR := fifelse(strand == '+', TR_start, TR_end)]
+
+
+TR.gff.compare.uni.CAGE.ref.counts.sum      <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[,.(sum_count=sum(count)), 
+             by=.(class_code, CAGE_ID, CAGE_significance, correct_tss, correct_tes, support, score, hpi)]
+
+
+
+ggplot(TR.gff.compare.uni.CAGE.ref.counts.sum) + 
+  geom_col(aes(CAGE_significance, sum_count, fill=class_code)) +
+  scale_fill_manual(values=colorvec) +
+  theme_bw() +
+  theme(axis.text.y  = element_text(face='italic', hjust = 1),
+        #strip.text.y = element_blank()
+        ) +
+  facet_nested(cols=vars(hpi), rows=vars(correct_tss),
+               scales = 'free')
+
+ggsave(file.path(fig.dir, 'TR.Class.counts_by_CAGE.Sig.jpg'), height = 14, width = 20)
+
+
+ggplot(TR.gff.compare.uni.CAGE.ref.counts.sum) + 
+  geom_col(aes(as.factor(score), sum_count, fill=class_code), position = 'fill') +
+  scale_fill_manual(values=colorvec) +
+  theme_bw() +
+  theme(axis.text.y  = element_text(face='italic', hjust = 1),
+        #strip.text.y = element_blank()
+        ) +
+  facet_nested(rows=vars(hpi), cols=vars(correct_tss),
+               scales = 'fixed')
+
+ggsave(file.path(fig.dir, 'TR.Class.counts_by_CAGE.Score.jpg'), height = 20, width = 24)
+
+
+ggplot(TR.gff.compare.uni.CAGE.ref.counts.sum) + 
+  geom_col(aes(as.factor(support), sum_count, fill=class_code)) +
+  scale_fill_manual(values=colorvec) +
+  theme_bw() +
+  theme(axis.text.y  = element_text(face='italic', hjust = 1),
+        #strip.text.y = element_blank()
+        ) +
+  facet_nested(cols=vars(hpi), rows=vars(correct_tss),
+               scales = 'free')
+
+ggsave(file.path(fig.dir, 'TR.Class.counts_by_CAGE.Sup.jpg'), height = 12, width = 20)
+
+
+
+ggplot(TR.gff.compare.uni.CAGE.ref.counts.sum) + 
+  geom_col(aes(class_code, sum_count, fill=CAGE_significance)) +
+  scale_fill_manual(values=colorvec) +
+  coord_flip() +
+  theme_bw() +
+  theme(axis.text.y  = element_text(face='italic', hjust = 1),
+        #strip.text.y = element_blank()
+        ) +
+  facet_nested(cols=vars(hpi), rows=vars(correct_tss, class_code),
+               scales = 'free')
+
+ggsave(file.path(fig.dir, 'TR.Class.counts_by_CAGE.Sup.v2.jpg'), height = 16, width = 24)
+
+
+
+ggplot(TR.gff.compare.uni.CAGE.ref.counts.sum[!is.na(CAGE_significance)]) + 
+  geom_col(aes(class_code, sum_count, fill=CAGE_significance)) +
+  scale_fill_manual(values=colorvec) +
+  coord_flip() +
+  theme_bw() +
+  theme(axis.text.y  = element_text(face='italic', hjust = 1),
+        #strip.text.y = element_blank()
+        ) +
+  facet_nested(cols=vars(hpi), rows=vars(correct_tss, class_code),
+               scales = 'free')
+
+ggsave(file.path(fig.dir, 'TR.Class.counts_by_CAGE.Sup.v2.noNA.jpg'), height = 16, width = 24)
+
+
+ggplot(TR.gff.compare.uni.CAGE.ref.counts.sum[!is.na(CAGE_significance) & correct_tss == T]) + 
+  geom_col(aes(class_code, sum_count, fill=CAGE_significance)) +
+  scale_fill_manual(values=colorvec) +
+  coord_flip() +
+  theme_bw() +
+  theme(axis.text.y  = element_text(face='italic', hjust = 1),
+        #strip.text.y = element_blank()
+        ) +
+  facet_nested(cols=vars(hpi), rows=vars(class_code),
+               scales = 'free')
+
+ggsave(file.path(fig.dir, 'TR.Class.counts_by_CAGE.Sup.v2.noNA.p5True.jpg'), height = 12, width = 24)
+
+
+```
+
+```{r}
+
+## check the CAGE clusters here
+CAGE.sum <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
+  #transcript_id %in% trids
+  !is.na(CAGE_significance) 
+  , .(sum_count=sum(count)), 
+         by=.(seqnames, strand, CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score, hpi)]
+
+
+CAGE.sum[, correlation := cor(score, sum_count), by = hpi]
+
+
+ggplot(CAGE.sum) + 
+  geom_point(aes(score, sum_count)) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "red") +
+  geom_label_repel(data=unique(CAGE.sum[, .(correlation, hpi)]),
+                   aes(correlation, correlation, label = paste0('R2=', round(correlation, 3))), 
+                   nudge_x = 1000000, nudge_y = 100000, size = 3) +
+  theme_bw() +
+  #lims(x=c(0,1000), y=c(0,5000)) +
+  facet_nested_wrap(~hpi, #rows=vars(correct_tss),
+               scales = 'free')
+
+
+```
+
+
+There are many transcripts that were identifed with CAGE, and have a high read count in the dcDNA but are novel (not in the reference).
+They are not the product of false 5-prime sites as they have correct TSS adapaters.
+Most of these are antisense or 5-prime short but there are 5-prime longs (both shere the 4-primes with ref transcripts) and 'c' as well (which have different 3-primes)
+
+Lets check them gene-wise
+The 5-prime long and short variants.
+
+```{r}
+
+### summarise read counts in transcript classes and CAGE results, according to genes and tim-points
+
+TR.gff.compare.uni.CAGE.ref.counts.gene.sum      <- 
+  TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[,.(sum_count=sum(count)),
+                  by=.(gene, class_code, correct_tss, correct_tes,
+                       CAGE_significance, CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, support, score, hpi)]
+
+
+ggplot(TR.gff.compare.uni.CAGE.ref.counts.gene.sum[class_code  %in% c('5`-long', '5`-short')
+                                                 & correct_tss == T]) + 
+  geom_col(aes(gene, sum_count, fill=CAGE_significance)) +
+  scale_fill_manual(values=colorvec) +
+  coord_flip() +
+  theme_void() +
+  theme(axis.text.y  = element_text(face='italic', hjust = 1),
+        legend.position = 'bottom',
+        strip.text.y = element_blank()
+        ) +
+  facet_nested(cols=vars(hpi, class_code), rows=vars(gene),
+               scales = 'free')
+
+ggsave(file.path(fig.dir, 'TR.5P-var.counts_by_Gene_and_CAGE.Sig.jpg'), height = 14, width = 20)
+
+
+
+```
+It seems that ORF51 particularly has a lot of these
+Check the novel long isoforms for this gene first
+```{r}
+
+
+trids <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
+    hpi == '12h'
+  & class_code == '5`-long' 
+  & correct_tss == T
+  #& !is.na(CAGE_significance)
+  & gene == 'ORF51'
+  & strand == '+',
+         transcript_id ]
+
+trids.gff <- TR.gff[transcript_id %in% trids, ]
+
+rtracklayer::export.gff3(trids.gff, 'ORF51_5p-longs-TRs.gff3')
+
+## check the CAGE clusters here
+trids.cage <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
+  transcript_id %in% trids
+  & !is.na(CAGE_significance), 
+  .(sum_count=sum(count)), 
+         by=.(seqnames, strand, CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+
+```
+
+
+```{r}
+## cluster the ends of thOSe transfrags from the 12h samples
+trids.toclust <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[transcript_id %in% trids, .(sum_count=sum(count)), 
+         by=.(seqnames, strand, TR_end)]
+
+#trids.toclust[,prime5 := fifelse(strand == '-', TR_end, TR_start)]
+#trids.toclust[,prime3 := fifelse(strand == '+', TR_end, TR_start)]
+
+
+
+
+```
+
+
+
+Select TSS clusters that are significant (non-NA) in the CAGE results AND have sufficient read counts in the dcDNA reads as well, from where their 5-prime ends were correct and their class-code based on gff-compare was either 5-prime short or long. 
+
+Exclude those transfrags that have more than one exon, for now.
+
+```{r}
+trids <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
+    #hpi == '12h'
+  class_code != '=' & # %in% c('5`-long', '5`-short') &
+  correct_tss == T
+  & !is.na(CAGE_significance)
+  #& gene == 'ORF51'
+  #& strand == '+',
+         ,  transcript_id]
+
+
+trids.gff <- TR.gff[transcript_id %in% trids
+                  & type == 'exon', ]
+
+trids.gff[,transcript_id := as.numeric(transcript_id)]
+
+trids.gff[type == 'exon', n_exon := seq_along(exon_number), by=.(seqnames, transcript_id)]
+
+trids.gff <- merge(trids.gff, TR.adapt.filt[,.(sum_count=sum(count)), by=.(transcript_id)], by='transcript_id', all.x=T)
+trids.gff[,ID := transcript_id]
+
+trids.spliced <- unique(trids.gff[transcript_id %in% trids
+                  & n_exon > 1
+                  , transcript_id])
+
+trids.spliced.gff <- trids.gff[transcript_id %in% trids.spliced, ]
+
+
+rtracklayer::export.gff3(trids.spliced.gff, 'TX_spliced.gff3')
+
+
+trids.gff <- trids.gff[transcript_id %in% trids
+                  & n_exon == 1
+                  , ]
+
+
+trids <- unique(trids.gff[, transcript_id])
+
+
+
+message('Number of TransFrags to be kept:')
+length(trids)
+
+message('Number of TransFrags omitted because they are spliced:')
+length(trids.spliced)
+```
+
+
+```{r}
+#rtracklayer::export.gff3(trids.gff, 'ORF51_5p-longs-TRs.gff3')
+
+
+## check the CAGE clusters here
+## summed dcDNA read counts (from those that have correct 5-primes), for those transcripts that have no equal ('=') reference TR, but are long- or short-5-prime variants of them, and for which CAGEfighter yielded significant CAGE signals. 
+## to make novel transcripts from these, we cluster the transfrags according to the CAGE clusters.
+## (we could also find the peaks here using the dcDNA read end counts.)
+
+
+
+
+## 
+trids.cage <- TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[
+  transcript_id %in% trids
+  #& !is.na(CAGE_significance), 
+  , .(sum_count=sum(count)), 
+         by=.(seqnames, strand, transcript_id, prime3.TR, prime5.TR, 
+              CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+
+## assign novel TX_ID, based on CAGE ID and 3-prime end
+trids.cage[,TX_ID := .GRP, by=.(prime3.TR, CAGE_ID)]
+
+
+## summed read counts for each such CAGE TSS cluster AND read 3-prime end
+trids.cage.sum <- trids.cage[
+  #transcript_id %in% trids
+  #& !is.na(CAGE_significance), 
+  , .(sum_count=sum(sum_count)), 
+         by=.(seqnames, strand, TX_ID, prime3.TR, 
+              CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+
+
+
+## we have to merge with the reference annotations 3-prime ends
+viral.mrna[, prime3.TR := fifelse(strand == '+', transcript_end,   transcript_start )]
+viral.mrna[, prime5.TR := fifelse(strand == '-', transcript_end,   transcript_start )]
+
+## unique 3-primes with genes
+ref.trs  <- unique(viral.mrna[type == 'transcript', .(seqnames, strand, transcript_id, prime3.TR, prime5.TR, gene_id)])
+ref.TESs <- unique(ref.trs[,.(seqnames, strand, prime3.TR, gene_id)])
+#ref.TESs[,gene_nr := seq_along(gene_id), by=.(seqnames, strand, prime3.TR)]
+ref.TESs[,genes   := paste0(gene_id, collapse = ';'), by=.(seqnames, strand, prime3.TR)]
+ref.TESs <- unique(ref.TESs[,.(seqnames, strand, prime3.TR, genes)])
+ref.TESs[,TES := .GRP, prime3.TR]
+
+
+## add windows for merging
+ref.TESs  [,':='(start = prime3.TR-10, end=prime3.TR+10)]
+trids.cage.sum[,':='(start = prime3.TR-10, end=prime3.TR+10)]
+
+
+ref.TESs <- ref.TESs[!TES %in% c(11062, 51693)]
+
+
+foo <- foverlaps2(trids.cage.sum, ref.TESs, by = c('seqnames', 'strand', 'start', 'end'), minoverlap = 1)
+
+setnames(foo, c('i.start', 'i.end', 'i.prime3.TR', 'start', 'end', 'prime3.TR'), c('TX.prime3.win.start', 'TX.prime3.win.end', 'TX.prime3.TR', 'Ref.prime3.win.start', 'Ref.prime3.win.end', 'Ref.prime3.TR'))
+
+## calculate distance between novel TXs and Ref TRs
+foo[,prime3.dist := fifelse(strand == '+', TX.prime3.TR-Ref.prime3.TR, Ref.prime3.TR-TX.prime3.TR)]
+## negative distance is when the novel TX is shorter
+
+## find minimum absolute distance for each prime3 in each CAGE cluster
+foo[,min.prime3.dist := min(abs(prime3.dist)), by=.(CAGE_ID, TX.prime3.TR)]
+
+## subset for these
+foo.filt <- foo[abs(prime3.dist) == min.prime3.dist, ]
+
+## ezeknél ugyanakkora a distance, szerintem ez hiba a ref annotációban
+dup(foo.filt$TX_ID)
+
+foo.filt <- foo.filt[!duplicated(TX_ID), ]
+
+nrow(foo.filt) == nrow(trids.cage)
+## igy mar jó
+
+### assembly novel TXs based on ref TESs and CAGE TSS clusters
+
+TX_nov <- foo.filt[,.(sum_TX_count=sum(sum_count)), 
+                   by=.(seqnames, strand, Ref.prime3.TR, TES, 
+                        CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, support, score)]
+TX_nov[,TX_nov_ID := paste0('TX_nov_ID_', seq(1:nrow(TX_nov)))]
+
+
+## these are effectively novel transcripts, but have to chcek their read count
+```
+
+
+```{r}
+tx_uni <- unique(foo.filt[,.(seqnames, strand, TX_ID, TX.prime3.TR, TES, Ref.prime3.TR, CAGE_ID)])
+## merge back with the original 3-prime sites and TX_IDs
+tx_uni <- merge(tx_uni, 
+                TX_nov[,.(Ref.prime3.TR, TES, CAGE_ID, TX_nov_ID, sum_TX_count)], by=c('Ref.prime3.TR', 'TES', 'CAGE_ID'))
+
+## transcript_id is the original transfrags ID, 
+## TX ID is when we clustered CAGE TSS cluster ID with the transfrags' prime3 site,
+## while TX-nov-ID is when we clustered these with the REFERENCES closest TES in addition
+
+## merge with original transfrags
+tx_uni <- merge(tx_uni,
+                unique(trids.cage[,.(seqnames, strand, transcript_id, prime3.TR, CAGE_ID, TX_ID)]),
+                by.x=c('seqnames', 'strand', 'CAGE_ID', 'TX.prime3.TR', 'TX_ID'),
+                by.y=c('seqnames', 'strand', 'CAGE_ID', 'prime3.TR', 'TX_ID'),
+                all=T)
+
+nrow(tx_uni) == length(trids)
+## OK
+
+```
+
+
+```{r}
+## add 5-prime sites and other info, including read counts
+TR.gff.compare.uni.CAGE.ref.counts.melt.hpi.TXnov <- merge(
+  TR.gff.compare.uni.CAGE.ref.counts.melt.hpi,
+  tx_uni,
+  by.x=c('seqnames', 'strand', 'CAGE_ID', 'prime3.TR', 'transcript_id'),
+  by.y=c('seqnames', 'strand', 'CAGE_ID', 'TX.prime3.TR', 'transcript_id'),
+  all=T
+)
+## OK
+
+
+
+### Filter for those that have their 3-prime sites in the previous annotation
+##tx_uni <- tx_uni[!is.na(TX_nov_ID),]
+
+  
+## unique this without read counts to get 5-prime sites and other info
+tx_uni_trs <- 
+  TR.gff.compare.uni.CAGE.ref.counts.melt.hpi.TXnov[,.(sum_count=sum(count)),
+        by=.(seqnames, strand, prime3.TR, prime5.TR, transcript_id,
+             CAGE_ID, CAGE.cluster.start, CAGE.cluster.end, CAGE_significance, score, support, TX_ID, TX_nov_ID, Ref.prime3.TR, TES,
+             cmp_ref, class_code, gene)]
+tx_uni_trs[,CAGE_cluster_width := CAGE.cluster.end - CAGE.cluster.start +1]
+tx_uni_trs[,.N,CAGE_cluster_width][order(CAGE_cluster_width)]
+
+```
+
+
+```{r}
+## find the largest 5-prime count site for each novel TX
+## because for now, only the CAGE TSS cluster is considered
+tx_uni_trs_nov <- tx_uni_trs[!is.na(TX_nov_ID)]
+
+ggplot(tx_uni_trs_nov, ## [,.N,CAGE_cluster_width]
+       aes(CAGE_cluster_width)) + 
+  geom_density() +
+  theme_bw() +
+  labs(title = 'Density of CAGE TSS Cluster widths')
+
+```
+
+
+```{r, eval=T, echo=FALSE}
+## AND/OR use mclust to cluster the dcDNA read ends (accross timepoints)
+
+CAGEID <- unique(tx_uni_trs_nov[,CAGE_ID])[2]
+CAGEID <- 'CAGE_cluster_789'
+tx_uni_trs_nov_mclust_all <- data.table(NULL)
+
+
+for (CAGEID in unique(tx_uni_trs_nov[,CAGE_ID])) {
+  
+  tx_uni_trs_nov_mclust <- tx_uni_trs_nov[CAGE_ID == CAGEID, .(count=sum(sum_count)), 
+                                          by=.(seqnames, strand, CAGE_ID, prime5.TR)]
+  
+  setnames(tx_uni_trs_nov_mclust, 'prime5.TR', 'position')
+  
+  if (nrow(tx_uni_trs_nov_mclust) > 5 ) {
+  
+    message('Clustering ', CAGEID, ' with ', nrow(tx_uni_trs_nov_mclust), ' positions...')
+    
+    tx_uni_trs_nov_mclust <- 
+      Mclust_stranded(
+        tx_uni_trs_nov_mclust,
+                      sep_strands = FALSE,
+                      use_weights = TRUE,
+                      include_zeros = FALSE,
+                      plot_results = F,
+                      G = NULL  # Let Mclust decide the optimal number of clusters)
+                      )
+  
+     tx_uni_trs_nov_mclust_all <- rbind(tx_uni_trs_nov_mclust, tx_uni_trs_nov_mclust_all)
+       
+  } else {
+    
+    message('Skipping ', CAGEID, ', as it had only ', nrow(tx_uni_trs_nov_mclust), ' positions.')
+    
+  }
+  
+ 
+}
+
+ggplot(tx_uni_trs_nov_mclust_all, ## [,.N,CAGE_cluster_width]
+       aes(cluster_width)) + 
+  geom_density() +
+  theme_bw() +
+  labs(title = 'Density of CAGE TSS Cluster widths')
+
+
+ggplot(tx_uni_trs_nov_mclust_all[,.N,cluster_width],
+       aes(cluster_width, N)) + 
+  geom_col() +
+  scale_x_continuous(breaks = c(0,1,2,5,10,15,20,30,50)) +
+  xlim(c(0,100)) +
+  theme_bw() +
+  labs(title = 'Density of Novel CAGE TSS Cluster widths')
+
+tx_uni_trs_nov_mclust_all[,.N,cluster_width][order(cluster_width)]
+
+```
+
+
+```{r}
+#### Use custom clustering function
+CAGEID <- unique(tx_uni_trs_nov[,CAGE_ID])[]
+tx_uni_trs_nov_customclust_all <- data.table(NULL)
+
+
+for (CAGEID in unique(tx_uni_trs_nov[,CAGE_ID])) {
+  
+  tx_uni_trs_nov_customclust <- tx_uni_trs_nov[CAGE_ID == CAGEID, .(count=sum(sum_count)), 
+                                          by=.(seqnames, strand, CAGE_ID, prime5.TR)]
+  
+  setnames(tx_uni_trs_nov_customclust, 'prime5.TR', 'position')
+
+  
+  if (nrow(tx_uni_trs_nov_customclust) > 5) {
+  
+    message('Clustering ', CAGEID, ' with ', nrow(tx_uni_trs_nov_customclust), ' positions...')
+    
+    tx_uni_trs_nov_customclust <- 
+      CustomClustering(
+        tx_uni_trs_nov_customclust,
+        max_cluster_size = 25,
+        max_distance_within_cluster = 5,  # Adjust as needed
+        sep_strands   = FALSE,
+        include_zeros = FALSE,
+        plot_results  = FALSE
+      )
+  
+     tx_uni_trs_nov_customclust_all <- rbind(tx_uni_trs_nov_customclust, tx_uni_trs_nov_customclust_all)
+       
+  } else {
+    
+    message('Skipping ', CAGEID, ', as it had only ', nrow(tx_uni_trs_nov_customclust), ' positions.')
+    
+  }
+  
+ 
+}
+
+
+c(tx_uni_trs_nov_customclust_all[CAGE_ID == 'CAGE_cluster_1897', min(cluster_start)],
+  tx_uni_trs_nov_customclust_all[CAGE_ID == 'CAGE_cluster_1897', max(cluster_end)])
+
+c(tx_uni_trs_nov[CAGE_ID == 'CAGE_cluster_1897', min(CAGE.cluster.start)],
+  tx_uni_trs_nov[CAGE_ID == 'CAGE_cluster_1897', max(CAGE.cluster.end)])
+
+
+ggplot(tx_uni_trs_nov_customclust_all, ## [,.N,CAGE_cluster_width]
+       aes(cluster_width)) + 
+  geom_density() +
+  theme_bw() +
+  labs(title = 'Density of CAGE TSS Cluster widths')
+
+
+ggplot(tx_uni_trs_nov_customclust_all[,.N,cluster_width],
+       aes(cluster_width, N)) + 
+  geom_col() +
+  scale_x_continuous(breaks = c(0,1,2,5,10,15,20,30,50)) +
+  theme_bw() +
+  labs(title = 'Density of Novel CAGE TSS Cluster widths')
+
+tx_uni_trs_nov_customclust_all[,.N,cluster_width][order(cluster_width)]
+```
+
+
+```{r}
+
+## cluster all 5-prime ends
+
+tx_uni_trs_nov_customclust_dcDNA <- 
+      CustomClustering(
+        tx_uni_trs_nov[, 
+                       .(seqnames, strand, count=sum_count, position=prime5.TR, CAGE_ID, transcript_id)],
+        max_cluster_size = 25,
+        max_distance_within_cluster = 5,  # Adjust as needed
+        sep_strands   = FALSE,
+        include_zeros = FALSE,
+        plot_results  = FALSE
+      )
+  
+
+ggplot(tx_uni_trs_nov_customclust_dcDNA[,.N,cluster_width],
+       aes(cluster_width, N)) + 
+  geom_col() +
+  scale_x_continuous(breaks = c(0,1,2,5,10,15,20,30,50)) +
+  theme_bw() +
+  labs(title = 'Density of dcDNA TSS Cluster widths')
+
+tx_uni_trs_nov_customclust_dcDNA[,.N,cluster_width][order(cluster_width)]
+
+```
+
+
+
+```{r}
+
+
+## merge it with the 5-prime clustering
+
+final_tx_nov_clust  <- merge(tx_uni_trs_nov, tx_uni_trs_nov_customclust_all, ## OR: tx_uni_trs_nov_mclust_all
+                             by.x=c('seqnames', 'strand', 'sum_count', 'CAGE_ID', 'prime5.TR'),
+                             by.y=c('seqnames', 'strand', 'count', 'CAGE_ID', 'position')
+                          ) 
+
+## OR with
+#tx_uni_trs_nov_customclust_dcDNA
+
+## OR
+# final_tx_nov  <- merge(tx_uni_trs_nov, tx_uni_trs_nov_mclust_all[,.()], by=c('seqnames', 'strand', 'position', 'count', 'CAGE_ID', 'transcript_id', 'position'))
+
+## OR:
+# tx_uni_trs_nov[,highest_count := max(sum_count), by=.(TX_nov_ID)]
+# tx_uni_trs_nov[,peak_5prime   := fifelse(sum_count == highest_count, T, F)]
+# final_tx_nov <- tx_uni_trs_nov[peak_5prime == T, ]
+
+## subset to the highest peak
+#final_tx_nov[,peak_5prime   := fifelse(cluster_peak == prime5.TR, T, F)]
+#final_tx_nov <- final_tx_nov[peak_5prime == T, ]
+# final_tx_nov
+
+
+## sum counts again and add final_TX_ID based on the new 5-prime clusters
+
+final_tx_nov_clust[, final_TX_ID := .GRP, 
+                   by=.(seqnames, strand, Ref.prime3.TR, TES, CAGE_ID, TX_nov_ID, cluster_ID, cluster_peak)]
+
+## these contain the novel TX IDs and clusters with the original TransFrags and class_code
+final_tx_nov <- final_tx_nov_clust[,.(sum_count = sum(sum_count), prime5.TR = cluster_peak), 
+                                   by=.(seqnames, strand, Ref.prime3.TR, TES, cmp_ref, class_code, gene,
+                                        TX_nov_ID, CAGE_ID, CAGE_significance, score, support, 
+                                        cluster_ID, cluster_width, final_TX_ID)]
+
+final_tx_nov[,.(sum_class_count = sum(sum_count)), by=.(class_code)]
+
+
+## this is the novel transcripts based on the the novel TX IDs
+final_tx_nov_clust <- unique(final_tx_nov_clust[,.(sum_count = sum(sum_count), prime5.TR = cluster_peak), 
+                                   by=.(seqnames, strand, Ref.prime3.TR, TES, 
+                                        TX_nov_ID, CAGE_ID, CAGE_significance, score, support, 
+                                        cluster_ID, cluster_width, final_TX_ID)])
+
+
+```
+
+
+
+```{r}
+## make gff from the Novel Transcripts
+final_tx_nov_gff <- final_tx_nov_clust[, .(seqnames, strand, Ref.prime3.TR, prime5.TR, final_TX_ID)]
+
+final_tx_nov_gff[, start := fifelse(strand == '+', prime5.TR, Ref.prime3.TR)]
+final_tx_nov_gff[, end   := fifelse(strand == '+', Ref.prime3.TR, prime5.TR)]
+final_tx_nov_gff[, ':=' (type = 'transcript', source = 'Tombácz_et_al', width = end-start+1, phase=NA, score=NA), ]
+
+
+rtracklayer::export.gff3(as.data.frame(final_tx_nov_gff), 'final_tx_nov.gff3')
+
+
+```
+
+
+```{r}
+## filtering based on CAGE TSS and dcDNA read counts
+
+final_tx_nov_filt <- final_tx_nov_clust[sum_count >= 5 &
+            support > 2 &
+            score > 300 &
+            CAGE_significance != '*'
+            ]
+
+length(unique(final_tx_nov_filt[,final_TX_ID]))
+
+final_tx_nov_filt_gff <- final_tx_nov_gff[final_TX_ID %in% final_tx_nov_filt$final_TX_ID, ]
+
+## make gff from them
+rtracklayer::export.gff3(as.data.frame(final_tx_nov_filt_gff), 'final_tx_nov_filt.gff3')
+
+final_tx_nov_filt_gff <- as.data.table(as.data.frame(rtracklayer::import.gff3('final_tx_nov_filt.gff3')))
+
+
+```
+### END
+##
+
+
+
+
+
+
+#### 
+
+
+```{r, eval=F}
+
+TR.adapt.filt_nov <- merge(TR.adapt.filt, tx_uni, 
+                           by.x=c('seqnames', 'strand', 'transcript_id'), 
+                           by.y=c('seqnames', 'strand', 'transcript_id'), all=T)
+
+TR.adapt.filt_nov.only <- TR.adapt.filt_nov[!is.na(TX_nov_ID)]
+TR.adapt.filt_nov.only[,.(sum_count = sum(count)), by=.(seqnames, strand, TX_nov_ID) ]
+TR.adapt.filt_nov.only[,max_TSS := max(count)]
+
+
+#TR.merged.data.gene
+#orf.perc
+
+TR.gff.compare.uni.CAGE.ref.counts.melt.hpi
+length(unique(TR.gff.compare.uni.CAGE.ref.counts.melt.hpi[,transcript_id]))
+length(unique(TR.adapt.filt[,transcript_id]))
+
+
+## have to check the distribution of these novel TXs in the dcDNA samples
+
+
+```
+
+
+```{r, eval=F}
+ggplot(TX_nov) + 
+  geom_bar(aes(sum_TX_count))
+  
+
+ggplot(TX_nov) + 
+ geom_histogram(aes(sum_TX_count), bins = 500)
+
+
+nrow(TX_nov[sum_TX_count > 0])
+
+nrow(TX_nov[sum_TX_count > 1])
+
+nrow(TX_nov[sum_TX_count >= 5])
+
+nrow(TX_nov[sum_TX_count >= 10])
+
+nrow(TX_nov[sum_TX_count >= 20])
+
+nrow(TX_nov[sum_TX_count >= 50])
+
+
+
+
+nrow(TX_nov[sum_TX_count >= 20 &
+            support > 2 &
+            score > 300 &
+            CAGE_significance != '*'
+            ])
+
+
+
+
+TX_nov[,.N,by=.(CAGE_significance, support)]
+```
+
+
+```{r, eval=F}
+
+ggplot(TX_nov) + 
+  geom_point(aes(sum_TX_count, score, color=CAGE_significance)) +
+  facet_wrap(~support, scales = 'free')
+
+```
+
+
+#### Spliced reads to transcripts ####
+
+
+
+
+
+#### Not needed ####
+
+Annotation plotting function
+```{r}
+
+figw  <- 20
+figh  <- 9
+
+gene.sizes <- data.frame(gene_arrowhead_height=4,
+                         gene_arrow_body_height=3,
+                         gene_label_height=1.75,   ## size of gene label text
+                         gene_feature_height=2, ## lineheight of feature line
+                         gene_feature_width=5,
+                         gene_feature_label_height=-5.0, ## distance of gene label from gene arrow
+                         gene_feature_label_text=5,
+                         unstranded_rect_height=0.5,
+                         unstranded_feature_height=6,
+                         unstranded_feature_width=6,
+                         unstranded_feature_label_height=5,
+                         unstranded_feature_label_text=6,
+                         genome_feature_arrowhead_height=2.5,
+                         genome_feature_arrow_body_height=2.5
+)
+
+transcript.sizes <- data.frame(
+  transcript.label.size = 2,
+  exon.rect_height = 0.1, exon.rect.linewidth=0.01,  
+  intron.linetype = 'dashed', intron.linewidth = 0.1)
+
+sizes <- 6
+
+
+scales <- 'fixed'
+
+## scale of annotation to coverage
+genomplot.scale <- 6
+
+breakseq <- 5000
+
+## plot size
+width <- 35; height <- 14
+
+
+ylims.gene <- c(10, -5) ## NULL
+
+gene_to_plot <- 'NOIR'
+
+vis_win <- 500
+
+ann.plotfun <- function(gene_to_plot, plot.data=plot.data, 
+                        visfrom = NULL, visto = NULL, vis_win=500, 
+                        TR.merged.data.gene = NULL, ...) {
+  
+  if(is.null(visfrom) & is.null(visto)) {
+    visfrom <- min(gene.plotdata$start[gene.plotdata$gene_name == gene_to_plot]) - vis_win
+    visto   <- max(gene.plotdata$end  [gene.plotdata$gene_name == gene_to_plot]) + vis_win
+  }
+
+  
+  ggann <- plot.genome.region(visfrom = visfrom, visto = visto, 
+                     genome=genome, plot.data=plot.data, gene.plotdata=gene.plotdata, TR.merged.data=TR.merged.data.gene,
+             geom = geom_bar(), geom2 = NULL,
+             prime='prime5', crop.FALSE=F, samples=NA, comb.all.samples=NA,
+             sum.counts.in.window=T, bin_width = 200, sum.fun='sum', add.all.pos=F, y.thresh=0, minus.strand.down=T,
+             #what.to.plot = c('coverage', 'gene annotation', 'transcripts'), 
+             add.coverage=F, add.transcripts.plot=T, add.genome.plot=T, flip.panels=F, genome.only=F, transcripts.only=F,
+             genome.and.transcripts=T, transcript.plot.scale=2,
+             add.cageTSS=F, cagefr.clust=NULL, cagefr.clust.dist=6, asterisk.size = 2,
+             gene_name_col = 'gene_name', 
+             gene.label=T, add.unstranded=T, add.feature=F, gene.feature.width.thresh=700, flip.gene.y=T, force.gene.y=T,
+             force.all.gene.down=T, angle=0, force.one.lab.per.gene=T, force.all.gene.up.and.down=F,
+             transcript.sizes=transcript.sizes, tr.size.multip = 0.75,
+             
+             sizes=sizes, gene.sizes=gene.sizes, gene.label.col='black', alpha=alpha, plot.title=NA, 
+             palette=palette[1:3], tr.palette = colorvec, # palette[c(15,18)],
+             tolower=F, vline=NULL, vline2=NULL, breakseq=5000, margins=unit(c(0,0,0,0), "cm"), #margins=margin(10,1,1,5)
+             scales=scales, genomplot.scale=5.5, ylim=c(0, NA), y.log10=F, y.log2=F, ylims.gene=ylims.gene, y.multip=1.5, 
+             ybreaks=NULL, ybreak_n=10,
+             strip.text =  element_text(angle = 45, size = sizes*1.5, hjust = 0.5), facet_space=1,
+             gene.aes = aes(xmin = start, xmax = end, y = ymin, fill = strand, forward = orientation, label = gene),
+             facet_cropF = NULL, # facet_nested(rows = vars(hpi), cols=NULL, scales ),
+             labels=NULL, legend.position.prime = 'top', theme_general = theme_bw(), 
+             return.plot.data=F
+             , ...
+             )
+             
+  
+  ggann
+
+}
+
+
+#ann.plotfun(visfrom = visfrom, visto = visto, gene_to_plot, orf.sum.perc, vis_win)
+
+```
+
+
+```{r}
+### 
+
+max_ncol   <- 6
+row_multip <- 6
+col_multip <- 4
+
+plotfun <- function(DT, 
+                    geom1 = geom_point(aes(x=Time, y=norm_read_count, colour = Ref_Class)),
+                    #geom1 = geom_pointrange(aes(x=Time, y=mean, ymin = mean-sd, ymax = mean+sd, colour = Ref_Class)),
+                    geom2 = geom_smooth(aes(x=Time, y=norm_read_count, color=Ref_Class, group = Ref_Class)),
+                    geom3 = NULL,
+                    ncol = 10, title = NULL, #"Normalized ORF counts", 
+                    strip.backgr = pal_d3()(10)[2], palette=colorvec[],
+                    save.plot=T, filename='plot.jpg', figw=12, figh=9,
+                    legend.position= 'right', 
+                    legend.name    = '',
+                    ...) {
+  
+  if (nrow(DT) == 0) { 
+    ggp <- NULL } else {   # try({ 
+      
+    gene_N <- length(unique(DT[,gene]))
+  
+    ggp <- 
+      ggplot(DT) + 
+      geom1 +
+      geom2 + 
+      geom3 +
+      
+      ## Color and Fill Scales
+      #guides( color = guide_legend("Ref. Isoform") ) +
+      scale_color_manual(values = palette, name=legend.name) +
+      scale_fill_manual( values = palette, name=legend.name) +
+     
+      ## Axis limits and labels
+      scale_y_continuous(name = 'Transcript Isoform ratio', limits = c(0, 1)) +
+      scale_x_continuous(name = 'Hours past infection') +
+      
+      #coord_cartesian(ylim = c(0, NULL)) +
+      
+      
+      ## Theme elements
+      theme_bw() +
+      theme( text = element_text(size = 8),
+             legend.position = legend.position, 
+            # plot.margin = unit(c(1,1,1,1), 'mm'),
+            # strip.background = element_rect(fill = alpha(strip.backgr, 0.4))
+            , ...) +
+      
+      ## Faceting
+      #facet_wrap(~ gene, scales = 'free', ncol = ncol) +
+      #facet_nested_wrap(~ gene, scales = 'free', ncol = ncol) +
+      #facet_nested(cols=vars(gene, cell_line), scales = 'free', independent=T) + 
+      
+      ## Plot title
+      ggtitle(title)
+   
+  if (gene_N < ncol) { 
+    #ggp <- cowplot::plot_grid(ggp, NULL, rel_widths = c(gene_N, ncol - gene_N ), nrow=1)
+  }
+  
+  }   # })
+  
+  if(save.plot) {
+    message('saving plot to: ', filename, '...')
+    ggsave(filename, ggp, width = figw, height = figh)
+  }
+  
+  return(ggp)
+ 
+}
+
+
+mapfun <- function(gene_to_plot, DT, plotfun, ...) { 
+  plotfun(DT[gene == gene_to_plot], filename=paste0(fig.dir, '/', gene_to_plot, '_', EndType, '_replicates_loess.jpg'), ...) 
+}
+
+split_vector_to_list <- function(vec, n) {
+  # Calculate the group for each element based on its position
+  group_indices <- ceiling(seq_along(vec) / n)
+  # Split the vector by these calculated group indices
+  split_list <- split(vec, group_indices)
+  return(split_list)
+}
+
+strip.background <- palette[10]
+```
+
+
+
+```{r}
+
+figw  <- 10
+figh  <- 6
+
+```
+
+
+
+START PLOTTING
+
+```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
+#DT <- orf.sum.perc
+
+mapfun <- function(gene_to_plot, DT, recalc = F,
+                   TR.annot.data = TR.merged.data.gene,
+                   visfrom = NULL, visto = NULL, strand_to_plot = c('+', '-'),
+                   rel_widths = c(5, 5), what2plot = 'annot_and_abund', save.plot=F, ...) { 
+  
+    filename <- paste0(fig.dir, '/', 'IF.ratio_and_annotation_', gene_to_plot, '_', 'replicates_loess.jpg')
+  
+    DTsub <- DT[gene == gene_to_plot & strand %in% strand_to_plot]
+    
+    ## recalculate ratios 
+    if (recalc) {
+      DTsub[, sum_read_count  := sum(read_count), by=.(sample, Time, gene, Kinetic_class)]
+      DTsub[, norm_read_count := read_count / sum_read_count]
+      DTsub[is.na(norm_read_count), norm_read_count := 0]
+      DTsub[, mean            := mean(norm_read_count, na.rm=T), by=.(Time, gene, Ref_Class)]
+      DTsub[, sd := sd(norm_read_count, na.rm=T), by=.(Time, gene, Ref_Class)]
+    }
+    
+    ggrt  <- plotfun(DTsub, 
+                    geom1 = geom_linerange(aes(x=Time, y=mean, ymin = mean-sd, ymax = mean+sd)),
+                    geom3 = geom_point(aes(x=Time, y=mean, fill = Ref_Class), shape=21, size=3),
+                    geom2 = geom_line(aes(x=Time, y=mean, color=Ref_Class, group = Ref_Class), linewidth = 0.85),
+                    #geom2 = geom_pointrange(aes(x=Time, y=mean, ymin = mean-sd, ymax = mean+sd, colour = Ref_Class)),
+                    #geom3 = geom_smooth(aes(x=Time, y=mean, color=Ref_Class, group = Ref_Class), se = F, method = 'gam'),
+                    save.plot = F, ...) 
+  
+    
+    ggtr <- NULL
+    try({
+      
+      TR.annot.data.filt <- as.data.frame(TR.annot.data)
+      TR.annot.data.filt$Ref_Class[TR.annot.data.filt$gene != gene_to_plot] <- NA
+      setDT(TR.annot.data.filt)
+      
+      if(is.null(visfrom) & is.null(visto)) {
+        visfrom <- min(TR.annot.data.filt[gene == gene_to_plot, start]) - vis_win
+        visto   <- max(TR.annot.data.filt[gene == gene_to_plot, end  ]) + vis_win
+      }
+      
+      ggtr <- ann.plotfun(gene_to_plot, vis_win=vis_win, 
+                          visfrom = visfrom, visto = visto,
+                          TR.merged.data=TR.annot.data.filt,
+                          annot_fill_column = 'Ref_Class',
+                          add.TR.labels=T)
+    })
+    
+    
+    if (what2plot == 'annot_and_abund') {
+    
+      if (is.null('ggtr')) {
+        ggcomb <- cowplot::plot_grid(ggrt, ggtr, nrow = 1, rel_widths = c(3, 0.5), align = 'v', axis = 'tb')
+      } else {
+        ggcomb <- cowplot::plot_grid(ggrt, ggtr, nrow = 1, rel_widths = rel_widths, align = 'v', axis = 'tb')
+      }
+      
+    } else if (what2plot == 'annot_only') {
+      
+      ggcomb <- ggtr
+      
+    } else if (what2plot == 'abund_only') {
+      
+      ggcomb <- ggrt
+      
+    }
+      
+    if(save.plot) { ggsave(filename, ggcomb, width = figw, height = figh) }
+    
+    ggcomb
+  
+  
+}
+
+
+
+#purrr::map(unique(orf.sum.perc[,gene]), mapfun, orf.sum.perc)
+```
+
+
+Tests
+```{r, fig.show='hold',  fig.width = 10, fig.height = 10, eval=T}
+
+gene_to_plot <- 'ORF67'
+mapfun(gene_to_plot,  orf.sum.perc, 
+       visfrom = min(TR.merged.data.gene[gene == gene_to_plot & strand == '+', start]) - vis_win,
+       visto   = max(TR.merged.data.gene[gene == gene_to_plot & strand == '+', end  ]) + vis_win,
+       legend.position='right',  rel_widths=c(1, 1), title = 'NOIR', what2plot = 'annot_only')
+
+
+```
+
+
+
+#### ####
+
+
+
+
+```{r}
+## Export data
+if (writetables) {
+  
+  write.table(orf.sum.perc, paste0(fig.dir, '/', EndType, '_counts.norm.tsv'), quote = F, row.names = F, sep = '\t')
+
+}
+```
+
+
+
+```{r bib, include=FALSE}
+# KEEP THIS AT THE END OF THE DOCUMENT TO GENERATE A LOCAL bib FILE FOR PKGS USED
+knitr::write_bib(sub("^package:", "", grep("package", search(), value=TRUE)), file='skeleton.bib')
+```

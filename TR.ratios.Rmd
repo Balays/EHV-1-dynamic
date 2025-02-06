@@ -219,7 +219,7 @@ TR.gene.cluster.counts <- merge(TR.gene.cluster,
 
 
 CAGE.sig <- fread("CAGEFighteR.SIG.tsv")
-
+CAGE.sig[,.N,CAGE_significance]
 
 TR.merged.data[,CAGE_significance := NULL]
 
@@ -2092,9 +2092,10 @@ Fig.PRV.Ori <- cowplot::plot_grid(plotlist = list(
   ann.plotfun(NULL, vis_win=NULL, genome='LT934125.1',
               gene.plotdata = genome.plotdata.PRV,
               genomplot.scale = 8,
-              visfrom = 55000, visto = 75000,
+              visfrom = 55000, visto = 73500,
               tr.palette = colorvec[-c(3)],
               theme_general = theme_ipsum(),
+              #theme_general = theme_bw(), #ipsum(),
               TR.merged.data = TR.merged.data.PRV.ori,
               annot_fill_column = 'ori_overlap',
               add.TR.labels = T, breakseq=breakseq, plot.title='OriL'),
@@ -2102,9 +2103,10 @@ Fig.PRV.Ori <- cowplot::plot_grid(plotlist = list(
   ann.plotfun(NULL, vis_win=NULL, genome='LT934125.1',
               gene.plotdata = genome.plotdata.PRV,
               genomplot.scale = 12,
-              visfrom = 115000, visto = 135000,
+              visfrom = 103000, visto = 117500,
               tr.palette = colorvec[-c(3)],
               theme_general = theme_ipsum(),
+              #theme_general = theme_bw(), #ipsum(),
               TR.merged.data = TR.merged.data.PRV.ori,
               annot_fill_column = 'ori_overlap',
               add.TR.labels = T, breakseq=breakseq, plot.title='OriS')

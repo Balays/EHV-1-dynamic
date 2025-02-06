@@ -1,6 +1,6 @@
 ##gff-version 3
-##source-version rtracklayer 1.58.0
-##date 2024-12-02
+##source-version rtracklayer 1.66.0
+##date 2025-02-05
 NC_001491.2	rtracklayer	exon	92378	93028	.	+	.	transcript_id=402;exon_number=1
 NC_001491.2	rtracklayer	exon	92559	93026	.	+	.	transcript_id=758;exon_number=1
 NC_001491.2	rtracklayer	exon	92379	93028	.	+	.	transcript_id=840;exon_number=1
