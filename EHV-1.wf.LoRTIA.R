@@ -18,16 +18,32 @@ source('_WF.part0.R')
 
 
 ##
-#### WF Part 1. ####
+######## WF Part 1. Importing and preprocessing alignments
 
+##
+#### settings ####
+
+outdir  <- 'LoRTIA_virus'; try({ dir.create(outdir) })
+project_config <- data.table(outdir = outdir)
+fwrite(project_config, 'project_config.txt')
+
+##
 write.all <- T
 rename_host_contigs <- F
 fix.viral.contigs <- T
 make.plots <- T
 save.images <- F
 
-### CAGE
-include.cage <- F
+#### ####
+##
+
+
+
+
+##
+#### CAGE ####
+
+include.cage <- T
 if (include.cage) {
   outdir  <- 'CAGE'; try({ dir.create(outdir) })
   project_config <- data.table(outdir = outdir)
@@ -82,17 +98,17 @@ if (include.cage) {
   readcounts.CAGE  <- readcounts
 }
 
-### settings
-outdir  <- 'LoRTIA_virus'; try({ dir.create(outdir) })
-project_config <- data.table(outdir = outdir)
-fwrite(project_config, 'project_config.txt')
+#### ####
+##
 
+
+##
+#### dcDNA ####
 
 flag  <- scanBamFlag(isSupplementaryAlignment=FALSE)
 param <- ScanBamParam(what=scanBamWhat(), flag=scanBamFlag(isSupplementaryAlignment=FALSE))
 rm.gaps.in.aln <- T
 
-### dcDNA
 is.lortia <- T
 bamdir  <- "../LoRTIA_stranded_only"
 pattern <- '_stranded_only.bam'
@@ -100,34 +116,66 @@ bamfiles <- grep('.bai',
                  list.files(bamdir, pattern, recursive = T, full.names = T),
                  invert = T, value = T)
 
-### dRNA
-#is.lortia <- F
-#bamdir  <- "C:/data/EHV-1/rebasecall/mapped"
-#pattern <- '.bam'
-#bamfiles <- grep('.bai',
-#                 list.files(bamdir, pattern, recursive = T, full.names = T),
-#                 invert = T, value = T)
 
-
-##
+### import coverages
 source('_WF.part1.R')
+
 try({
-mapped.cov       <- fread(paste0(outdir, '/mapped.cov.tsv'), na.strings = '')
-merged_cov       <- fread(paste0(outdir, '/merged_cov.tsv'), na.strings = '')
+  mapped.cov       <- fread(paste0(outdir, '/mapped.cov.tsv'), na.strings = '')
+  merged_cov       <- fread(paste0(outdir, '/merged_cov.tsv'), na.strings = '')
 
-win.cov.sum      <- fread(paste0(outdir, '/win.cov.sum.tsv'), na.strings = '')
-win.cov.hpi.sum  <- fread(paste0(outdir, '/win.cov.hpi.sum.tsv'), na.strings = '')
+  win.cov.sum      <- fread(paste0(outdir, '/win.cov.sum.tsv'), na.strings = '')
+  win.cov.hpi.sum  <- fread(paste0(outdir, '/win.cov.hpi.sum.tsv'), na.strings = '')
 
-norm_cov_summary <- fread(paste0(outdir, '/norm.cov.summary.tsv'), na.strings = '')
+  norm_cov_summary <- fread(paste0(outdir, '/norm.cov.summary.tsv'), na.strings = '')
 
-readcounts       <- fread(paste0(outdir, '/readcounts.tsv'), na.strings = '', header = T)
+  readcounts       <- fread(paste0(outdir, '/readcounts.tsv'), na.strings = '', header = T)
 })
 
-### remove
+### remove unnecessary
 rm(list = c('bam.all.list', 'bam.cov.list', 'mapped.cov', 'merged_cov', 'norm.cov'))
 
 #### ####
 ##
+
+
+
+##
+#### dRNA ####
+
+is.lortia <- F
+bamdir  <- "C:/data/EHV-1/rebasecall/mapped"
+pattern <- '.bam'
+bamfiles <- grep('.bai',
+                 list.files(bamdir, pattern, recursive = T, full.names = T),
+                 invert = T, value = T)
+
+### import coverages
+source('_WF.part1.R')
+
+try({
+  mapped.cov       <- fread(paste0(outdir, '/mapped.cov.tsv'), na.strings = '')
+  merged_cov       <- fread(paste0(outdir, '/merged_cov.tsv'), na.strings = '')
+
+  win.cov.sum      <- fread(paste0(outdir, '/win.cov.sum.tsv'), na.strings = '')
+  win.cov.hpi.sum  <- fread(paste0(outdir, '/win.cov.hpi.sum.tsv'), na.strings = '')
+
+  norm_cov_summary <- fread(paste0(outdir, '/norm.cov.summary.tsv'), na.strings = '')
+
+  readcounts       <- fread(paste0(outdir, '/readcounts.tsv'), na.strings = '', header = T)
+})
+
+### remove unnecessary
+rm(list = c('bam.all.list', 'bam.cov.list', 'mapped.cov', 'merged_cov', 'norm.cov'))
+
+#### ####
+##
+
+
+
+
+##
+#### ####
 
 ### Combine w CAGE
 if(include.cage) {
@@ -142,11 +190,13 @@ if(save.images) {
   save.image(paste0(outdir, '.P1.RData'))
   load(paste0(outdir, '.P1.RData'))
 }
-###
 
-
+#### ####
 ##
-#### WF Part 2. Read clustering into TRs ####
+
+
+######## WF Part 2. Read clustering into TransFrags
+####  ####
 
 if(is.lortia) {
   bam.all[,correct_tes := fifelse(grepl('correct', tag.l3) | grepl('correct', tag.r3), T, F)]
@@ -165,9 +215,7 @@ fwrite(bam.filt, paste0(outdir, '/bam.filt.tsv'), sep='\t')
 bam.filt <- fread(paste0(outdir, '/bam.filt.tsv'), na.strings = '')
 
 
-
-
-## make Transcripts
+## make TransFrags
 source('makeTRs.R')
 TR.data <- TR.uni
 TR.data[, TR_start := min(start), by =.(TR_ID)][, TR_end := max(end), by= .(TR_ID)]
@@ -280,6 +328,7 @@ if(save.images) {
   load(paste0(outdir, '.P2.RData'))
 }
 
+
 ##
 #### WF part 3. Ref Transcript count analysis ####
 
@@ -339,7 +388,7 @@ if(save.images) {
 ##
 #### WF part 4. Count genes and Transcripts ####
 
-source('_WF.part0.R')
+#source('_WF.part0.R')
 
 res.dir <- outdir; try({ dir.create(res.dir) })
 

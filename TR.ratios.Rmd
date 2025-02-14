@@ -210,6 +210,10 @@ TR.gene.cluster.counts <- merge(TR.gene.cluster,
                                 #all.x=T, 
                                 #allow.cartesian=TRUE
                                 )
+
+unique(TR.merged.data[,.(transcript_id, strand, CAGE_significance)])[,.N,CAGE_significance]
+
+TR.merged.data.CAGE <- copy(TR.merged.data)
 ```
 
 ### CAGE significance
@@ -227,8 +231,29 @@ TR.merged.data[,CAGE_significance := NULL]
 TR.merged.data <- merge(TR.merged.data[,], CAGE.sig[,.(CAGE_ID = gene, CAGE_significance)], by=c('CAGE_ID'), all.x=T)
 
 
-TR.merged.data[,.N,CAGE_significance]
+unique(TR.merged.data[,.(transcript_id, strand, CAGE_significance)])[,.N,CAGE_significance]
 ```
+
+
+```{r}
+TR.merged.data.CAGE.merge <- 
+  merge(unique(TR.merged.data[,.(transcript_id, start.TR, end.TR, strand, CAGE_significance, CAGE_ID)]), 
+      unique(TR.merged.data.CAGE[,.(transcript_id, start.TR, end.TR, strand, CAGE_significance, CAGE_ID)]), 
+      by=c('transcript_id', 'strand') )
+
+
+TR.merged.data.CAGE.merge[is.na(CAGE_significance.x), CAGE_significance.x := '']
+
+TR.merged.data.CAGE.merge[start.TR.x != start.TR.y, ]
+TR.merged.data.CAGE.merge[end.TR.x != end.TR.y, ]
+
+TR.merged.data.CAGE.merge[CAGE_significance.x != CAGE_significance.y, ]
+transcript_id_sus <- TR.merged.data.CAGE.merge[CAGE_significance.x != CAGE_significance.y, ]
+
+
+
+```
+
 
 ```{r}
 #### summarise read-transcripts into ref transcripts
@@ -1922,7 +1947,7 @@ mapfun <- function(gene_to_plot=NULL,  DT=orf.sum.perc, TRs_to_plot=NULL, recalc
 
 ## REVIEW 2
 
-### Supp Fig S12A - EHV raRNAs
+### Supp Fig S12 - EHV raRNAs
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
 
 dir.create('Figures')
@@ -1949,7 +1974,7 @@ TR.merged.data.ori <- foverlaps2(TR.merged.data.ori, data.table(Ori.df), minover
 Ori.TRs <- unique(TR.merged.data.ori$transcript_id)
 
 TR.merged.data.ori <- copy(TR.merged.data[,
-          .(seqnames, strand, transcript_id,
+          .(seqnames, strand, start, end, transcript_id,
             start.TR, end.TR, prime5.TR, prime3.TR,
             start.exon, end.exon, exon_number, last_exon)])
 
@@ -1960,7 +1985,7 @@ TR.merged.data.ori[, CAGE_significance := '']
 
 
 Fig.all.Ori <- cowplot::plot_grid(plotlist = list(
-  ann.plotfun(NULL, vis_win=NULL, 
+  ann.plotfun(NULL, vis_win=NULL, genome='NC_001491.2',
               gene.plotdata = gene.ori.plotdata,
               genomplot.scale = 12,
               visfrom = 66000, visto = 85000,
@@ -1969,7 +1994,7 @@ Fig.all.Ori <- cowplot::plot_grid(plotlist = list(
               annot_fill_column = 'ori_overlap',
               add.TR.labels = T, breakseq=breakseq, plot.title='OriL'),
 
-  ann.plotfun(NULL, vis_win=NULL, 
+  ann.plotfun(NULL, vis_win=NULL, genome='NC_001491.2',
               gene.plotdata = gene.ori.plotdata,
               genomplot.scale = 7,
               visfrom = 118000, visto = 124000,
@@ -1982,13 +2007,30 @@ Fig.all.Ori <- cowplot::plot_grid(plotlist = list(
 
 
 
-ggsave('./Figures/Supp Fig S12A.pdf', Fig.all.Ori, height = 16, width = 10)
+ggsave('./Figures/Supp Fig S12.pdf', Fig.all.Ori, height = 16, width = 10)
+
+
+
+
+TR.merged.data.oriL.ov <- foverlaps2(TR.merged.data.ori, 
+                                    visregion = data.table(seqnames = 'NC_001491.2', start = 66000, end = 85000), 
+                                    minoverlap = 1, by=c('seqnames',  'start', 'end'))
+
+unique(TR.merged.data.oriL.ov[grepl('novTX', transcript_id), transcript_id])
+
+
+
+TR.merged.data.oriS.ov <- foverlaps2(TR.merged.data.ori, 
+                                    data.table(seqnames = 'NC_001491.2', start = 118000, end = 124000), 
+                                    minoverlap = 1, by=c('seqnames',  'start', 'end'))
+
+unique(TR.merged.data.oriS.ov[grepl('novTX', transcript_id), transcript_id])
 
 #Fig.all.Ori
 ```
 
 
-### Supp Fig S12B - PRV raRNAs
+### Supp Fig S13 - PRV raRNAs
 ```{r, fig.show='hold',  fig.width = figw, fig.height = figh, eval=T}
 
 dir.create('Figures')
@@ -2115,7 +2157,7 @@ Fig.PRV.Ori <- cowplot::plot_grid(plotlist = list(
 
 
 
-ggsave('./Figures/Supp Fig S12B.tiff', Fig.PRV.Ori, height = 18, width = 10)
+ggsave('./Figures/Supp Fig S13.tiff', Fig.PRV.Ori, height = 18, width = 10)
 
 #Fig.all.Ori
 ```
