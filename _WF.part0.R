@@ -22,18 +22,23 @@ library(fuzzyjoin)
 library(purrr)
 library(BiocParallel)
 
-## Own functions -->> Needs to be present
-misc.dir    <- 'functions'
+### Own functions
+misc.dir <- 'C:/GitHub/Rlyeh/R'
+minitax.dir <- 'C:/GitHub/minitax/R'
+functions_dir <- 'functions'
 
 if (.Platform$OS.type!="windows") {
-
-  misc.dir  <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', misc.dir))),
-                      stri_replace_first_regex(misc.dir, '.*:\\/', '')
-  )
+  misc.dir <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', misc.dir))),
+                     stri_replace_first_regex(misc.dir, '.*:/', ''))
+  minitax.dir <- paste0('/mnt/', gsub(':', '/', tolower(gsub('/.*', '', minitax.dir))),
+                        stri_replace_first_regex(minitax.dir, '.*:/', ''))
 
 }
 
-for(f in list.files(misc.dir,    '*.R', full.names = T)) { try({source(f)}) }
+
+for(f in list.files(misc.dir, '*.R', full.names = T)) { try({source(f)}) }
+for(f in list.files(minitax.dir, '*.R', full.names = T)) { try({source(f)}) }
+for(f in list.files(functions_dir, '*.R', full.names = T)) { try({source(f)}) }
 
 bam.flags           <- fread(paste0(misc.dir, '/bam.flags.tsv'))
 gff_compare_classes <- fread(paste0(misc.dir, '/gff_compare.txt'))
