@@ -1,0 +1,27 @@
+  addNote(s, 'Use this only if methods questions come up. The main point is that the pipeline does not accept every long-read boundary as a transcript. Adapter evidence, independent CAGE support, TES validation and extra filtering for potentially truncated ORF-carrying RNAs were combined to reduce false positives.');
+}
+
+// 17. Backup resources
+{
+  const s = pptx.addSlide('MASTER');
+  addTitle(s, 'Backup: data, code and reproducibility', 'Resources');
+  const items=[
+    ['Published article','Tombácz et al. (2025)\nPLOS ONE 20(4): e0320439','doi:10.1371/journal.pone.0320439',C.orange,C.paleOrange],
+    ['Raw sequencing data','European Nucleotide Archive','PRJEB52190 · PRJEB6233',C.blue,C.paleBlue],
+    ['Analysis repository','Balays/EHV-1-dynamic','R/Rmd workflows, processed tables and publication figures',C.teal,C.paleTeal],
+  ];
+  items.forEach((it,i)=>{
+    const y=1.62+i*1.52;
+    s.addText(it[0],{x:0.90,y,w:2.25,h:0.96,fontSize:17.5,bold:true,color:C.navy,align:'center',valign:'mid',margin:0.08,fill:{color:it[4]},line:{color:it[3]},radius:0.08});
+    s.addText(it[1],{x:3.45,y:y+0.05,w:4.0,h:0.72,fontSize:17,bold:true,color:C.navy,margin:0.02});
+    s.addText(it[2],{x:7.70,y:y+0.05,w:4.25,h:0.72,fontSize:14.2,color:C.gray,margin:0.02});
+  });
+  s.addText('Repository status used for this deck', {x:0.90,y:6.26,w:2.7,h:0.28,fontSize:11.5,bold:true,color:C.teal,margin:0});
+  s.addText('main branch · latest checked repository commit before deck creation: df4589e (17 Mar 2025)', {x:3.58,y:6.23,w:8.2,h:0.34,fontSize:13.5,color:C.gray,margin:0});
+  addSource(s, 'The deck is grounded in the published paper and the analysis repository used to generate the publication results.');
+  addNote(s, 'This backup slide is useful if someone asks where the data or code can be found. The paper provides the ENA accessions and the GitHub repository contains the workflows, processed result tables and generated publication figures.');
+}
+
+
+fs.mkdirSync('presentation', { recursive: true });
+pptx.writeFile({ fileName: 'presentation/EHV1_dynamic_transcriptome_conference_master.pptx' });
