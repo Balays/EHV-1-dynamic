@@ -25,3 +25,4 @@
 
 fs.mkdirSync('presentation', { recursive: true });
 pptx.writeFile({ fileName: 'presentation/EHV1_dynamic_transcriptome_conference_master.pptx' });
+// rebuild trigger 2026-09-15
