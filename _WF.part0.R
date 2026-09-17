@@ -23,8 +23,9 @@ library(purrr)
 library(BiocParallel)
 
 ### Own functions
-misc.dir      <- 'C:/GitHub/Rlyeh/R'
-minitax.dir   <- 'C:/GitHub/minitax/R'
+misc.dir <- 'C:/GitHub/Rlyeh/R'
+minitax.dir <- 'C:/GitHub/minitax/R'
+
 functions_dir <- 'functions'
 
 if (.Platform$OS.type!="windows") {
@@ -34,6 +35,8 @@ if (.Platform$OS.type!="windows") {
                         stri_replace_first_regex(minitax.dir, '.*:/', ''))
 
 }
+
+for(f in list.files(functions_dir, '*.R', full.names = T)) { try({source(f)}) }
 
 
 for(f in list.files(misc.dir, '*.R', full.names = T)) { try({source(f)}) }
