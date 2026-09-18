@@ -1,13 +1,44 @@
-# RStudio project files
+# R / RStudio
 .Rproj.user/
 .Rhistory
-.RData/
+.RData
+.RDataTmp
+.Ruserdata
+.Renviron
 .Rproj
 
-# R environment
-.Renviron
+# R Markdown / knitr generated files
+*_cache/
+*_files/
+*.html
 
+# Large sequencing and alignment files
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bam
+*.bai
+*.cram
+*.crai
+*.pod5
+*.fast5
 
-#
+# Manuscript working files
+Article/
+~$*
+*.docx
+
+# Generated analysis outputs
+LoRTIA_virus/
+TX.All.Isoforms_VirusRead.norm_hclust_files/
+CAGE/bam/
+CAGE/*.rds
+CAGE/mapped.cov.tsv
+CAGE/win.cov*.tsv
+
+# Vendored external software should be installed separately
+NAGATA/
+
+# Local bibliography helper
 skeleton.bib
-
